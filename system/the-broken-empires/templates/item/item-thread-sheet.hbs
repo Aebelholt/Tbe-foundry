@@ -1,0 +1,76 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Thread"/></h1>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A Thread only works on spells using the Bind or Strand it is attuned to.">Attuned to</label>
+          <select name="system.attunement">
+            <option value="" {{#unless system.attunement}}selected{{/unless}}>&mdash; none &mdash;</option>
+            {{#each config.BINDS as |b|}}
+            <option value="{{b}}" {{#if (eq b @root.system.attunement)}}selected{{/if}}>Bind: {{b}}</option>
+            {{/each}}
+            {{#each config.STRANDS as |s|}}
+            <option value="{{s}}" {{#if (eq s @root.system.attunement)}}selected{{/if}}>Strand: {{s}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Kind</label>
+          <select name="system.kind">
+            <option value="die" {{#if (eq system.kind "die")}}selected{{/if}}>Thread Die</option>
+            <option value="consumable" {{#if (eq system.kind "consumable")}}selected{{/if}}>Consumable pool</option>
+            <option value="location" {{#if (eq system.kind "location")}}selected{{/if}}>Location-based</option>
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Expended</label>
+          <input type="checkbox" name="system.expended" {{checked system.expended}}/>
+        </div>
+      </div>
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A grimoire acts as a Thread for RITUAL castings only. It may name up to three Binds or Strands (comma-separated above), rolls its die once per applicable skill, and is destroyed on a maximum roll. TBE: Ritual rolls it.">Grimoire</label>
+          <input type="checkbox" name="system.grimoire" {{checked system.grimoire}}/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A Weave Reagent: a Strand and a count. Spent one-for-one in place of an enchantment's Fraying, and as the active ingredient in alchemy. Keep the count in Pool left.">Weave Reagent</label>
+          <input type="checkbox" name="system.reagent" {{checked system.reagent}}/>
+        </div>
+      </div>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Rolled after a successful Bind roll. A 1 or 2 still counts as Mastery but steps the die down; a d6 crumbles.">Thread Die</label>
+          <select name="system.die">
+            <option value="d6" {{#if (eq system.die "d6")}}selected{{/if}}>d6</option>
+            <option value="d8" {{#if (eq system.die "d8")}}selected{{/if}}>d8</option>
+            <option value="d10" {{#if (eq system.die "d10")}}selected{{/if}}>d10</option>
+            <option value="d12" {{#if (eq system.die "d12")}}selected{{/if}}>d12</option>
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Mastery left in a consumable Thread. At 0 it is inert forever.">Pool left</label>
+          <input type="text" name="system.pool" value="{{system.pool}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A location-based Thread gives this Mastery every casting, without limit.">Set Mastery</label>
+          <input type="text" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div style="font-size:11px;opacity:.85;margin-bottom:6px">
+        Threads are used only after a <b>successful</b> Bind roll, never on a failure, and you
+        must be in physical contact with one to use it. You may use up to one Bind Thread and
+        one Strand Thread in a single casting; Threads of the same type never stack.
+        <b>TBE: Cast</b> applies this Thread and writes back what it costs.
+      </div>
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+  </section>
+</form>

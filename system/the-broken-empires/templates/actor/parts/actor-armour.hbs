@@ -1,0 +1,20 @@
+<table class="wound-table armour-table">
+  <thead>
+    <tr>
+      <th class="loc-col">Location</th>
+      <th>Natural</th>
+      <th>Worn</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each config.LOCATIONS as |label loc|}}
+    {{#with (lookup @root.system.armour loc) as |a|}}
+    <tr>
+      <td class="loc-label">{{label}}</td>
+      <td><input type="text" class="narrow-input" name="system.armour.{{loc}}.natural" value="{{a.natural}}" data-dtype="Number"/></td>
+      <td><input type="text" class="narrow-input" name="system.armour.{{loc}}.worn" value="{{a.worn}}" data-dtype="Number"/></td>
+    </tr>
+    {{/with}}
+    {{/each}}
+  </tbody>
+</table>

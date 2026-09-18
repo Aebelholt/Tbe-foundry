@@ -1,0 +1,808 @@
+{
+ "piety": {
+  "requiresGodbound": {
+   "q": "earning a score in the Piety skill requires the possession of the Godbound Talent"
+  },
+  "startingValue": {
+   "n": 30,
+   "q": "When the Godbound Talent is taken, the character is granted a starting Piety of 30."
+  },
+  "noXp": {
+   "q": "The Piety skill can never be improved with Experience Points. Only pious acts of service done in the god's name and for the god's benefit will improve the skill."
+  },
+  "cap": {
+   "n": 90,
+   "q": "A PC's actual Piety skill can never be improved past 90, although modifiers can temporarily raise it to 100 or beyond."
+  },
+  "noExpertise": {
+   "q": "Piety can never have Expertise, but a Piety roll can benefit from a holy symbol"
+  },
+  "hidden": {
+   "q": "By default, the Godbound never knows exactly what his current Piety score is: the GM keeps track of it."
+  },
+  "warningVision": {
+   "n": 30,
+   "q": "if a Godbound's Piety falls to 30 or below, they should receive an appropriate vision from their god by way of warning"
+  },
+  "goodVision": {
+   "n": 80,
+   "q": "if their Piety reaches 80, they should receive a positive vision or sign as encouragement"
+  },
+  "noResolve": {
+   "q": "Godbound can't spend Resolve on Piety rolls."
+  },
+  "noWeaveReaction": {
+   "q": "Weave Reactions do not manifest from a miracle. The god itself mitigates the Weave, regardless of the miracle's success or failure."
+  },
+  "symbolSls": {
+   "n": 2,
+   "q": "Piety SLs can be improved by +2 from a holy symbol's use."
+  },
+  "outsideDomain": {
+   "q": "The gods cannot affect things outside their Domains. If a Godbound asks for a miracle that falls outside their deity's Domains, there will be no result."
+  },
+  "noShaping": {
+   "q": "Unlike a Spellweaver, a Godbound cannot shape the miracle's effect."
+  },
+  "celestialCap": {
+   "q": "celestial servants cannot grant Greater Miracles under any circumstance"
+  },
+  "oneAction": {
+   "q": "Asking for a miracle takes one action."
+  },
+  "range": {
+   "q": "usually the miracle affects a target within Close Range"
+  },
+  "over100": {
+   "q": "subtract 100 from the modified Piety skill value. The tens die amount of this value acts as extra SLs (minimum +1 SL). It also means the miracle roll cannot critically fail."
+  },
+  "capViaActs": {
+   "n": 90,
+   "q": "A Godbound's Piety can never be raised to more than 90 through Pious Acts."
+  }
+ },
+ "holySymbol": {
+  "supplyDie": {
+   "q": "each use of the symbol requires a roll of its current Die Type (starts at d12)"
+  },
+  "afterSuccess": {
+   "n": 2,
+   "q": "The symbol can be rolled after a successful Piety roll to add +2 SLs to the outcome, but the Die Type diminishes one step on a roll of 1-2."
+  },
+  "notOnFailure": {
+   "q": "The holy symbol does not help a failed Piety roll."
+  },
+  "blessing": {
+   "n": 70,
+   "q": "If a Godbound's holy symbol depletes below d6, the symbol must be blessed by another Godbound of the same deity with at least 70 Piety before it will provide further benefit."
+  },
+  "blessingIsMiracle": {
+   "q": "The blessing itself is considered a Lesser Miracle that must be prayed and rolled for like any other effect, and restores the symbol to d12."
+  },
+  "onlyOne": {
+   "q": "A Godbound may only possess one holy symbol at a time."
+  }
+ },
+ "symbolDice": [
+  "d12",
+  "d10",
+  "d8",
+  "d6",
+  "d4"
+ ],
+ "castOut": {
+  "atZero": {
+   "n": 0,
+   "q": "If a Godbound's Piety ever falls to zero, they are Cast Out."
+  },
+  "immediate": {
+   "q": "If the Piety score falls to zero due to a miracle roll's Piety cost, the Godbound is Cast Out immediately after the miracle's effects are resolved"
+  },
+  "noMiracles": {
+   "q": "the deity will no longer respond to the Godbound's requests for miracles, and the Godbound cannot regain lost Piety until they have made an act of atonement"
+  },
+  "afterAtonement": {
+   "n": 6,
+   "q": "no Greater Miracles may be granted to the Godbound for 1d6 game sessions"
+  }
+ },
+ "prayer": [
+  {
+   "key": "minute",
+   "label": "a full minute",
+   "sls": 1,
+   "q": "Praying for a full minute: +1 SL"
+  },
+  {
+   "key": "ten",
+   "label": "10 minutes",
+   "sls": 2,
+   "q": "Praying for 10 minutes: +2 SLs"
+  },
+  {
+   "key": "hour",
+   "label": "a full hour or more",
+   "sls": 3,
+   "q": "Praying for a full hour or more: +3 SLs"
+  }
+ ],
+ "pietyResults": [
+  {
+   "key": "success",
+   "name": "Success",
+   "cost": "1d10+SLs",
+   "q": "The request is granted. Reduce the Godbound's Piety by 1d10 + the total SLs generated"
+  },
+  {
+   "key": "crit",
+   "name": "Critical Success",
+   "cost": "0",
+   "bonusSls": 3,
+   "q": "Add 3 SLs to the roll's total. The miracle is granted as above with zero Piety cost."
+  },
+  {
+   "key": "failure",
+   "name": "Failure",
+   "cost": "1d10",
+   "q": "The god doesn't grant the miracle; reduce the Godbound's Piety by 1d10."
+  },
+  {
+   "key": "critFail",
+   "name": "Critical Failure",
+   "cost": "1d10+10",
+   "q": "The god doesn't grant the miracle; reduce the Godbound's Piety by 1d10+10."
+  }
+ ],
+ "miracleBands": [
+  {
+   "level": "Lesser",
+   "min": 1,
+   "max": 4,
+   "q": "1-4 SLs grants a Lesser Miracle"
+  },
+  {
+   "level": "Middle",
+   "min": 5,
+   "max": 8,
+   "q": "5-8 SLs grants a Middle Miracle"
+  },
+  {
+   "level": "Greater",
+   "min": 9,
+   "max": 9999,
+   "q": "9+ SLs grants a Greater Miracle"
+  }
+ ],
+ "pietyModifiers": [
+  {
+   "label": "Clearly furthers the god's aims or agenda",
+   "mod": 10,
+   "max": 30,
+   "q": "Clearly furthers the god's aims or agenda +10 to +30"
+  },
+  {
+   "label": "Directly aids others faithful to the god",
+   "mod": 10,
+   "q": "Directly aids others faithful to the god +10"
+  },
+  {
+   "label": "Involves genuine self-sacrifice or personal hardship in the god's name",
+   "mod": 10,
+   "max": 20,
+   "q": "Involves genuine self-sacrifice or personal hardship in the god's name +10 to +20"
+  },
+  {
+   "label": "A plea made during great danger, showing true faith and humility",
+   "mod": 10,
+   "q": "A plea made during great danger, showing true faith and humility +10"
+  },
+  {
+   "label": "Made arrogantly or without reverence",
+   "mod": -10,
+   "max": -20,
+   "q": "Made arrogantly or without reverence -10 to -20"
+  },
+  {
+   "label": "Motivated by personal gain, comfort, or vanity",
+   "mod": -10,
+   "q": "Motivated by personal gain, comfort, or vanity -10 or worse"
+  },
+  {
+   "label": "Involves harm to the church's own faithful",
+   "mod": -20,
+   "q": "Involves harm to the church's own faithful -20 or worse"
+  },
+  {
+   "label": "Violates a Core Stricture of the deity",
+   "mod": -30,
+   "q": "Violates a Core Stricture of the deity -30"
+  }
+ ],
+ "resistance": [
+  {
+   "key": "uninvolved",
+   "name": "Uninvolved or ignorant (or unclear)",
+   "fixed": 1
+  },
+  {
+   "key": "threatening",
+   "name": "Directly threatening the Godbound",
+   "fixed": 2
+  },
+  {
+   "key": "blasphemous",
+   "name": "Blasphemous or offensive to the faith",
+   "fixed": 3
+  },
+  {
+   "key": "active",
+   "name": "Active threat to the deity's works",
+   "fixed": 4
+  },
+  {
+   "key": "profane",
+   "name": "Profane defiance",
+   "fixed": 5
+  }
+ ],
+ "resistanceRules": {
+  "livingOnly": {
+   "q": "Only living, sentient beings make resistance rolls. Inanimate objects, areas, or zones cannot oppose a miracle"
+  },
+  "divinity": {
+   "q": "Any character may oppose a miracle with the Divinity skill instead of another appropriate resistance"
+  },
+  "reroll": {
+   "q": "If an ongoing Divine effect lasts for 1 minute or less, the target may attempt an opposed roll every round."
+  }
+ },
+ "piousActs": [
+  {
+   "act": "One hour of uninterrupted prayer (one attempt per day)",
+   "gain": "50% chance of 1",
+   "formula": "coin",
+   "q": "One hour of uninterrupted prayer (one attempt per day) 50% chance of 1"
+  },
+  {
+   "act": "Fasting",
+   "gain": "1d3 per full day",
+   "formula": "1d3",
+   "note": "Suffer 1 Fatigue per day of fasting due to deprivation",
+   "q": "Fasting* 1d3 per full day"
+  },
+  {
+   "act": "Confession",
+   "gain": "1d3",
+   "formula": "1d3",
+   "note": "must be heard by a religious superior, and can only be benefited from once per week",
+   "q": "Confession** 1d3"
+  },
+  {
+   "act": "Helping a member of the Faith",
+   "gain": "1d4",
+   "formula": "1d4",
+   "q": "Helping a member of the Faith 1d4"
+  },
+  {
+   "act": "Conducting a mass",
+   "gain": "1d4+1",
+   "formula": "1d4+1",
+   "q": "Conducting a mass 1d4+1"
+  },
+  {
+   "act": "Consecrating holy ground",
+   "gain": "1d6",
+   "formula": "1d6",
+   "q": "Consecrating holy ground 1d6"
+  },
+  {
+   "act": "Making a sacrifice of an item of deep personal importance",
+   "gain": "1d8+2",
+   "formula": "1d8+2",
+   "q": "Making a sacrifice of an item of deep personal importance 1d8+2"
+  },
+  {
+   "act": "Enduring physical or social harm for the god's sake",
+   "gain": "1d8+4",
+   "formula": "1d8+4",
+   "q": "Enduring physical or social harm for the god's sake 1d8+4"
+  },
+  {
+   "act": "Establishing a place of worship",
+   "gain": "1d12+3",
+   "formula": "1d12+3",
+   "q": "Establishing a place of worship 1d12+3"
+  },
+  {
+   "act": "Converting an unbeliever",
+   "gain": "2d8+4",
+   "formula": "2d8+4",
+   "q": "Converting an unbeliever 2d8+4"
+  },
+  {
+   "act": "Destroying a true enemy of the faith",
+   "gain": "3d6+2",
+   "formula": "3d6+2",
+   "q": "Destroying a true enemy of the faith 3d6+2"
+  },
+  {
+   "act": "Embodying the Core Strictures",
+   "gain": "4d6",
+   "formula": "4d6",
+   "note": "Varies by deity: the act must clearly advance the god's aims, carry real cost or risk, and be performed in the deity's name",
+   "q": "Embodying the Core Strictures*** 4d6"
+  },
+  {
+   "act": "Fulfilling a pilgrimage",
+   "gain": "1d10+8",
+   "formula": "1d10+8",
+   "q": "Fulfilling a pilgrimage 1d10+8"
+  },
+  {
+   "act": "Completing a holy quest",
+   "gain": "1d10+10",
+   "formula": "1d10+10",
+   "q": "Completing a holy quest 1d10+10"
+  }
+ ],
+ "domains": [
+  {
+   "name": "Air",
+   "aspects": "Weather, storms, light, sound, silence, the sky",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Perception rolls based on hearing or smell.",
+     "The Godbound receives +20 or Ex2 to Stealth rolls based on silence.",
+     "The Godbound channels the rage of a storm and receives +20 or Ex2 on Intimidate rolls.",
+     "A soft, divine light, equivalent to a lantern, emanates from the Godbound\u2019s holy symbol."
+    ],
+    "Middle": [
+     "The Godbound can fall short distances without taking damage (up to 20').",
+     "A whirlwind forms around the Godbound, acting as 1d4+1 AP.",
+     "A gust of air acts as a Might 90 Ex3 NL attack (Dmg 3) against one target of the Godbound\u2019s choice.",
+     "Shimmering air and tricks of light cause the Godbound to be invisible for the Duration of the scene, or until he takes an aggressive action.",
+     "A controlled cyclone forms around a zone, Blocking it for 1d4+1 rounds.",
+     "A mighty wind damages smaller structures, or Drives Back (as per the Combat Maneuver) 1d4+1 foes out of the targeted zone."
+    ],
+    "Greater": [
+     "Calms a storm in the Godbound\u2019s vicinity.",
+     "A whirlwind forms around the Godbound and 1d4+1 of her nearby allies, acting as 1d4+1 AP for the Duration of the combat.",
+     "Shimmering air and tricks of light cause the Godbound and his nearby allies to be invisible for 3d6 rounds, or until one of them takes an aggressive action.",
+     "The Godbound is moved from the area of one storm to the area of any other storm in the Broken Empires."
+    ]
+   }
+  },
+  {
+   "name": "Battle",
+   "aspects": "Enhancing weapons and armor, combat maneuvers, feats of strength, aggression, war, struggle, honor",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to 2 Combat skills.",
+     "The Godbound receives +20 or Ex2 to Endurance rolls.",
+     "The Godbound receives a +20 bonus or Ex2 to Prepare the Battlefield attempts until combat begins."
+    ],
+    "Middle": [
+     "A divine light forms around the Godbound, acting as 1d4+2 AP.",
+     "The Godbound receives +2 to all Wound Die rolls.",
+     "One of the Godbound\u2019s allies receives a +20 blessing to a Combat skill.",
+     "The Godbound\u2019s attacks do +2 damage.",
+     "As long as the Godbound performs the Stand Your Ground action, he receives an additional +10 to all defense rolls (for a total of +30) and any Trip attempts against him require +1 SL."
+    ],
+    "Greater": [
+     "The Godbound\u2019s next successful attack ignores all AP.",
+     "The Godbound\u2019s next successful attack causes any Wound Die roll to be made at -5.",
+     "For the duration of the combat, the Godbound may make a re-roll of any fatal Wound Die rolls he suffers.",
+     "The Godbound\u2019s Lethality Levels increase by 3.",
+     "The Godbound\u2019s Death Threshold increases by 5."
+    ]
+   }
+  },
+  {
+   "name": "Communication",
+   "aspects": "Interactions among thinking beings, social engagements, creativity, camaraderie, the arts,",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to any two Social skills.",
+     "The Godbound receives +20 or Ex2 to opposed Willpower rolls against mental manipulation.",
+     "The Godbound can send a short one-sentence message to any fellow adherent of the faith who possesses a holy symbol."
+    ],
+    "Middle": [
+     "The Godbound receives Ex4 to one Social skill for the next three rolls.",
+     "The Godbound can mentally communicate without words to one target in Short Range.",
+     "The Godbound can speak and understand any one language.",
+     "The Godbound implants one specific memory in the mind of one nearby target.",
+     "The Godbound\u2019s voice carries over great distances.",
+     "The Godbound can send a short one-sentence message to anyone in the world, as long as they know the person\u2019s current location."
+    ],
+    "Greater": [
+     "The Godbound receives Ex4 to one Social skill until the scene ends.",
+     "The Godbound may Command a target to make them act even against their own interests exactly as the Weave magic Command Effect. The effect lasts for 1 minute. If resisted, or when the effect ends, the target knows they have been manipulated if they make an Insight or Divinity roll.",
+     "Everyone in the chosen zone can speak and understand any one language.",
+     "Everyone the Godbound targets in a zone can mentally communicate without words to each other.",
+     "The Godbound can send a short message to anyone in the world."
+    ]
+   }
+  },
+  {
+   "name": "Curse",
+   "aspects": "Hexing an enemy, bringing lingering misfortune",
+   "miracles": {
+    "Lesser": [
+     "The Godbound chooses two of a target\u2019s skills to be at -20.",
+     "Some cosmetic curse befalls the target: hair falls out, warts, bad smell, etc. Most of these are permanent until the curse is removed."
+    ],
+    "Middle": [
+     "One target suffers -3 Initiative.",
+     "One target suffers -2 Toughness.",
+     "One target suffers -1 zone movement.",
+     "One of a target\u2019s non-combat skills always fails for the duration of the miracle.",
+     "The Godbound can remove a curse."
+    ],
+    "Greater": [
+     "Any one of a target\u2019s skills always fails for the duration of the miracle.",
+     "One target goes last for the duration of the combat.",
+     "1d4+1 targets (within Long Range) suffer up to -2 Toughness.",
+     "1d4+1 targets (within Long Range) suffer -1 zone movement.",
+     "Some awful curse manifests: cannot reproduce for a year, always react to friends with wrath, up to 500 sp worth of materials turn to dust/destitution, etc."
+    ]
+   }
+  },
+  {
+   "name": "Dream",
+   "aspects": "Memory, visions, prophecy, illusion, restfulness",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Insight rolls.",
+     "The sleeping Godbound can enter the dream of a sleeping target within 1 mile and change one detail per 2 SLs of a standard Insight roll."
+    ],
+    "Middle": [
+     "The Godbound can cause a target to have nightmares for 1 straight week, causing Sleep Deprivation (see Chapter 11 - Wounds, Healing, & Perils: Other Perils ).",
+     "The Godbound can enter the dreams of a target within one mile and control them as a sleepwalker for 1 hour. Issuing a command that the target wouldn\u2019t normally do requires a successful Insight roll; failure expels the Godbound from the target\u2019s dream.",
+     "The Godbound can manifest an object from a target\u2019s dream in the real world. The object lasts for 1 minute.",
+     "The deity provides the Godbound with an illusion that helps them in this moment. The illusion can deceive all senses, but has no physical presence and cannot directly affect the real world."
+    ],
+    "Greater": [
+     "The sleeping Godbound can enter the dream of a sleeping target anywhere in the world and communicate directly with them for 1 minute.",
+     "The sleeping Godbound can implant, erase, or take one specific memory from the mind of a sleeping target within one mile.",
+     "The Godbound can manifest a Dream Beast in the real world (as a Summoned Creature in the Bestiary ) to serve him for the duration of the scene."
+    ]
+   }
+  },
+  {
+   "name": "Earth",
+   "aspects": "Crafting, terrestrial materials, metal, stone, gravity",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Craft: Practical or Artistic rolls when using stone.",
+     "The Godbound receives +20 or Ex2 to Endurance rolls.",
+     "The Godbound receives +20 or Ex2 to Might rolls.",
+     "The Godbound can shape stone or rock into small structures or objects."
+    ],
+    "Middle": [
+     "The Godbound\u2019s skin hardens like rock, acting as 1d4+1 AP.",
+     "The Godbound leaves no trace of his passing over soil or stone for 1 day.",
+     "The Godbound can sense a quarry through the earth; he receives either +20 to Track , or a Track of 80, whichever is greater, for 1 day.",
+     "The earth rises and ensnares a single enemy, Restraining them for 1d4+1 rounds.",
+     "The Godbound can turn an earthen zone into quicksand (Hazard: Rough, Blocked)."
+    ],
+    "Greater": [
+     "The earth rises and ensnares a single enemy, Paralyzing them for 2d6 rounds.",
+     "An earthquake shakes 1d4+1 contiguous zones, causing a Hazard: Other (knocked Prone), and Damaging (External Damage 10).",
+     "The Godbound can shape stone or rock into a 6\u201310\u2019 high defensible wall through 1d4+1 contiguous zones that lasts for 1 day."
+    ]
+   }
+  },
+  {
+   "name": "Fertility",
+   "aspects": "Fertility, birth, the harvest, life, youth, passion, love, marriage, joy, food,",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Naturewise rolls.",
+     "The Godbound can re-roll a Rations Die."
+    ],
+    "Middle": [
+     "The crops/plants in 1d4+1 zones grow more rapidly, producing a 1d20+20% higher yield when harvest comes.",
+     "A target becomes reproductively attractive to likely members of the opposite sex, gaining +30 to Seduce for 1d4+1 hours.",
+     "+20 to a character\u2019s next set of Recovery rolls.",
+     "Provide enough food and water for 1d4 Ration dice."
+    ],
+    "Greater": [
+     "The Godbound\u2019s touch turns barren ground into rich soil. Affects 1d4+1 zones, lasts the growing season.",
+     "Purge a single infected wound or other affliction (poison, disease) from the target.",
+     "Guarantee a child is born healthy, and ensures them great strength and vigor in adulthood"
+    ]
+   }
+  },
+  {
+   "name": "Fire",
+   "aspects": "Heat, light, fire, strong emotions",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Survival rolls.",
+     "The Godbound receives +20 or Ex2 to Intimidate rolls.",
+     "The Godbound creates a small flame equal to a torch with no need for kindling.",
+     "The Godbound causes a strong emotion in the target: anger, jealousy, desire, despair, disgust, or anxiety. This may give a contextually-appropriate +/- 20 to various skills used either by the target or against him."
+    ],
+    "Middle": [
+     "The Godbound does not suffer the effects of cold or freezing for 1 day.",
+     "A jet of flame from an existing fire shoots forth at a target within Close Range, doing 1d8 fire damage opposed by Dodge .",
+     "A zone within Medium range is filled with smoke, causing an Obscured Hazard for 1d4+1 rounds.",
+     "The Godbound\u2019s weapon (or an ally\u2019s) is wreathed in flame (+5 Fire Damage)."
+    ],
+    "Greater": [
+     "The Godbound summons a wall of flame through 1d3 contiguous zones, creating a zone Damaging hazard (Fire Damage 15, external).",
+     "The weapons of the Godbound and all their allies are wreathed in flame (+5 Fire Damage).",
+     "The earth erupts into flame, smoke, and lava in a single zone within Long range, creating a Zone Hazard: Damaging (Fire Damage 20, external), Blocked & Obscured."
+    ]
+   }
+  },
+  {
+   "name": "Healing",
+   "aspects": "Reducing WP, removal of disease, poison, and other afflictions of the body",
+   "miracles": {
+    "Lesser": [
+     "Grants +20 on the next 1d4+1 Heal rolls or until the end of the scene, whichever comes first.",
+     "Grants +30 to the next Naturewise roll used to make natural healing potions, or Survival roll to treat poison.",
+     "Grants +20 to a target character\u2019s next set of Recovery rolls."
+    ],
+    "Middle": [
+     "Heals total WP equal to the Piety roll\u2019s SLs to any combination of wounds on the target. If it doesn\u2019t already have an RB, give each wound +10 RB.",
+     "Purges a single infected wound or other affliction (poison, disease) from the target."
+    ],
+    "Greater": [
+     "Heals all of the target\u2019s wounds completely and cures all infection.",
+     "Eliminates all Fatigue and removes infection from 1 infected wound.",
+     "Resets all current RBs of the Godbound and each of his allies to +30."
+    ]
+   }
+  },
+  {
+   "name": "Knowledge",
+   "aspects": "Thought, memory, history, reasoning, creativity, truth, foresight, lore, learning, secrets",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Common Lore and Ancient Lore rolls.",
+     "The Godbound receives +20 or Ex2 to Craft Practical or Artistic rolls.",
+     "The Godbound receives +20 or Ex2 to opposed Willpower rolls against mental manipulation.",
+     "The Godbound may read any language for the duration of the scene or until the end of the day, whichever comes first."
+    ],
+    "Middle": [
+     "The Godbound receives +30 on the next three rolls they make with any Lore skill.",
+     "By placing hands on a target\u2019s head, the Godbound may pull one memory from the target\u2019s mind.",
+     "The Godbound may speak and read any language for the duration of the scene or until the end of the day, whichever comes first.",
+     "The Godbound may make a single Masterwork item as though they had the Master Artist/ Craftsman Talent."
+    ],
+    "Greater": [
+     "The Godbound receives +30 on the next three skill rolls they make with any skill.",
+     "The Godbound sees in her mind an ethereal library containing every book, scroll, and text from all ages. The Godbound may ask any question, and the answer will be provided as a book or scroll pulled from the library. If it\u2019s conceivable that someone would have had cause to write the desired answer down somewhere, then the Godbound can see it."
+    ]
+   }
+  },
+  {
+   "name": "Luck",
+   "aspects": "Chance, fortune, risk, wagers, reversals of fate",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +2 to Initiative for the rest of this combat.",
+     "The Godbound receives +20 or Ex2 to Locks & Traps and Dodge rolls.",
+     "Once during the current scene, the Godbound may reroll any single failed test and keep the better result.",
+     "A coin, card, or dice roll within sight always lands in the Godbound\u2019s favor for the next minute."
+    ],
+    "Middle": [
+     "For 1 minute, the Godbound and allies within Short range gain +20 to all Dodge and Perception rolls.",
+     "For the rest of this scene, the Godbound\u2019s critical failures are counted as regular failures instead.",
+     "Roll a d10 immediately after invoking this miracle. On 1\u20135, any roll the Godbound makes in this scene gains +10; on 6\u201310, all rolls against him also gain +10. The Godbound may not refuse either result.",
+     "Choose one ally within Short Range of the Godbound. That ally gains +20 to all rolls for 1d4+1 rounds\u2014but for that same duration, the Godbound suffers -20 to all rolls."
+    ],
+    "Greater": [
+     "An event of staggering improbability occurs in the Godbound\u2019s favor (the bridge doesn\u2019t collapse, the enemy\u2019s bowstring snaps, lightning strikes the pursuer).",
+     "The Godbound may name one person or object within Long range, including themselves. For the next 24 hours, the first great fortune or disaster that would befall them is reversed.",
+     "For the next hour, the Godbound and all allies remaining within Medium Range ignore the first failed roll they make; treat it as a success with 3 SL. This miracle fades after it benefits each creature once.",
+     "Once in the next 24 hours, before any roll the Godbound makes, they may declare \u201cThe hand is mine\u201d, to automatically succeed with SL equal to the Godbound\u2019s Divinity Score."
+    ]
+   }
+  },
+  {
+   "name": "Magic",
+   "aspects": "The planes of existence, fate, Magic itself",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Arcana rolls.",
+     "The Godbound receives +20 or Ex2 to all opposed rolls against magic.",
+     "The Godbound detects the presence and type of Threads within the zone for 1 minute.",
+     "The Godbound may participate in a Ritual spell exactly as an assistant, reducing the ritual\u2019s Total Cost by half the Godbound\u2019s Divinity Score (see Chapter 14 - Weave Magic: Assistance From Others ).",
+     "For 1 minute, the Godbound may identify, with an Arcana roll, the Binds and Strands of any magic he encounters and the magic signature of the Spellweaver who cast it. Success with 3+ SLs also allows him to know all the details of the spell (see Chapter 14 - Weave Magic: Tears in the Tapestry )."
+    ],
+    "Middle": [
+     "The Godbound may dispel magic exactly as a Spellweaver, using Divinity instead of a Bind skill. This power lasts until the end of the scene. On a tie, compare the Godbound\u2019s Divinity to the Spellweaver\u2019s Strand.",
+     "The Godbound channels the deity\u2019s power as a magical attack, causing 1d4+2 magical internal damage to a random location on 1 enemy, resisted by Dodge .",
+     "The Godbound points at a Spellweaver and forces them to make a roll on the Weave Reaction Table with a modifier equal to the Piety roll\u2019s SLs (re-rolling positive results)."
+    ],
+    "Greater": [
+     "A Spellweaver ally subtracts 10 from any Weave Reaction Table rolls for the next 5 rounds.",
+     "Enemy Spellweavers within Medium range of the Godbound suffer a -30 to all Bind rolls for 1d6+2 rounds.",
+     "The Godbound points at a Spellweaver and forces them to take Fraying points equal to half the Piety roll\u2019s SLs (round up)."
+    ]
+   }
+  },
+  {
+   "name": "Movement",
+   "aspects": "Moving faster or slower, restraining, immobilization or paralyzation, independence",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Athletics , Dodge , or other rolls directly related to quick movement."
+    ],
+    "Middle": [
+     "Add +1 zone to the Godbound\u2019s regular Move for Piety SL rounds.",
+     "Immobilize 1d4 enemies (within Long range) in their zone for 1d4+1 rounds.",
+     "The Godbound ignores all worn armor penalties.",
+     "Increase the Godbound\u2019s Inventory ENC by 1d4+1 until the next sunset/rise."
+    ],
+    "Greater": [
+     "Add +2 zones to the Godbound\u2019s regular move for Piety SL rounds.",
+     "Restrain 1d4 enemies (within Long range) in their zone for 1d4+1 rounds.",
+     "Paralyze one enemy (within Long range) for 1d4+2 rounds."
+    ]
+   }
+  },
+  {
+   "name": "Nature",
+   "aspects": "Animals, wilderness, plants, and the products derived from them, balance, change,",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to Survival , Track , Naturewise , or other appropriate roll currently being used to survive in the wilds.",
+     "The Godbound creates a small globe of sunlight in his/her hand with light equal to a torch.",
+     "Allows the Godbound to receive a true answer to a single question posed to the local plants or animals."
+    ],
+    "Middle": [
+     "Produce food and drink equal to 1d6 Ration Supply Die steps.",
+     "Summon a friendly local animal of up to Medium Size that will help as best it can for the scene.",
+     "Foretell the exact weather conditions for the next 24 hours in the general vicinity.",
+     "Restore life or fertility to blighted crops or plants in the immediate zone.",
+     "Restore 1 Fatigue each to 1d4 of the Godbound\u2019s allies."
+    ],
+    "Greater": [
+     "Restore 1d6+2 Fatigue to the Godbound and each of her allies.",
+     "Produce food and drink equal to 2d6 Ration Supply Die steps.",
+     "Summon a friendly local animal of up to Huge Size that will help as best it can for the scene.",
+     "Change the current weather to something beneficial to the Godbound\u2019s situation.",
+     "Avert a natural disaster, within reason."
+    ]
+   }
+  },
+  {
+   "name": "Protection",
+   "aspects": "Armor, shields, magic resistance, skill enhancement, sending help, guardianship, virtue",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 or Ex2 to all defense rolls.",
+     "The Godbound receives +20 or Ex2 to all opposed rolls against magic."
+    ],
+    "Middle": [
+     "An invisible force protects the Godbound, acting as 1d4+2 AP.",
+     "The Godbound selects an ally to receive +20 to either Dodge , Endurance , Willpower , Athletics , or Insight for 3 rounds.",
+     "The Godbound receives +3 on all Wound Die rolls.",
+     "All physical attacks targeting the Godbound are at -20.",
+     "A Size Medium or smaller creature arrives to assist the Godbound."
+    ],
+    "Greater": [
+     "All physical attacks targeting 1d4+1 of the Godbound\u2019s allies are at -20.",
+     "The Godbound and all allies receive +3 on all Wound Die rolls.",
+     "The Godbound is made invisible for 1d4+1 rounds (if an enemy has reason and opportunity to detect them and succeeds at a Perception roll, they may attack at -30).",
+     "A Size Large or bigger creature arrives to assist the Godbound."
+    ]
+   }
+  },
+  {
+   "name": "Spirit",
+   "aspects": "Ghosts, spirits, decay, stillness, shadows, damage to and protection from undead,",
+   "miracles": {
+    "Lesser": [
+     "The Godbound gains +20 or Ex2 to any two skills used against undead for the Duration of the conflict.",
+     "The Godbound gains +20 or Ex2 to Stealth for the duration."
+    ],
+    "Middle": [
+     "Cause 1d4 undead targets to each suffer a 3-point wound to a random location.",
+     "One undead target suffers one 1d6+2 wound to a random location.",
+     "One undead must make a Willpower roll or be forced to flee.",
+     "A chill wind freezes 1d4 undead in place, Restraining them for 1d4+1 rounds.",
+     "One undead not currently in combat is forced to answer 1d4 specific questions made by the Godbound.",
+     "The Godbound gains 1d4+1 AP vs attacks from all undead for the Duration of the current conflict, or bestows this power to one ally."
+    ],
+    "Greater": [
+     "Cause 1d4+1 undead targets to suffer a wound of 1d4+2 points to a random location.",
+     "One undead must make a Willpower roll at -30 or be forced to flee OR 1d4+1 undead targets must make a Willpower roll or be forced to flee.",
+     "The Godbound gains 1d6+3 AP vs attacks from all undead for the Duration of the current conflict, or bestows this power to one ally.",
+     "1d4 of the Godbound\u2019s allies gain 1d4 AP+1 vs attacks from all undead for the Duration of the current conflict.",
+     "A snowstorm covers the area, protecting the Godbound and his party in some way."
+    ]
+   }
+  },
+  {
+   "name": "Travel",
+   "aspects": "Making journeys safer and easier, navigation",
+   "miracles": {
+    "Lesser": [
+     "The Godbound\u2019s deity grants +20 or Ex2 to a character making the next Travel Lore, Guide, Quartermaster, or Scout skill roll.",
+     "The Godbound, or one who receives the Godbound\u2019s blessing, gains a one-time +20 bonus to an applicable skill during a Travel Event or encounter.",
+     "The Godbound\u2019s deity allows one target to make a single Recovery roll while on a Journey."
+    ],
+    "Middle": [
+     "The Godbound or an ally receives +3 on the next or current Fatigue Table roll.",
+     "Produce food and drink equal to 1d4 Ration Supply Die steps.",
+     "Apply -5 to the next Hostile Encounter roll."
+    ],
+    "Greater": [
+     "Restore 1d6+1 depleted Ration Supply dice.",
+     "If on a Journey, allows the Godbound\u2019s party to add 1d4+1 hexes to the next Guide roll.",
+     "Upon arrival in a new hex, make the area one level safer (Dangerous to Precarious, Precarious to Normal, Normal to Safe), with a -5 to the first Hostile Encounter roll."
+    ]
+   }
+  },
+  {
+   "name": "Water",
+   "aspects": "Liquids, water, tranquility, mystery, the ocean",
+   "miracles": {
+    "Lesser": [
+     "The Godbound gains +20 or Ex2 to Sail/Boat rolls, Athletics (swim), or any roll required while on or in the water."
+    ],
+    "Middle": [
+     "Use water to do 1d6+2 external damage to a single enemy within Long Range if water is reasonably available.",
+     "Protect the Godbound from the effects of water or fire (or AP equal to Piety SLs on all locations, versus water/fire only).",
+     "Get a vision through a body of water\u2019s surface and get an important detail of some approaching danger.",
+     "Extinguish a wagon-sized fire or smaller."
+    ],
+    "Greater": [
+     "Use water to do 1d6+2 internal damage to a single enemy within Long range if water is reasonably available.",
+     "Protect the Godbound and those he blesses from the effects of water or fire (or AP equal to Piety SLs on all locations, versus water/ fire only).",
+     "Guide a ship or boat through troubled waters; lasts until the next sunset/rise.",
+     "Extinguish a building-sized fire.",
+     "Turn aside a giant wave."
+    ]
+   }
+  },
+  {
+   "name": "Wealth",
+   "aspects": "Money, items of value, prosperity, commerce",
+   "miracles": {
+    "Lesser": [
+     "The Godbound gains +20 or Ex2 to Commerce rolls.",
+     "The Godbound gains +20 or Ex2 to Common or Ancient Lore rolls regarding wealth or money."
+    ],
+    "Middle": [
+     "The Godbound receives the Intangible Benefits (not Affordability Limit) of a Status of 2 higher than their current amount for the Duration of the scene.",
+     "The Godbound coincidentally discovers [current Piety Score \u00d750] silver pieces among their possessions. Requesting this kind of help too often will cause an extra loss of Piety ."
+    ],
+    "Greater": [
+     "The next 3 Resolve the Godbound uses to increase a skill count as +20.",
+     "The Godbound receives the Intangible Benefits (not Affordability Limit) of a Status of 4 higher than their current amount for the duration of the scene (max Status of 9)."
+    ]
+   }
+  },
+  {
+   "name": "Wrath",
+   "aspects": "Anger, rage, revenge, dealing damage directly to enemies",
+   "miracles": {
+    "Lesser": [
+     "The Godbound receives +20 to a combat skill for the duration of the conflict.",
+     "One target suffers a 1-point wound to a random location."
+    ],
+    "Middle": [
+     "Cause a target to make an immediate Wound Die roll (choose the most wounded location).",
+     "1d4 enemy targets suffer a 2-point wound to a random location.",
+     "One target suffers one 1d6+2 wound to a random location.",
+     "A target must roll Willpower as against Fear. On a failure, foe must Fight, Flee, or Faint for the duration of the scene.",
+     "1d4+1 foes must make an opposed Endurance roll or have their weapons fly out of their hands into an adjacent zone."
+    ],
+    "Greater": [
+     "Cause a target to make an immediate Wound Die roll at -5 (choose the most wounded location).",
+     "Cause all of the Godbound\u2019s enemies within Medium Range to make Wound Die rolls (choose the most wounded locations).",
+     "A single target takes a 1d8+1 wound to a random location.",
+     "A chosen foe must make an opposed Willpower roll or break and run as though Fleeing.",
+     "A Thessian Bear (or geographically appropriate animal) appears and attacks the Godbound\u2019s enemies with Ferocity 6.",
+     "1d4+1 foes must make an opposed Endurance roll or have their weapons fly out of their hands and start attacking them next round with a combat skill of 70. The weapons have 3 AP, and are defeated when taking 5+ damage on a single hit. No Combat Maneuvers apply against them."
+    ]
+   }
+  }
+ ]
+}

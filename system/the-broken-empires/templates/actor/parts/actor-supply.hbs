@@ -1,0 +1,10 @@
+<div class="supply-row grid grid-4col">
+  {{#each system.supply as |die key|}}
+  <div class="resource flex-group-center">
+    <label class="resource-label">{{key}}</label>
+    <div class="resource-content flexrow flex-center flex-between">
+      <span>d</span><input type="text" class="narrow-input" name="system.supply.{{key}}" value="{{die}}" data-dtype="Number"/>
+    </div>
+  </div>
+  {{/each}}
+</div>

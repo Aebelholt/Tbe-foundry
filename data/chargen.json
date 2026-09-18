@@ -1,0 +1,1988 @@
+{
+ "sizes": [
+  "Minute",
+  "Diminutive",
+  "Tiny",
+  "Little",
+  "Small",
+  "Medium",
+  "Large",
+  "Huge",
+  "Massive",
+  "Gargantuan",
+  "Colossal"
+ ],
+ "mediumIndex": 5,
+ "sizeStepEffects": {
+  "toughness": 1,
+  "baseDamage": 2,
+  "deathThreshold": 5,
+  "initiative": -1
+ },
+ "sizeCombatRules": [
+  {
+   "gap": 2,
+   "key": "reach",
+   "text": "+1 Reach per 2 Sizes larger than the opponent"
+  },
+  {
+   "gap": 2,
+   "key": "grapple",
+   "text": "Grappling is only possible up to 2 Sizes larger or smaller"
+  },
+  {
+   "gap": 2,
+   "key": "might",
+   "text": "+20 Might per Size category of difference when Grappling"
+  },
+  {
+   "gap": 3,
+   "key": "maneuvers",
+   "text": "Drive Back, Trip and Disarm cannot be used against a creature 3+ Sizes larger"
+  },
+  {
+   "gap": 3,
+   "key": "monstrous",
+   "text": "Melee attacks from a creature 3+ Sizes larger cannot be parried, only Dodged"
+  },
+  {
+   "gap": 3,
+   "key": "easyToHit",
+   "text": "All Combat skills used against a creature 3+ Sizes larger are at +20"
+  }
+ ],
+ "races": [
+  {
+   "name": "Human",
+   "d100": "01-70",
+   "size": "Medium",
+   "toughness": 0,
+   "dt": 20,
+   "lethalityBonus": 0,
+   "toughnessCap": null,
+   "skillMods": [],
+   "savvy": [
+    "one bonus Savvy skill of their choice"
+   ],
+   "languages": [
+    {
+     "name": "cultural Language of the region",
+     "value": 70
+    },
+    {
+     "name": "Low Vestrian",
+     "value": 20
+    }
+   ],
+   "exclusiveTalents": [],
+   "restrictions": [],
+   "bonus": "One additional level of Expertise in any skill, and one additional Talent for which they meet the requirements.",
+   "startingSkills": [],
+   "talentLimits": [],
+   "invBonus": 0
+  },
+  {
+   "name": "Half-Orc",
+   "d100": "71-80",
+   "size": "Medium",
+   "toughness": 1,
+   "dt": 20,
+   "lethalityBonus": 0,
+   "toughnessCap": null,
+   "skillMods": [
+    {
+     "skill": "Willpower",
+     "mod": -10
+    }
+   ],
+   "savvy": [
+    "Endurance"
+   ],
+   "languages": [
+    {
+     "name": "Orcish",
+     "value": 70
+    },
+    {
+     "name": "Low Vestrian",
+     "value": 20
+    }
+   ],
+   "exclusiveTalents": [
+    "Blood-Fury"
+   ],
+   "restrictions": [
+    "Few if any Half-Orcs will be from the Civilized: Urban background.",
+    "Always male. Initial social encounters are uneasy affairs at best."
+   ],
+   "bonus": "",
+   "startingSkills": [],
+   "talentLimits": [],
+   "invBonus": 0
+  },
+  {
+   "name": "Dwarf",
+   "d100": "81-90",
+   "size": "Medium",
+   "toughness": 0,
+   "dt": 20,
+   "lethalityBonus": 1,
+   "toughnessCap": null,
+   "skillMods": [
+    {
+     "skill": "Endurance",
+     "mod": 10
+    },
+    {
+     "skill": "Inspire",
+     "mod": -10
+    }
+   ],
+   "savvy": [
+    "Locks & Traps"
+   ],
+   "languages": [
+    {
+     "name": "Kharzhad",
+     "value": 70
+    },
+    {
+     "name": "Low Vestrian",
+     "value": 20
+    }
+   ],
+   "exclusiveTalents": [
+    "Dwarven Swordsinger"
+   ],
+   "restrictions": [],
+   "bonus": "Reduce the required SLs of any extended Craft: Practical or Craft: Artistic roll by 2.",
+   "startingSkills": [],
+   "talentLimits": [],
+   "invBonus": 0
+  },
+  {
+   "name": "Ogre",
+   "d100": "91-95",
+   "size": "Large",
+   "toughness": 1,
+   "dt": 22,
+   "lethalityBonus": 0,
+   "toughnessCap": null,
+   "invBonus": 2,
+   "skillMods": [
+    {
+     "skill": "Might",
+     "mod": 10
+    },
+    {
+     "skill": "Stealth",
+     "mod": -20
+    },
+    {
+     "skill": "Athletics",
+     "mod": -20
+    },
+    {
+     "skill": "Melee: Light",
+     "mod": -20
+    }
+   ],
+   "savvy": [],
+   "languages": [
+    {
+     "name": "Tusker",
+     "value": 70
+    },
+    {
+     "name": "Low Vestrian",
+     "value": 20
+    }
+   ],
+   "exclusiveTalents": [
+    "Devouring Maw"
+   ],
+   "restrictions": [
+    "Ogres may not take any Civilized background.",
+    "Can only use Medium or Large shields.",
+    "Untrained in reinforced leather, mail, scale or plate: -20 to all Willpower rolls if worn.",
+    "May never become any type of Spellweaver or Fade.",
+    "Armor Training can be taken only once, giving training in Bone armor only.",
+    "The Breaking: on a critical failure using Resolve, attacks the nearest living thing at +10."
+   ],
+   "bonus": "8 general Inventory ENC instead of 6.",
+   "talentLimits": [
+    {
+     "talent": "Armor Training",
+     "maxRanks": 1,
+     "note": "Bone armor only"
+    }
+   ],
+   "startingSkills": []
+  },
+  {
+   "name": "Bolg Fiir",
+   "d100": "96-99",
+   "size": "Medium",
+   "toughness": 0,
+   "dt": 20,
+   "lethalityBonus": 0,
+   "toughnessCap": 2,
+   "skillMods": [
+    {
+     "skill": "Stealth",
+     "mod": -10
+    },
+    {
+     "skill": "Insight",
+     "mod": -10
+    }
+   ],
+   "savvy": [
+    "Melee: Light",
+    "Missile",
+    "Ancient Lore",
+    "Arcana",
+    "Naturewise"
+   ],
+   "languages": [
+    {
+     "name": "Fionnan (Low Court)",
+     "value": 70
+    },
+    {
+     "name": "Low Vestrian",
+     "value": 20
+    }
+   ],
+   "exclusiveTalents": [
+    "Whispered Inheritance"
+   ],
+   "restrictions": [
+    "No Bolg Fiir may take the Civilized: Urban background.",
+    "No Bolg Fiir can ever have a Toughness of more than 2."
+   ],
+   "bonus": "With Patterned in the Weave: +10 to one Bind skill. Without it: +10 to all opposed rolls against Weave Magic. Ancestor Communion: a Hard (-20) Willpower roll on an Elven memory stone grants access to its memories.",
+   "startingSkills": [],
+   "talentLimits": [],
+   "invBonus": 0
+  },
+  {
+   "name": "The Replaced",
+   "d100": "00",
+   "size": "Medium",
+   "toughness": 0,
+   "dt": 20,
+   "lethalityBonus": 0,
+   "toughnessCap": null,
+   "skillMods": [],
+   "savvy": [
+    "one bonus Savvy skill of their choice (as Human)"
+   ],
+   "languages": [
+    {
+     "name": "Language of their cultural region",
+     "value": 70
+    },
+    {
+     "name": "Low Vestrian",
+     "value": 20
+    }
+   ],
+   "exclusiveTalents": [
+    "Hunted By The Queen",
+    "Thornmark"
+   ],
+   "restrictions": [
+    "Replaced can never be Spellweavers or Fades.",
+    "Must take the Hunted by the Queen Talent (free, mandatory at creation)."
+   ],
+   "bonus": "Start with 20 in a specialty Lore skill, Dark Fae-wise. Gets all the Traits of a Human.",
+   "startingSkills": [
+    {
+     "name": "Dark Fae-wise",
+     "value": 20
+    }
+   ],
+   "talentLimits": [],
+   "invBonus": 0
+  }
+ ],
+ "careers": [
+  {
+   "name": "Warrior",
+   "d10": 1,
+   "pools": {
+    "Combat": 80,
+    "Adventuring": 50,
+    "Social": 40,
+    "Lore": 30,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     1,
+     20
+    ]
+   ],
+   "talents": "Armor Training III, and one Combat Talent",
+   "silver": "1d6*5",
+   "desc": "Mercenaries, knights, archers, pirates, bandits, and anyone who lives by the sword.",
+   "talentPicks": {
+    "auto": [
+     "Armor Training III"
+    ],
+    "picks": [
+     {
+      "count": 1,
+      "categories": [
+       "Combat"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Rogue",
+   "d10": 2,
+   "pools": {
+    "Combat": 50,
+    "Adventuring": 70,
+    "Social": 50,
+    "Lore": 30,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     1,
+     20
+    ]
+   ],
+   "talents": "Pick a total of two Talents from the Combat, Adventuring, or Social categories",
+   "silver": "1d6*5",
+   "desc": "Thieves, assassins, ruffians, burglars, swashbucklers, pirates, and all those who make a living outside the law.",
+   "talentPicks": {
+    "auto": [],
+    "picks": [
+     {
+      "count": 2,
+      "categories": [
+       "Combat",
+       "Adventuring",
+       "Social"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Ranger",
+   "d10": 3,
+   "pools": {
+    "Combat": 50,
+    "Adventuring": 80,
+    "Social": 30,
+    "Lore": 40,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     1,
+     20
+    ]
+   ],
+   "talents": "On Through the Night or Armor Training I, and any one Combat or Adventuring Talent",
+   "silver": "1d6*5",
+   "desc": "Warriors of the wilderness, rangers often act as guides for those brave or foolish enough to leave their homes.",
+   "talentPicks": {
+    "auto": [],
+    "picks": [
+     {
+      "count": 1,
+      "named": [
+       "On Through the Night",
+       "Armor Training I"
+      ]
+     },
+     {
+      "count": 1,
+      "categories": [
+       "Combat",
+       "Adventuring"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Speaker",
+   "d10": 4,
+   "pools": {
+    "Combat": 20,
+    "Adventuring": 40,
+    "Social": 80,
+    "Lore": 60,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     1,
+     30
+    ]
+   ],
+   "talents": "Two Social talents",
+   "silver": "2d4*10",
+   "desc": "Diplomats, envoys, raconteurs, or anyone who can sway individuals or groups with soaring rhetoric.",
+   "talentPicks": {
+    "auto": [],
+    "picks": [
+     {
+      "count": 2,
+      "categories": [
+       "Social"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Bard",
+   "d10": 5,
+   "pools": {
+    "Combat": 30,
+    "Adventuring": 50,
+    "Social": 70,
+    "Lore": 50,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     2,
+     20
+    ]
+   ],
+   "talents": "Entertaining, and one Social Talent",
+   "silver": "1d6*5",
+   "desc": "A wandering minstrel, skald, singer, or performer, known for their knowledge of old stories and songs.",
+   "talentPicks": {
+    "auto": [
+     "Entertaining"
+    ],
+    "picks": [
+     {
+      "count": 1,
+      "categories": [
+       "Social"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Civilian",
+   "d10": 6,
+   "pools": {
+    "Combat": 50,
+    "Adventuring": 50,
+    "Social": 50,
+    "Lore": 50,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     1,
+     20
+    ]
+   ],
+   "talents": "Experienced (during Rounding Out, get an extra 30 points on Adventuring, Social, or Lore skills), and any one Adventuring, Social, or Lore Talent",
+   "silver": "2d6*10",
+   "desc": "A townsman, guildsman, crafter, farmer, or any other vital role in a pseudo-medieval society.",
+   "talentPicks": {
+    "auto": [
+     "Experienced"
+    ],
+    "picks": [
+     {
+      "count": 1,
+      "categories": [
+       "Adventuring",
+       "Social",
+       "Lore"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Loremaster",
+   "d10": 7,
+   "pools": {
+    "Combat": 20,
+    "Adventuring": 50,
+    "Social": 50,
+    "Lore": 80,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     3,
+     30
+    ]
+   ],
+   "talents": "Literate and either Lecturer or Travel Planner",
+   "silver": "2d4*10",
+   "desc": "A scholar, expert, or wise one well versed in knowledge both esoteric and mundane.",
+   "talentPicks": {
+    "auto": [
+     "Literate"
+    ],
+    "picks": [
+     {
+      "count": 1,
+      "named": [
+       "Lecturer",
+       "Travel Planner"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Merchant",
+   "d10": 8,
+   "pools": {
+    "Combat": 20,
+    "Adventuring": 60,
+    "Social": 60,
+    "Lore": 60,
+    "Magic": 0
+   },
+   "customs": [
+    [
+     1,
+     30
+    ]
+   ],
+   "talents": "Literate, and either Barterer or I See Your Mind",
+   "silver": "3d6*10",
+   "desc": "Masters of commerce, merchants travel the world (or set up shop) trading wares or services for profit.",
+   "talentPicks": {
+    "auto": [
+     "Literate"
+    ],
+    "picks": [
+     {
+      "count": 1,
+      "named": [
+       "Barterer",
+       "I See Your Mind"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "Godbound",
+   "d10": 9,
+   "pools": {
+    "Combat": 30,
+    "Adventuring": 40,
+    "Social": 50,
+    "Lore": 60,
+    "Magic": 20
+   },
+   "customs": [
+    [
+     1,
+     30
+    ]
+   ],
+   "talents": "Godbound, and either Literate or any one Lore Talent",
+   "silver": "1d6*10",
+   "desc": "A mortal servant chosen by a deity and granted the right to call upon divine aid, provided their Piety is maintained.",
+   "talentPicks": {
+    "auto": [
+     "Godbound"
+    ],
+    "picks": [
+     {
+      "count": 1,
+      "named": [
+       "Literate"
+      ],
+      "categories": [
+       "Lore"
+      ],
+      "note": "Literate, or any one Lore Talent"
+     }
+    ]
+   }
+  },
+  {
+   "name": "Spellweaver",
+   "d10": 10,
+   "pools": {
+    "Combat": 20,
+    "Adventuring": 20,
+    "Social": 20,
+    "Lore": 40,
+    "Magic": 100
+   },
+   "customs": [
+    [
+     1,
+     20
+    ]
+   ],
+   "talents": "Patterned in the Weave, Literate",
+   "silver": "1d6*5",
+   "desc": "Wizards, sorcerers, warlocks; a Spellweaver pulls at the threads of reality to work their own will upon it.",
+   "talentPicks": {
+    "auto": [
+     "Patterned in the Weave",
+     "Literate"
+    ],
+    "picks": []
+   }
+  }
+ ],
+ "abilityScores": [
+  {
+   "name": "Strength",
+   "skills": [
+    "Melee: Medium",
+    "Melee: Heavy",
+    "Thrown",
+    "Athletics",
+    "Sail/Boat",
+    "Intimidate"
+   ],
+   "talents": [
+    "Powerful Blow",
+    "Sweeping Attack",
+    "Strong Back"
+   ],
+   "descriptors": [
+    "Strong",
+    "Big",
+    "Brutish",
+    "Powerful",
+    "Muscled"
+   ]
+  },
+  {
+   "name": "Dexterity",
+   "skills": [
+    "Dodge",
+    "Melee: Light",
+    "Missile",
+    "Ride",
+    "Sleight of Hand",
+    "Stealth"
+   ],
+   "talents": [
+    "Combat Awareness",
+    "Quick and Quiet",
+    "Quickdraw"
+   ],
+   "descriptors": [
+    "Fast",
+    "Nimble",
+    "Quick",
+    "Dexterous",
+    "Agile"
+   ]
+  },
+  {
+   "name": "Constitution",
+   "skills": [
+    "Might",
+    "Endurance",
+    "Survival",
+    "Track",
+    "Craft: Practical"
+   ],
+   "talents": [
+    "Enduring Watch",
+    "Not Today, Death",
+    "Mettle"
+   ],
+   "descriptors": [
+    "Tough",
+    "Hardy",
+    "Enduring",
+    "Weathered",
+    "Rugged"
+   ]
+  },
+  {
+   "name": "Intelligence",
+   "skills": [
+    "Locks & Traps",
+    "Protocol",
+    "Wit",
+    "Ancient Lore",
+    "Arcana",
+    "Commerce",
+    "Common Lore"
+   ],
+   "talents": [
+    "Tactician",
+    "Travel Planner",
+    "Inner Strength"
+   ],
+   "descriptors": [
+    "Smart",
+    "Studied",
+    "Intelligent",
+    "Astute",
+    "Cunning"
+   ]
+  },
+  {
+   "name": "Wisdom",
+   "skills": [
+    "Perception",
+    "Willpower",
+    "Insight",
+    "Craft: Artistic",
+    "Divinity",
+    "Heal",
+    "Naturewise"
+   ],
+   "talents": [
+    "Combat Awareness",
+    "Fearless",
+    "I See Your Mind"
+   ],
+   "descriptors": [
+    "Wise",
+    "Perceptive",
+    "Discerning",
+    "Prudent",
+    "Sage"
+   ]
+  },
+  {
+   "name": "Charisma",
+   "skills": [
+    "Deceive",
+    "Inspire",
+    "Perform",
+    "Persuade",
+    "Seduce",
+    "Streetwise"
+   ],
+   "talents": [
+    "Feint",
+    "Press the Point",
+    "Allow Me To Introduce\u2026"
+   ],
+   "descriptors": [
+    "Charismatic",
+    "Magnetic",
+    "Alluring",
+    "Affable",
+    "Natural Leader"
+   ]
+  }
+ ],
+ "culturalBackgrounds": [
+  {
+   "name": "Civilized, Urban",
+   "range": "1-3",
+   "silver": "1d6*10",
+   "extraLanguage": 0,
+   "picks": [
+    {
+     "amount": 20,
+     "count": 1,
+     "options": "CAT:Social",
+     "expertise": false
+    },
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Common Lore"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 2,
+     "options": "CAT:Combat",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Perception"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 4,
+     "options": "CAT:Social",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Arcana",
+      "Divinity"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Commerce"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Craft: Practical",
+      "Craft: Artistic"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Heal"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Streetwise"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": "CAT:Adventuring",
+     "expertise": true
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": "CAT:Lore",
+     "expertise": true
+    }
+   ]
+  },
+  {
+   "name": "Civilized, Rural",
+   "range": "4-6",
+   "silver": "1d4*10",
+   "extraLanguage": 0,
+   "picks": [
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Common Lore"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Craft: Practical"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 2,
+     "options": "CAT:Combat",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Athletics"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Endurance"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Perception"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Ride",
+      "Sail/Boat"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Survival"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 2,
+     "options": "CAT:Social",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Arcana",
+      "Divinity"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Heal"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Naturewise"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": [
+      "Naturewise"
+     ],
+     "expertise": true
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": "CAT:Adventuring+Lore",
+     "expertise": true
+    }
+   ]
+  },
+  {
+   "name": "Barbarian",
+   "range": "7-8",
+   "silver": "1d4*5",
+   "extraLanguage": 0,
+   "picks": [
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Common Lore"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Survival"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 2,
+     "options": "CAT:Combat",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Athletics"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Endurance"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Perception"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Ride",
+      "Sail/Boat"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Stealth"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Track"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": "CAT:Social",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Divinity"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Heal"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Naturewise"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": [
+      "Survival"
+     ],
+     "expertise": true
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": "CAT:Adventuring+Lore",
+     "expertise": true
+    }
+   ]
+  },
+  {
+   "name": "Wanderer",
+   "range": "9-0",
+   "silver": "1d6*5",
+   "extraLanguage": 40,
+   "picks": [
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Ride",
+      "Sail/Boat"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 20,
+     "count": 1,
+     "options": [
+      "Naturewise"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 2,
+     "options": "CAT:Combat",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Athletics"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Endurance"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Perception"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Survival"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Track"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": "CAT:Social",
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Common Lore"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Craft: Practical"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Divinity"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 10,
+     "count": 1,
+     "options": [
+      "Heal"
+     ],
+     "expertise": false
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": [
+      "Common Lore"
+     ],
+     "expertise": true
+    },
+    {
+     "amount": 0,
+     "count": 1,
+     "options": "CAT:Adventuring+Lore",
+     "expertise": true
+    }
+   ]
+  }
+ ],
+ "humanCultures": [
+  {
+   "range": "01-12",
+   "name": "Westlands",
+   "language": "Westronne"
+  },
+  {
+   "range": "13-24",
+   "name": "Angevarre",
+   "language": "Angevarran or High Angevarran"
+  },
+  {
+   "range": "25-30",
+   "name": "Thessia",
+   "language": "Thessian"
+  },
+  {
+   "range": "31-35",
+   "name": "Haedravik",
+   "language": "Vikstongue"
+  },
+  {
+   "range": "36-36",
+   "name": "Ironlanders",
+   "language": "Iron Tongue"
+  },
+  {
+   "range": "37-42",
+   "name": "Serpent's Teeth",
+   "language": "Pirate's Cant"
+  },
+  {
+   "range": "43-50",
+   "name": "Tical Dondala",
+   "language": "Dondalese"
+  },
+  {
+   "range": "51-58",
+   "name": "Dunblaine",
+   "language": "Gael"
+  },
+  {
+   "range": "59-64",
+   "name": "Old Vestrians",
+   "language": "Low Vestrian or High Vestrian"
+  },
+  {
+   "range": "65-69",
+   "name": "Hohenvall",
+   "language": "Meersreich"
+  },
+  {
+   "range": "70-77",
+   "name": "Vieksgradia",
+   "language": "Slahvac"
+  },
+  {
+   "range": "78-81",
+   "name": "Red Waste Tribals",
+   "language": "Sandspeech"
+  },
+  {
+   "range": "82-90",
+   "name": "Ansharir",
+   "language": "Ellaric (Anshari)"
+  },
+  {
+   "range": "91-95",
+   "name": "Drangia",
+   "language": "Khannish"
+  },
+  {
+   "range": "96-00",
+   "name": "Sattagoya Steppes",
+   "language": "Khannish"
+  }
+ ],
+ "lifeEvents": {
+  "origin": [
+   {
+    "range": "01-02",
+    "name": "Child of Revolt"
+   },
+   {
+    "range": "03-04",
+    "name": "Legacy of Invention"
+   },
+   {
+    "range": "05-06",
+    "name": "Tower of Secrets"
+   },
+   {
+    "range": "07-08",
+    "name": "Faithful Companion"
+   },
+   {
+    "range": "09-10",
+    "name": "Servant to Nobility"
+   },
+   {
+    "range": "11-12",
+    "name": "Outside the Law"
+   },
+   {
+    "range": "13-14",
+    "name": "Smuggler's Start"
+   },
+   {
+    "range": "15-16",
+    "name": "Tied to the Streets"
+   },
+   {
+    "range": "17-18",
+    "name": "Marked by the Weave"
+   },
+   {
+    "range": "19-20",
+    "name": "River Rat"
+   },
+   {
+    "range": "21-22",
+    "name": "Fated From Birth"
+   },
+   {
+    "range": "23-24",
+    "name": "Far Trader"
+   },
+   {
+    "range": "25-26",
+    "name": "Raised by a Sect"
+   },
+   {
+    "range": "27-28",
+    "name": "Cursed Inheritance"
+   },
+   {
+    "range": "29-30",
+    "name": "Imprisoned"
+   },
+   {
+    "range": "31-32",
+    "name": "Bastard of High Blood"
+   },
+   {
+    "range": "33-34",
+    "name": "Raised in the Wild"
+   },
+   {
+    "range": "35-36",
+    "name": "Witness"
+   },
+   {
+    "range": "37-38",
+    "name": "Orphan of War"
+   },
+   {
+    "range": "39-40",
+    "name": "Apprentice of the Esoteric"
+   },
+   {
+    "range": "41-42",
+    "name": "Far Traveler"
+   },
+   {
+    "range": "43-44",
+    "name": "Heretic's Offspring"
+   },
+   {
+    "range": "45-46",
+    "name": "Shipwrecked"
+   },
+   {
+    "range": "47-48",
+    "name": "Apprenticed"
+   },
+   {
+    "range": "49-50",
+    "name": "Haunted Home"
+   },
+   {
+    "range": "51-52",
+    "name": "Diplomatic Upbringing"
+   },
+   {
+    "range": "53-54",
+    "name": "Child of the Sands"
+   },
+   {
+    "range": "55-56",
+    "name": "Raised by a Sage"
+   },
+   {
+    "range": "57-58",
+    "name": "Tavern Kid"
+   },
+   {
+    "range": "59-60",
+    "name": "Beast-Marked"
+   },
+   {
+    "range": "61-62",
+    "name": "Crowd Pleaser"
+   },
+   {
+    "range": "63-64",
+    "name": "Rising Star"
+   },
+   {
+    "range": "65-66",
+    "name": "Revenge Sworn"
+   },
+   {
+    "range": "67-68",
+    "name": "Secret Heritage"
+   },
+   {
+    "range": "69-70",
+    "name": "Secret Sanctuary"
+   },
+   {
+    "range": "71-72",
+    "name": "Little Thief"
+   },
+   {
+    "range": "73-74",
+    "name": "Found Family"
+   },
+   {
+    "range": "75-76",
+    "name": "Scion of Glory"
+   },
+   {
+    "range": "77-78",
+    "name": "Blightmarked"
+   },
+   {
+    "range": "79-80",
+    "name": "Soldier's Child"
+   },
+   {
+    "range": "81-82",
+    "name": "Last Words"
+   },
+   {
+    "range": "83-84",
+    "name": "Merchant's Life"
+   },
+   {
+    "range": "85-86",
+    "name": "Village Protector"
+   },
+   {
+    "range": "87-88",
+    "name": "Fateful Rescue"
+   },
+   {
+    "range": "89-90",
+    "name": "Wild Child"
+   },
+   {
+    "range": "91-92",
+    "name": "Student"
+   },
+   {
+    "range": "93-94",
+    "name": "Child of Privilege"
+   },
+   {
+    "range": "95-96",
+    "name": "Storykeeper"
+   },
+   {
+    "range": "97-98",
+    "name": "Home of Ill Repute"
+   },
+   {
+    "range": "99-00",
+    "name": "Oathsworn"
+   }
+  ],
+  "youth": [
+   {
+    "range": "01-02",
+    "name": "Miraculous Recovery"
+   },
+   {
+    "range": "03-04",
+    "name": "Itinerant Actor"
+   },
+   {
+    "range": "05-06",
+    "name": "Dogsbody"
+   },
+   {
+    "range": "07-08",
+    "name": "Nightmare Fuel"
+   },
+   {
+    "range": "09-10",
+    "name": "Unexpected Stand-In"
+   },
+   {
+    "range": "11-12",
+    "name": "Ever a Squire"
+   },
+   {
+    "range": "13-14",
+    "name": "Tough Character"
+   },
+   {
+    "range": "15-16",
+    "name": "Grifter"
+   },
+   {
+    "range": "17-18",
+    "name": "Hunted"
+   },
+   {
+    "range": "19-20",
+    "name": "Shady Trade"
+   },
+   {
+    "range": "21-22",
+    "name": "Artist"
+   },
+   {
+    "range": "23-24",
+    "name": "Sanguine Secret"
+   },
+   {
+    "range": "25-26",
+    "name": "Gaoler"
+   },
+   {
+    "range": "27-28",
+    "name": "River Run"
+   },
+   {
+    "range": "29-30",
+    "name": "By Wits Alone"
+   },
+   {
+    "range": "31-32",
+    "name": "Terrible Vision"
+   },
+   {
+    "range": "33-34",
+    "name": "Weavebound"
+   },
+   {
+    "range": "35-36",
+    "name": "Rebel Arisen"
+   },
+   {
+    "range": "37-38",
+    "name": "Young Recruit"
+   },
+   {
+    "range": "39-40",
+    "name": "Champion"
+   },
+   {
+    "range": "41-42",
+    "name": "Labyrinth-Lost"
+   },
+   {
+    "range": "43-44",
+    "name": "Healer's Apprentice"
+   },
+   {
+    "range": "45-46",
+    "name": "Thrilling Pursuit"
+   },
+   {
+    "range": "47-48",
+    "name": "Saboteur's Sidekick"
+   },
+   {
+    "range": "49-50",
+    "name": "Harsh Migration"
+   },
+   {
+    "range": "51-52",
+    "name": "Forbidden Lesson"
+   },
+   {
+    "range": "53-54",
+    "name": "Dealmaker"
+   },
+   {
+    "range": "55-56",
+    "name": "Courtly Spy"
+   },
+   {
+    "range": "57-58",
+    "name": "Honey-Trap Hustler"
+   },
+   {
+    "range": "59-60",
+    "name": "Amorous Adventure"
+   },
+   {
+    "range": "61-62",
+    "name": "Sacred Grove"
+   },
+   {
+    "range": "63-64",
+    "name": "Tricky Tinker"
+   },
+   {
+    "range": "65-66",
+    "name": "Land of Legend"
+   },
+   {
+    "range": "67-68",
+    "name": "Rite of Passage"
+   },
+   {
+    "range": "69-70",
+    "name": "Trial of Strength"
+   },
+   {
+    "range": "71-72",
+    "name": "Eagle Eye"
+   },
+   {
+    "range": "73-74",
+    "name": "Narrow Escape"
+   },
+   {
+    "range": "75-76",
+    "name": "Range Rider"
+   },
+   {
+    "range": "77-78",
+    "name": "Vigilant Ally"
+   },
+   {
+    "range": "79-80",
+    "name": "Spiritual Path"
+   },
+   {
+    "range": "81-82",
+    "name": "Duel of Words"
+   },
+   {
+    "range": "83-84",
+    "name": "Master's Plan"
+   },
+   {
+    "range": "85-86",
+    "name": "Merchant Mariner"
+   },
+   {
+    "range": "87-88",
+    "name": "Magician"
+   },
+   {
+    "range": "89-90",
+    "name": "Counterfeiter"
+   },
+   {
+    "range": "91-92",
+    "name": "Enforcer"
+   },
+   {
+    "range": "93-94",
+    "name": "Firebrand"
+   },
+   {
+    "range": "95-96",
+    "name": "Courtly Affair"
+   },
+   {
+    "range": "97-98",
+    "name": "Strange Flora"
+   },
+   {
+    "range": "99-00",
+    "name": "Glimpse Beyond"
+   }
+  ],
+  "recent": [
+   {
+    "range": "01-02",
+    "name": "Desperate Rescue"
+   },
+   {
+    "range": "03-04",
+    "name": "Bitter Victory"
+   },
+   {
+    "range": "05-06",
+    "name": "Arena Contender"
+   },
+   {
+    "range": "07-08",
+    "name": "Gambler's Touch"
+   },
+   {
+    "range": "09-10",
+    "name": "Back From the Dead"
+   },
+   {
+    "range": "11-12",
+    "name": "Survivor"
+   },
+   {
+    "range": "13-14",
+    "name": "Revenue Run-In"
+   },
+   {
+    "range": "15-16",
+    "name": "Jailbreak"
+   },
+   {
+    "range": "17-18",
+    "name": "Healer's Friend"
+   },
+   {
+    "range": "19-20",
+    "name": "Pirate's Gambit"
+   },
+   {
+    "range": "21-22",
+    "name": "Forced Labor"
+   },
+   {
+    "range": "23-24",
+    "name": "Broken Promise"
+   },
+   {
+    "range": "25-26",
+    "name": "Cavalry Charge"
+   },
+   {
+    "range": "27-28",
+    "name": "Whisper Campaign"
+   },
+   {
+    "range": "29-30",
+    "name": "Evangelist"
+   },
+   {
+    "range": "31-32",
+    "name": "Clever Ingenuity"
+   },
+   {
+    "range": "33-34",
+    "name": "Artist of the Wild"
+   },
+   {
+    "range": "35-36",
+    "name": "Wayward Familiar"
+   },
+   {
+    "range": "37-38",
+    "name": "Storm-Runner"
+   },
+   {
+    "range": "39-40",
+    "name": "Stalwart Defender"
+   },
+   {
+    "range": "41-42",
+    "name": "Stalker"
+   },
+   {
+    "range": "43-44",
+    "name": "Ancient Mystery"
+   },
+   {
+    "range": "45-46",
+    "name": "Informant"
+   },
+   {
+    "range": "47-48",
+    "name": "Infiltrator"
+   },
+   {
+    "range": "49-50",
+    "name": "Fortune Dealer"
+   },
+   {
+    "range": "51-52",
+    "name": "Challenging Climb"
+   },
+   {
+    "range": "53-54",
+    "name": "Sacred Vigil"
+   },
+   {
+    "range": "55-56",
+    "name": "Lover's Lock"
+   },
+   {
+    "range": "57-58",
+    "name": "Memorial Tribute"
+   },
+   {
+    "range": "59-60",
+    "name": "Battered Vessel"
+   },
+   {
+    "range": "61-62",
+    "name": "Courier"
+   },
+   {
+    "range": "63-64",
+    "name": "Smuggled Goods"
+   },
+   {
+    "range": "65-66",
+    "name": "Campfire Tales"
+   },
+   {
+    "range": "67-68",
+    "name": "Secret History"
+   },
+   {
+    "range": "69-70",
+    "name": "Battlefield Medic"
+   },
+   {
+    "range": "71-72",
+    "name": "Deal of a Lifetime"
+   },
+   {
+    "range": "73-74",
+    "name": "Improvised Repair"
+   },
+   {
+    "range": "75-76",
+    "name": "Heroic Rescue"
+   },
+   {
+    "range": "77-78",
+    "name": "Holy Revision"
+   },
+   {
+    "range": "79-80",
+    "name": "Masked Entertainer"
+   },
+   {
+    "range": "81-82",
+    "name": "Path to Ruin"
+   },
+   {
+    "range": "83-84",
+    "name": "Close Bond"
+   },
+   {
+    "range": "85-86",
+    "name": "Trial of the Wild"
+   },
+   {
+    "range": "87-88",
+    "name": "Agent of Diplomacy"
+   },
+   {
+    "range": "89-90",
+    "name": "Clever Theft"
+   },
+   {
+    "range": "91-92",
+    "name": "Reluctant Revelation"
+   },
+   {
+    "range": "93-94",
+    "name": "Waycutter"
+   },
+   {
+    "range": "95-96",
+    "name": "Summoner's Call"
+   },
+   {
+    "range": "97-98",
+    "name": "Forbidden Knowledge"
+   },
+   {
+    "range": "99",
+    "name": "Haunted"
+   },
+   {
+    "range": "00",
+    "name": "Forgotten Past"
+   }
+  ]
+ },
+ "roundingOutAges": [
+  {
+   "key": "Young",
+   "endurance": 20,
+   "dt": 1,
+   "anyPoints": 70,
+   "lorePoints": 0,
+   "expertise": false
+  },
+  {
+   "key": "Adult",
+   "endurance": 0,
+   "dt": 0,
+   "anyPoints": 100,
+   "lorePoints": 0,
+   "expertise": false
+  },
+  {
+   "key": "Old",
+   "endurance": -20,
+   "dt": -2,
+   "anyPoints": 100,
+   "lorePoints": 30,
+   "expertise": true
+  }
+ ],
+ "personalityTraits": [
+  "Altruistic",
+  "Callous",
+  "Calm",
+  "Cautious",
+  "Compliant",
+  "Deceitful",
+  "Defiant",
+  "Fearless",
+  "Forgiving",
+  "Friendly",
+  "Honest",
+  "Hopeful",
+  "Humble",
+  "Loyal",
+  "Passionate",
+  "Pessimistic",
+  "Proud",
+  "Self-serving",
+  "Suspicious",
+  "Trusting",
+  "Unprincipled",
+  "Vengeful"
+ ]
+}

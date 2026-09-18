@@ -1,0 +1,48 @@
+{
+  "_provenance": "ORIGINAL CONTENT, NOT FROM THE RULEBOOK. Every other data file in this repo is transcribed and verified verbatim against /tmp/tbe.txt. This one is not: the book asks for a rough concept at step 1 (p.79, 'a single sentence or short phrase... This isn't binding') and gives three examples, but provides no table to generate one. These tables are written to fit the setting and to point at real TBE skill names. They are flavour only. Nothing here writes to a mechanical field; the skill names are shown as SUGGESTIONS for the four category-30 picks on step 1, which the player still chooses. Safe to rewrite wholesale without touching any book-derived rule.",
+  "_format": "Three independent d10 columns, rolled separately so odd pairings happen on purpose. Assembled as: '{role} {streak}, {trouble}'. Each entry may suggest one skill per category; suggestions are merged across the three rolls.",
+  "_bookExamples": [
+    "wandering sellsword haunted by his last command",
+    "young scholar chasing forbidden truths",
+    "runaway noble turned smuggler"
+  ],
+
+  "roles": [
+    { "d10": 1, "text": "Swashbuckler", "skills": { "Combat": "Melee: Light", "Adventuring": "Athletics", "Social": "Wit" } },
+    { "d10": 2, "text": "Sellsword", "skills": { "Combat": "Melee: Medium", "Adventuring": "Endurance", "Lore": "Common Lore" } },
+    { "d10": 3, "text": "Godbound", "skills": { "Social": "Inspire", "Lore": "Divinity", "Adventuring": "Willpower" } },
+    { "d10": 4, "text": "Hedge-scholar", "skills": { "Lore": "Ancient Lore", "Social": "Protocol", "Adventuring": "Perception" } },
+    { "d10": 5, "text": "Cutpurse", "skills": { "Adventuring": "Sleight of Hand", "Lore": "Streetwise", "Combat": "Melee: Light" } },
+    { "d10": 6, "text": "Poacher", "skills": { "Adventuring": "Stealth", "Combat": "Missile", "Lore": "Naturewise" } },
+    { "d10": 7, "text": "Caravan factor", "skills": { "Lore": "Commerce", "Social": "Persuade", "Adventuring": "Ride" } },
+    { "d10": 8, "text": "Ship's rat", "skills": { "Adventuring": "Sail/Boat", "Combat": "Thrown", "Social": "Deceive" } },
+    { "d10": 9, "text": "Bonesetter", "skills": { "Lore": "Heal", "Adventuring": "Perception", "Social": "Insight" } },
+    { "d10": 10, "text": "Hearth-singer", "skills": { "Social": "Perform", "Lore": "Craft: Artistic", "Adventuring": "Willpower" } }
+  ],
+
+  "streaks": [
+    { "d10": 1, "text": "with a casanova streak", "skills": { "Social": "Seduce" } },
+    { "d10": 2, "text": "with a gambler's nerve", "skills": { "Social": "Wit", "Adventuring": "Sleight of Hand" } },
+    { "d10": 3, "text": "who cannot leave a lock alone", "skills": { "Adventuring": "Locks & Traps" } },
+    { "d10": 4, "text": "with an unnerving stare", "skills": { "Social": "Intimidate" } },
+    { "d10": 5, "text": "who talks to things that do not answer", "skills": { "Lore": "Arcana", "Adventuring": "Willpower" } },
+    { "d10": 6, "text": "with a scavenger's eye", "skills": { "Adventuring": "Perception", "Lore": "Craft: Practical" } },
+    { "d10": 7, "text": "who lies more easily than not", "skills": { "Social": "Deceive" } },
+    { "d10": 8, "text": "with a brawler's habits", "skills": { "Combat": "Might" } },
+    { "d10": 9, "text": "who reads people before rooms", "skills": { "Social": "Insight" } },
+    { "d10": 10, "text": "with a horseman's impatience", "skills": { "Adventuring": "Ride", "Combat": "Melee: Heavy" } }
+  ],
+
+  "troubles": [
+    { "d10": 1, "text": "fleeing prosecution", "skills": { "Adventuring": "Stealth", "Lore": "Streetwise" } },
+    { "d10": 2, "text": "haunted by a last command", "skills": { "Adventuring": "Willpower", "Combat": "Melee: Medium" } },
+    { "d10": 3, "text": "chasing a forbidden truth", "skills": { "Lore": "Ancient Lore", "Adventuring": "Perception" } },
+    { "d10": 4, "text": "in debt to the wrong house", "skills": { "Lore": "Commerce", "Social": "Persuade" } },
+    { "d10": 5, "text": "carrying someone else's name", "skills": { "Social": ["Deceive", "Protocol"] } },
+    { "d10": 6, "text": "hunted across three borders", "skills": { "Adventuring": ["Survival", "Track"] } },
+    { "d10": 7, "text": "sworn to a grave", "skills": { "Adventuring": "Willpower", "Lore": "Divinity" } },
+    { "d10": 8, "text": "exiled and not sorry", "skills": { "Social": "Intimidate", "Adventuring": "Endurance" } },
+    { "d10": 9, "text": "looking for the one who lived", "skills": { "Adventuring": "Track", "Social": "Insight" } },
+    { "d10": 10, "text": "one job from getting out", "skills": { "Lore": "Streetwise", "Adventuring": "Sleight of Hand" } }
+  ]
+}

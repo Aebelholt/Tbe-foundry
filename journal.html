@@ -1,0 +1,51 @@
+<h2>The Broken Empires, solo in Foundry</h2>
+<p>Everything in this pack is a macro or a roll table. Nothing overrides your game system, so it works on top of Call of Cthulhu 7e, Custom System Builder, or anything else.</p>
+
+<h3>The loop</h3>
+<ol>
+<li><b>Frame the scene.</b> Run <b>TBE: Subverted Scene</b>, state your expectation, take what the die gives you.</li>
+<li><b>Act.</b> Roll with <b>TBE: Skill Roll</b> or <b>TBE: Opposed Roll</b>.</li>
+<li><b>Ask when you don't know.</b> <b>Ask the Weave</b>, with odds. Phrase the question so a Yes creates a complication.</li>
+<li><b>Interpret.</b> Doubles on the oracle fire a Random Event automatically. Go with your first instinct.</li>
+<li><b>Keep the list current.</b> Add NPCs, goals, and threads to <b>TBE: Empires List</b> as they matter, cross them off when they don't.</li>
+</ol>
+
+<h3>Ask the Weave chart</h3>
+<table border="1" cellpadding="3">
+<tr><th>Odds</th><th>Extreme Yes</th><th>Yes</th><th>No</th><th>Extreme No</th></tr>
+<tr><td>Certain</td><td>01-25</td><td>26-90</td><td>91-98</td><td>99-00</td></tr>
+<tr><td>Likely</td><td>01-17</td><td>18-70</td><td>71-93</td><td>94-00</td></tr>
+<tr><td>50/50</td><td>01-10</td><td>11-50</td><td>51-90</td><td>91-00</td></tr>
+<tr><td>Unlikely</td><td>01-07</td><td>08-30</td><td>31-83</td><td>84-00</td></tr>
+<tr><td>Impossible</td><td>01-02</td><td>03-10</td><td>11-75</td><td>76-00</td></tr>
+</table>
+<p>Doubles (11, 22 ... 99, 00) generate a Random Event on top of the answer.</p>
+
+<h3>What the roll macros implement</h3>
+<ul>
+<li>Roll d100 under modified skill. Success Levels = the tens die, minimum 1 on any success.</li>
+<li>Critical success: doubles under the skill, or the skill value exactly. Adds +3 SL.</li>
+<li>Critical failure: doubles over the skill.</li>
+<li>01-05 always succeeds; 99-00 always fails. Skill 0 or less still succeeds on 01-04 and crits on 05.</li>
+<li>Skill over 100 cannot critically fail and adds bonus SL equal to the tens digit of the excess, minimum 1.</li>
+<li>Opposed rolls apply the full resolution ladder: SLs, then criticals, then higher die, then higher modified skill. Degree of Success = winner's SL minus loser's SL.</li>
+<li>Fixed Numbers act as an automatic success at that many SL, and lose ties to a rolled skill.</li>
+</ul>
+
+<h3>Extended Rolls &amp; Social Encounters</h3>
+<ul>
+<li><b>TBE: Extended Roll</b> (Ch.2) &mdash; a task that takes more than one roll: crafting, research, tracking, anything with a target Success Level total and an interval. Start one, have each participant "make an attempt" during the interval, then "resolve the interval": the single highest successful roll counts in full, up to two more successful rolls that same interval each add +1 SL, and a critical failure anywhere in the interval halves the accumulated total (round up). Reaching the required SLs succeeds; running out an optional Limit of intervals fails.</li>
+<li><b>TBE: Social Encounter</b> (Ch.13) &mdash; the same engine applied to a scene. <i>Static</i>: a hidden Tolerance (how many attempts, success or fail, before the NPC ends the audience) and a running SL total compared to an outcome table once the scene ends. The same skill auto-fails on a third consecutive use. Exceeding Tolerance ends things immediately and knocks 1d10 off the total first. <i>Competitive</i>: two or more sides each track their own total; a successful roll adds to your own side or subtracts from a rival's. Two sides race to a Victory Condition and the winner's Degree of Success (winner minus loser) sets the outcome tier; three or more sides (a council vote, say) resolve by whoever has the most support when the GM calls it, no DoS table needed.</li>
+<li>Both tools remember their state in the world between macro runs, so a negotiation or a months-long crafting project can span more than one session. The running totals are shown openly in the dialog and the chat card, the same as everything else in this pack &mdash; if you're running a group and want the book's Tolerance-is-secret rule to actually hold, keep this dialog to yourself the way you would a GM screen.</li>
+</ul>
+
+<h3>Solo house rules worth taking</h3>
+<ul>
+<li><b>Enhanced Defense, Solo</b> and <b>Solo Constitution</b> (d20 Wound Die) free for your PC.</li>
+<li><b>Lone Wanderer</b> free if you use the full Travel rules.</li>
+<li>+2 NPC Tolerance in static social encounters.</li>
+<li>Hire NPC allies early. Solo combat is lethal.</li>
+</ul>
+
+<h3>Tables in this pack</h3>
+<p>TBE: Random Events, Event Randomizers I and II, Subverted Expectations, Opposing Difficulty, Empires List. Edit any of them freely, the macros read whatever is in the table.</p>

@@ -1,0 +1,59 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">AP</label>
+          <input type="text" name="system.ap" value="{{system.ap}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center" title="Ch.9 p.141: summed across every equipped armor piece, then divided by 3 (rounded up) for your Initiative penalty -- computed automatically on the Overview tab">
+          <label class="resource-label">Bulk</label>
+          <input type="text" name="system.bulk" value="{{system.bulk}}" data-dtype="Number"/>
+        </div>
+      </div>
+      <div class="resources grid grid-2col" style="margin-top:4px">
+        <label class="resource flex-group-center" title="Ch.9 p.129: worn armor costs no Inventory ENC and protects its checked locations; un-equipped, it costs 1 Inventory ENC and protects nothing">
+          <input type="checkbox" name="system.equipped" {{checked system.equipped}}/> Equipped (worn)
+        </label>
+      </div>
+      <div class="resources grid grid-4col" style="margin-top:4px">
+        <label class="resource flex-group-center" title="Hit location, p.140: each location needs its own armor piece">
+          <input type="checkbox" name="system.locations.head" {{#if system.locations.head}}checked{{/if}}/> Head
+        </label>
+        <label class="resource flex-group-center">
+          <input type="checkbox" name="system.locations.body" {{#if system.locations.body}}checked{{/if}}/> Body
+        </label>
+        <label class="resource flex-group-center">
+          <input type="checkbox" name="system.locations.rArm" {{#if system.locations.rArm}}checked{{/if}}/> R Arm
+        </label>
+        <label class="resource flex-group-center">
+          <input type="checkbox" name="system.locations.lArm" {{#if system.locations.lArm}}checked{{/if}}/> L Arm
+        </label>
+        <label class="resource flex-group-center">
+          <input type="checkbox" name="system.locations.rLeg" {{#if system.locations.rLeg}}checked{{/if}}/> R Leg
+        </label>
+        <label class="resource flex-group-center">
+          <input type="checkbox" name="system.locations.lLeg" {{#if system.locations.lLeg}}checked{{/if}}/> L Leg
+        </label>
+      </div>
+      <div style="font-size:11px;opacity:.75;margin-top:2px">Check every hit location this specific piece covers. A full suit is several armor Items — one per location — since armor may not be layered (p.140).</div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/the-broken-empires/templates/item/parts/item-effects.hbs"}}
+    </div>
+  </section>
+</form>

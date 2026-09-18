@@ -1,0 +1,337 @@
+<div class="tbe-magic">
+
+  {{!-- Pattern. This is the gate on everything else on the tab: a character
+        who is not Patterned cannot cast at all, and the two Patterns have
+        different ceilings, so it is stated first and in plain words. --}}
+  <div class="items-header flexrow">
+    <div class="item-name">Weave Magic &mdash; {{magic.patternLabel}}</div>
+    <div class="item-controls">
+      {{#if magic.canAttempt}}
+      <a class="item-control tbe-macro" data-macro="TBE: Cast" title="Open TBE: Cast to shape and cast a spell">
+        <i class="fas fa-hand-sparkles"></i> Cast
+      </a>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="grid grid-3col" style="margin-bottom:6px">
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="Patterned in the Weave (creation only) makes a true Spellweaver. Faded Pattern (10 XP, 2 Talent slots at creation) makes a Fade.">Pattern</label>
+      <select name="system.pattern">
+        <option value="none" {{#if (eq system.pattern "none")}}selected{{/if}}>Not Patterned</option>
+        <option value="spellweaver" {{#if (eq system.pattern "spellweaver")}}selected{{/if}}>Spellweaver</option>
+        <option value="fade" {{#if (eq system.pattern "fade")}}selected{{/if}}>Fade</option>
+      </select>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="Ch.7 p.106: an optional template of 2 Binds, 4 Strands and 2 Thin Strands. Blank if you built your magic freely.">Convocation</label>
+      <select name="system.convocation">
+        <option value="" {{#unless system.convocation}}selected{{/unless}}>&mdash; none &mdash;</option>
+        {{#each magic.convocations as |c|}}
+        <option value="{{c.name}}" {{#if (eq c.name @root.system.convocation)}}selected{{/if}}>{{c.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="The Weave imprints a True Name on anyone Patterned. It is the ultimate Arcane Tether to you, so keep it secret.">True Name</label>
+      <input type="text" name="system.trueName" value="{{system.trueName}}" placeholder="in the language of your people"/>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="A True Name must be spoken aloud in the language of that name, which needs a successful Language roll — or the spell using it automatically fails (p.312). This is the language anyone targeting you through your name has to roll.">Its language</label>
+      <input type="text" name="system.trueNameLanguage" value="{{system.trueNameLanguage}}" placeholder="e.g. Dondalese"/>
+    </div>
+  </div>
+
+  {{#if magic.canCast}}{{#unless magic.canAttempt}}
+  <div class="item-empty" style="line-height:1.4;color:var(--tbe-blood)">
+    No Resolve left. A caster must have at least <b>1 available Resolve</b> or a spell cannot be
+    attempted at all (Ch.14 p.280).
+  </div>
+  {{/unless}}{{/if}}
+
+  {{#unless magic.canCast}}
+  <div class="item-empty" style="line-height:1.4">
+    This character is not Patterned, so no Bind roll is possible.
+    A true Spellweaver takes <b>Patterned in the Weave</b> at character creation only;
+    anyone else must first buy <b>Faded Pattern</b> (10 XP in play, or two Talent
+    slots at creation), which opens Binds and Strands but caps every Bind at 70
+    and every Strand at 7.
+    <a class="item-control tbe-macro" data-macro="TBE: Talents" title="Open TBE: Talents"><i class="fas fa-plus"></i> Talents</a>
+  </div>
+  {{/unless}}
+
+  {{#if magic.convocationRec}}
+  <div style="font-size:11px;opacity:.8;margin-bottom:6px">
+    <b>{{magic.convocationRec.name}}</b>
+    &middot; Binds {{#each magic.convocationRec.binds}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+    &middot; Strands {{#each magic.convocationRec.strands}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+    &middot; Thin {{#each magic.convocationRec.thinStrands}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+  </div>
+  {{/if}}
+
+  {{!-- Binds: the roll. --}}
+  <h3 class="skill-group-label">Binds{{#if magic.bindCap}} <span style="font-weight:normal;font-size:11px;opacity:.75">(a Fade can never pass {{magic.bindCap}})</span>{{/if}}</h3>
+  <ol class="items-list">
+    {{#each magic.binds as |b|}}
+    <li class="item flexrow{{#unless b.known}} tbe-unknown{{/unless}}" {{#if b.item}}data-item-id="{{b.item._id}}"{{/if}}>
+      <div class="item-name" title="{{b.desc}}"><h4>{{b.name}}</h4></div>
+      <div class="item-prop">
+        {{#if b.known}}<b{{#if b.atCap}} class="tbe-at-cap"{{/if}}>{{b.value}}</b>{{#if b.expertise}} Ex{{b.expertise}}{{/if}}
+        {{else if b.hasItem}}<span class="tbe-at-cap">0</span>
+        {{else}}<span style="opacity:.7">not known</span>{{/if}}
+      </div>
+      {{!-- What it would take to open this Bind, which is not the same
+            question for a caster and for someone who is not Patterned: the
+            latter must buy Faded Pattern first, so quoting them the 5 XP
+            price would be quoting the wrong number. --}}
+      <div class="item-prop" style="font-size:11px;opacity:.8">
+        {{#if b.known}}{{#if b.atCap}}at the Fade ceiling{{else}}&mdash;{{/if}}
+        {{else if @root.magic.canCast}}at 0, so it cannot be cast with; 5 XP opens it at 10
+        {{else}}needs a Pattern first{{/if}}
+      </div>
+      <div class="item-controls">
+        {{#if b.item}}
+        <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+        {{else if @root.magic.canCast}}
+        <a class="item-control tbe-macro" data-macro="TBE: Advancement" title="Buy this Bind in TBE: Advancement"><i class="fas fa-plus"></i></a>
+        {{/if}}
+      </div>
+    </li>
+    {{/each}}
+    {{#each magic.otherBinds as |item|}}
+    <li class="item flexrow" data-item-id="{{item._id}}">
+      <div class="item-name"><h4>{{item.name}}</h4></div>
+      <div class="item-prop"><b>{{item.system.value}}</b>{{#if item.system.expertise}} Ex{{item.system.expertise}}{{/if}}</div>
+      <div class="item-prop" style="font-size:11px;opacity:.7">custom Bind slot</div>
+      <div class="item-controls">
+        <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+        <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+
+  {{!-- Strands: the cost cover. --}}
+  <div class="items-header flexrow">
+    <div class="item-name">Strands ({{magic.strands.length}}, {{magic.totalStrandLevels}} levels)</div>
+    <div class="item-controls">
+      {{!-- The Raise launcher is hidden for a character with no Pattern:
+            TBE: Advancement offers no Strand action to them, so the button
+            would open a window that does not contain what it promised. --}}
+      {{#if magic.canCast}}
+      <a class="item-control tbe-macro" data-macro="TBE: Advancement" title="Raise a Strand in TBE: Advancement">
+        <i class="fas fa-arrow-up"></i> Raise
+      </a>
+      {{/if}}
+      <a class="item-control item-create" title="Create Strand" data-type="strand"><i class="fas fa-plus"></i> New</a>
+    </div>
+  </div>
+  <div style="font-size:11px;opacity:.8;margin-bottom:4px">
+    A Strand is not rolled. Its level is added to your Mastery on every casting that uses it.
+    {{#if magic.strandCap}}Ceiling {{magic.strandCap}}: {{magic.strandCapWhy}}
+    {{else}}No hard ceiling, but {{magic.strandCapWhy}}{{/if}}
+  </div>
+  <ol class="items-list">
+    {{#each magic.strands as |s|}}
+    <li class="item flexrow" data-item-id="{{s.item._id}}">
+      <div class="item-name" title="{{s.item.system.description}}">
+        <h4>{{s.name}}</h4>
+        {{#if s.thin}}<span class="tag" title="A Thin Strand cannot be developed at character creation and costs double to acquire.">thin</span>{{/if}}
+      </div>
+      <div class="item-prop"><b{{#if s.atCap}} class="tbe-at-cap"{{/if}}>{{s.level}}</b></div>
+      <div class="item-prop" style="font-size:11px;opacity:.85">
+        {{#if s.atCap}}at the ceiling
+        {{else}}next level {{s.nextXp}} XP{{#if s.nextFraying}}, +{{s.nextFraying}} Fraying{{/if}}{{/if}}
+      </div>
+      <div class="item-controls">
+        <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+        <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
+      </div>
+    </li>
+    {{else}}
+    <li class="item-empty">No Strands yet. A Spellweaver picks four at creation; anyone else buys the Strand Secret Talent.</li>
+    {{/each}}
+  </ol>
+  {{#if magic.unknownStrands.length}}
+  <div style="font-size:11px;opacity:.75;margin-top:2px">
+    Not yet known (Strand Secret Talent, and you must be taught or find a source first):
+    {{#each magic.unknownStrands as |u|}}<span title="{{u.desc}}">{{u.name}} {{u.xp}} XP{{#if u.thin}} (thin){{/if}}</span>{{#unless @last}} &middot; {{/unless}}{{/each}}
+  </div>
+  {{/if}}
+
+  {{!-- Threads: the other half of Mastery. --}}
+  <div class="items-header flexrow">
+    <div class="item-name">Threads ({{magic.threads.length}})</div>
+    <div class="item-controls">
+      <a class="item-control item-create" title="Create Thread" data-type="thread"><i class="fas fa-plus"></i> New</a>
+    </div>
+  </div>
+  <div style="font-size:11px;opacity:.8;margin-bottom:4px">
+    Used only after a <b>successful</b> Bind roll, and only on a spell that uses the Bind or
+    Strand the Thread is attuned to. One Bind Thread and one Strand Thread per casting; they
+    never stack.
+  </div>
+  <ol class="items-list">
+    {{#each magic.threads as |t|}}
+    <li class="item flexrow{{#if t.inert}} tbe-unknown{{/if}}" data-item-id="{{t.item._id}}">
+      <div class="item-name">
+        <img class="item-image" src="{{t.item.img}}" width="20" height="20"/>
+        <h4>{{t.name}}</h4>
+        {{#if t.attunement}}<span class="tag">{{#if t.isBind}}Bind{{else}}Strand{{/if}}: {{t.attunement}}</span>{{/if}}
+      </div>
+      <div class="item-prop" style="font-size:11px">{{#if t.inert}}spent{{else}}{{t.gives}}{{/if}}</div>
+      <div class="item-controls">
+        <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+        <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
+      </div>
+    </li>
+    {{else}}
+    <li class="item-empty">No Threads. A Spellweaver starts with one d8 Thread Die of a Bind or Strand of their choice.</li>
+    {{/each}}
+  </ol>
+
+  {{!-- Enchanted items and potions: spells stored in things. --}}
+  <div class="items-header flexrow">
+    <div class="item-name">Enchanted items &amp; potions ({{enchantments.length}})</div>
+    <div class="item-controls">
+      <a class="item-control item-create" title="Create enchanted item" data-type="enchantment"><i class="fas fa-plus"></i> New</a>
+    </div>
+  </div>
+  <div style="font-size:11px;opacity:.8;margin-bottom:4px">
+    The item is the caster: a stored spell's resistance is fixed at the Bind roll it was made
+    with. <b>TBE: Enchant</b> makes them, <b>TBE: Use Enchanted Item</b> spends them.
+  </div>
+  <ol class="items-list">
+    {{#each enchantments as |e|}}
+    <li class="item flexrow{{#if e.spent}} tbe-unknown{{/if}}" data-item-id="{{e.item._id}}">
+      <div class="item-name">
+        <img class="item-image" src="{{e.item.img}}" width="20" height="20"/>
+        <h4>{{e.name}}</h4>
+        {{#if e.unstable}}<span class="tag">unstable</span>{{/if}}
+        {{#if e.anyone}}<span class="tag">anyone</span>{{/if}}
+      </div>
+      <div class="item-prop" style="font-size:11px">{{e.left}}</div>
+      <div class="item-controls">
+        <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+        <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
+      </div>
+    </li>
+    {{else}}
+    <li class="item-empty">Nothing enchanted. An enchantment needs a masterwork item and a full day of preparation; a potion needs only reagents and a lab.</li>
+    {{/each}}
+  </ol>
+
+  {{!-- Divine Magic: a different power entirely, and only for a Godbound. --}}
+  {{#if divine.isGodbound}}
+  <div class="items-header flexrow">
+    <div class="item-name">Divine Magic{{#if system.deity}} &mdash; {{system.deity}}{{/if}}</div>
+    <div class="item-controls">
+      <a class="item-control tbe-macro" data-macro="TBE: Miracle" title="Ask the god for a miracle"><i class="fas fa-hands-praying"></i> Pray</a>
+      <a class="item-control tbe-macro" data-macro="TBE: Pious Act" title="Regain Piety, atone, or bless a symbol"><i class="fas fa-plus"></i> Pious Act</a>
+    </div>
+  </div>
+  {{#if divine.castOut}}
+  <div class="item-empty" style="line-height:1.4;color:var(--tbe-blood)">
+    <b>Cast Out.</b> The deity no longer answers, and no Piety can be regained until an act of
+    atonement is completed.
+  </div>
+  {{/if}}
+  <div class="grid grid-3col" style="margin-bottom:6px">
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="Which god this Godbound serves. A Godbound serves a single deity, though they show reverence to all.">Deity</label>
+      <input type="text" name="system.deity" value="{{system.deity}}"/>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="A holy symbol acts as a Supply Die: rolled after a successful Piety roll for +2 SLs, stepping down one die type on a 1-2. Below d6 it must be blessed before it helps again.">Holy symbol</label>
+      <select name="system.holySymbol">
+        <option value="" {{#unless system.holySymbol}}selected{{/unless}}>&mdash; none &mdash;</option>
+        <option value="d12" {{#if (eq system.holySymbol "d12")}}selected{{/if}}>d12</option>
+        <option value="d10" {{#if (eq system.holySymbol "d10")}}selected{{/if}}>d10</option>
+        <option value="d8" {{#if (eq system.holySymbol "d8")}}selected{{/if}}>d8</option>
+        <option value="d6" {{#if (eq system.holySymbol "d6")}}selected{{/if}}>d6</option>
+        <option value="d4" {{#if (eq system.holySymbol "d4")}}selected{{/if}}>d4 (needs blessing)</option>
+      </select>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="After atonement the god has forgiven but distance remains: no Greater Miracles for 1d6 sessions.">No Greater for</label>
+      <input type="text" name="system.noGreaterSessions" value="{{system.noGreaterSessions}}" data-dtype="Number"/>
+    </div>
+  </div>
+  <div style="font-size:11px;opacity:.8;margin-bottom:4px">
+    Piety is a skill on the Skills tab, but not like any other: it can never be improved with XP,
+    never carries Expertise, is capped at 90, and asking for a miracle spends it whether or not the
+    god answers. By default the Godbound does not know their own score &mdash; the GM keeps it.
+    {{#if divine.atWarning}}<b style="color:var(--tbe-blood)"> At 30 or below, the god should be sending warning visions.</b>{{/if}}
+    {{#if divine.atEncouragement}}<b> At 80 or above, the god should be sending signs of encouragement.</b>{{/if}}
+    {{#if divine.symbolNeedsBlessing}}<b style="color:var(--tbe-blood)"> The holy symbol is depleted below d6 and gives no benefit until blessed.</b>{{/if}}
+  </div>
+  <div class="items-header flexrow">
+    <div class="item-name">Domains ({{system.domains.length}})</div>
+  </div>
+  <div style="font-size:11px;opacity:.8;margin-bottom:4px">
+    The god's Domains are the only things it can be asked for: a request outside them has no result.
+    <b>TBE: Miracle</b> offers only these; with none recorded it offers all twenty.
+  </div>
+  <div class="domains">
+    {{#each system.domains as |d i|}}
+    <div class="flexrow domain-row" style="align-items:center;margin-bottom:2px">
+      <input type="text" class="domain-input" data-idx="{{i}}" value="{{d}}" placeholder="Domain" style="flex:1"/>
+      <a class="domain-remove item-control" data-idx="{{i}}" title="Remove"><i class="fas fa-trash"></i></a>
+    </div>
+    {{else}}
+    <div style="font-size:11px;opacity:.7">&mdash; none recorded &mdash;</div>
+    {{/each}}
+    <a class="domain-add item-control" title="Add Domain"><i class="fas fa-plus"></i> Add Domain</a>
+  </div>
+  {{/if}}
+
+  {{!-- Fraying: the price. --}}
+  <h3 class="skill-group-label">Fraying</h3>
+  <div class="grid grid-3col" style="align-items:end">
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="Ch.14 p.308: Fraying accumulates and can never be reduced.">Fraying points</label>
+      <input type="text" name="system.fraying" value="{{system.fraying}}" data-dtype="Number"/>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label">Max Resolve</label>
+      <div class="resource-content"><b>{{magic.maxResolve}}</b></div>
+    </div>
+    <div class="resource flex-group-center">
+      <label class="resource-label" title="1d100 at or under this number removes the character from reality.">Purge risk per new point</label>
+      <div class="resource-content">
+        {{#if magic.inFrayingRoll}}<b class="tbe-at-cap">{{magic.frayingRisk}}%</b>
+        {{else}}<span style="opacity:.75">none yet</span>{{/if}}
+      </div>
+    </div>
+  </div>
+  <div style="font-size:11px;opacity:.85;margin-top:4px;line-height:1.4">
+    {{#if magic.inFrayingRoll}}
+      Fraying is {{magic.frayingOver}} over Max Resolve, so <b>every further point demands a Fraying Roll</b>:
+      1d100 at or under ({{magic.fraying}} &minus; {{magic.maxResolve}}) &times; 2 = <b>{{magic.frayingRisk}}</b> and the
+      character is purged from the Tapestry. TBE: Advancement and TBE: Cast make that roll for you when a point lands.
+    {{else}}
+      The Fraying Roll begins the moment the total passes Max Resolve
+      ({{magic.maxResolve}}); {{magic.fraying}} now, {{sub magic.maxResolve magic.fraying}} to go.
+    {{/if}}
+    There is no way of reducing Fraying points.
+  </div>
+  {{#if magic.frayingTiers.length}}
+  <div style="font-size:11px;margin-top:4px">
+    <b>Symptoms in effect</b> (permanent once reached, even if Max Resolve later rises):
+    {{#each magic.frayingTiers as |t|}}
+    <div style="margin-top:3px">{{t.label}} &mdash; {{t.summary}}
+      <ul style="margin:1px 0 0 14px;opacity:.85">
+        {{#each t.signs as |sign|}}<li>{{sign}}</li>{{/each}}
+      </ul>
+    </div>
+    {{/each}}
+  </div>
+  {{#if magic.frayingTrait}}
+  <div style="font-size:11px;margin-top:4px;opacity:.85">
+    At 10+ Fraying you may take the <b>Frayed</b> Personality Trait on the Notes tab. It works like
+    any other &mdash; advocate it for +20, or earn XP when it complicates a session &mdash; but it
+    assumes you are playing the symptoms above, and once taken it can never be removed.
+  </div>
+  {{/if}}
+  {{/if}}
+</div>

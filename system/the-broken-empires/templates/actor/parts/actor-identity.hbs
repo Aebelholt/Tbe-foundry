@@ -1,0 +1,61 @@
+<div class="identity-row grid grid-4col">
+  <div class="resource flex-group-center">
+    <label class="resource-label">Race</label>
+    <select name="system.race">
+      {{#each config.RACE_NAMES as |r|}}
+      <option value="{{r}}" {{#if (eq r @root.system.race)}}selected{{/if}}>{{r}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Size</label>
+    <select name="system.size">
+      {{#each config.SIZES as |s|}}
+      <option value="{{s}}" {{#if (eq s @root.system.size)}}selected{{/if}}>{{s}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Culture</label>
+    <input type="text" name="system.culture" value="{{system.culture}}" placeholder="Westlands"/>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Career</label>
+    <input type="text" name="system.career" value="{{system.career}}" placeholder="Warrior"/>
+  </div>
+</div>
+
+<div class="identity-row grid grid-4col">
+  <div class="resource flex-group-center">
+    <label class="resource-label">Silver (sp)</label>
+    <input type="text" name="system.silver" value="{{system.silver}}" data-dtype="Number"/>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Status</label>
+    <input type="text" name="system.status" value="{{system.status}}" data-dtype="Number"/>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label" title="Ch.8: spend with TBE: Advancement">XP available</label>
+    <input type="text" name="system.experience.available" value="{{system.experience.available}}" data-dtype="Number"/>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">XP earned (lifetime)</label>
+    <input type="text" name="system.experience.earned" value="{{system.experience.earned}}" data-dtype="Number"/>
+  </div>
+</div>
+
+{{#if raceInfo}}
+<div class="race-brief">
+  <span class="stat-chip">Size <strong>{{raceInfo.size}}</strong></span>
+  {{#if raceInfo.lethalityBonus}}<span class="stat-chip">Lethality <strong>+{{raceInfo.lethalityBonus}}</strong></span>{{/if}}
+  {{#if raceInfo.toughnessCap}}<span class="stat-chip">Toughness cap <strong>{{raceInfo.toughnessCap}}</strong></span>{{/if}}
+  {{#each raceInfo.skillMods as |m|}}
+  <span class="stat-chip">{{m.skill}} <strong>{{#if (gt m.mod 0)}}+{{/if}}{{m.mod}}</strong></span>
+  {{/each}}
+</div>
+{{#if raceInfo.restrictions.length}}
+<ul class="race-restrictions">
+  {{#each raceInfo.restrictions as |r|}}<li>{{r}}</li>{{/each}}
+</ul>
+{{/if}}
+{{/if}}

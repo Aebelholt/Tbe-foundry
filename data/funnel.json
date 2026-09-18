@@ -1,0 +1,880 @@
+{
+  "_provenance": "ORIGINAL CONTENT, NOT FROM THE RULEBOOK. The Broken Empires gives no table of common trades and no rules for pre-adventuring townsfolk; these tables exist so a funnel can generate a town's worth of ordinary people without hand-writing each one. It is written to fit the Baronies (Ch.20: shifting fiefdoms, fortified estates, river valleys) and to point at the book's own machinery rather than invent any. Nothing here is a mechanic: every skill name is a real catalogue skill and the numbers attached to them are assigned by the macro, not by this file. Treated the same way as data/concepts.json, which is the other original-content file in this repo.",
+  "_format": "trades[]: range is an inclusive d100 span covering 1-100 exactly once. skills are real names from TBE.SKILL_GROUPS (funnel_check.mjs enforces this). kit is flavour text, not equipment Items. knows is the one piece of local knowledge that makes the person useful in a scene. stake is what they would run back into a burning town for -- the seed for the Bond and, if they live, for a Goal. bonds[] and scars[] are the funnel's own tables: a bond is the person a townsperson would break formation for, a scar is what surviving the night cost them. Both are prompts for play, not mechanics -- nothing in them touches a number.",
+  "trades": [
+    {
+      "range": [
+        1,
+        2
+      ],
+      "name": "Tanner",
+      "skills": [
+        "Craft: Practical",
+        "Endurance",
+        "Commerce"
+      ],
+      "kit": "Scraping knife, a rack of half-cured hides",
+      "knows": "which alleys drain to the river and which flood",
+      "stake": "The season's hides, which are all the family's money"
+    },
+    {
+      "range": [
+        3,
+        4
+      ],
+      "name": "Cooper",
+      "skills": [
+        "Craft: Practical",
+        "Might",
+        "Commerce"
+      ],
+      "kit": "Adze, iron hoops, a half-built barrel",
+      "knows": "every cellar in the quarter, because he delivered to them",
+      "stake": "A brother apprenticed across town"
+    },
+    {
+      "range": [
+        5,
+        6
+      ],
+      "name": "Miller",
+      "skills": [
+        "Craft: Practical",
+        "Commerce",
+        "Might"
+      ],
+      "kit": "Sack hook, dusting of flour that will not brush out",
+      "knows": "who in town is quietly in debt, and to whom",
+      "stake": "The mill, and the grain the town will need if it survives"
+    },
+    {
+      "range": [
+        7,
+        8
+      ],
+      "name": "Miller's apprentice",
+      "skills": [
+        "Athletics",
+        "Craft: Practical",
+        "Perception"
+      ],
+      "kit": "A too-big apron, a sack needle",
+      "knows": "the roofline route from the mill to the market",
+      "stake": "Proving they are worth more than the sacks they carry"
+    },
+    {
+      "range": [
+        9,
+        10
+      ],
+      "name": "Blacksmith",
+      "skills": [
+        "Craft: Practical",
+        "Might",
+        "Endurance"
+      ],
+      "kit": "Hammer, tongs, a bar of good iron",
+      "knows": "which of the militia's blades are sound and which will fold",
+      "stake": "The forge, and the apprentices in it"
+    },
+    {
+      "range": [
+        11,
+        12
+      ],
+      "name": "Smith's striker",
+      "skills": [
+        "Might",
+        "Endurance",
+        "Craft: Practical"
+      ],
+      "kit": "Sledge, burn-scarred forearms",
+      "knows": "how long a fire takes to eat a timber wall",
+      "stake": "The smith, who took them in"
+    },
+    {
+      "range": [
+        13,
+        14
+      ],
+      "name": "Farrier",
+      "skills": [
+        "Craft: Practical",
+        "Ride",
+        "Naturewise"
+      ],
+      "kit": "Rasp, nippers, a pocket of nails",
+      "knows": "every horse in town by name and temper",
+      "stake": "The horses, which are the only way anyone leaves fast"
+    },
+    {
+      "range": [
+        15,
+        16
+      ],
+      "name": "Carter",
+      "skills": [
+        "Ride",
+        "Commerce",
+        "Perception"
+      ],
+      "kit": "Whip, a cart with one bad wheel",
+      "knows": "the three roads out and what season closes each",
+      "stake": "The cart, and whoever can be loaded onto it"
+    },
+    {
+      "range": [
+        17,
+        18
+      ],
+      "name": "Ferryman",
+      "skills": [
+        "Sail/Boat",
+        "Endurance",
+        "Common Lore"
+      ],
+      "kit": "Pole, a flat-bottomed punt",
+      "knows": "where the river is fordable and where it lies",
+      "stake": "The crossing, which is the town's only back door"
+    },
+    {
+      "range": [
+        19,
+        20
+      ],
+      "name": "Fisher",
+      "skills": [
+        "Sail/Boat",
+        "Perception",
+        "Survival"
+      ],
+      "kit": "Hand-lines, a gutting knife",
+      "knows": "the river's moods better than the priest knows his prayers",
+      "stake": "A boat that will hold four, maybe five"
+    },
+    {
+      "range": [
+        21,
+        22
+      ],
+      "name": "Netmaker",
+      "skills": [
+        "Craft: Practical",
+        "Commerce",
+        "Wit"
+      ],
+      "kit": "Netting needle, coils of cord",
+      "knows": "who owes whom, from a lifetime of doorway gossip",
+      "stake": "A daughter who married into the north quarter"
+    },
+    {
+      "range": [
+        23,
+        24
+      ],
+      "name": "Riverwarden",
+      "skills": [
+        "Sail/Boat",
+        "Missile",
+        "Perception"
+      ],
+      "kit": "Boat hook, a short bow, a warden's brass token",
+      "knows": "the smugglers' landings nobody reports",
+      "stake": "The oath they took, which nobody else remembers"
+    },
+    {
+      "range": [
+        25,
+        26
+      ],
+      "name": "Charcoal burner",
+      "skills": [
+        "Survival",
+        "Endurance",
+        "Naturewise"
+      ],
+      "kit": "Rake, a smell of smoke that never leaves",
+      "knows": "the woods, and every path through them that isn't a road",
+      "stake": "The burn, three days from ready and worth a winter"
+    },
+    {
+      "range": [
+        27,
+        28
+      ],
+      "name": "Woodcutter",
+      "skills": [
+        "Might",
+        "Endurance",
+        "Naturewise"
+      ],
+      "kit": "Felling axe, wedge and maul",
+      "knows": "which timbers in the palisade were cut green and rotten",
+      "stake": "An axe, and the arms to swing it all day"
+    },
+    {
+      "range": [
+        29,
+        30
+      ],
+      "name": "Poacher",
+      "skills": [
+        "Stealth",
+        "Missile",
+        "Track"
+      ],
+      "kit": "A bow that should not exist, snares",
+      "knows": "the ways under the wall the lord never found",
+      "stake": "Not hanging, which was already the plan"
+    },
+    {
+      "range": [
+        31,
+        32
+      ],
+      "name": "Trapper",
+      "skills": [
+        "Track",
+        "Survival",
+        "Naturewise"
+      ],
+      "kit": "Line of iron traps, a skinning knife",
+      "knows": "how far a wounded thing runs before it stops",
+      "stake": "A dog, currently missing"
+    },
+    {
+      "range": [
+        33,
+        34
+      ],
+      "name": "Herbalist",
+      "skills": [
+        "Heal",
+        "Naturewise",
+        "Commerce"
+      ],
+      "kit": "Satchel of dried stems, a mortar",
+      "knows": "what in the apothecary's stock is worth a life and what is chalk",
+      "stake": "The stock, which is worth more than the shop"
+    },
+    {
+      "range": [
+        35,
+        36
+      ],
+      "name": "Midwife",
+      "skills": [
+        "Heal",
+        "Insight",
+        "Persuade"
+      ],
+      "kit": "Clean linen, a birthing stool's memory",
+      "knows": "every family's secret, having been present for the worst of them",
+      "stake": "The women she has not delivered yet"
+    },
+    {
+      "range": [
+        37,
+        38
+      ],
+      "name": "Bone-setter",
+      "skills": [
+        "Heal",
+        "Might",
+        "Willpower"
+      ],
+      "kit": "Splints, a leather strap for biting",
+      "knows": "how much pain a body can take before it quits",
+      "stake": "That nobody dies of something she could have set"
+    },
+    {
+      "range": [
+        39,
+        40
+      ],
+      "name": "Priest",
+      "skills": [
+        "Divinity",
+        "Inspire",
+        "Common Lore"
+      ],
+      "kit": "Vestments, a shrine key, a plain wooden token",
+      "knows": "what the shrine's crypt actually holds",
+      "stake": "The congregation, all of them, which is the problem"
+    },
+    {
+      "range": [
+        41,
+        42
+      ],
+      "name": "Shrine-keeper",
+      "skills": [
+        "Divinity",
+        "Craft: Artistic",
+        "Perception"
+      ],
+      "kit": "Broom, lamp oil, a chisel for the votive stones",
+      "knows": "which stones in the shrine floor lift",
+      "stake": "Something under the shrine nobody has asked about"
+    },
+    {
+      "range": [
+        43,
+        44
+      ],
+      "name": "Hedge-witch",
+      "skills": [
+        "Naturewise",
+        "Arcana",
+        "Deceive"
+      ],
+      "kit": "Charms of no proven worth, a good knife",
+      "knows": "what the old ways say about nights like this",
+      "stake": "A reputation that will get her blamed by dawn"
+    },
+    {
+      "range": [
+        45,
+        46
+      ],
+      "name": "Scribe",
+      "skills": [
+        "Common Lore",
+        "Ancient Lore",
+        "Craft: Artistic"
+      ],
+      "kit": "Quill, ink cake, the town's only ledger",
+      "knows": "what the deeds say about who owns the river crossing",
+      "stake": "The records, which are the town's memory of itself"
+    },
+    {
+      "range": [
+        47,
+        48
+      ],
+      "name": "Tax clerk",
+      "skills": [
+        "Commerce",
+        "Protocol",
+        "Wit"
+      ],
+      "kit": "Tally sticks, a locked box, a list of names",
+      "knows": "exactly how much the town is worth to an attacker",
+      "stake": "The box, and what happens when they ask him to open it"
+    },
+    {
+      "range": [
+        49,
+        50
+      ],
+      "name": "Reeve",
+      "skills": [
+        "Protocol",
+        "Insight",
+        "Commerce"
+      ],
+      "kit": "Staff of office, a seal nobody outside town respects",
+      "knows": "which of the lord's promises were never written down",
+      "stake": "Authority that stops mattering the moment the gate falls"
+    },
+    {
+      "range": [
+        51,
+        52
+      ],
+      "name": "Bailiff's man",
+      "skills": [
+        "Intimidate",
+        "Melee: Medium",
+        "Protocol"
+      ],
+      "kit": "Cudgel, a coat with the lord's badge",
+      "knows": "who in town already hates the badge he wears",
+      "stake": "Whether the badge is worth keeping on tonight"
+    },
+    {
+      "range": [
+        53,
+        54
+      ],
+      "name": "Militia volunteer",
+      "skills": [
+        "Melee: Medium",
+        "Endurance",
+        "Willpower"
+      ],
+      "kit": "Spear, a helmet that fits badly",
+      "knows": "the muster drill, run twice, badly",
+      "stake": "Not running, which is harder than it sounded"
+    },
+    {
+      "range": [
+        55,
+        56
+      ],
+      "name": "Gate guard",
+      "skills": [
+        "Perception",
+        "Melee: Medium",
+        "Intimidate"
+      ],
+      "kit": "Spear, a gate key on a thong",
+      "knows": "who came in this week and did not come out",
+      "stake": "The gate, and the decision about when to shut it"
+    },
+    {
+      "range": [
+        57,
+        58
+      ],
+      "name": "Watch sergeant",
+      "skills": [
+        "Inspire",
+        "Melee: Medium",
+        "Insight"
+      ],
+      "kit": "Sword, a whistle, a list of the watch rota",
+      "knows": "which of his men will hold and which will bolt",
+      "stake": "Twelve people who will do what he says"
+    },
+    {
+      "range": [
+        59,
+        60
+      ],
+      "name": "Bowyer",
+      "skills": [
+        "Craft: Practical",
+        "Missile",
+        "Commerce"
+      ],
+      "kit": "Staves, glue pot, a finished bow he has not sold",
+      "knows": "how many bows the town actually has, which is fewer than they think",
+      "stake": "The stave-stock, a year of drying wood"
+    },
+    {
+      "range": [
+        61,
+        62
+      ],
+      "name": "Fletcher",
+      "skills": [
+        "Craft: Practical",
+        "Missile",
+        "Perception"
+      ],
+      "kit": "Feathers, shafts, a fletching jig",
+      "knows": "how fast arrows run out",
+      "stake": "A sister on the wall who is going to need them"
+    },
+    {
+      "range": [
+        63,
+        64
+      ],
+      "name": "Armourer's apprentice",
+      "skills": [
+        "Craft: Practical",
+        "Might",
+        "Endurance"
+      ],
+      "kit": "Riveting hammer, a mail shirt with one panel finished",
+      "knows": "where the good armour is stored and who has the key",
+      "stake": "Finishing the shirt, which is stupid, and doing it anyway"
+    },
+    {
+      "range": [
+        65,
+        66
+      ],
+      "name": "Stablehand",
+      "skills": [
+        "Ride",
+        "Athletics",
+        "Naturewise"
+      ],
+      "kit": "Halter, hoof pick, straw in the hair",
+      "knows": "which horses can be ridden bareback and which will kill you",
+      "stake": "The horses, all sixteen of them"
+    },
+    {
+      "range": [
+        67,
+        68
+      ],
+      "name": "Drover",
+      "skills": [
+        "Ride",
+        "Survival",
+        "Endurance"
+      ],
+      "kit": "Goad, a dog whistle, road dust",
+      "knows": "the stock routes south into the badlands",
+      "stake": "A herd that is either salvation or a slow-moving target"
+    },
+    {
+      "range": [
+        69,
+        70
+      ],
+      "name": "Shepherd",
+      "skills": [
+        "Naturewise",
+        "Survival",
+        "Perception"
+      ],
+      "kit": "Crook, sling, a coat that smells of lanolin",
+      "knows": "the high ground and what can be seen from it",
+      "stake": "The flock, and the boy watching it outside the walls"
+    },
+    {
+      "range": [
+        71,
+        72
+      ],
+      "name": "Swineherd",
+      "skills": [
+        "Naturewise",
+        "Endurance",
+        "Track"
+      ],
+      "kit": "Switch, a bag of acorns",
+      "knows": "the drainage ditches, having chased pigs through all of them",
+      "stake": "A brother who thinks the pigs matter more than they do"
+    },
+    {
+      "range": [
+        73,
+        74
+      ],
+      "name": "Beekeeper",
+      "skills": [
+        "Naturewise",
+        "Craft: Practical",
+        "Willpower"
+      ],
+      "kit": "Veil, smoker, hands that no longer flinch",
+      "knows": "how fire moves in a wind, from a lifetime of watching smoke",
+      "stake": "The hives, which cannot be carried"
+    },
+    {
+      "range": [
+        75,
+        76
+      ],
+      "name": "Brewer",
+      "skills": [
+        "Craft: Practical",
+        "Commerce",
+        "Persuade"
+      ],
+      "kit": "Mash paddle, a cask of the good stuff",
+      "knows": "which of the militia can be bought with a drink",
+      "stake": "The cellar, deep, stone-vaulted, and full"
+    },
+    {
+      "range": [
+        77,
+        78
+      ],
+      "name": "Innkeeper",
+      "skills": [
+        "Persuade",
+        "Insight",
+        "Commerce"
+      ],
+      "kit": "Cellar keys, a cudgel behind the bar",
+      "knows": "every stranger who came through in the last month",
+      "stake": "A common room currently full of frightened people"
+    },
+    {
+      "range": [
+        79,
+        80
+      ],
+      "name": "Tavern server",
+      "skills": [
+        "Perception",
+        "Wit",
+        "Sleight of Hand"
+      ],
+      "kit": "Apron, a knife nobody knows about",
+      "knows": "what the soldiers said when they thought no one listened",
+      "stake": "Getting out with more than she came in with"
+    },
+    {
+      "range": [
+        81,
+        82
+      ],
+      "name": "Baker",
+      "skills": [
+        "Craft: Practical",
+        "Commerce",
+        "Endurance"
+      ],
+      "kit": "Peel, a stone oven's worth of heat",
+      "knows": "how many days the town can eat without the mill",
+      "stake": "The oven, and the queue outside it"
+    },
+    {
+      "range": [
+        83,
+        84
+      ],
+      "name": "Butcher",
+      "skills": [
+        "Craft: Practical",
+        "Might",
+        "Commerce"
+      ],
+      "kit": "Cleaver, hooks, an apron past saving",
+      "knows": "anatomy, which is a worse thing to know tonight",
+      "stake": "A daughter apprenticed to the herbalist"
+    },
+    {
+      "range": [
+        85,
+        86
+      ],
+      "name": "Weaver",
+      "skills": [
+        "Craft: Artistic",
+        "Craft: Practical",
+        "Commerce"
+      ],
+      "kit": "Shuttle, a half-finished bolt on the loom",
+      "knows": "whose cloth is whose, so whose body is whose",
+      "stake": "A loom that took a year to build"
+    },
+    {
+      "range": [
+        87,
+        88
+      ],
+      "name": "Dyer",
+      "skills": [
+        "Craft: Practical",
+        "Commerce",
+        "Endurance"
+      ],
+      "kit": "Vats, stained arms to the elbow",
+      "knows": "which of the town's water runs clean and which is fouled",
+      "stake": "The vats, which are also a hiding place"
+    },
+    {
+      "range": [
+        89,
+        90
+      ],
+      "name": "Mason",
+      "skills": [
+        "Craft: Practical",
+        "Might",
+        "Athletics"
+      ],
+      "kit": "Chisel, line and plumb",
+      "knows": "which walls will stand and which are facing over rubble",
+      "stake": "The wall he built, and what it means when it fails"
+    },
+    {
+      "range": [
+        91,
+        92
+      ],
+      "name": "Thatcher",
+      "skills": [
+        "Athletics",
+        "Craft: Practical",
+        "Endurance"
+      ],
+      "kit": "Reed knife, a long ladder",
+      "knows": "the rooftops as a road, because he works up there",
+      "stake": "A ladder that is suddenly the most useful thing in town"
+    },
+    {
+      "range": [
+        93,
+        94
+      ],
+      "name": "Peddler",
+      "skills": [
+        "Commerce",
+        "Deceive",
+        "Streetwise"
+      ],
+      "kit": "Pack of small goods, a scale that lies slightly",
+      "knows": "the price of everything, including passage out",
+      "stake": "A pack that is his whole life and slows him down"
+    },
+    {
+      "range": [
+        95,
+        96
+      ],
+      "name": "Cutpurse",
+      "skills": [
+        "Sleight of Hand",
+        "Stealth",
+        "Streetwise"
+      ],
+      "kit": "Two knives, someone else's purse",
+      "knows": "the roofs, cellars and gaps the watch never patrol",
+      "stake": "A fence who owes him, if the fence is still alive"
+    },
+    {
+      "range": [
+        97,
+        98
+      ],
+      "name": "Beggar",
+      "skills": [
+        "Streetwise",
+        "Insight",
+        "Deceive"
+      ],
+      "kit": "Bowl, a bad leg that is sometimes real",
+      "knows": "who is kind and who only looks it, tested daily",
+      "stake": "A corner, a blanket, and one person who talks to him"
+    },
+    {
+      "range": [
+        99,
+        100
+      ],
+      "name": "Refugee of the last war",
+      "skills": [
+        "Survival",
+        "Willpower",
+        "Streetwise"
+      ],
+      "kit": "Bundle, a child's shoe kept for no good reason",
+      "knows": "exactly how this goes, having survived it once",
+      "stake": "Not doing this again, and doing it again"
+    }
+  ],
+  "bonds": [
+    {
+      "relation": "Brother",
+      "tie": "household"
+    },
+    {
+      "relation": "Sister",
+      "tie": "household"
+    },
+    {
+      "relation": "Mother",
+      "tie": "household"
+    },
+    {
+      "relation": "Father",
+      "tie": "household"
+    },
+    {
+      "relation": "Their child",
+      "tie": "household"
+    },
+    {
+      "relation": "Grandmother",
+      "tie": "household"
+    },
+    {
+      "relation": "Husband",
+      "tie": "household"
+    },
+    {
+      "relation": "Wife",
+      "tie": "household"
+    },
+    {
+      "relation": "Lover, not spoken of",
+      "tie": "household"
+    },
+    {
+      "relation": "Betrothed",
+      "tie": "household"
+    },
+    {
+      "relation": "Their apprentice",
+      "tie": "trade"
+    },
+    {
+      "relation": "The master who trained them",
+      "tie": "trade"
+    },
+    {
+      "relation": "Partner in the trade",
+      "tie": "trade"
+    },
+    {
+      "relation": "Neighbour of thirty years",
+      "tie": "town"
+    },
+    {
+      "relation": "The one who took them in",
+      "tie": "town"
+    },
+    {
+      "relation": "Rival, and the only one who understands the work",
+      "tie": "town"
+    },
+    {
+      "relation": "Owes them money they cannot repay",
+      "tie": "town"
+    },
+    {
+      "relation": "Owed money by them, quietly",
+      "tie": "town"
+    },
+    {
+      "relation": "Childhood friend, drifted apart",
+      "tie": "town"
+    },
+    {
+      "relation": "They swore an oath to them once",
+      "tie": "town"
+    }
+  ],
+  "scars": [
+    {
+      "name": "Burned",
+      "line": "Fire took skin off the face or an arm. It is the first thing anyone sees now."
+    },
+    {
+      "name": "Crushed",
+      "line": "Something heavy came down. The leg or the hand never came all the way back."
+    },
+    {
+      "name": "Shaken",
+      "line": "The night is still happening somewhere behind their eyes. Certain sounds put them back in it."
+    },
+    {
+      "name": "Owes",
+      "line": "Someone else in the roster dragged them out. That is not a debt that gets settled."
+    },
+    {
+      "name": "Bloodied",
+      "line": "They killed someone. First time. They know exactly how it felt and cannot say so."
+    },
+    {
+      "name": "Abandoned",
+      "line": "They left someone behind, knowing. Nobody has said it aloud yet."
+    },
+    {
+      "name": "Witness",
+      "line": "They saw what the attackers were actually looking for, and did not understand it."
+    },
+    {
+      "name": "Wanted",
+      "line": "An officer saw their face clearly, in the middle of doing something unforgivable to him."
+    },
+    {
+      "name": "Carried",
+      "line": "They got someone out on their back. Their own body paid for the distance."
+    },
+    {
+      "name": "Struck the bargain",
+      "line": "They traded something away to get through a gate. It will be collected."
+    }
+  ]
+}

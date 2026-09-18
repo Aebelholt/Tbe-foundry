@@ -1,0 +1,41 @@
+<div class="talents-list">
+  <div class="items-header flexrow">
+    <div class="item-name">Talent ({{talentCount}})</div>
+    <div class="item-prop">Rank</div>
+    <div class="item-prop">Applies to</div>
+    <div class="item-controls">
+      <a class="item-control item-create" title="Create Talent" data-type="talent">
+        <i class="fas fa-plus"></i> New Talent
+      </a>
+    </div>
+  </div>
+  {{#each config.TALENT_CATEGORIES as |cat|}}
+  {{#with (lookup @root.talentGroups cat) as |list|}}
+  {{#if list.length}}
+  <div class="talent-group">
+    <h3 class="skill-group-label">{{cat}}</h3>
+    <ol class="items-list">
+      {{#each list as |item|}}
+      <li class="item flexrow{{#if item.system.sub}} talent-sub{{/if}}" data-item-id="{{item._id}}">
+        <div class="item-name">
+          <img class="item-image" src="{{item.img}}" width="20" height="20"/>
+          <h4>{{item.name}}</h4>
+          {{#if item.system.requirements}}<span class="tag" title="{{item.system.requirements}}">req</span>{{/if}}
+        </div>
+        <div class="item-prop">{{#if (gt item.system.ranks 1)}}&times;{{item.system.ranks}}{{else}}&mdash;{{/if}}</div>
+        <div class="item-prop">{{#if item.system.specialization}}{{item.system.specialization}}{{else}}&mdash;{{/if}}</div>
+        <div class="item-controls">
+          <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/if}}
+  {{/with}}
+  {{/each}}
+  {{#unless talentCount}}
+  <div class="item-empty">No Talents yet. Run the Talents installer, then drag them on from the TBE Talents folder.</div>
+  {{/unless}}
+</div>

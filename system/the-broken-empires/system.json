@@ -1,0 +1,192 @@
+{
+  "id": "the-broken-empires",
+  "title": "The Broken Empires",
+  "description": "A native FoundryVTT implementation of The Broken Empires: real Death Threshold/Resolve/wound/supply/skill fields instead of a Call of Cthulhu 7e sheet wearing TBE's numbers.",
+  "authors": [],
+  "url": "",
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "bugs": "",
+  "changelog": "CHANGELOG.md",
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/the-broken-empires/assets/anvil-impact.png",
+      "thumbnail": "systems/the-broken-empires/assets/anvil-impact.png"
+    }
+  ],
+  "version": "0.37.0",
+  "compatibility": {
+    "minimum": 12,
+    "verified": "14.365"
+  },
+  "esmodules": [
+    "module/the-broken-empires.mjs"
+  ],
+  "styles": [
+    "css/the-broken-empires.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "tbe-talents",
+      "label": "TBE Talents",
+      "path": "packs/tbe-talents",
+      "type": "Item",
+      "system": "the-broken-empires",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "folder": "tbe-content"
+    },
+    {
+      "name": "tbe-equipment",
+      "label": "TBE Weapons, Armor & Shields",
+      "path": "packs/tbe-equipment",
+      "type": "Item",
+      "system": "the-broken-empires",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "folder": "tbe-content"
+    },
+    {
+      "name": "tbe-bestiary",
+      "label": "TBE Bestiary",
+      "path": "packs/tbe-bestiary",
+      "type": "Actor",
+      "system": "the-broken-empires",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "folder": "tbe-content"
+    },
+    {
+      "name": "tbe-macros",
+      "label": "TBE Tools",
+      "path": "packs/tbe-macros",
+      "type": "Macro",
+      "system": "the-broken-empires",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "folder": "tbe-content"
+    },
+    {
+      "name": "tbe-tables",
+      "label": "TBE Oracle Tables",
+      "path": "packs/tbe-tables",
+      "type": "RollTable",
+      "system": "the-broken-empires",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "folder": "tbe-content"
+    },
+    {
+      "name": "tbe-journals",
+      "label": "TBE Reference",
+      "path": "packs/tbe-journals",
+      "type": "JournalEntry",
+      "system": "the-broken-empires",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "folder": "tbe-content"
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "The Broken Empires",
+      "sorting": "m",
+      "color": "#7a5a2e",
+      "packs": [
+        "tbe-macros",
+        "tbe-talents",
+        "tbe-equipment",
+        "tbe-bestiary",
+        "tbe-tables",
+        "tbe-journals"
+      ]
+    }
+  ],
+  "socket": false,
+  "manifest": "",
+  "download": "",
+  "background": "systems/the-broken-empires/assets/anvil-impact.png",
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
+  "primaryTokenAttribute": "deathThreshold",
+  "secondaryTokenAttribute": "resolve",
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": [
+          "biography",
+          "notes"
+        ]
+      },
+      "creature": {
+        "htmlFields": [
+          "biography"
+        ]
+      }
+    },
+    "Item": {
+      "skill": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "weapon": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "armor": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "shield": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "talent": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "strand": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "thread": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "enchantment": {
+        "htmlFields": [
+          "description"
+        ]
+      }
+    }
+  }
+}

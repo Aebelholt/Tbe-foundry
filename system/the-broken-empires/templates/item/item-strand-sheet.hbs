@@ -1,0 +1,31 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Strand"/></h1>
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Ch.3 p.33: a Strand is not rolled like a skill. Its level is a single number that helps cover a spell's Total Cost.">Level</label>
+          <input type="text" name="system.level" value="{{system.level}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Ch.7 p.104: a Thin Strand cannot be developed at character creation and costs double (10 XP) to acquire later.">Thin Strand</label>
+          <input type="checkbox" name="system.thin" {{checked system.thin}}/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div style="font-size:11px;opacity:.85;margin-bottom:6px">
+        A Strand contributes its level to your <b>Mastery</b> on every casting that uses it
+        (Ch.14: &ldquo;Add together the Bind roll&rsquo;s ones die, the relevant Strand value, and
+        any Thread result&rdquo;). Raise it with <b>TBE: Advancement</b>, which charges XP equal
+        to the next value and adds Fraying for any point above 10.
+      </div>
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+  </section>
+</form>

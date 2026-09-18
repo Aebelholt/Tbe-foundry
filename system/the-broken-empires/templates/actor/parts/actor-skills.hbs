@@ -1,0 +1,35 @@
+<div class="skills-list">
+  <div class="items-header flexrow">
+    <div class="item-name">Skill</div>
+    <div class="skill-value">Value</div>
+    <div class="skill-fighting">Fighting</div>
+    <div class="item-controls">
+      <a class="item-control item-create" title="Create Skill" data-type="skill">
+        <i class="fas fa-plus"></i> New Skill
+      </a>
+    </div>
+  </div>
+  {{#each config.SKILL_GROUPS as |group|}}
+  <div class="skill-group">
+    <h3 class="skill-group-label">{{group}}</h3>
+    <ol class="items-list">
+      {{#each (lookup @root.skillGroups group) as |item|}}
+      <li class="item flexrow" data-item-id="{{item._id}}">
+        <div class="item-name">
+          <img class="item-image" src="{{item.img}}" width="20" height="20"/>
+          <h4 class="skill-roll rollable" title="Roll {{item.name}}">{{item.name}}{{#if item.system.savvy}} <span class="skill-savvy" title="Savvy: +1 when improving with XP">S</span>{{/if}}{{#if (gt item.system.expertise 1)}} <span class="skill-expertise" title="Expertise: minimum SLs on a success">Ex{{item.system.expertise}}</span>{{/if}}</h4>
+        </div>
+        <div class="skill-value">{{item.system.value}}</div>
+        <div class="skill-fighting">{{#if item.system.fighting}}<i class="fas fa-check"></i>{{/if}}</div>
+        <div class="item-controls">
+          <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
+        </div>
+      </li>
+      {{else}}
+      <li class="item-empty">&mdash; none &mdash;</li>
+      {{/each}}
+    </ol>
+  </div>
+  {{/each}}
+</div>

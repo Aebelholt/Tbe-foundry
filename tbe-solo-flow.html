@@ -1,0 +1,214 @@
+<title>The Lone Weaver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#171310; --panel:#1f1a15; --ink:#d9d2c4; --ink-dim:#9a907d;
+    --rule:#3a322a; --accent:#c05a48; --accent-deep:#8c3226; --brass:#a8874f;
+    --chip-bg:#26201a; --good:#7d9a6a;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --ground:#efeae0; --panel:#e6dfd2; --ink:#26221c; --ink-dim:#6f6656;
+      --rule:#cfc5b4; --accent:#8c3226; --accent-deep:#6e2118; --brass:#7a5f2e;
+      --chip-bg:#e0d8c8; --good:#4e6e3a;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#efeae0; --panel:#e6dfd2; --ink:#26221c; --ink-dim:#6f6656;
+    --rule:#cfc5b4; --accent:#8c3226; --accent-deep:#6e2118; --brass:#7a5f2e;
+    --chip-bg:#e0d8c8; --good:#4e6e3a;
+  }
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:"Alegreya", Georgia, serif; font-size:17px; line-height:1.6;
+    margin:0; padding:0 20px 90px;
+  }
+  .wrap{max-width:780px; margin:0 auto}
+  header{padding:64px 0 28px; border-bottom:1px solid var(--rule)}
+  h1{
+    font-family:"IM Fell English", Georgia, serif; font-weight:400;
+    font-size:clamp(40px,7vw,58px); line-height:1.05; margin:0 0 10px; text-wrap:balance;
+  }
+  .sub{color:var(--ink-dim); font-size:18px; font-style:italic; max-width:56ch; margin:0}
+  h2{
+    font-family:"IM Fell English", Georgia, serif; font-weight:400;
+    font-size:31px; margin:56px 0 6px; text-wrap:balance;
+  }
+  h2 + .lede{color:var(--ink-dim); font-style:italic; margin:0 0 18px}
+  h3{font-size:19px; font-weight:700; margin:26px 0 6px}
+  p{margin:0 0 14px; max-width:68ch}
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace; font-size:11.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 2px;
+  }
+  kbd.m{
+    font-family:"IBM Plex Mono", monospace; font-size:.82em; font-weight:500;
+    background:var(--chip-bg); border:1px solid var(--rule); border-bottom-width:2px;
+    border-radius:4px; padding:1px 7px 2px; white-space:nowrap;
+  }
+  kbd.k{
+    font-family:"IBM Plex Mono", monospace; font-size:.8em;
+    border:1px solid var(--ink-dim); border-radius:3px; padding:0 5px; white-space:nowrap;
+  }
+  .steps{list-style:none; margin:20px 0; padding:0; counter-reset:st}
+  .steps>li{
+    counter-increment:st; position:relative; padding:0 0 22px 58px;
+    border-left:1px solid var(--rule); margin-left:19px;
+  }
+  .steps>li:last-child{padding-bottom:4px}
+  .steps>li::before{
+    content:counter(st); position:absolute; left:-20px; top:-2px;
+    width:38px; height:38px; border-radius:50%;
+    background:var(--panel); border:1px solid var(--rule);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"IM Fell English", Georgia, serif; font-size:19px; color:var(--accent);
+  }
+  .steps b.t{display:block; font-size:18.5px}
+  table{border-collapse:collapse; width:100%; font-size:15px; font-variant-numeric:tabular-nums}
+  .tw{overflow-x:auto; margin:14px 0 20px; border:1px solid var(--rule); border-radius:6px}
+  th{
+    text-align:left; font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim);
+    padding:9px 12px; border-bottom:1px solid var(--rule); background:var(--panel);
+  }
+  td{padding:8px 12px; border-bottom:1px solid var(--rule); vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td:first-child{white-space:nowrap}
+  .note{
+    border-left:3px solid var(--brass); background:var(--panel);
+    padding:12px 16px; margin:18px 0; border-radius:0 6px 6px 0; max-width:64ch;
+  }
+  .note b:first-child{color:var(--brass)}
+  .warn{border-left-color:var(--accent-deep)}
+  .warn b:first-child{color:var(--accent)}
+  .cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin:16px 0}
+  .card{border:1px solid var(--rule); border-radius:6px; padding:14px 16px; background:var(--panel)}
+  .card h3{margin:0 0 6px; font-size:17px}
+  .card p{font-size:15px; margin:0; color:var(--ink); max-width:none}
+  footer{margin-top:70px; border-top:1px solid var(--rule); padding-top:16px;
+    color:var(--ink-dim); font-size:14px; font-style:italic}
+  a{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  @media (prefers-reduced-motion:no-preference){
+    header{animation:rise .5s ease-out both}
+    @keyframes rise{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}}
+  }
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">The Broken Empires · solo play in Foundry VTT</p>
+  <h1>The Lone Weaver</h1>
+  <p class="sub">One player, one Gamemaster, both of them you. Twenty macros, one hotbar row, and how a session actually runs. Plus the fifth of Foundry worth knowing.</p>
+</header>
+
+<h2>The table, set once</h2>
+<p class="lede">Twenty minutes the first evening, never again.</p>
+<ol class="steps">
+  <li><b class="t">World on Call of Cthulhu 7e</b>Create the world on the CoC7 system. It provides the d100 sheet, tokens, and item plumbing; every rule that matters runs through the TBE macros instead.</li>
+  <li><b class="t">Run the three installers</b>Each is one Script macro: paste, save, click. Solo pack first, then equipment, then bestiary. All three are safe to re-run when updated, and they report to the console (<kbd class="k">F12</kbd>, lines starting <span style="font-family:'IBM Plex Mono',monospace">TBE |</span>) if anything objects.</li>
+  <li><b class="t">Build your character</b>Make a blank Character actor, select its token, run <kbd class="m">TBE: Build Character</kbd>. It stocks the sheet with the TBE skill list and creates your <em>TBE Sheet</em> journal for everything CoC7 has no field for. Then do Chapter&nbsp;7 chargen by typing values in. Right-click the actor and choose <em>Assign as Character</em> so the macros find you without a token selected.</li>
+  <li><b class="t">Arm yourself</b>Drag weapons from the <em>TBE Weapons</em> folder onto your sheet. <kbd class="m">TBE: Attack</kbd> reads skill, damage, and maneuver costs off the item, so a weapon on the sheet is a weapon that works.</li>
+  <li><b class="t">Lay the hotbar</b>Everything lives on keys 1&ndash;0. The whole game is one row of your keyboard.</li>
+</ol>
+
+<div class="tw"><table>
+<tr><th>Key</th><th>Macro</th><th>Reaches for</th></tr>
+<tr><td>1</td><td><kbd class="m">TBE: Solo Panel</kbd></td><td>all twenty, grouped by what you are doing</td></tr>
+<tr><td>2</td><td><kbd class="m">Ask the Weave</kbd></td><td>any question the fiction cannot answer</td></tr>
+<tr><td>3</td><td><kbd class="m">TBE: Skill Roll</kbd></td><td>standard rolls, task modifiers</td></tr>
+<tr><td>4</td><td><kbd class="m">TBE: Attack</kbd></td><td>the full combat exchange</td></tr>
+<tr><td>5</td><td><kbd class="m">TBE: Quick Combat</kbd></td><td>fights whose outcome is not in doubt</td></tr>
+<tr><td>6</td><td><kbd class="m">TBE: Subverted Scene</kbd></td><td>every scene opening</td></tr>
+<tr><td>7</td><td><kbd class="m">TBE: NPC</kbd></td><td>who is this, answered completely</td></tr>
+<tr><td>8</td><td><kbd class="m">TBE: Clocks</kbd></td><td>anything longer than one roll</td></tr>
+<tr><td>9</td><td><kbd class="m">TBE: Wounds &amp; Recovery</kbd></td><td>after the fight, and every night after</td></tr>
+<tr><td>0</td><td><kbd class="m">TBE: Status</kbd></td><td>where everything stands</td></tr>
+</table></div>
+
+<div class="note"><b>The scene is a stage, not a grid.</b> TBE thinks in zones, not squares. A plain backdrop scene with three or four drawn rectangles labelled by zone quality &mdash; <em>Open</em>, <em>Rough</em>, <em>the ford</em> &mdash; carries a whole fight. Skip measured movement entirely; a token sitting inside a rectangle is the position record.</div>
+
+<h2>The loop</h2>
+<p class="lede">A session is this sequence, repeated until bedtime.</p>
+<ol class="steps">
+  <li><b class="t">Frame the scene</b>Say your expectation aloud or in the box: <em>&ldquo;I ride to the Death Knight's castle.&rdquo;</em> Run <kbd class="m">TBE: Subverted Scene</kbd>. Expected, Less, More, or Unexpected &mdash; the macro rolls the follow-up words or the interrupting Event itself.</li>
+  <li><b class="t">Act toward a goal</b>Your character does something that pursues what they want. If the outcome is uncertain, roll it: <kbd class="m">TBE: Skill Roll</kbd> with a task modifier, or <kbd class="m">TBE: Attack</kbd> if steel is out. If your skill makes success obvious, don't roll at all &mdash; take 1&nbsp;SL and move.</li>
+  <li><b class="t">Ask when you don't know</b><kbd class="m">Ask the Weave</kbd>, with odds, phrased so <em>yes</em> creates a complication: not &ldquo;is the chest safe?&rdquo; but &ldquo;is the chest trapped?&rdquo;. Doubles fire a Random Event on top of the answer &mdash; the macro handles it, including the Empires List draw when the event calls for one.</li>
+  <li><b class="t">Interpret, first instinct</b>The two randomizer words plus context. If nothing comes in ten seconds, re-roll or discard; second-guessing kills solo games faster than any monster.</li>
+  <li><b class="t">Record what now matters</b>A new face &rarr; <kbd class="m">TBE: NPC</kbd> rolls their name, look, aspect, agenda and reaction trigger, and files them on the Empires List for you. Something long begun &rarr; <kbd class="m">TBE: Clocks</kbd>. Then <kbd class="m">TBE: Session Log</kbd> for the two sentences that make this readable in a month.</li>
+</ol>
+
+<h2>Running your characters</h2>
+<p><b>Selection is who acts; targeting is who suffers.</b> Click a token to select it &mdash; the macros roll with <em>that</em> actor's skills and weapons. Hover an enemy and press <kbd class="k">T</kbd> to target it &mdash; that's who the attack resolves against. This one pair of habits is most of &ldquo;controlling actors&rdquo; in Foundry.</p>
+<p>Hirelings and allies are just more Character actors: build them with <kbd class="m">TBE: Build Character</kbd> at whatever skill base fits, park their tokens beside yours, and select whichever one is acting. The book's advice stands &mdash; don't go into the dungeon alone. Enemy turns use the same tool in reverse: select the <em>creature's</em> token, target <em>your</em> PC, run <kbd class="m">TBE: Attack</kbd>. One macro plays both sides.</p>
+
+<div class="tw"><table>
+<tr><th>CoC7 field</th><th>What it is in TBE</th></tr>
+<tr><td>HP</td><td>Lethal Wound Points against the Death Threshold. The attack macro maintains it.</td></tr>
+<tr><td>MP</td><td>Resolve. Spend and recover by hand; set max to your Max Resolve.</td></tr>
+<tr><td>Skills</td><td>TBE skills, values typed straight in. Rename blank <em>Wise</em>/<em>Bind</em> slots via the row's edit button.</td></tr>
+<tr><td>TBE Sheet journal</td><td>Attributes, the six-location wound table, Talents, goals, supply dice, purse.</td></tr>
+<tr><td>SAN, Luck, STR&ndash;EDU</td><td>Ignored. They can sit at zero forever.</td></tr>
+</table></div>
+
+<h2>A fight, start to finish</h2>
+<ol class="steps">
+  <li><b class="t">Set the stage</b>Drag the creature from <em>TBE Bestiary</em> onto the scene. Describe the zones like a GM would &mdash; elevation, mud, fire, cover. Interesting ground is what makes maneuvers worth choosing.</li>
+  <li><b class="t">Order of action</b>Enemies act on the static Initiative in their bio; you roll d10&nbsp;+&nbsp;your Initiative once. Higher first, then alternate. The combat tracker is optional overhead &mdash; for one or two combatants a side, just remember who's fast.</li>
+  <li><b class="t">Your exchange</b>Select your PC, <kbd class="k">T</kbd> the foe, <kbd class="m">TBE: Attack</kbd>. Pick the weapon &mdash; skill and damage come with it. Defence is pre-picked from the foe's Dodge or best parry skill. One dialog, one Strike.</li>
+  <li><b class="t">Win the clash, pick a maneuver</b>The popup lists every Combat Maneuver with that weapon's own costs, greyed where your rolled SLs fall short. The rule the macro enforces so you don't have to: <em>maneuvers gate on rolled SLs and are never spent; damage uses DoS</em>. A critical adds +3&nbsp;SL and unlocks two picks.</li>
+  <li><b class="t">The wound resolves itself</b>Hit location from the dice, armour and shield AP from the creature's grid, Circumvent Shield and Pierce Armor applied if chosen, Wound Die with Toughness, impairment called out, WP subtracted from HP. Trip and Shield Bash set Prone on the sheet; Unbalance and Lock leave a token icon.</li>
+  <li><b class="t">Their exchange</b>Select the creature, target you, same macro. It writes the wound to <em>your</em> sheet exactly the way it writes one to a foe's &mdash; same per-location WP, same impairment count, same token icons. Nothing to copy into the journal by hand.</li>
+</ol>
+<div class="note warn"><b>Shields are that strong.</b> Damage&nbsp;+&nbsp;DoS must clear armour <em>plus</em> shield AP. A hand axe against a shielded bandit often needs Circumvent Shield or a fat DoS to draw blood. That's the book working as intended, not the macro failing you &mdash; and it's why Splitting the Shield exists.</div>
+
+<h2>Clocks are everything long</h2>
+<p class="lede">One mechanic, many skins: the extended roll.</p>
+<p><kbd class="m">TBE: Clocks</kbd> keeps them: name a clock, set SLs required (3 easy · 6 standard · 9 difficult · 12+ major), an interval, and an optional limit. Each advance rolls a skill from the selected token &mdash; or takes SLs typed in directly, for helpers and half-progress rulings. Successes accumulate, a critical failure halves the total (rounding up), and hitting the limit closes the opportunity. Every clock persists in the <em>TBE Clocks</em> journal with a progress bar, so pop that journal out and pin it beside chat.</p>
+<div class="cols">
+  <div class="card"><h3>Travel leg</h3><p>6&nbsp;SL, interval a day, limit = days of rations. Roll Survival or Track; a failed day also triggers an event roll. The full Chapter&nbsp;12 machine, one clock.</p></div>
+  <div class="card"><h3>Social encounter</h3><p>Need 3&ndash;6&nbsp;SL of Persuade, Wit, Protocol in sequence; limit 4&ndash;5 exchanges as the Timer. Failure adds a complication; a critical failure is the door closing.</p></div>
+  <div class="card"><h3>Crafting</h3><p>Straight from the book's table &mdash; a Medium weapon is 12&nbsp;SL of Craft: Practical, interval a day. The macro's crit-fail halving <em>is</em> the ruined-work rule.</p></div>
+  <div class="card"><h3>Investigation</h3><p>9&nbsp;SL over the scene, every 3&nbsp;SL banked reveals the next clue. Gradual outcomes without extra machinery.</p></div>
+</div>
+
+<h2>After the blood</h2>
+<p class="lede">The part most VTT tools skip, and the part that actually kills you.</p>
+<p>Twenty thousand simulated fights say the same thing: characters fall to <b>Shock</b> roughly four times as often as to the Death Threshold, and Shock comes from a second impairment in one location. That makes per-location wounds the state worth tracking, and <kbd class="m">TBE: Wounds &amp; Recovery</kbd> is where they live.</p>
+<p>Attack writes wounds there automatically, location by location, with impairment counts, and offers the 3-Resolve refusal when Shock lands. Afterwards the same macro does the rest of Chapter 11: Stabilize the dying, Treat a wound (which sets its Recovery Bonus and can never be redone), remove an impairment, rouse someone from Shock, purge an infection, and run a night's Recovery roll per wound with the cleanliness modifier. Every Heal attempt burns the Medical Supply Die, as the book demands, and a critical failure degrades it automatically.</p>
+<div class="note"><b>Untreated wounds set at -20.</b> A wound left alone for an hour fixes its own Recovery Bonus at -20 and can never be treated afterwards. Treating in the field, badly, still beats not treating at all.</div>
+<p>Every state that matters now shows on the token, not just in a chat card: each impaired location gets its own icon, Shock and Dying and Infected and Septic all get one too, and so do Unbalance/Lock/Disarm/Disadvantaged riders and a caster's own Restrained from a bad Weave Reaction &mdash; <kbd class="m">TBE: Attack</kbd>, <kbd class="m">TBE: Wounds &amp; Recovery</kbd>, and <kbd class="m">TBE: Cast</kbd> apply and clear these for you. <kbd class="m">TBE: Status Effects</kbd> is the manual side of the same folder &mdash; mark Fatigue, Weary, Deprived, Sleepless, Blinded, Frostbite, Burning, Poisoned, or Feared when the fiction calls for one, since nothing rolls those automatically yet. The full list, book page references included, lives in the <em>TBE: Status &amp; Peril Reference</em> journal the installer creates; <kbd class="m">TBE: Status</kbd> also repaints every icon to match your actual wounds whenever you open it, so nothing stays stale if a step gets skipped.</p>
+
+<h2>The road and the pack</h2>
+<p><kbd class="m">TBE: Journey Leg</kbd> compresses the eight-step leg into the rolls one player actually makes: the Guide's Track roll for distance (half your Score, plus a hex per SL), the Quartermaster's Survival roll against your rations, the arrival Infection check for anyone carrying lethal wounds, the Scout's Perception roll for warning, then the Event itself with odds that shift by hex danger. Take the free <b>Lone Wanderer</b> Talent and the -40 for holding all three duties disappears.</p>
+<p><kbd class="m">TBE: Supply</kbd> keeps Gear, Ammo, Medical and Rations on their d12 to d6 track. It runs itself where it matters: a bow shot rolls Ammo, a Heal roll rolls Medical, a night's rest and a failed forage roll Rations.</p>
+
+<h2>Magic that bites back</h2>
+<p><kbd class="m">TBE: Cast</kbd> takes the Bind roll, the control check, and the whole d20 Weave Reaction table. Declare the effect, name the shortfall in Total Cost you could not cover, then decide how much Resolve to spend mitigating before you know whether the target resists. Spend nothing and the Reaction rolls; a critical failure adds +5 to it. NPC casters use the Chapter 18 shortcut instead, where the ones die against the Strand decides control, and the macro reads the ones die back as the struck hit location for damaging spells.</p>
+
+<h2>Foundry, the fifth you need</h2>
+<p>Foundry is a database with a map on top. Five document types matter here, and nothing else does.</p>
+<div class="tw"><table>
+<tr><th>Thing</th><th>What it is</th><th>Where</th></tr>
+<tr><td>Actor</td><td>A character sheet. The <em>token</em> is its playing piece; deleting a token never deletes the actor.</td><td>Actors tab</td></tr>
+<tr><td>Item</td><td>A document <em>on</em> an actor &mdash; skills and weapons are items. Drag to copy, edit via the row's button.</td><td>Items tab, or on sheets</td></tr>
+<tr><td>Journal</td><td>Pages of text. Your TBE Sheet, session log, clocks, and references live here. Pop out with the window icon.</td><td>Journal tab</td></tr>
+<tr><td>Roll table</td><td>d100 ranges with results. The oracle's guts &mdash; edit them freely, the macros read whatever is there.</td><td>Roll Tables tab</td></tr>
+<tr><td>Macro</td><td>A button of script. Found behind the folder icon at the <em>left end of the hotbar</em>, not in the sidebar.</td><td>Hotbar folder</td></tr>
+</table></div>
+<p>Play as the GM login. Solo has no secrets to keep, and GM permission is what lets the macros write wounds and conditions onto any sheet.</p>
+
+<h2>Making Foundry disappear</h2>
+<p>The aim is that a session touches the keyboard row, the <kbd class="k">T</kbd> key, and the chat log &mdash; nothing else.</p>
+<div class="cols">
+  <div class="card"><h3>One key, whole game</h3><p>When in doubt, key 1: the Solo Panel lists every tool. Muscle memory for 2, 4, and 8 comes free within a session.</p></div>
+  <div class="card"><h3>Pin the paper</h3><p>Pop out your TBE Sheet, the session log, and TBE Clocks as floating windows. Foundry remembers window positions per client.</p></div>
+  <div class="card"><h3>Let chat be the record</h3><p>Every macro posts a card &mdash; the chat log <em>is</em> the session transcript. Skim it before the next session instead of taking separate notes.</p></div>
+  <div class="card"><h3>Physical dice feel</h3><p>Dice So Nice rolls 3D dice for every macro roll. For solo immersion it earns its install more than any other module.</p></div>
+  <div class="card"><h3>When something ghosts</h3><p>Stale hotbar warnings or a sheet not refreshing: <kbd class="k">F5</kbd> first. Installer complaints: <kbd class="k">F12</kbd>, read the <span style="font-family:'IBM Plex Mono',monospace">TBE |</span> lines, send them onward.</p></div>
+  <div class="card"><h3>Update without fear</h3><p>Re-running any installer updates in place: hotbar slots survive, and a filled-in Empires List is never overwritten.</p></div>
+</div>
+
+<footer>Built for The Broken Empires RPG core rules &mdash; oracle ch.&nbsp;19, maneuvers ch.&nbsp;10, wounds ch.&nbsp;11, extended rolls ch.&nbsp;2. Personal play aid.</footer>
+</div>

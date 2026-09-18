@@ -1,0 +1,107 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="overview">Overview</a>
+    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="talents">Talents</a>
+    <a class="item" data-tab="magic">Magic</a>
+    <a class="item" data-tab="gear">Gear</a>
+    <a class="item" data-tab="notes">Notes</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Overview Tab: what changes moment-to-moment in play comes first --
+         vitals, wound table, and Initiative/Lethality/Shock, matching how
+         the creature sheet already leads with actor-wounds.hbs -- then the
+         mostly-set-once-at-creation identity block (Race/Size/Culture/
+         Career/Silver/Status/XP), then Supply. Previously identity led,
+         pushing the wound table below the fold; reordered per direct
+         feedback that Overview's priorities were "a little slanted." --}}
+    <div class="tab overview" data-group="primary" data-tab="overview">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-wounds.hbs"}}
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-identity.hbs"}}
+      <h3>Supply</h3>
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-supply.hbs"}}
+    </div>
+
+    {{!-- Skills Tab --}}
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-skills.hbs"}}
+    </div>
+
+    {{!-- Talents Tab --}}
+    <div class="tab talents" data-group="primary" data-tab="talents">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-talents.hbs"}}
+    </div>
+
+    {{!-- Magic Tab: Binds, Strands and Fraying. Present for everyone rather
+         than hidden behind the Pattern, because "can I learn magic, and what
+         would it cost" is itself a question the sheet should answer. --}}
+    <div class="tab magic" data-group="primary" data-tab="magic">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-magic.hbs"}}
+    </div>
+
+    {{!-- Gear Tab --}}
+    <div class="tab gear" data-group="primary" data-tab="gear">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-items.hbs"}}
+    </div>
+
+    {{!-- Notes Tab: Biography + free-text extras (talents, goals, purse) --}}
+    <div class="tab notes" data-group="primary" data-tab="notes">
+      <h3>Personality Traits</h3>
+      <div class="personality-traits">
+        {{#each system.personalityTraits as |trait i|}}
+        <div class="flexrow trait-row" style="align-items:center;margin-bottom:2px">
+          <input type="text" class="trait-input" data-idx="{{i}}" value="{{trait}}" placeholder="Trait" style="flex:1"/>
+          <a class="trait-remove item-control" data-idx="{{i}}" title="Remove"><i class="fas fa-trash"></i></a>
+        </div>
+        {{else}}
+        <div class="trait-empty" style="font-size:11px;opacity:.7">&mdash; none yet &mdash;</div>
+        {{/each}}
+        <a class="trait-add item-control" title="Add Trait"><i class="fas fa-plus"></i> Add Trait</a>
+        <div style="font-size:11px;opacity:.7;margin-top:2px">Change, add, or remove freely at the end of a session as warranted by play (Ch.8 p.123, no XP cost).</div>
+      </div>
+      <h3>Goals</h3>
+      <div class="goals">
+        {{#each system.goals as |goal i|}}
+        <div class="flexrow goal-row" style="align-items:center;margin-bottom:2px">
+          <input type="checkbox" class="goal-done" data-idx="{{i}}" {{checked goal.done}} title="Completed"/>
+          <input type="text" class="goal-input" data-idx="{{i}}" value="{{goal.text}}" placeholder="Goal" style="flex:1"/>
+          <select class="goal-kind" data-idx="{{i}}" style="width:90px">
+            <option value="individual" {{#if (eq goal.kind "individual")}}selected{{/if}}>Individual</option>
+            <option value="shared" {{#if (eq goal.kind "shared")}}selected{{/if}}>Shared</option>
+          </select>
+          {{#if goal.awarded}}<span class="tag" title="TBE: Advancement has already paid the XP for this goal.">XP paid</span>{{/if}}
+                    <a class="goal-remove item-control" data-idx="{{i}}" title="Remove"><i class="fas fa-trash"></i></a>
+        </div>
+        {{else}}
+        <div style="font-size:11px;opacity:.7">&mdash; none yet &mdash;</div>
+        {{/each}}
+        <a class="goal-add item-control" title="Add Goal"><i class="fas fa-plus"></i> Add Goal</a>
+        <div style="font-size:11px;opacity:.7;margin-top:2px">Keep three to five active (Ch.6). Build them with <b>TBE: Finish Character</b>, which walks the book&rsquo;s four-step method.</div>
+      </div>
+      <h3>Biography</h3>
+      {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+      <h3>Notes</h3>
+      {{editor enrichedNotes target="system.notes" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-effects.hbs"}}
+    </div>
+
+  </section>
+</form>

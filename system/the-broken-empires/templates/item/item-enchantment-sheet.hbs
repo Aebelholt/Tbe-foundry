@@ -1,0 +1,107 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Enchanted item"/></h1>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A Use Die risks going inert; charges are a guaranteed number of uses; single-use spends the vessel forever; a potion is alchemy's single-use form, measured in doses from one batch.">Kind</label>
+          <select name="system.kind">
+            <option value="die" {{#if (eq system.kind "die")}}selected{{/if}}>Use Die</option>
+            <option value="charges" {{#if (eq system.kind "charges")}}selected{{/if}}>Charges</option>
+            <option value="single" {{#if (eq system.kind "single")}}selected{{/if}}>Single-use</option>
+            <option value="potion" {{#if (eq system.kind "potion")}}selected{{/if}}>Potion (doses)</option>
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Rolled after each use. On a 1 or 2 the item is inert for 1-6 days — on a 1-4 if the enchantment is unstable.">Use Die</label>
+          <select name="system.die">
+            <option value="d6" {{#if (eq system.die "d6")}}selected{{/if}}>d6</option>
+            <option value="d8" {{#if (eq system.die "d8")}}selected{{/if}}>d8</option>
+            <option value="d10" {{#if (eq system.die "d10")}}selected{{/if}}>d10</option>
+            <option value="d12" {{#if (eq system.die "d12")}}selected{{/if}}>d12</option>
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Days of inertness left. TBE: Use Enchanted Item sets this when the Use Die comes up short.">Inert for</label>
+          <input type="text" name="system.inertDays" value="{{system.inertDays}}" data-dtype="Number"/>
+        </div>
+      </div>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Charges or doses left. No enchanted item may exceed 30 charges.">Left</label>
+          <input type="text" name="system.charges" value="{{system.charges}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Out of</label>
+          <input type="text" name="system.chargesMax" value="{{system.chargesMax}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Anyone resisting this item's magic must meet or beat the Bind roll it was made with.">Resistance</label>
+          <input type="text" name="system.resistance" value="{{system.resistance}}" data-dtype="Number"/>
+        </div>
+      </div>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A Weave Reaction during its making left a flaw in the item's Pattern. Unstable items fail more readily, in a way that depends on their kind.">Unstable</label>
+          <input type="checkbox" name="system.unstable" {{checked system.unstable}}/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A spent single-use vessel can never again hold magic; a collapsed potion batch is inert.">Spent</label>
+          <input type="checkbox" name="system.spent" {{checked system.spent}}/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="By default only a Spellweaver or Fade can use an enchanted item, after a successful Arcana roll. Making it usable by anyone cost its maker +1 Fraying and an activation word.">Anyone can use</label>
+          <input type="checkbox" name="system.anyoneCanUse" {{checked system.anyoneCanUse}}/>
+        </div>
+      </div>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">Bind</label>
+          <input type="text" name="system.bind" value="{{system.bind}}"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="A potion's reagents must match this Strand.">Strand</label>
+          <input type="text" name="system.strand" value="{{system.strand}}"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="The stored spell's Total Cost, fixed at creation.">TC</label>
+          <input type="text" name="system.tc" value="{{system.tc}}" data-dtype="Number"/>
+        </div>
+      </div>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Spoken aloud, or inscribed on the item and activated by touch.">Activation word</label>
+          <input type="text" name="system.activationWord" value="{{system.activationWord}}"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="What it cost its enchanter. Alchemy accrues none.">Fraying paid</label>
+          <input type="text" name="system.frayingCost" value="{{system.frayingCost}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Weave Reagents consumed in place of Fraying, one per point.">Reagents used</label>
+          <input type="text" name="system.reagentsUsed" value="{{system.reagentsUsed}}" data-dtype="Number"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="resource flex-group-center" style="margin-bottom:6px">
+        <label class="resource-label" title="Fixed at creation: the item reproduces this spell exactly, Duration, Target, Range and Effect.">The stored spell</label>
+        <input type="text" name="system.spell" value="{{system.spell}}" placeholder="e.g. Change Body: +3 Toughness for 1 hour"/>
+      </div>
+      <div style="font-size:11px;opacity:.85;margin-bottom:6px">
+        The item itself is the caster, so a spell with a Range or Target of <b>Self</b> affects the
+        item and not whoever holds it &mdash; unless the item's purpose naturally extends the effect
+        to its user (a flying broom carries its rider; an enchanted lantern lights the room).
+        An enchanted item can only reproduce its own stored spells: it can never counterspell or
+        otherwise react to magic. <b>TBE: Use Enchanted Item</b> rolls the Use Die, spends charges
+        and doses, and applies what happens when an unstable one fails.
+      </div>
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+  </section>
+</form>

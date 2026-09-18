@@ -1,0 +1,45 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">AP</label>
+          <input type="text" name="system.ap" value="{{system.ap}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Ch.9 p.129 Encumbrance">ENC</label>
+          <input type="text" name="system.enc" value="{{system.enc}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="At Hand shares a 6 ENC pool; Stored counts against Inventory ENC instead">Carried</label>
+          <select name="system.carried">
+            <option value="ready" {{#if (eq system.carried "ready")}}selected{{/if}}>Held and Ready (no action)</option>
+            <option value="hand" {{#if (eq system.carried "hand")}}selected{{/if}}>At Hand (Minor Action to draw)</option>
+            <option value="stored" {{#if (eq system.carried "stored")}}selected{{/if}}>Stored (2 full actions to retrieve)</option>
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="SL cost to Shield Bash with this shield, p.140. Leave blank for a Buckler, which cannot Shield Bash at all">Shield Bash SL</label>
+          <input type="text" name="system.shb" value="{{system.shb}}" data-dtype="Number" placeholder="blank = can't"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/the-broken-empires/templates/item/parts/item-effects.hbs"}}
+    </div>
+  </section>
+</form>

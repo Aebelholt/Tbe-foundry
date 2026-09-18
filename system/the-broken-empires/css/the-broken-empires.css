@@ -1,0 +1,472 @@
+/* Fonts: named first, then a real fallback stack.
+   This used to open with an @import from fonts.googleapis.com, which meant a
+   self-hosted world with no internet rendered in whatever the browser picked,
+   and every table made an outbound request to Google that nobody running their
+   own VTT would expect. The families are open-licensed and could be bundled;
+   until they are, the fallbacks below carry the same old-style serif and
+   monospace character on every platform, and anyone who has the real faces
+   installed still gets them. */
+
+/* ------------------------------------------------------------------ */
+/* Lone Weaver aesthetic: dark parchment + brass, matching the         */
+/* published solo-play reference sheet.                                */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --tbe-ink: #efe2c4;
+  --tbe-ink-dim: #c9b98f;
+  --tbe-parchment: #2a2016;
+  --tbe-parchment-light: #362a1c;
+  --tbe-parchment-panel: #1f1710;
+  --tbe-brass: #c08a3e;
+  --tbe-brass-bright: #e0ac5c;
+  --tbe-brass-dim: #7a5a2e;
+  --tbe-blood: #8c2f2f;
+  --tbe-shadow: rgba(0, 0, 0, 0.55);
+}
+
+.the-broken-empires.sheet {
+  font-family: "Alegreya", "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  color: var(--tbe-ink);
+  background: var(--tbe-parchment);
+  border: 1px solid var(--tbe-brass-dim);
+}
+
+.the-broken-empires.sheet .window-content {
+  background: var(--tbe-parchment);
+  color: var(--tbe-ink);
+}
+
+.the-broken-empires.sheet h1,
+.the-broken-empires.sheet h2,
+.the-broken-empires.sheet h3 {
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  color: var(--tbe-brass-bright);
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--tbe-brass-dim);
+  padding-bottom: 2px;
+  margin: 10px 0 6px;
+}
+
+.the-broken-empires.sheet input,
+.the-broken-empires.sheet select,
+.the-broken-empires.sheet textarea {
+  background: var(--tbe-parchment-panel);
+  color: var(--tbe-ink);
+  border: 1px solid var(--tbe-brass-dim);
+  border-radius: 2px;
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.the-broken-empires.sheet input:focus,
+.the-broken-empires.sheet select:focus {
+  outline: none;
+  border-color: var(--tbe-brass-bright);
+  box-shadow: 0 0 4px var(--tbe-brass);
+}
+
+.the-broken-empires.sheet input[type="checkbox"] {
+  accent-color: var(--tbe-brass);
+}
+
+/* Header */
+.the-broken-empires.sheet .sheet-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  background: var(--tbe-parchment-light);
+  border-bottom: 2px solid var(--tbe-brass-dim);
+}
+
+.the-broken-empires.sheet .profile-img {
+  border: 2px solid var(--tbe-brass);
+  border-radius: 4px;
+  box-shadow: 0 0 8px var(--tbe-shadow);
+}
+
+.the-broken-empires.sheet .charname input {
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  font-size: 1.6em;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tbe-brass-dim);
+  color: var(--tbe-brass-bright);
+  width: 100%;
+}
+
+/* Grid utility (kept from boilerplate, restyled) */
+.the-broken-empires.sheet .grid,
+.the-broken-empires.sheet .grid-2col,
+.the-broken-empires.sheet .grid-3col,
+.the-broken-empires.sheet .grid-4col {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0;
+}
+.the-broken-empires.sheet .grid-2col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.the-broken-empires.sheet .grid-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.the-broken-empires.sheet .grid-4col { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.the-broken-empires.sheet .resource.flex-group-center {
+  background: var(--tbe-parchment-panel);
+  border: 1px solid var(--tbe-brass-dim);
+  border-radius: 4px;
+  padding: 4px 6px;
+  text-align: center;
+}
+
+.the-broken-empires.sheet .resource-label {
+  display: block;
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  font-size: 0.85em;
+  color: var(--tbe-ink-dim);
+  text-transform: capitalize;
+  margin-bottom: 2px;
+}
+
+.the-broken-empires.sheet .resource-content input {
+  width: 3.5em;
+  text-align: center;
+}
+
+/* Tabs */
+.the-broken-empires.sheet .sheet-tabs {
+  background: var(--tbe-parchment-light);
+  border-bottom: 1px solid var(--tbe-brass-dim);
+  padding: 0 6px;
+}
+
+.the-broken-empires.sheet .sheet-tabs .item {
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  color: var(--tbe-ink-dim);
+  padding: 6px 10px;
+}
+
+.the-broken-empires.sheet .sheet-tabs .item.active {
+  color: var(--tbe-brass-bright);
+  border-bottom: 2px solid var(--tbe-brass);
+}
+
+/* Defensive: inactive tab panels must not occupy layout space. Overview
+   alone (identity rows + vitals + the six-row wound table + supply) is the
+   tallest panel on the sheet; if core's tab-switching ever leaves an
+   inactive panel at visibility:hidden instead of display:none (seen on some
+   Foundry V12/V13 builds) it still reserves its full height, which is
+   exactly the "top bar eats all the room" gap reported above every other
+   tab's content — Notes worst of all, since Biography/Notes are short. This
+   rule doesn't depend on core getting that right. */
+.the-broken-empires.sheet .sheet-body > .tab {
+  display: none !important;
+}
+.the-broken-empires.sheet .sheet-body > .tab.active {
+  display: block !important;
+}
+/* The Effects tab template ships its own `flexcol` utility class for a
+   column layout; keep that intact rather than flattening it to block. */
+.the-broken-empires.sheet .sheet-body > .tab.active.flexcol {
+  display: flex !important;
+}
+
+.the-broken-empires.sheet .sheet-body {
+  padding: 8px;
+}
+
+/* Vitals summary chips */
+.the-broken-empires.sheet .vitals-summary {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.the-broken-empires.sheet .stat-chip {
+  background: var(--tbe-parchment-panel);
+  border: 1px solid var(--tbe-brass-dim);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 0.85em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.the-broken-empires.sheet .stat-chip strong {
+  color: var(--tbe-brass-bright);
+}
+
+.the-broken-empires.sheet .stat-chip.dying-chip {
+  background: var(--tbe-blood);
+  color: #fff;
+  border-color: #b33;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.the-broken-empires.sheet .shock-toggle {
+  cursor: pointer;
+}
+
+/* Wound / armour table */
+.the-broken-empires.sheet .wound-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6px 0 10px;
+}
+
+.the-broken-empires.sheet .wound-table th {
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  color: var(--tbe-ink-dim);
+  border-bottom: 1px solid var(--tbe-brass-dim);
+  padding: 3px 4px;
+  text-align: center;
+}
+
+.the-broken-empires.sheet .wound-table td {
+  border-bottom: 1px solid rgba(192, 138, 62, 0.15);
+  padding: 3px 4px;
+  text-align: center;
+}
+
+.the-broken-empires.sheet .wound-table .loc-label {
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  text-align: left;
+  color: var(--tbe-ink);
+}
+
+.the-broken-empires.sheet .narrow-input {
+  width: 2.8em;
+  text-align: center;
+}
+
+.the-broken-empires.sheet .center { text-align: center; }
+
+/* Active statuses */
+.the-broken-empires.sheet .status-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.the-broken-empires.sheet .status-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--tbe-parchment-panel);
+  border: 1px solid var(--tbe-brass);
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 0.85em;
+}
+
+/* Items / skills / gear lists */
+.the-broken-empires.sheet .items-list,
+.the-broken-empires.sheet .skills-list,
+.the-broken-empires.sheet .gear-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.the-broken-empires.sheet .items-header,
+.the-broken-empires.sheet .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(192, 138, 62, 0.15);
+}
+
+.the-broken-empires.sheet .items-header {
+  font-family: "IM Fell English", Georgia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  color: var(--tbe-ink-dim);
+  border-bottom: 1px solid var(--tbe-brass-dim);
+}
+
+.the-broken-empires.sheet .item-name {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.the-broken-empires.sheet .item-image {
+  border-radius: 3px;
+  border: 1px solid var(--tbe-brass-dim);
+}
+
+.the-broken-empires.sheet .item-prop,
+.the-broken-empires.sheet .skill-value,
+.the-broken-empires.sheet .skill-fighting {
+  flex: 1;
+  text-align: center;
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+}
+
+.the-broken-empires.sheet .item-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.the-broken-empires.sheet .item-controls a {
+  color: var(--tbe-brass);
+}
+
+.the-broken-empires.sheet .item-controls a:hover {
+  color: var(--tbe-brass-bright);
+  text-shadow: 0 0 6px var(--tbe-brass);
+}
+
+.the-broken-empires.sheet .item-empty {
+  color: var(--tbe-ink-dim);
+  font-style: italic;
+  padding: 4px 6px;
+}
+
+.the-broken-empires.sheet .tag {
+  font-size: 0.7em;
+  background: var(--tbe-brass-dim);
+  color: var(--tbe-ink);
+  border-radius: 6px;
+  padding: 0 5px;
+  margin-left: 4px;
+}
+
+.the-broken-empires.sheet .skill-group-label {
+  margin-top: 8px;
+}
+
+/* Effects list (reuses boilerplate structure) */
+.the-broken-empires.sheet .effects-list .item-name h4,
+.the-broken-empires.sheet .item-name h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.the-broken-empires.sheet .effect-source,
+.the-broken-empires.sheet .effect-duration {
+  flex: 1;
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--tbe-ink-dim);
+}
+
+/* Prosemirror editor areas. An empty editor collapses to a sliver without a
+   min-height, which reads as a broken one-line text input rather than a
+   rich-text area waiting for content. */
+.the-broken-empires.sheet .editor-content,
+.the-broken-empires.sheet .editor {
+  background: var(--tbe-parchment-panel);
+  border: 1px solid var(--tbe-brass-dim);
+  border-radius: 4px;
+  padding: 6px;
+  color: var(--tbe-ink);
+  min-height: 120px;
+}
+
+.the-broken-empires.sheet .editor .editor-edit {
+  background: var(--tbe-brass-dim);
+  border-radius: 3px;
+}
+
+.rollable:hover, .rollable:focus {
+  color: var(--tbe-brass-bright);
+  text-shadow: 0 0 10px var(--tbe-brass);
+  cursor: pointer;
+}
+
+/* Identity block (race / size / culture / career) and race summary */
+.the-broken-empires.sheet .identity-row {
+  margin-bottom: 4px;
+}
+
+.the-broken-empires.sheet .identity-row select,
+.the-broken-empires.sheet .identity-row input {
+  width: 100%;
+  text-align: center;
+}
+
+.the-broken-empires.sheet .race-brief {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 6px;
+}
+
+.the-broken-empires.sheet .race-restrictions {
+  margin: 0 0 8px;
+  padding-left: 18px;
+  font-size: 0.82em;
+  color: var(--tbe-ink-dim);
+}
+
+.the-broken-empires.sheet .race-restrictions li {
+  margin: 1px 0;
+}
+
+.the-broken-empires.sheet .skill-savvy,
+.the-broken-empires.sheet .skill-expertise {
+  display: inline-block;
+  font-size: 0.7em;
+  font-weight: bold;
+  padding: 0 4px;
+  border-radius: 3px;
+  vertical-align: middle;
+  border: 1px solid var(--tbe-brass-dim);
+  color: var(--tbe-brass-dim);
+}
+
+.the-broken-empires.sheet .xp-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 4px 0;
+  font-size: 0.9em;
+}
+
+/* A sub-talent extends the Talent above it, so indent it under its parent. */
+.the-broken-empires.sheet .talent-sub .item-name {
+  padding-left: 16px;
+  position: relative;
+}
+
+.the-broken-empires.sheet .talent-sub .item-name::before {
+  content: "\21B3";
+  position: absolute;
+  left: 2px;
+  color: var(--tbe-brass-dim);
+}
+
+.the-broken-empires.sheet .talent-group {
+  margin-bottom: 6px;
+}
+
+/* ---- Weave Magic tab ---------------------------------------------------- */
+
+/* A Bind or Strand at its hard ceiling, and the Fraying purge percentage.
+   Both are numbers the player needs to notice without reading the row. */
+.the-broken-empires.sheet .tbe-at-cap {
+  color: var(--tbe-blood, #8b1a1a);
+}
+
+/* A Bind the character does not have yet still gets a row, so the cost to
+   open it is visible; it is dimmed so the known ones read first. */
+.the-broken-empires.sheet .tbe-unknown {
+  opacity: 0.6;
+}
+
+.the-broken-empires.sheet .tbe-magic .items-list .item-prop {
+  flex: 0 0 auto;
+  min-width: 90px;
+  text-align: right;
+  padding-right: 8px;
+}
+
+.the-broken-empires.sheet .tbe-magic h3.skill-group-label {
+  border-bottom: 1px solid var(--tbe-brass-dim);
+}

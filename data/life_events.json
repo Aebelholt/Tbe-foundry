@@ -1,0 +1,3424 @@
+{
+ "origin": [
+  {
+   "range": "01-02",
+   "name": "Child of Revolt",
+   "desc": "You were the child of a noble family against whom the common folk revolted. How did you escape the ensuing violence? What did this teach you about the politics of your people?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    }
+   ]
+  },
+  {
+   "range": "03-04",
+   "name": "Legacy of Invention",
+   "desc": "Your family were inventors. What was the nature of their work? How did their creations get them into trouble? And what unfinished task did your dying parent beg you to complete?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "05-06",
+   "name": "Tower of Secrets",
+   "desc": "Your father was made petty nobility and granted a small keep. Why did your father never speak of why he was made a noble? What was the thing he was hiding in the highest tower of the keep? And why did the other lords always avoid your family at court?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    },
+    {
+     "kind": "wise",
+     "name": "Noble-wise",
+     "value": 20,
+     "label": "gain Noble-wise at 20"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "07-08",
+   "name": "Faithful Companion",
+   "desc": "You come from a line of animal breeders or handlers (horses, hunting dogs, etc.). To whom did your family sell your most beloved four-legged friend? Did you let it go, or did you do something to get it back?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    },
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    }
+   ]
+  },
+  {
+   "range": "09-10",
+   "name": "Servant to Nobility",
+   "desc": "You grew up as a servant to a noble house. How did you befriend one of their children? Why were you released from service? What favor did your noble friend promise to do for you if ever you returned?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    }
+   ]
+  },
+  {
+   "range": "11-12",
+   "name": "Outside the Law",
+   "desc": "You were raised in a bandit camp, where you were forced to prove your worth on a daily basis. What physical feat demonstrated your value? And the one you humiliated in front of the leader\u2014where are they now?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    }
+   ]
+  },
+  {
+   "range": "13-14",
+   "name": "Smuggler\u2019s Start",
+   "desc": "Your family were smugglers. What kind of contraband did they move? What stolen valuable finally got them caught? And why is the person to whom it belonged still hunting you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    }
+   ]
+  },
+  {
+   "range": "15-16",
+   "name": "Tied to the Streets",
+   "desc": "You spent years as an orphan on the streets of a large city. What individual, organization, or group took you in and trained you? What secret were they hiding? And how has that secret returned to plague you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Deceive",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Deceive"
+    }
+   ]
+  },
+  {
+   "range": "17-18",
+   "name": "Marked by the Weave",
+   "desc": "You were born with a strange mark somewhere on your body. What magical rune does the mark resemble? Who revealed to you its possible significance? And how does it change under certain astrological conditions? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": null,
+     "amount": 10,
+     "label": "+10 to a Bind of your choice (Spellweaver)"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    }
+   ]
+  },
+  {
+   "range": "19-20",
+   "name": "River Rat",
+   "desc": "Your family scratched out a living plying the riverways of the Broken Empires, selling whatever goods they could manage to trade. Why was your family wanted by the authorities? Where did one of your parents stash the \u201cmost valuable prize in the world\u201d? And why were you the only one she trusted with the map to its location?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    }
+   ]
+  },
+  {
+   "range": "21-22",
+   "name": "Fated From Birth",
+   "desc": "Your family line is cursed: upon reaching age 30, the firstborn child starts to sleep longer and longer, until one day they simply don\u2019t wake up. You are the firstborn. How long until you turn 30? What have you learned about the possible origins of this curse? And who taught you how to stave off the coming dreamless sleep?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    },
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    }
+   ]
+  },
+  {
+   "range": "23-24",
+   "name": "Far Trader",
+   "desc": "Your family was part of a wealthy caravan or trading fleet. As a child, you traveled far from your homeland. What wonder from a foreign land still lingers in your memory? What trinket or skill did you bring back with you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "25-26",
+   "name": "Raised by a Sect",
+   "desc": "You were given to a secluded religious order to be raised in faith and discipline. What sacred artifact or practice were you entrusted to guard? Were you cast out, or did you leave of your own free will?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "27-28",
+   "name": "Cursed Inheritance",
+   "desc": "An ancestor passed down a priceless heirloom\u2014ancient weapon, amulet, or tapestry\u2014 with a troubling history. What is said to happen to those who own it? Who tried to steal it from you as a child, and what did you do? Why do you still carry it, despite the rumors?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "29-30",
+   "name": "Imprisoned",
+   "desc": "Due to ill fortune or parental negligence, you spent your early years in captivity. Why were you imprisoned? Where were you held, and for how long? What friend or enemy did you make there, and where are they now?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    }
+   ]
+  },
+  {
+   "range": "31-32",
+   "name": "Bastard of High Blood",
+   "desc": "You are the illegitimate child of a noble or influential figure. How did you discover the truth of your parentage? Who raised you in secret, and what did they teach you? Which sibling or rival hates you most for existing?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "wise",
+     "name": "Noble-wise",
+     "value": 20,
+     "label": "gain Noble-wise at 20"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "33-34",
+   "name": "Raised in the Wild",
+   "desc": "You grew up on the edge of civilization, either in the wilderness or among nomads. What animal or spirit do you believe watches over you? What hidden glade, ruin, or cave did you discover as a child? How did you prove yourself to your wild kin or guardians?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    },
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    }
+   ]
+  },
+  {
+   "range": "35-36",
+   "name": "Witness",
+   "desc": "When you were young, you saw a man in the town square claiming the gods didn\u2019t exist. As he spoke against Devona the Sea-Bitch, he suddenly drowned before your very eyes. What did this teach you about the world and your place in it? Why did no one in town speak of that event ever again? And who were the shadowy figures who came for his corpse in the night?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "37-38",
+   "name": "Orphan of War",
+   "desc": "You were lost or abandoned during a military conflict. Who trained you to survive, and what\u2014 besides your family\u2014did you lose in the chaos?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Endurance",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Endurance"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    }
+   ]
+  },
+  {
+   "range": "39-40",
+   "name": "Apprentice of the Esoteric",
+   "desc": "You were raised by a reclusive alchemist, court magician, or inventor. What odd habit or quirk of theirs did you pick up? What dangerous experiment or forbidden knowledge did you glimpse while working with them? What is the current state of your relationship? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": null,
+     "amount": 10,
+     "label": "+10 to a Bind of your choice (Spellweaver)"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    }
+   ]
+  },
+  {
+   "range": "41-42",
+   "name": "Far Traveler",
+   "desc": "Your family was forced to flee their homeland due to war, famine, or other disaster. How far did you travel? What memory of that journey lingers in your mind?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    }
+   ]
+  },
+  {
+   "range": "43-44",
+   "name": "Heretic\u2019s Offspring",
+   "desc": "Your mother believed she was the chosen of a god, but the church considered her a heretic. What finally happened to her? What made you doubt her story? And what did it look like when the god finally spoke to you in a dream? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    },
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    }
+   ]
+  },
+  {
+   "range": "45-46",
+   "name": "Shipwrecked",
+   "desc": "You were the sole survivor of a shipwreck that claimed your family. Upon what strange isle or hidden cove did you wash ashore? What token of that place do you carry with you still?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    }
+   ]
+  },
+  {
+   "range": "47-48",
+   "name": "Apprenticed",
+   "desc": "An artisan took you in as an apprentice. What was so odd about them? With what aspect of the trade did you assist? Why did you leave before your training was complete?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    }
+   ]
+  },
+  {
+   "range": "49-50",
+   "name": "Haunted Home",
+   "desc": "Your family residence was plagued by unexplained phenomena\u2014whispers, apparitions, or moving objects. What did you see during your childhood that no one else would believe? What aspect of that experience haunts you, even now?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    }
+   ]
+  },
+  {
+   "range": "51-52",
+   "name": "Diplomatic Upbringing",
+   "desc": "Your family served as envoys or mediators between warring factions. What treaty or alliance fell apart back then because of betrayal or sabotage? What document or map remains with you from that time?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "53-54",
+   "name": "Child of the Sands",
+   "desc": "Your father made a bargain with a desert Djinn to save your life from the illness you were suffering. You survived, but your father disappeared. What clues have you found of his fate? What were the permanent side effects of your illness? And what words did the Djinn whisper to you on the wind as you made your recovery?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "wise",
+     "name": "Desert-wise",
+     "value": 20,
+     "label": "gain Desert-wise at 20"
+    }
+   ]
+  },
+  {
+   "range": "55-56",
+   "name": "Raised by a Sage",
+   "desc": "You were brought up by someone who sought to decipher the world\u2019s secrets. Were they your birth parent or adoptive parent? What unfortunate truth did you learn from them by accident? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": null,
+     "amount": 10,
+     "label": "+10 to a Bind of your choice (Spellweaver)"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "57-58",
+   "name": "Tavern Kid",
+   "desc": "Your family ran a popular tavern. What sort of clientele did the place serve? What did you learn about the world from trying to manage drunken brawls and rowdy guests?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "59-60",
+   "name": "Beast-Marked",
+   "desc": "As a child, you survived a dangerous encounter with a wild animal or monster. What scar or injury remains from the attack? Why do you believe the creature left you alive?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Dodge",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Dodge"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "61-62",
+   "name": "Crowd Pleaser",
+   "desc": "You were taught to work the crowd at markets, festivals, and fairs. Were you the pupil of a lone expert, or a young member of a storied company? What forced you to leave that life behind?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    }
+   ]
+  },
+  {
+   "range": "63-64",
+   "name": "Rising Star",
+   "desc": "At a young age, you were lauded as a prodigy in a specific field. Who tried to exploit or sabotage your talent? What caused your rise to fame to falter?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Dodge",
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy",
+      "Might",
+      "Missile",
+      "Thrown"
+     ],
+     "amount": 10,
+     "label": "+10 to any Combat skill"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    }
+   ]
+  },
+  {
+   "range": "65-66",
+   "name": "Revenge Sworn",
+   "desc": "Someone wronged your parents, leaving your family destitute or disgraced. Who do you blame? How have you sought revenge or justice? What token of that vendetta do you still carry?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    }
+   ]
+  },
+  {
+   "range": "67-68",
+   "name": "Secret Heritage",
+   "desc": "One or both of your parents were of noble birth, but hid it from everyone. Why did they turn their backs on their old life? How did you discover their secret? And what did they threaten you with if you ever told anyone?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "wise",
+     "name": "Noble-wise",
+     "value": 20,
+     "label": "gain Noble-wise at 20"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "69-70",
+   "name": "Secret Sanctuary",
+   "desc": "As a child, you sought refuge in an ancient ruin, hidden cave, or other private hideaway. What was so special about that place? What memory or token of its existence continues to haunt or inspire you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "71-72",
+   "name": "Little Thief",
+   "desc": "You were caught stealing as a child, either out of necessity or mischief. What did you try to steal? Who caught you, and how did they punish or forgive you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    }
+   ]
+  },
+  {
+   "range": "73-74",
+   "name": "Found Family",
+   "desc": "You were raised by a band of outcasts, on the city streets or in the wilds. How did you come into their company? What did they teach you about the rules of society? Why did you eventually leave them behind?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "75-76",
+   "name": "Scion of Glory",
+   "desc": "One of your parents was a celebrated hero, famed for a great deed or tragic sacrifice. What did they do? What burden or expectations has their legacy placed on you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    },
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "77-78",
+   "name": "Blightmarked",
+   "desc": "Your family were outcasts, due to having unintentionally spread a terrible contagion among your people. What was the nature of that disease? Why did your sibling always believe your family was unjustly blamed? And why have you always been immune to the effects of the sickness?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "79-80",
+   "name": "Soldier\u2019s Child",
+   "desc": "One or both of your parents were enlisted in an armed force of some kind. In what battle or war did they distinguish or shame themselves? What crippling or fatal injury did they suffer?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Dodge",
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy",
+      "Might",
+      "Missile",
+      "Thrown"
+     ],
+     "amount": 10,
+     "label": "+10 to any Combat skill"
+    },
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    }
+   ]
+  },
+  {
+   "range": "81-82",
+   "name": "Last Words",
+   "desc": "The oldest surviving member of your family swore to reveal to you the incredible secret of your family, once you come of age. What happened to them before they could share the knowledge? Where was the shallow grave in which they were hastily buried? And what was the eerie rhyme in the song that served as your relative\u2019s last words to you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "83-84",
+   "name": "Merchant\u2019s Life",
+   "desc": "Your family were traveling peddlers or traders. What sorts of things did they buy and sell? What prized item of those days do you still carry with you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "85-86",
+   "name": "Village Protector",
+   "desc": "You helped defend your community from a minor threat in your youth. How did the villagers reward you, and who still sees you as a hero?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Missile",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Missile"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "87-88",
+   "name": "Fateful Rescue",
+   "desc": "You saved a noble or other refined personage from certain injury or death. What reward, resentment, or burden did this act produce? Do you regret it?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "89-90",
+   "name": "Wild Child",
+   "desc": "You were raised in the wilderness by your stern and secretive aunt. What did she tell you happened to your parents? What kind of wilderness was it? And what did you see when you secretly followed your aunt out into a storm one night?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    }
+   ]
+  },
+  {
+   "range": "91-92",
+   "name": "Student",
+   "desc": "At a young age, you began your studies under a scholar or sage. What did your teacher appreciate or dislike about you? Did your family value the acquisition of knowledge? How did it eventually prove useful?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    }
+   ]
+  },
+  {
+   "range": "93-94",
+   "name": "Child of Privilege",
+   "desc": "You were the child of the ruling class among your people. Unfortunately the leader of your faction became corrupt, and the common people revolted. How did you, a child, escape the violence that ensued? How did the leader get mysteriously reinstated? And what did this teach you about the politics of your people?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    }
+   ]
+  },
+  {
+   "range": "95-96",
+   "name": "Storykeeper",
+   "desc": "You were raised by a group of traveling minstrels, storytellers, or other performers. Were they your blood relatives, or found family? For what tale or song were they most renowned?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "97-98",
+   "name": "Home of Ill Repute",
+   "desc": "You older sibling raised you in the red light district of a large city. To make ends meet, they plied their trade sometimes as an artist, sometimes as a courtesan. What was the one talent your sibling insisted would one day allow you to escape this life? What token did they give you and implore you to never, ever lose? And what bone-chilling thing did you hear the night your sibling was \u201centertaining\u201d a strange visitor from a foreign land?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    },
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    }
+   ]
+  },
+  {
+   "range": "99-00",
+   "name": "Oathsworn",
+   "desc": "A parent or ancestor made a vital promise, the burden of which has been passed on to you. What was the nature of the oath they swore? Has it been broken already\u2014saddling you with stigma\u2014or does it remain intact?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    }
+   ]
+  }
+ ],
+ "youth": [
+  {
+   "range": "01-02",
+   "name": "Miraculous Recovery",
+   "desc": "You died and somehow came back to life. How did you die? Was it mundane? Who or what was responsible for bringing you back? What was the cost of your being brought back?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    }
+   ]
+  },
+  {
+   "range": "03-04",
+   "name": "Itinerant Actor",
+   "desc": "You performed in a wandering theatrical troupe. What secrets of theirs did you discover? Why were you forced to flee? Did you leave anything behind?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    }
+   ]
+  },
+  {
+   "range": "05-06",
+   "name": "Dogsbody",
+   "desc": "You served onboard a vessel of one of the Free Lords of the Serpent\u2019s Teeth Isles. The captain trusted you with the location of a valuable secret. Why you? And why did the crew blame you for his death?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "wise",
+     "name": "Navigation-wise",
+     "value": 20,
+     "label": "gain Navigation-wise at 20"
+    }
+   ]
+  },
+  {
+   "range": "07-08",
+   "name": "Nightmare Fuel",
+   "desc": "Your village was overrun by a terrible undead creature. Why did it leave you alive? Why did it abduct certain members of the village to its hidden lair? And why have you been recently plagued with vivid nightmares about it?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "wise",
+     "name": "Undead-wise",
+     "value": 20,
+     "label": "gain Undead-wise at 20"
+    }
+   ]
+  },
+  {
+   "range": "09-10",
+   "name": "Unexpected Stand-In",
+   "desc": "You spent some years in service to a troupe of far-wandering minstrels. You were never allowed on stage, until one night a mistake was made. How did you wind up performing for an influential lord and his retinue? Who was the minstrel whose place you took? And why did they curse your name and vow revenge?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "11-12",
+   "name": "Ever a Squire",
+   "desc": "You squired to a knight in wartime. Why didn\u2019t he make you a knight? What item of his do you still possess? And what forbidden treasure did you see him hiding?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Dodge",
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy",
+      "Might",
+      "Missile",
+      "Thrown"
+     ],
+     "amount": 10,
+     "label": "+10 to any Combat skill"
+    },
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    }
+   ]
+  },
+  {
+   "range": "13-14",
+   "name": "Tough Character",
+   "desc": "In the community where you spent your youth, you became known for your physical presence. Did you use that advantage for good or ill? Who was your greatest rival, and what happened to them?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    }
+   ]
+  },
+  {
+   "range": "15-16",
+   "name": "Grifter",
+   "desc": "You learned early on how to identify and take advantage of the ignorant and gullible. What was your main means of extracting wealth? Whom do you most regret ripping off? Did they ever find out the truth?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "17-18",
+   "name": "Hunted",
+   "desc": "You discovered a beloved sibling or friend was part of a secret society. When you confronted them, they grew angry with you, and you left. The society has been after you ever since, believing you to be a threat. What of theirs do you carry with you? Why did you leave your sibling/friend behind, and do they still belong to that group?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    },
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    }
+   ]
+  },
+  {
+   "range": "19-20",
+   "name": "Shady Trade",
+   "desc": "For some time you dealt in contraband, and had to learn quickly how to evade the authorities. What illicit product did you buy and sell? Why did you leave that line of work behind, or are you still in it? Who is the useful ally or dangerous rival you made along the way?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "21-22",
+   "name": "Artist",
+   "desc": "You were an artist with a wealthy patron. What type of art did you produce? Why were you forced to leave it all behind? And why did this make an enemy out of your patron?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    }
+   ]
+  },
+  {
+   "range": "23-24",
+   "name": "Sanguine Secret",
+   "desc": "You apprenticed with a well-known armorer. Who was the mysterious figure that paid him to secretly infuse custom armor with something that looked a lot like blood? How did you wind up with a single piece of that armor? And how has the armor\u2019s owner been constantly tracking you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "25-26",
+   "name": "Gaoler",
+   "desc": "For a while you worked as a guard in a prison or dungeon. What was the worst part of the job? Who was the worst person you had to deal with while you were there? And why do you still think about them, even now?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    }
+   ]
+  },
+  {
+   "range": "27-28",
+   "name": "River Run",
+   "desc": "One day the lights went out\u2014all of them. Who did you help escape? How did you convince them to join with you in using the river as a means of escape? Why did no one believe your warnings of impending disaster?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    }
+   ]
+  },
+  {
+   "range": "29-30",
+   "name": "By Wits Alone",
+   "desc": "Somehow you ended up as a jester, clown, or adviser to someone of means. Who were they, and how did they treat you? What forced you to eventually abandon that job?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "31-32",
+   "name": "Terrible Vision",
+   "desc": "You were given a vision from what you believed to be the gods. Why did it terrify you? What divine truth did it reveal? And in what undiscovered location did it tell you to seek that truth? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    }
+   ]
+  },
+  {
+   "range": "33-34",
+   "name": "Weavebound",
+   "desc": "You studied the ways of the Weave from a young age. Who was your teacher? Under what circumstances did they disappear? And who are the people seeking the ancient artifact your teacher left you? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": null,
+     "amount": 2,
+     "label": "+2 to a Strand of your choice (Spellweaver)"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "35-36",
+   "name": "Rebel Arisen",
+   "desc": "A revolt or uprising swept through your community, leaving it broken or embattled. Who did you lose in the chaos? Who stayed with you through thick and thin? And who planted in you the bitter seed of revenge?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Endurance",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Endurance"
+    },
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    }
+   ]
+  },
+  {
+   "range": "37-38",
+   "name": "Young Recruit",
+   "desc": "You were conscripted at a young age into a local militia. What lord or cause did your company serve? What fellow conscript or officer became a friend or enemy for life? And what event brought your company\u2019s service to an end?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Dodge",
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy",
+      "Might",
+      "Missile",
+      "Thrown"
+     ],
+     "amount": 10,
+     "label": "+10 to any Combat skill"
+    },
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    }
+   ]
+  },
+  {
+   "range": "39-40",
+   "name": "Champion",
+   "desc": "You competed in a contest at a provincial fair or noble court\u2014and won. What feat did you accomplish, and how did it color your reputation for years afterward? What was the prize? Does your closest competitor still hold a grudge, or have you become fast friends?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "41-42",
+   "name": "Labyrinth-Lost",
+   "desc": "You became lost for weeks in a tangled forest, ancient ruin, or endless catacomb. What wisdom or trauma do you carry with you as a result? What did you encounter there that fosters your wish to one day return? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": "Earth",
+     "amount": 2,
+     "label": "+2 to Strand: Earth"
+    },
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "43-44",
+   "name": "Healer\u2019s Apprentice",
+   "desc": "You assisted a healer of renown during a great number of years, your greatest trial manifesting in the outbreak of a deadly disease that decimated the community. How many were lost, and how did their deaths affect you? What important figure was saved by your ministrations? And what happened to your master?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    }
+   ]
+  },
+  {
+   "range": "45-46",
+   "name": "Thrilling Pursuit",
+   "desc": "For several years, you hunted for living, at one point joining in the pursuit of a prized quarry\u2014a swift stag, dangerous predator, or legendary beast. The chase tested both your marksmanship and your ability to traverse treacherous terrain. Did you take the killing shot, or did someone else claim the glory? What trophy or lesson did you take from the experience?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Missile",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Missile"
+    },
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    }
+   ]
+  },
+  {
+   "range": "47-48",
+   "name": "Saboteur\u2019s Sidekick",
+   "desc": "You were taken under the wing of a skilled saboteur who taught you to spot weak points and create or disable traps. For whom did your master work? What dangerous operation did you assist with that tested your skills and nerves? What key insight or clever trick saved you from disaster?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    }
+   ]
+  },
+  {
+   "range": "49-50",
+   "name": "Harsh Migration",
+   "desc": "Your family or community was forced to flee through harsh wilderness due to war, famine, or disaster. You played a key role in tracking safe paths, foraging for food, and avoiding dangers. What toll did the journey take on you? Who do you remember most from those desperate days? Where did your people finally find refuge?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    }
+   ]
+  },
+  {
+   "range": "51-52",
+   "name": "Forbidden Lesson",
+   "desc": "You studied the ways of the Weave under the tutelage of a reclusive mentor. One day, you were left alone to observe a summoned entity. The strain tested your mental fortitude as the being attempted to break free. What was the nature of the entity? Did you succeed in holding it at bay, or did it escape? What mark did the encounter leave on you? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": "Control",
+     "amount": 10,
+     "label": "+10 Bind: Control"
+    },
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    }
+   ]
+  },
+  {
+   "range": "53-54",
+   "name": "Dealmaker",
+   "desc": "You became known in your community for negotiating agreements and resolving disputes in the local marketplace. Your ability to recall useful facts about merchants, their wares, and their customs gave you an edge. What was the largest deal you brokered, and who still owes you a debt\u2014or holds a grudge?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "55-56",
+   "name": "Courtly Spy",
+   "desc": "You were taken in as a servant or page in a noble house, but your true role was to gather information for a rival faction. Using your understanding of etiquette, you blended in seamlessly while uncovering secrets. What critical piece of information did you uncover? Did you get away clean, or were you exposed as a traitor?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Deceive",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Deceive"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    }
+   ]
+  },
+  {
+   "range": "57-58",
+   "name": "Honey-Trap Hustler",
+   "desc": "Among the shadier activities of your youth, you engaged in cons designed to exploit greed, vanity, and desire. What was your most successful\u2014or disastrous\u2014scheme? Who has never forgiven you for it?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    }
+   ]
+  },
+  {
+   "range": "59-60",
+   "name": "Amorous Adventure",
+   "desc": "During a period of artistic exploration, you created a song, poem, or other work of art that enchanted your audience, and one admirer in particular. What was the nature of your creation? How did it spark the romance that still burns\u2014or haunts you\u2014to this day?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    }
+   ]
+  },
+  {
+   "range": "61-62",
+   "name": "Sacred Grove",
+   "desc": "You were tasked with tending a grove or forest shrine dedicated to a deity. What omens or divine signs did you witness there, and how did they influence your faith? What taboo did you accidentally break, and how did you make amends? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    }
+   ]
+  },
+  {
+   "range": "63-64",
+   "name": "Tricky Tinker",
+   "desc": "At some point you became adept at crafting small mechanical devices or tools. What was the most ingenious (or underhanded) thing you invented? Who has been seeking you out to replicate it, and to what end?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    }
+   ]
+  },
+  {
+   "range": "65-66",
+   "name": "Land of Legend",
+   "desc": "You grew up near a forest or wildland that figured prominently in local folklore. What story or belief about the land\u2019s history shaped your understanding of it? How did your knowledge of old stories and natural signs help you uncover a hidden truth about the place?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "67-68",
+   "name": "Rite of Passage",
+   "desc": "In your community or culture, everyone had to complete a rite of passage. What was the nature of yours? How did you prove yourself, and at what cost? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": null,
+     "amount": 2,
+     "label": "+2 to a Strand of your choice (Spellweaver)"
+    },
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "69-70",
+   "name": "Trial of Strength",
+   "desc": "Your community held a ceremonial ritual that required participants to survive a series of punishing physical or combat-related challenges. Did you succeed by dint of raw endurance or a skill with a particular weapon? What did completing\u2014or failing\u2014the trial teach you? What scar or ceremonial tattoo marks you as a result?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy"
+     ],
+     "amount": 10,
+     "label": "+10 to Melee: Light, Medium or Heavy"
+    },
+    {
+     "kind": "skill",
+     "name": "Endurance",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Endurance"
+    }
+   ]
+  },
+  {
+   "range": "71-72",
+   "name": "Eagle Eye",
+   "desc": "You earned respect in your community for spotting distant threats or game before anyone else could. Your sharp eyes and steady aim became invaluable. What challenge tested both your perception and marksmanship? How did your success or failure alter your reputation in the eyes of your people?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Missile",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Missile"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    }
+   ]
+  },
+  {
+   "range": "73-74",
+   "name": "Narrow Escape",
+   "desc": "You were either involved in a risky theft, or just in the wrong place at the wrong time. Your ability to evade guards and disappear into the environment was the only thing that saved you. What was the object of the theft? If it was successfully stolen, who has it now? Who else was involved, and what happened to them?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Dodge",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Dodge"
+    },
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    }
+   ]
+  },
+  {
+   "range": "75-76",
+   "name": "Range Rider",
+   "desc": "You spent time roaming the wide open country, as a loner, hunter, or warden. At one point you had to track down an outlaw, fugitive, or missing person. Who was it? What happened when you found them? And how did the experience test your bond with your mount?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    },
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    }
+   ]
+  },
+  {
+   "range": "77-78",
+   "name": "Vigilant Ally",
+   "desc": "Stranded in a remote landscape, you had to keep yourself and a gravely injured companion alive. Gathering scarce resources while tending to their wounds pushed you to your limits. Who were they? Did they survive? And what did you lose in the process?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    }
+   ]
+  },
+  {
+   "range": "79-80",
+   "name": "Spiritual Path",
+   "desc": "You joined a group of religious pilgrims on a sacred journey. Along the way, your words or hymns uplifted the weary travelers, bolstering their faith. What was the destination of the pilgrimage? What hardship did the group overcome? How did your voice or prayers play a pivotal role? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    },
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    }
+   ]
+  },
+  {
+   "range": "81-82",
+   "name": "Duel of Words",
+   "desc": "You were drawn into a heated argument or debate with someone far more powerful than you\u2014 perhaps a noble, scholar, or elder. Using sharp wit and sheer determination, you held your ground and earned their respect (or wrath). What was the subject of the debate? How did the confrontation end? What ally or enemy did you make as a result?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "83-84",
+   "name": "Master\u2019s Plan",
+   "desc": "You apprenticed under a renowned artisan who specialized in tools or mechanical devices. One day, they left you in charge of finishing a critical project. Did you complete it flawlessly or add your own modifications? How did your master react to your completed work?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "85-86",
+   "name": "Merchant Mariner",
+   "desc": "You worked as a crew member aboard a trading vessel, learning the ropes of both sailing and negotiation. What critical deal or trade did you help secure? How did your quick thinking save\u2014or risk\u2014the valuable cargo?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "87-88",
+   "name": "Magician",
+   "desc": "For some time, you earned a living as an entertainer, dazzling onlookers with illusions and mundane trickery. Or was it? What feat was the crowd-pleaser? How did it go wrong that one time, and what were the consequences? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": "Change",
+     "amount": 10,
+     "label": "+10 Bind: Change"
+    },
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    }
+   ]
+  },
+  {
+   "range": "89-90",
+   "name": "Counterfeiter",
+   "desc": "You were commissioned\u2014or coerced\u2014into creating a forgery of a valuable artwork, document, or currency. Your skill as an artist and talent for deception allowed you to pass it off as the real thing. Who discovered the ruse? What consequences have followed you since?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Deceive",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Deceive"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    }
+   ]
+  },
+  {
+   "range": "91-92",
+   "name": "Enforcer",
+   "desc": "For a while you worked for a gang or criminal organization, using your knowledge of the streets and your menacing demeanor to collect debts or settle disputes. What line did you cross\u2014or refuse to cross\u2014while carrying out your duties? How did that decision change your life?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    }
+   ]
+  },
+  {
+   "range": "93-94",
+   "name": "Firebrand",
+   "desc": "You rallied your community during a time of crisis, drawing on local traditions and historical examples to inspire unity. What was the threat faced by your people? How did your words of encouragement turn the tide? And who still looks up to you because of it?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    }
+   ]
+  },
+  {
+   "range": "95-96",
+   "name": "Courtly Affair",
+   "desc": "You became involved in a romantic entanglement at court, navigating the delicate roles of decorum while advancing your ambitions. Who was your partner in this intrigue? How did the affair bolster or harm your standing?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    },
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    }
+   ]
+  },
+  {
+   "range": "97-98",
+   "name": "Strange Flora",
+   "desc": "You experimented with an unusual plant thought to have mystical properties. While its use saved a life or cured a disease, it also carried unforeseen consequences. What did you learn about the plant\u2019s hidden nature? What lasting impact has it had on your life? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": "Plant",
+     "amount": 2,
+     "label": "+2 to Strand: Plant"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "99-00",
+   "name": "Glimpse Beyond",
+   "desc": "During a moment of meditation or turmoil, you connected to something greater\u2014a fleeting vision, cryptic message, or profound realization. What did it show you about the past, present, or future? How has your interpretation of the signs altered the course of your life? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": "Witness",
+     "amount": 10,
+     "label": "+10 Bind: Witness"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  }
+ ],
+ "recent": [
+  {
+   "range": "01-02",
+   "name": "Desperate Rescue",
+   "desc": "You saved a mysterious woman\u2019s life from bandits in the woods, beating them in a moment of desperation with your bare hands. What were the bandits trying to get from her? What did she reward you with? Why did you choose to leave it behind?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    },
+    {
+     "kind": "skill",
+     "name": "Might",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Might"
+    }
+   ]
+  },
+  {
+   "range": "03-04",
+   "name": "Bitter Victory",
+   "desc": "You talked your way into a lord\u2019s archery contest to impress his young heir, and won. What was the prize? Why did they accuse you of cheating? Where did you escape to with the lord\u2019s heir, and what happened to them?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    },
+    {
+     "kind": "skill",
+     "name": "Missile",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Missile"
+    }
+   ]
+  },
+  {
+   "range": "05-06",
+   "name": "Arena Contender",
+   "desc": "You participated in a brutal public contest\u2014perhaps a gladiatorial bout, a test of strength, or an endurance challenge. Your physical prowess and intimidating presence cowed your opponents. What was the prize? What scar now marks your body as a result? And who still holds a grudge against you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "07-08",
+   "name": "Gambler\u2019s Touch",
+   "desc": "You caught someone cheating at a game of chance, or used your own tricks to outplay them. Your sharp observation and quick fingers turned the game to your advantage. What was at stake? Who took notice of your skills? And what opportunity or threat did they then present?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "09-10",
+   "name": "Back From the Dead",
+   "desc": "You saw your best friend die. Then last year in a crowded town square, you saw him again. His eyes met yours\u2014and he fled. How did he \u201cdie\u201d? What did you see him carrying as he ran away? To where were you able to track him to before you lost his trail?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    }
+   ]
+  },
+  {
+   "range": "11-12",
+   "name": "Survivor",
+   "desc": "You were trapped in a mountain crevasse for days. Only by stumbling across a grappling hook and rope did you manage to escape. What happened to the rest of your expedition? What else did you take from the bottom of the crevasse? And what strange symbol did you discover down there?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Thrown",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Thrown"
+    },
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    }
+   ]
+  },
+  {
+   "range": "13-14",
+   "name": "Revenue Run-In",
+   "desc": "You worked as a tax collector\u2014or evader\u2014which brought with it the need to avoid physical confrontations with angry debtors or enforcers. What clever deal or bribe helped you escape a particularly heated moment? Who\u2019s after you now, for your enforcement or defiance of the law?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Dodge",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Dodge"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "15-16",
+   "name": "Jailbreak",
+   "desc": "You orchestrated\u2014or were forced to participate in\u2014a daring escape from a guarded facility. The success of this undertaking relied upon your threatening demeanor or ability to disable security measures. Who escaped with you? Who did you have to leave behind? What do you need to do now, to stay one step ahead of the authorities?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    }
+   ]
+  },
+  {
+   "range": "17-18",
+   "name": "Healer\u2019s Friend",
+   "desc": "During a military campaign you befriended a skilled healer. What rare disease did they teach you to recognize? Which influential figure did you use this treatment on, securing their favor? What medical experiment is the healer still working on?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    }
+   ]
+  },
+  {
+   "range": "19-20",
+   "name": "Pirate\u2019s Gambit",
+   "desc": "You were captured by a notorious crew of cutthroats and talked your way into a position aboard their ship. What bold claim or skill convinced them to spare you? How did you quickly earn\u2014or lose\u2014their trust?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    }
+   ]
+  },
+  {
+   "range": "21-22",
+   "name": "Forced Labor",
+   "desc": "You were conscripted into a work crew for the ambitious construction project of a powerful figure. The experience nearly broke you, but you bonded with your workmates and were able to eventually find freedom. What were you building? How did you and your comrades finally get out from under the yoke? And who among them travels with you now?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Endurance",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Endurance"
+    },
+    {
+     "kind": "wise",
+     "name": "Architecture-wise",
+     "value": 20,
+     "label": "gain Architecture-wise at 20"
+    }
+   ]
+  },
+  {
+   "range": "23-24",
+   "name": "Broken Promise",
+   "desc": "You broke your oath. To whom or what was that oath? What did the oath require of you? And what forced you to break it when you didn\u2019t want to?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Deceive",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Deceive"
+    }
+   ]
+  },
+  {
+   "range": "25-26",
+   "name": "Cavalry Charge",
+   "desc": "You joined a mounted skirmish or battle, riding at the forefront of a daring charge. Your skill with weapon or steed turned the tide. What unexpected obstacle forced you to adapt mid-combat? Who was your most formidable opponent? What happened to your mount?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy"
+     ],
+     "amount": 10,
+     "label": "+10 to Melee: Light, Medium or Heavy"
+    },
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    }
+   ]
+  },
+  {
+   "range": "27-28",
+   "name": "Whisper Campaign",
+   "desc": "You secretly spread messages of hope or rebellion within a heavily guarded area, rallying others to the cause without being detected. Who betrayed\u2014or protected\u2014you during the effort? What insurgent action did your efforts spark? Who suffered, and who emerged as a villain or savior?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    },
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    }
+   ]
+  },
+  {
+   "range": "29-30",
+   "name": "Evangelist",
+   "desc": "You helped to spread the teachings of your faith as part of a pilgrimage or religious mission. What song, dance, or tale recently captured the hearts of your audience? Who opposes your message, and why? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    }
+   ]
+  },
+  {
+   "range": "31-32",
+   "name": "Clever Ingenuity",
+   "desc": "During a recent siege, you drew upon historical techniques to construct or repair a critical piece of equipment\u2014a battering ram, catapult, barricade, or the like. What flaw in the design almost jeopardized the effort? How did your quick thinking save the day? How did the siege finally come to an end, and what did it cost you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    }
+   ]
+  },
+  {
+   "range": "33-34",
+   "name": "Artist of the Wild",
+   "desc": "You created a striking memorial, shrine, or work of art using materials gathered from the wilderness, blending natural elements into your design. What inspired this creation? Who now seeks to claim or destroy it? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": "Earth",
+     "amount": 2,
+     "label": "+2 to Strand: Earth"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "35-36",
+   "name": "Wayward Familiar",
+   "desc": "You tracked down a rogue magical entity running loose in the city, using every resource at your disposal to subdue it. Who hired you for this task? How were you rewarded for your success? And what did you lose in the process? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": "Control",
+     "amount": 10,
+     "label": "+10 Bind: Control"
+    },
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    }
+   ]
+  },
+  {
+   "range": "37-38",
+   "name": "Storm-Runner",
+   "desc": "While investigating a legend about a flying beast or airborne vessel, you found yourself caught in a dangerous chase under stormy skies. You surely would have perished, were it not for your physical agility and knowledge of the weather. What became of your quarry? And what tantalizing truth did your encounter reveal? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": "Air",
+     "amount": 2,
+     "label": "+2 to Strand: Air"
+    },
+    {
+     "kind": "skill",
+     "name": "Dodge",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Dodge"
+    },
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    }
+   ]
+  },
+  {
+   "range": "39-40",
+   "name": "Stalwart Defender",
+   "desc": "In a fight against overwhelming odds, you held your ground while others faltered. Your determination and skill inspired those around you to rally. Who or what were you fighting, and why? With what scar\u2014physical or emotional\u2014did the battle leave you?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy"
+     ],
+     "amount": 10,
+     "label": "+10 to Melee: Light, Medium or Heavy"
+    },
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    }
+   ]
+  },
+  {
+   "range": "41-42",
+   "name": "Stalker",
+   "desc": "You spent days tracking an elusive target through harsh terrain, waiting for the perfect moment to strike. Who or what were you tracking? What tested your patience during the pursuit? And what unexpected complication arose after you took the shot?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Missile",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Missile"
+    },
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    }
+   ]
+  },
+  {
+   "range": "43-44",
+   "name": "Ancient Mystery",
+   "desc": "While exploring a ruin or enigmatic site, you discovered lines of weathered glyphs etched in stone. A\u00a0consultation with a local loremaster revealed their meaning, unlocking a piece of forgotten history\u2014or a dangerous secret. What does the ancient writing suggest or foretell? What other party has taken an interest in your find?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "45-46",
+   "name": "Informant",
+   "desc": "Through personal connections or clever conversation, you obtained a valuable piece of intel regarding the local criminal underworld. What\u2019s the nature of this information? To whom is it most valuable? And who wants you to keep quiet?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "47-48",
+   "name": "Infiltrator",
+   "desc": "You slipped into a guarded event or restricted area under the guise of someone else. You went largely unnoticed\u2014until someone started asking questions. Whom did you impersonate? What did you uncover? And how did you escape?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    },
+    {
+     "kind": "skill",
+     "name": "Deceive",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Deceive"
+    }
+   ]
+  },
+  {
+   "range": "49-50",
+   "name": "Fortune Dealer",
+   "desc": "In a bustling marketplace, you set up a stand offering astrological readings to attract wealthy patrons. One influential client took your augury to heart, for good or ill. Who was it? What did you tell them about their future? And in what way have they decided to reward you\u2014or make you pay for your insolence?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "51-52",
+   "name": "Challenging Climb",
+   "desc": "You scaled a treacherous ridge in search of a mountain pass, rare flora, or reclusive hermit. Your physical strength and understanding of the wilderness were tested by the journey. What did you find at the summit? What challenge did you face on the way down?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "53-54",
+   "name": "Sacred Vigil",
+   "desc": "You participated in a ritual that required you to stay awake and focused for days in prayer or meditation. What vision came to you at the height of your altered state? How has it shaped your beliefs? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Endurance",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Endurance"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    }
+   ]
+  },
+  {
+   "range": "55-56",
+   "name": "Lover\u2019s Lock",
+   "desc": "You charmed, distracted, or gained the trust of someone in the possession of a valuable item, long enough to lay your hands on it without their notice. What was the item? How did you get away? And what strong emotion do you still feel for the person you deceived?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    }
+   ]
+  },
+  {
+   "range": "57-58",
+   "name": "Memorial Tribute",
+   "desc": "You chose or were commissioned to craft a tribute to a fallen hero or other important figure. During its presentation, the crowd was deeply moved by your words or the beauty of the work itself. Who was the fallen figure, and what was your personal relationship to them? What controversial rumor arose around that relationship or the tribute itself?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Artistic",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Artistic"
+    }
+   ]
+  },
+  {
+   "range": "59-60",
+   "name": "Battered Vessel",
+   "desc": "You were part of a desperate repair effort to keep a storm-damaged ship afloat. Your practical skills and knowledge played a key role in the outcome. What crew or cargo was lost to the tempest? Where did the ship go down, or finally limp into harbor? Who remains grateful\u2014or holds you responsible\u2014for her fate?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    }
+   ]
+  },
+  {
+   "range": "61-62",
+   "name": "Courier",
+   "desc": "You delivered a vital message to a local authority, noble court, or military official. What unexpected challenge did you overcome in the course of your journey? What was the nature of the message? And who among the recipients now trusts and respects you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    }
+   ]
+  },
+  {
+   "range": "63-64",
+   "name": "Smuggled Goods",
+   "desc": "You helped transport contraband through a heavily patrolled district or settlement, using your dexterity and street savvy to outwit the authorities. What were you smuggling? What unexpected complication arose? How did you turn the situation to your advantage?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sleight of Hand",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sleight of Hand"
+    },
+    {
+     "kind": "skill",
+     "name": "Streetwise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Streetwise"
+    }
+   ]
+  },
+  {
+   "range": "65-66",
+   "name": "Campfire Tales",
+   "desc": "While facing bleak conditions over the course of a long journey, you used storytelling or song to distract yourself and others from the harsh reality. Who were your comrades, and where were you going? What was the lowest point, and what story or song got everyone through it? Who or what was lost along the way?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    }
+   ]
+  },
+  {
+   "range": "67-68",
+   "name": "Secret History",
+   "desc": "Curiosity and intuition led you to piece together clues about a community\u2019s past, leading to the revelation of a hidden truth. What secret did you uncover, and what did you do with this knowledge? How has your position with the community been permanently altered by it?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    },
+    {
+     "kind": "skill",
+     "name": "Common Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Common Lore"
+    }
+   ]
+  },
+  {
+   "range": "69-70",
+   "name": "Battlefield Medic",
+   "desc": "In the chaos of battle, you endured terror and exhaustion in order to provide aid to wounded comrades. What forces or factions were at war? Among those you helped, whose life did you save, or fail to save? In what way has that stayed with you?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Willpower",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Willpower"
+    },
+    {
+     "kind": "skill",
+     "name": "Heal",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Heal"
+    }
+   ]
+  },
+  {
+   "range": "71-72",
+   "name": "Deal of a Lifetime",
+   "desc": "You convinced a skeptical merchant or other buyer to agree to a deal that others thought impossible. What was on the table? What terms did you negotiate? And what valuable item or service changed hands?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Persuade",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Persuade"
+    },
+    {
+     "kind": "skill",
+     "name": "Commerce",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Commerce"
+    }
+   ]
+  },
+  {
+   "range": "73-74",
+   "name": "Improvised Repair",
+   "desc": "Your weapon broke in the heat of battle, and you had to fix it on the fly. Whom or what were you fighting? What material or clever fix saved the day? What fresh scar do you carry as a result?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy"
+     ],
+     "amount": 10,
+     "label": "+10 to Melee: Light, Medium or Heavy"
+    },
+    {
+     "kind": "skill",
+     "name": "Craft: Practical",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Craft: Practical"
+    }
+   ]
+  },
+  {
+   "range": "75-76",
+   "name": "Heroic Rescue",
+   "desc": "You performed a feat of physical prowess to save someone in danger, inspiring those who witnessed your bravery. What danger did you face, and whom did you rescue? How has this selfless act impacted your reputation?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Athletics",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Athletics"
+    },
+    {
+     "kind": "skill",
+     "name": "Inspire",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Inspire"
+    },
+    {
+     "kind": "status",
+     "amount": 1,
+     "label": "+1 Status"
+    }
+   ]
+  },
+  {
+   "range": "77-78",
+   "name": "Holy Revision",
+   "desc": "While listening to someone recount a sacred parable, or reading it for yourself, you discerned a different lesson or deeper meaning than the one commonly accepted. What divine truth\u2014or paradigm-altering tenet\u2014did you perceive between the lines? How has it reshaped your faith? And who disagrees vehemently with your interpretation? If you plan to choose the Godbound career,",
+   "options": [
+    {
+     "kind": "piety",
+     "amount": 10,
+     "label": "+10 Piety (Godbound only)"
+    },
+    {
+     "kind": "skill",
+     "name": "Perception",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Perception"
+    },
+    {
+     "kind": "skill",
+     "name": "Divinity",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Divinity"
+    }
+   ]
+  },
+  {
+   "range": "79-80",
+   "name": "Masked Entertainer",
+   "desc": "You performed anonymously at some event, concealing your identity while delighting onlookers\u2014or disturbing them with an unwelcome truth. What display or story left a lasting impression? Who now is bent on uncovering your true identity?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Stealth",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Stealth"
+    },
+    {
+     "kind": "skill",
+     "name": "Perform",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Perform"
+    }
+   ]
+  },
+  {
+   "range": "81-82",
+   "name": "Path to Ruin",
+   "desc": "While traveling in the country, you came across an overgrown trail that led to a long-abandoned structure. What was its original function? What signs told the tale of its downfall? And what clue to an object of great value did you discover there?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Track",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Track"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "83-84",
+   "name": "Close Bond",
+   "desc": "In the course of taming an unruly horse or other mount, you became bonded to the animal and learned to see the world from their perspective. What is the mount\u2019s name? Is it yours, or were you taming it in service to someone else? What did the experience teach you about yourself?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Ride",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Ride"
+    },
+    {
+     "kind": "skill",
+     "name": "Insight",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Insight"
+    }
+   ]
+  },
+  {
+   "range": "85-86",
+   "name": "Trial of the Wild",
+   "desc": "During a time of scarcity\u2014due to isolation, war, famine, or seasonal extremes\u2014you had to forage and search for resources in the wild. What plant, animal, or water source did you locate? How did it save you, your expedition, or your community?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Survival",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Survival"
+    },
+    {
+     "kind": "skill",
+     "name": "Naturewise",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Naturewise"
+    }
+   ]
+  },
+  {
+   "range": "87-88",
+   "name": "Agent of Diplomacy",
+   "desc": "Unexpectedly or by design, you served as envoy aboard a ship on an important diplomatic mission. Your understanding of maritime customs and social etiquette ensured the mission\u2019s success\u2014or barely salvaged it. What was the mission? What critical role did you play in the negotiations? And who now respects or distrusts you for your efforts?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Sail/Boat",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Sail/Boat"
+    },
+    {
+     "kind": "skill",
+     "name": "Protocol",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Protocol"
+    }
+   ]
+  },
+  {
+   "range": "89-90",
+   "name": "Clever Theft",
+   "desc": "Through some combination of witty banter and technical skill, you gained access to a locked room or container, in the presence of its guardian. What treasure or secret did you claim within? Who was the guardian? And who is now after you because of your actions?",
+   "options": [
+    {
+     "kind": "skill",
+     "name": "Locks & Traps",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Locks & Traps"
+    },
+    {
+     "kind": "skill",
+     "name": "Wit",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Wit"
+    }
+   ]
+  },
+  {
+   "range": "91-92",
+   "name": "Reluctant Revelation",
+   "desc": "By charm, lies, or magical means, you managed to extract valuable information from someone who did not want to give it up. Who were they, and what dangerous truth did they yield? How has your relationship been complicated (or destroyed) as a result? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": "Thought",
+     "amount": 2,
+     "label": "+2 to Strand: Thought"
+    },
+    {
+     "kind": "skill",
+     "name": "Deceive",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Deceive"
+    },
+    {
+     "kind": "skill",
+     "name": "Seduce",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Seduce"
+    }
+   ]
+  },
+  {
+   "range": "93-94",
+   "name": "Waycutter",
+   "desc": "You mustered physical force or destructive magic to clear a path through an obstacle or opposing force. What was so important that such measures were demanded? What price did you pay for this dangerous feat? And what was won or lost, in the end? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": "Destroy",
+     "amount": 10,
+     "label": "+10 Bind: Destroy"
+    },
+    {
+     "kind": "skill",
+     "name": "Might",
+     "group": "Combat",
+     "amount": 10,
+     "label": "+10 Might"
+    },
+    {
+     "kind": "skill",
+     "name": "Endurance",
+     "group": "Adventuring",
+     "amount": 10,
+     "label": "+10 Endurance"
+    }
+   ]
+  },
+  {
+   "range": "95-96",
+   "name": "Summoner\u2019s Call",
+   "desc": "You or someone else conjured a powerful entity, risking otherworldly attention in order to gain the upper hand in some negotiation or conflict. What bargain or threat held the entity in check? What lasting impression did the display leave? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "strand",
+     "name": "Spheres",
+     "amount": 2,
+     "label": "+2 to Strand: Spheres"
+    },
+    {
+     "kind": "skill",
+     "name": "Intimidate",
+     "group": "Social",
+     "amount": 10,
+     "label": "+10 Intimidate"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    }
+   ]
+  },
+  {
+   "range": "97-98",
+   "name": "Forbidden Knowledge",
+   "desc": "You came across an ancient tome or scroll that contained astonishing and disturbing insights. What revelation did your study of the text uncover? And what danger do you now face for possessing\u2014or destroying\u2014it? If you plan to choose the Spellweaver career,",
+   "options": [
+    {
+     "kind": "bind",
+     "name": null,
+     "amount": 10,
+     "label": "+10 to a Bind of your choice (Spellweaver)"
+    },
+    {
+     "kind": "skill",
+     "name": "Arcana",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Arcana"
+    },
+    {
+     "kind": "skill",
+     "name": "Ancient Lore",
+     "group": "Lore",
+     "amount": 10,
+     "label": "+10 Ancient Lore"
+    }
+   ]
+  },
+  {
+   "range": "99",
+   "name": "Haunted",
+   "desc": "The restless spirit of a dead soul haunts your waking moments and invades your dreams. You rarely sleep anymore, but the constant wailing of the dead soul has given you some insight into the spirit world. Who was the spirit in life, and how did they die? Are you the cause of their torment? If not, why does this ghost haunt you, and what can you do to free yourself from it?",
+   "options": [
+    {
+     "kind": "wise",
+     "name": "Arcana and give yourself the Undead-wise",
+     "value": 20,
+     "label": "gain Arcana and give yourself the Undead-wise at 20"
+    }
+   ]
+  },
+  {
+   "range": "00",
+   "name": "Forgotten Past",
+   "desc": "You have woken up with no memories other than your other 2 life events, and this: standing on a dock, preparing to fight your pursuers. Where was the dock? Who were the pursuers? And why do you have the feeling this has all happened before?",
+   "options": [
+    {
+     "kind": "skill-any",
+     "options": [
+      "Dodge",
+      "Melee: Light",
+      "Melee: Medium",
+      "Melee: Heavy",
+      "Might",
+      "Missile",
+      "Thrown",
+      "Athletics",
+      "Endurance",
+      "Locks & Traps",
+      "Perception",
+      "Ride",
+      "Sail/Boat",
+      "Sleight of Hand",
+      "Stealth",
+      "Survival",
+      "Track",
+      "Willpower",
+      "Deceive",
+      "Insight",
+      "Inspire",
+      "Intimidate",
+      "Perform",
+      "Persuade",
+      "Protocol",
+      "Seduce",
+      "Wit",
+      "Ancient Lore",
+      "Arcana",
+      "Commerce",
+      "Common Lore",
+      "Craft: Artistic",
+      "Craft: Practical",
+      "Divinity",
+      "Heal",
+      "Naturewise",
+      "Streetwise"
+     ],
+     "amount": 10,
+     "label": "+10 to any skill"
+    }
+   ]
+  }
+ ]
+}

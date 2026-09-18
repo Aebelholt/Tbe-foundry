@@ -1,0 +1,452 @@
+[
+ {
+  "lo": 1,
+  "hi": 2,
+  "appearance": "Athletic",
+  "aspect": "Accent-heavy",
+  "personality": "Adaptable",
+  "agenda": "Evade a blood debt",
+  "trigger": "Bias: People wearing foreign fashion or garb"
+ },
+ {
+  "lo": 3,
+  "hi": 4,
+  "appearance": "Burly",
+  "aspect": "Chatterbox",
+  "personality": "Charismatic",
+  "agenda": "Prove their worth",
+  "trigger": "Skill: Persuade"
+ },
+ {
+  "lo": 5,
+  "hi": 6,
+  "appearance": "Gaunt",
+  "aspect": "Cryptic",
+  "personality": "Courteous",
+  "agenda": "Ascend to a position of authority",
+  "trigger": "Bias: People who ask many questions"
+ },
+ {
+  "lo": 7,
+  "hi": 8,
+  "appearance": "Lean",
+  "aspect": "Drawling",
+  "personality": "Determined",
+  "agenda": "Spread the Faith or seek converts",
+  "trigger": "Topic: Art, music, or performance"
+ },
+ {
+  "lo": 9,
+  "hi": 10,
+  "appearance": "Portly",
+  "aspect": "Eloquent",
+  "personality": "Empathetic",
+  "agenda": "Usurp a noble house",
+  "trigger": "Bias: People with overt confidence"
+ },
+ {
+  "lo": 11,
+  "hi": 12,
+  "appearance": "Slender",
+  "aspect": "Fast-talking",
+  "personality": "Generous",
+  "agenda": "Find a relic",
+  "trigger": "Topic: Superstitions, omens, or folk beliefs"
+ },
+ {
+  "lo": 13,
+  "hi": 14,
+  "appearance": "Stocky",
+  "aspect": "Monotone",
+  "personality": "Honest",
+  "agenda": "Rescue a prisoner",
+  "trigger": "Bias: People who follow strict etiquette or ritual"
+ },
+ {
+  "lo": 15,
+  "hi": 16,
+  "appearance": "Towering",
+  "aspect": "Muttering",
+  "personality": "Humble",
+  "agenda": "Undermine a rival",
+  "trigger": "Topic: The ruling nobility"
+ },
+ {
+  "lo": 17,
+  "hi": 18,
+  "appearance": "Stout",
+  "aspect": "Soft-spoken",
+  "personality": "Loyal",
+  "agenda": "Map lost lands or territories",
+  "trigger": "Bias: People with strong religious beliefs"
+ },
+ {
+  "lo": 19,
+  "hi": 20,
+  "appearance": "Wiry",
+  "aspect": "Verbose",
+  "personality": "Optimistic",
+  "agenda": "Stay hidden from pursuers",
+  "trigger": "Topic: Taxes and levies"
+ },
+ {
+  "lo": 21,
+  "hi": 22,
+  "appearance": "Angular",
+  "aspect": "Fidgety",
+  "personality": "Patient",
+  "agenda": "Atone for a family curse or past mistake",
+  "trigger": "Bias: People with military bearing or discipline"
+ },
+ {
+  "lo": 23,
+  "hi": 24,
+  "appearance": "Broad-faced",
+  "aspect": "Gesticulating",
+  "personality": "Perceptive",
+  "agenda": "Profit from resources in a specific region",
+  "trigger": "Topic: Magic-users or the use of magic"
+ },
+ {
+  "lo": 25,
+  "hi": 26,
+  "appearance": "Chiseled",
+  "aspect": "Humming",
+  "personality": "Resourceful",
+  "agenda": "Pursue knowledge",
+  "trigger": "Bias: People from a certain area or culture"
+ },
+ {
+  "lo": 27,
+  "hi": 28,
+  "appearance": "Round-faced",
+  "aspect": "Impatient tapping",
+  "personality": "Steadfast",
+  "agenda": "Spy on a rival",
+  "trigger": "Skill: Protocol"
+ },
+ {
+  "lo": 29,
+  "hi": 30,
+  "appearance": "Scarred",
+  "aspect": "Nail-biting",
+  "personality": "Witty",
+  "agenda": "Secure an ally",
+  "trigger": "Bias: Half-Orcs"
+ },
+ {
+  "lo": 31,
+  "hi": 32,
+  "appearance": "Sunken-eyed",
+  "aspect": "Nervous laughter",
+  "personality": "Ambitious",
+  "agenda": "Become a priest or Godbound",
+  "trigger": "Topic: Trade guilds and merchants"
+ },
+ {
+  "lo": 33,
+  "hi": 34,
+  "appearance": "Weathered",
+  "aspect": "Pacing",
+  "personality": "Curious",
+  "agenda": "Maintain a secret relationship",
+  "trigger": "Bias: Dwarves"
+ },
+ {
+  "lo": 35,
+  "hi": 36,
+  "appearance": "Bearded",
+  "aspect": "Snapping fingers",
+  "personality": "Diligent",
+  "agenda": "Deceive a ruler or authority figure",
+  "trigger": "Topic: Bandits and outlaws"
+ },
+ {
+  "lo": 37,
+  "hi": 38,
+  "appearance": "Freckled",
+  "aspect": "Whistling",
+  "personality": "Dreamy",
+  "agenda": "Impersonate an important figure",
+  "trigger": "Bias: People with noticeable scars"
+ },
+ {
+  "lo": 39,
+  "hi": 40,
+  "appearance": "Wrinkled",
+  "aspect": "Yawning excessively",
+  "personality": "Independent",
+  "agenda": "Build a stronghold or settlement",
+  "trigger": "Skill: Intimidate"
+ },
+ {
+  "lo": 41,
+  "hi": 42,
+  "appearance": "Balding",
+  "aspect": "Always disheveled",
+  "personality": "Introspective",
+  "agenda": "Recover a stolen item",
+  "trigger": "Bias: People with a certain color of hair"
+ },
+ {
+  "lo": 43,
+  "hi": 44,
+  "appearance": "Curly-haired",
+  "aspect": "Flourishing gestures",
+  "personality": "Observant",
+  "agenda": "Take revenge on a traitor",
+  "trigger": "Topic: Rumors of corruption or scandal"
+ },
+ {
+  "lo": 45,
+  "hi": 46,
+  "appearance": "Flowing",
+  "aspect": "Fastidious groomer",
+  "personality": "Reserved",
+  "agenda": "Take over or influence a criminal organization",
+  "trigger": "Bias: People who seem wealthy"
+ },
+ {
+  "lo": 47,
+  "hi": 48,
+  "appearance": "Long-haired",
+  "aspect": "Piercing stare",
+  "personality": "Stoic",
+  "agenda": "Change or reform the system",
+  "trigger": "Topic: Tales of heroes"
+ },
+ {
+  "lo": 49,
+  "hi": 50,
+  "appearance": "Messy",
+  "aspect": "Laughs at odd moments",
+  "personality": "Tenacious",
+  "agenda": "Assemble a mercenary force",
+  "trigger": "Bias: People who seem poor"
+ },
+ {
+  "lo": 51,
+  "hi": 52,
+  "appearance": "Shaven",
+  "aspect": "Confident bearing",
+  "personality": "Abrasive",
+  "agenda": "Find a suitable husband/wife",
+  "trigger": "Topic: The natural world—forests, beasts, and landscapes"
+ },
+ {
+  "lo": 53,
+  "hi": 54,
+  "appearance": "Short-cropped",
+  "aspect": "Overreacts to temperature",
+  "personality": "Arrogant",
+  "agenda": "Learn forbidden magic or rituals",
+  "trigger": "Bias: Rangers or woodsmen"
+ },
+ {
+  "lo": 55,
+  "hi": 56,
+  "appearance": "Slicked-back",
+  "aspect": "Pauses mid-sentence",
+  "personality": "Cynical",
+  "agenda": "Reconcile with a family member or friend",
+  "trigger": "Topic: A past war or recent conflict"
+ },
+ {
+  "lo": 57,
+  "hi": 58,
+  "appearance": "Thick-haired",
+  "aspect": "Whispers to emphasize",
+  "personality": "Deceptive",
+  "agenda": "Blackmail an adversary",
+  "trigger": "Bias: Rogues or thieves"
+ },
+ {
+  "lo": 59,
+  "hi": 60,
+  "appearance": "Unkempt",
+  "aspect": "Always tilts head",
+  "personality": "Greedy",
+  "agenda": "Write a book (chronicle, history, biography, etc.)",
+  "trigger": "Topic: Commonfolk grievances"
+ },
+ {
+  "lo": 61,
+  "hi": 62,
+  "appearance": "Bright-eyed",
+  "aspect": "Avoids eye contact",
+  "personality": "Impatient",
+  "agenda": "Break free of an oath or vow",
+  "trigger": "Topic: Academic knowledge and scholars"
+ },
+ {
+  "lo": 63,
+  "hi": 64,
+  "appearance": "Cold-eyed",
+  "aspect": "Clingy",
+  "personality": "Impulsive",
+  "agenda": "Solve a mystery",
+  "trigger": "Bias: Warriors"
+ },
+ {
+  "lo": 65,
+  "hi": 66,
+  "appearance": "Piercing",
+  "aspect": "Excessively polite",
+  "personality": "Jealous",
+  "agenda": "Build a strong reputation",
+  "trigger": "Skill: Wit"
+ },
+ {
+  "lo": 67,
+  "hi": 68,
+  "appearance": "Sharp-eyed",
+  "aspect": "Forgetful",
+  "personality": "Melancholic",
+  "agenda": "Seek out justice for a wronged party",
+  "trigger": "Topic: Foreign trade"
+ },
+ {
+  "lo": 69,
+  "hi": 70,
+  "appearance": "Soft-eyed",
+  "aspect": "Overly familiar",
+  "personality": "Reckless",
+  "agenda": "Eliminate a rival or enemy",
+  "trigger": "Bias: Merchants"
+ },
+ {
+  "lo": 71,
+  "hi": 72,
+  "appearance": "Sunken",
+  "aspect": "Overly formal",
+  "personality": "Ruthless",
+  "agenda": "Pay off crippling debts",
+  "trigger": "Topic: Foreign kingdoms or cultures"
+ },
+ {
+  "lo": 73,
+  "hi": 74,
+  "appearance": "Warm-eyed",
+  "aspect": "Superstitious",
+  "personality": "Selfish",
+  "agenda": "Rid a location of evil/enemies/curse",
+  "trigger": "Topic: Honor and oaths 478 chapter 18: bestiary NPC Special Reaction Effect Table (Roll or Choose) d100 Special Reaction 01–20 Increase or Decrease initial Tolerance based on a particular bias. 21–40 A skill automatically fails when used. 41–60 ±2 SLs to the party’s SL total when attempting a particular skill. 61–80 ±2 SLs to the party’s SL total when incorporating a particular topic into the skill roll. 81–100 ±2 SLs to the party’s SL total if the skill is attempted by a character of a particular race, profession, or cultural group. Creature Hit Locations Dragon or Winged Quadruped 1–2 Body 7 R Wing 3 R F ront Leg 8 L Wing 4 L Front Leg 9 Tail 5 R Rear Leg 0 Head 6 L Rear Leg Serpentine 1–8 Body 9–0 Head Insectoid 1–3 Body 7 L Mid Leg* 4 R Front leg 8 R Rear Leg 5 L F ront leg 9 L Rear Leg 6 R Mid Leg* 0 Head *Count as Wing if winged Horse or Quadruped 1–4 Body 8 R Rear Leg 5 Tail* 9 L Rear Leg 6 R F ront leg 0 Head 7 L Front Leg* *Count as Body if no tail, or Trunk or other if applicable Winged Humanoid 1–3 Body 7 L Leg 4 R Arm 8 R Wing 5 L Arm 9 L Wing 6 R Leg* 0 Head Finned Aquatic 1–5 Body 8 L Fin 6 Tail 9 Dorsal Fin 7 R Fin 0 Head"
+ },
+ {
+  "lo": 75,
+  "hi": 76,
+  "appearance": "Heavy-lidded",
+  "aspect": "Suspicious",
+  "personality": "Sullen",
+  "agenda": "Protect a child",
+  "trigger": "Bias: Loremasters or scholars"
+ },
+ {
+  "lo": 77,
+  "hi": 78,
+  "appearance": "Wide-eyed",
+  "aspect": "Tactless",
+  "personality": "Suspicious",
+  "agenda": "Gain control over a strategic location",
+  "trigger": "Skill: Inspire"
+ },
+ {
+  "lo": 79,
+  "hi": 80,
+  "appearance": "Narrow-eyed",
+  "aspect": "Too trusting",
+  "personality": "Vindictive",
+  "agenda": "Amass great wealth",
+  "trigger": "Topic: Ambition, power, and personal advancement"
+ },
+ {
+  "lo": 81,
+  "hi": 82,
+  "appearance": "Bony",
+  "aspect": "Always punctual",
+  "personality": "Compassionate",
+  "agenda": "Flee a pursuer",
+  "trigger": "Bias: Priests or Godbound"
+ },
+ {
+  "lo": 83,
+  "hi": 84,
+  "appearance": "Dimpled",
+  "aspect": "Chews on a twig",
+  "personality": "Courageous",
+  "agenda": "Keep a secret from being discovered",
+  "trigger": "Skill: Deceive"
+ },
+ {
+  "lo": 85,
+  "hi": 86,
+  "appearance": "Knobby",
+  "aspect": "Toys with odd trinkets",
+  "personality": "Dependable",
+  "agenda": "Regain their dignity",
+  "trigger": "Topic: Secrets, whispers, and forbidden Knowledge"
+ },
+ {
+  "lo": 87,
+  "hi": 88,
+  "appearance": "Pale",
+  "aspect": "Constantly scribbling notes",
+  "personality": "Encouraging",
+  "agenda": "Create a network of spies or informants",
+  "trigger": "Bias: Spellweavers"
+ },
+ {
+  "lo": 89,
+  "hi": 90,
+  "appearance": "Petite",
+  "aspect": "Fixated on symmetry",
+  "personality": "Fair-minded",
+  "agenda": "Win a contest or tournament",
+  "trigger": "Skill: Perform"
+ },
+ {
+  "lo": 91,
+  "hi": 92,
+  "appearance": "Rugged",
+  "aspect": "Hates being touched",
+  "personality": "Gracious",
+  "agenda": "Restore a lost or fallen religious site",
+  "trigger": "Topic: Mortality and loss"
+ },
+ {
+  "lo": 93,
+  "hi": 94,
+  "appearance": "Sallow",
+  "aspect": "Laughs at their own jokes",
+  "personality": "Resilient",
+  "agenda": "Gain followers for a cause",
+  "trigger": "Bias: People who talk softly/loudly"
+ },
+ {
+  "lo": 95,
+  "hi": 96,
+  "appearance": "Sinewy",
+  "aspect": "Obsessed with cleanliness",
+  "personality": "Trustworthy",
+  "agenda": "Find and claim a hidden treasure",
+  "trigger": "Skill: Seduce"
+ },
+ {
+  "lo": 97,
+  "hi": 98,
+  "appearance": "Weatherbeaten",
+  "aspect": "Talks to themselves",
+  "personality": "Visionary",
+  "agenda": "Protect their family",
+  "trigger": "Topic: The established Church"
+ },
+ {
+  "lo": 99,
+  "hi": 100,
+  "appearance": "Well-groomed",
+  "aspect": "Uncomfortable in silence",
+  "personality": "Supportive",
+  "agenda": "Establish a dynasty",
+  "trigger": "Bias: People who smell of travel"
+ }
+]

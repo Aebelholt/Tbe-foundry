@@ -1,0 +1,95 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+      <div class="resources grid grid-4col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">Difficulty</label>
+          <select name="system.difficulty">
+            {{#each config.DIFFICULTY_TIERS as |tier|}}
+            <option value="{{tier}}" {{#if (eq tier @root.system.difficulty)}}selected{{/if}}>{{tier}}</option>
+            {{/each}}
+          </select>
+        </div>
+        {{!-- Initiative is DISPLAYED here and EDITED in actor-wounds.hbs below.
+              There must be exactly one input named "system.initiative" in this
+              form. Two of them made FormDataExtended hand the DataModel an
+              ARRAY on every save; the StringField cast it to "14,14", the next
+              save to "14,14,NaN", and num() of that is NaN, so
+              initiativeEffective fell to 0 and every creature in the world
+              rolled Initiative 0 and acted last. Found in a real session's
+              probe output, v0.33.0. Do not add an input here. --}}
+        <div class="resource flex-group-center">
+          <label class="resource-label">Initiative</label>
+          <span class="resource-content" title="Edit this on the Overview tab">{{system.initiative}}</span>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Size</label>
+          <select name="system.size">
+            {{#each config.SIZES as |s|}}
+            <option value="{{s}}" {{#if (eq s @root.system.size)}}selected{{/if}}>{{s}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Ferocity</label>
+          <input type="text" name="system.ferocity" value="{{system.ferocity}}"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Move</label>
+          <input type="text" name="system.move" value="{{system.move}}"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="overview">Overview</a>
+    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="talents">Talents</a>
+    <a class="item" data-tab="gear">Gear</a>
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Overview Tab: DT/Resolve/Toughness/Fatigue, wound table, armour grid --}}
+    <div class="tab overview" data-group="primary" data-tab="overview">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-wounds.hbs"}}
+      <h3>Armour</h3>
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-armour.hbs"}}
+    </div>
+
+    {{!-- Skills Tab --}}
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-skills.hbs"}}
+    </div>
+
+    {{!-- Talents Tab --}}
+    <div class="tab talents" data-group="primary" data-tab="talents">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-talents.hbs"}}
+    </div>
+
+    {{!-- Gear Tab --}}
+    <div class="tab gear" data-group="primary" data-tab="gear">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-items.hbs"}}
+    </div>
+
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/the-broken-empires/templates/actor/parts/actor-effects.hbs"}}
+    </div>
+
+  </section>
+</form>

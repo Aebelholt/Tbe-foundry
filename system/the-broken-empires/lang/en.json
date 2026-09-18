@@ -1,0 +1,31 @@
+{
+  "TBE": {
+    "SheetLabels": {
+      "Actor": "The Broken Empires Actor Sheet",
+      "Item": "The Broken Empires Item Sheet"
+    },
+    "Effect": {
+      "Source": "Source",
+      "Duration": "Duration",
+      "Toggle": "Toggle Effect",
+      "Temporary": "Temporary Effects",
+      "Passive": "Passive Effects",
+      "Inactive": "Inactive Effects"
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Character",
+      "creature": "Creature"
+    },
+    "Item": {
+      "skill": "Skill",
+      "weapon": "Weapon",
+      "armor": "Armor",
+      "shield": "Shield",
+      "talent": "Talent",
+      "strand": "Strand",
+      "thread": "Thread"
+    }
+  }
+}

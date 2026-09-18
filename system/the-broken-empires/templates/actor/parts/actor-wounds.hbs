@@ -1,0 +1,85 @@
+<div class="vitals grid grid-4col">
+  <div class="resource flex-group-center">
+    <label class="resource-label">Death Threshold</label>{{#with (lookup statSources "system.deathThreshold.max")}}<span style="font-size:10px;opacity:.7"> {{this}}</span>{{/with}}
+    <div class="resource-content flexrow flex-center flex-between">
+      <input type="text" name="system.deathThreshold.value" value="{{system.deathThreshold.value}}" data-dtype="Number"/>
+      <span>/</span>
+      <input type="text" name="system.deathThreshold.max" value="{{system.deathThreshold.max}}" data-dtype="Number"/>
+    </div>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Resolve</label>{{#with (lookup statSources "system.resolve.max")}}<span style="font-size:10px;opacity:.7"> {{this}}</span>{{/with}}
+    <div class="resource-content flexrow flex-center flex-between">
+      <input type="text" name="system.resolve.value" value="{{system.resolve.value}}" data-dtype="Number"/>
+      <span>/</span>
+      <input type="text" name="system.resolve.max" value="{{system.resolve.max}}" data-dtype="Number"/>
+    </div>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Toughness</label>{{#with (lookup statSources "system.toughness")}}<span style="font-size:10px;opacity:.7"> {{this}}</span>{{/with}}
+    <div class="resource-content flexrow flex-center flex-between">
+      <input type="text" name="system.toughness" value="{{system.toughness}}" data-dtype="Number"/>
+    </div>
+  </div>
+  <div class="resource flex-group-center">
+    <label class="resource-label">Fatigue</label>
+    <div class="resource-content flexrow flex-center flex-between">
+      <input type="text" name="system.fatigue" value="{{system.fatigue}}" data-dtype="Number"/>
+    </div>
+  </div>
+</div>
+
+{{!-- This chip owns the one editable Initiative field for BOTH sheets. The
+     creature sheet's header shows the same value read-only; adding a second
+     input named system.initiative anywhere in one form makes every save
+     append to a comma-joined string (see v0.33.0). The dtype has to follow
+     the DataModel: creature.initiative is a StringField (a blank one cast
+     through Number gives the literal string "NaN"), character.initiative is
+     a NumberField. --}}
+<div class="vitals-summary flexrow">
+  <span class="stat-chip">Initiative <input type="text" class="narrow-input" name="system.initiative" value="{{system.initiative}}" data-dtype="{{#if (eq actor.type 'creature')}}String{{else}}Number{{/if}}" style="width:2.5em;text-align:center"/>{{#with (lookup statSources "system.initiative")}}<span style="font-size:10px;opacity:.7"> {{this}}</span>{{/with}}{{#if armorPenalty.penalty}} <em title="Bulk {{armorPenalty.bulk}} from worn armor, divided by 3 rounded up (Ch.9 p.141)">(-{{armorPenalty.penalty}} armor &rarr; {{sign armorPenalty.effective}})</em>{{/if}}</span>
+  <span class="stat-chip">Lethality Level <strong>{{system.lethalityLevel}}</strong>{{#with (lookup statSources "system.lethalityBonus")}} <em style="font-size:10px;opacity:.75">({{this}})</em>{{/with}}{{#if system.lethalityPenalty}} <em>(-{{system.lethalityPenalty}} from sepsis)</em>{{/if}}</span>
+  <span class="stat-chip">Total WP <strong>{{system.totalWp}}</strong></span>
+  <label class="stat-chip shock-toggle">
+    <input type="checkbox" name="system.shock" {{checked system.shock}}/> Shock
+  </label>
+  {{#if system.isDying}}<span class="stat-chip dying-chip">DYING</span>{{/if}}
+</div>
+
+<table class="wound-table">
+  <thead>
+    <tr>
+      <th class="loc-col">Location</th>
+      <th>WP</th>
+      <th>Imp</th>
+      <th>Inf</th>
+      <th>Septic</th>
+      <th>RB</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each config.LOCATIONS as |label loc|}}
+    {{#with (lookup @root.system.wounds loc) as |w|}}
+    <tr>
+      <td class="loc-label">{{label}}</td>
+      <td><input type="text" class="narrow-input" name="system.wounds.{{loc}}.wp" value="{{w.wp}}" data-dtype="Number"/></td>
+      <td><input type="text" class="narrow-input" name="system.wounds.{{loc}}.imp" value="{{w.imp}}" data-dtype="Number"/></td>
+      <td class="center"><input type="checkbox" name="system.wounds.{{loc}}.inf" {{checked w.inf}}/></td>
+      <td class="center"><input type="checkbox" name="system.wounds.{{loc}}.septic" {{checked w.septic}}/></td>
+      <td><input type="text" class="narrow-input" name="system.wounds.{{loc}}.rb" value="{{w.rb}}" data-dtype="Number"/></td>
+    </tr>
+    {{/with}}
+    {{/each}}
+  </tbody>
+</table>
+
+{{#if activeStatuses.length}}
+<div class="active-statuses">
+  <h3>Active Statuses</h3>
+  <ul class="status-chips">
+    {{#each activeStatuses as |s|}}
+    <li class="status-chip"><img src="{{s.icon}}" width="16" height="16"/> {{s.name}}</li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}

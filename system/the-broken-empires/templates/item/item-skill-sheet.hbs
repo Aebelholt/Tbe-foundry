@@ -1,0 +1,56 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">Group</label>
+          <select name="system.group">
+            {{#each config.SKILL_GROUPS as |group|}}
+            <option value="{{group}}" {{#if (eq group @root.system.group)}}selected{{/if}}>{{group}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Value</label>
+          <input type="text" name="system.value" value="{{system.value}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Fighting</label>
+          <input type="checkbox" name="system.fighting" {{checked system.fighting}}/>
+        </div>
+      </div>
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Ch.4 p.54 / Ch.8 p.123: guarantees at least this many SLs on a successful roll. 0 = none.">Expertise (0, 2-4)</label>
+          <select name="system.expertise">
+            <option value="0" {{#if (eq system.expertise 0)}}selected{{/if}}>None</option>
+            <option value="2" {{#if (eq system.expertise 2)}}selected{{/if}}>Ex2 (min 2 SL)</option>
+            <option value="3" {{#if (eq system.expertise 3)}}selected{{/if}}>Ex3 (min 3 SL)</option>
+            <option value="4" {{#if (eq system.expertise 4)}}selected{{/if}}>Ex4 (min 4 SL)</option>
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label" title="Ch.4 p.51: the Savvy Talent. XP spent improving this skill gets +1 (Ch.8 p.123).">Savvy (S)</label>
+          <input type="checkbox" name="system.savvy" {{checked system.savvy}}/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/the-broken-empires/templates/item/parts/item-effects.hbs"}}
+    </div>
+  </section>
+</form>

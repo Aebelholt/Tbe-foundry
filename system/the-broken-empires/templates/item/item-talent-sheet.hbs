@@ -1,0 +1,51 @@
+<form class="{{cssClass}} {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="80" width="80"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="resources grid grid-3col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">Category</label>
+          <select name="system.category">
+            {{#each config.TALENT_CATEGORIES as |cat|}}
+            <option value="{{cat}}" {{#if (eq cat @root.system.category)}}selected{{/if}}>{{cat}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Ranks taken</label>
+          <input type="text" name="system.ranks" value="{{system.ranks}}" data-dtype="Number"/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Repeatable</label>
+          <input type="text" name="system.maxRanks" value="{{system.maxRanks}}"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+          <label class="resource-label">Applies to</label>
+          <input type="text" name="system.specialization" value="{{system.specialization}}" placeholder="shortsword, Melee: Medium, Head..."/>
+        </div>
+        <div class="resource flex-group-center">
+          <label class="resource-label">Requirements</label>
+          <input type="text" name="system.requirements" value="{{system.requirements}}"/>
+        </div>
+      </div>
+      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+    </div>
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/the-broken-empires/templates/item/parts/item-effects.hbs"}}
+    </div>
+  </section>
+</form>
