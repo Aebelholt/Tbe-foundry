@@ -478,9 +478,21 @@ if (!attacker) {
               const keep = await TBE.prompt("Shock!", "<div>" + target.name + " is dropping in Shock. Spend <b>3 Resolve</b> (" + before + " in the pool) to stay up?</div>" +
                 '<label><input type="checkbox" name="spend" checked> Spend 3 Resolve</label>', "Decide");
               if (keep && keep.spend === "on") {
-                await target.update({ "system.resolve.value": before - 3 });
-                shock = false;
-                body += "<div><b>3 Resolve spent</b> (" + (before - 3) + " left): " + target.name + " refuses the Shock and stays standing.</div>";
+                /* The defender is very often not this user's actor -- a player
+                   attacking the GM's creature, or the GM resolving a hit on a
+                   player's character. This used to be a bare `.update()` with
+                   no try at all, so a permission error threw out of the middle
+                   of the attack and the card never posted. Now it reports. */
+                const w = await TBE.write(target, { "system.resolve.value": before - 3 }, "the 3 Resolve");
+                if (w.ok) {
+                  shock = false;
+                  body += "<div><b>3 Resolve spent</b> (" + (before - 3) + " left): " + target.name + " refuses the Shock and stays standing.</div>";
+                } else {
+                  /* The choice stands, the bookkeeping does not. Leave Shock
+                     applied rather than clearing a state nobody paid for. */
+                  body += '<div style="color:#8b1a1a">' + target.name + " chose to spend 3 Resolve, but it could not be written, so the Shock still applies. " +
+                    TBE.esc(w.notice) + "</div>";
+                }
               }
             }
             if (shock) {
@@ -507,15 +519,20 @@ if (!attacker) {
                  a separate and softer threshold that base-actor.mjs already
                  derives correctly but no macro ever showed. */
               const dtNote = TBE.deathThresholdNote(target, TBE.totalWp(wounds));
-              try {
-                await target.update({ "system.deathThreshold.value": dtNote.left });
+              const wdt = await TBE.write(target, { "system.deathThreshold.value": dtNote.left },
+                "the " + wp + " WP against the Death Threshold");
+              if (wdt.ok) {
                 body += "<div>" + dtNote.line + "</div>";
                 if (dtNote.dead) {
                   body += '<div style="font-weight:bold;color:#8b1a1a">Death Threshold reached, ' + target.name + " falls.</div>";
                   await TBE.applyStatus(target, "dead", {}).catch(() => {});
                 }
-              } catch (err) {
-                body += "<div><i>Could not write the Death Threshold, apply " + wp + " WP by hand.</i></div>";
+              } else {
+                /* The damage is real whether or not this user may record it.
+                   Show the line so the table can see what happened, and say
+                   who has to write it down. */
+                body += "<div>" + dtNote.line + "</div>" +
+                  '<div style="color:#8b1a1a"><i>Not recorded on the sheet. ' + TBE.esc(wdt.notice) + "</i></div>";
               }
             } else {
               body += "<div><i>" + target.name + "'s Death Threshold is not set. Set it on the sheet, then damage applies automatically. Record " + wp + " WP by hand this once.</i></div>";

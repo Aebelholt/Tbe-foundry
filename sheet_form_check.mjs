@@ -135,6 +135,46 @@ for (const sheet of SHEETS) {
   ok(n === 2, `mutation should produce 2 Initiative inputs, produced ${n} -- this check would not catch a regression`);
 }
 
+/* 6. B4: a chargen-derived ceiling is not a live resource. ------------------
+ *
+ * Seb's first real session: Resolve went 12/12 to 12/11 with the pool
+ * untouched. No Resolve spend in the codebase can produce that -- every one
+ * writes system.resolve.value -- so the maximum was hand-edited, almost
+ * certainly by someone reaching for the pool and hitting the box beside it,
+ * separated from it only by a "/". The loss is permanent, unsignalled, and
+ * there is nothing to restore it from. Gilda Hrundir sits at 10/11 in the
+ * same probe.
+ *
+ * Rule 12's neighbour: that one was about a form control's NAME corrupting a
+ * data path. This is about a form control existing at all where the data
+ * model says the value is not live. Both are "the template is a data path"
+ * failures, which is why they share a file. */
+{
+  const html = fs.readFileSync(path.join(ROOT, "actor/parts/actor-wounds.hbs"), "utf8");
+  for (const field of ["system.resolve.max", "system.deathThreshold.max"]) {
+    const re = new RegExp('<input[^>]*name="' + field.replace(/\./g, "\\.") + '"[^>]*>');
+    const tag = (html.match(re) || [""])[0];
+    ok(!!tag, `${field} still has an input`);
+    ok(/\breadonly\b/.test(tag), `${field} is readonly until deliberately unlocked`);
+    ok(/title="/.test(tag), `${field} says why it is locked`);
+  }
+  /* The matching .value fields must NOT be locked -- they are the live pool,
+     and locking them would be the opposite bug: a tool that punishes the
+     ordinary case to protect the rare one (rule 6). */
+  for (const field of ["system.resolve.value", "system.deathThreshold.value"]) {
+    const re = new RegExp('<input[^>]*name="' + field.replace(/\./g, "\\.") + '"[^>]*>');
+    const tag = (html.match(re) || [""])[0];
+    ok(!!tag, `${field} still has an input`);
+    ok(!/\breadonly\b/.test(tag), `${field} stays freely editable -- it IS the live pool`);
+  }
+  /* The lock is an anchor, not a second control: a second input carrying the
+     same name is exactly rule 12's bug, and section 1 would catch it, so this
+     asserts the shape rather than trusting that. */
+  const locks = (html.match(/class="stat-max-lock"/g) || []).length;
+  ok(locks === 2, `two locks, one per maximum (found ${locks})`);
+  ok(!/<input[^>]*class="stat-max-lock"/.test(html), "the lock is not itself a form control");
+}
+
 console.log(`${pass} passed, ${fails.length} failed`);
 for (const f of fails) console.log("  FAIL " + f);
 process.exit(fails.length ? 1 : 0);

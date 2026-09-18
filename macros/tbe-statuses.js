@@ -49,8 +49,8 @@ if (!me) {
     const fatigue = TBE.num(data.fatigue, 0);
     const prevFatigue = TBE.num(me.system?.fatigue, 0);
     if (fatigue !== prevFatigue) {
-      try { await me.update({ "system.fatigue": fatigue }); } catch (e) {}
-      changed.push("Fatigue " + prevFatigue + " &rarr; " + fatigue);
+      const wFat = await TBE.write(me, { "system.fatigue": fatigue }, "the Fatigue change");
+      changed.push("Fatigue " + prevFatigue + " &rarr; " + fatigue + (wFat.ok ? "" : " (NOT SAVED: " + TBE.esc(wFat.notice) + ")"));
     }
 
     let body = "<div><b>" + me.name + "</b></div>";

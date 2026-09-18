@@ -181,9 +181,18 @@ console.log("\n7. The sheet's roll button owns no rules");
 
   /* Safety: a Resolve spend is a write to the actor. */
   check(/Math\.max\(0, cur - spend\.favor\)/.test(handler), "a Resolve spend clamps at zero");
-  check(/this\.actor\.isOwner/.test(handler) && /not spent/.test(handler),
+  /* This method used to carry the only correct unowned-actor handling in the
+     codebase, inline, as `this.actor.isOwner`. v0.38.0 made that the owner's
+     job (module/rules/permission.mjs) so the macro pack could say the same
+     thing. The guarantee under test is the same one: a user who cannot write
+     is TOLD, rather than the spend silently not happening. */
+  check(/PERMISSION\.applyWrite\(/.test(handler) && /notify:/.test(handler),
     "a user who cannot write to the actor is told the Resolve was not spent rather than it failing silently");
-  check(handler.indexOf("await new Roll") < handler.indexOf("actor.update"),
+  check(/The roll still used the bonus/.test(handler),
+    "...and is told the bonus still applied, so the card and the pool agree");
+  check(!/this\.actor\.isOwner/.test(handler),
+    "and the sheet no longer carries its own copy of the ownership test");
+  check(handler.indexOf("await new Roll") < handler.indexOf("applyWrite"),
     "the roll happens before the Resolve is deducted, so a cancelled dialog costs nothing");
 
   /* Behavioural: the one piece of arithmetic it does own. */

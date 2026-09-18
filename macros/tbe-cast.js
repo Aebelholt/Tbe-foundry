@@ -831,8 +831,10 @@ if (!MAGIC) {
       s.rolls = [r];
       if (favor) {
         const cur = TBE.num(this.actor.system?.resolve?.value, 0);
-        try { await this.actor.update({ "system.resolve.value": Math.max(0, cur - favor) }); }
-        catch (err) { console.warn("TBE | could not spend Favor Resolve", err); }
+        /* The roll already used the bonus; if the deduction cannot land, the
+           player is told rather than quietly getting it for free. */
+        s.favorWrite = await TBE.write(this.actor,
+          { "system.resolve.value": Math.max(0, cur - favor) }, "the " + favor + " Resolve");
       }
       this.phase = "after";
       await this.render(true);
@@ -987,13 +989,23 @@ if (!MAGIC) {
         '<span style="color:' + TBE.colour(res) + '">' + TBE.tag(res) + "</span>" +
         (res && res.success ? ", <b>" + res.sl + " SL</b>" : "") + "</div>" +
         '<div style="font-size:11px;opacity:.85">Total Cost ' + cost.total + " = " +
-        cost.lines.map((l) => esc(l.label) + " " + l.tc).join(" + ") + "</div>";
+        cost.lines.map((l) => esc(l.label) + " " + l.tc).join(" + ") + "</div>" +
+        /* The Favor Resolve was spent (or refused) back in rollBind, before
+           this card existed. If it could not be written, the roll still used
+           the bonus, so the card has to say the pool is owed rather than let
+           the table read an unchanged number as "nothing was spent". */
+        (s.favorWrite && !s.favorWrite.ok
+          ? '<div style="font-size:11px;color:#8b1a1a">Favor bonus applied, but the Resolve was not deducted. ' +
+            esc(s.favorWrite.notice) + "</div>"
+          : "");
 
       let wrm = 0, react = null, uncontrolled = false;
       if (!res || !res.success) {
         const cur = TBE.num(this.actor.system?.resolve?.value, 0);
-        try { await this.actor.update({ "system.resolve.value": Math.max(0, cur - 1) }); } catch (e) {}
-        body += "<div>The spell is not cast. 1 Resolve spent.</div>";
+        const w = await TBE.write(this.actor, { "system.resolve.value": Math.max(0, cur - 1) }, "the 1 Resolve");
+        body += w.ok
+          ? "<div>The spell is not cast. 1 Resolve spent.</div>"
+          : "<div>The spell is not cast. <b>1 Resolve is owed.</b> " + esc(w.notice) + "</div>";
         if (res && res.critFail) {
           /* p.283: a critical failure rolls on the Weave Reaction Table
            * adding the spell's Magnitude cost, and a Fade gains 1 Fraying. */
@@ -1015,9 +1027,12 @@ if (!MAGIC) {
         const mit = this._mitigationClamp(raw);
         const reduce = mit.reduce;
         if (reduce) {
-          try { await this.actor.update({ "system.resolve.value": Math.max(0, TBE.num(this.actor.system?.resolve?.value, 0) - mit.paid) }); } catch (e) {}
+          const wm = await TBE.write(this.actor,
+            { "system.resolve.value": Math.max(0, TBE.num(this.actor.system?.resolve?.value, 0) - mit.paid) },
+            "the " + mit.paid + " Resolve for Mitigation");
           body += "<div>Mitigation: the modifier drops by <b>" + reduce + "</b> for " + mit.paid + " Resolve" +
-            (mit.enduringFree ? " (Enduring Caster covers " + mit.enduringFree + ")" : "") + ".</div>";
+            (mit.enduringFree ? " (Enduring Caster covers " + mit.enduringFree + ")" : "") + "." +
+            (wm.ok ? "" : " <b>Not deducted.</b> " + esc(wm.notice)) + "</div>";
         }
         if (mit.short) body += '<div style="font-size:11px;color:#8b1a1a">Only ' + mit.paid +
           " of the " + mit.charged + " Resolve the requested reduction needed was available, so it was only funded to " + reduce + ".</div>";
@@ -1122,9 +1137,10 @@ if (!MAGIC) {
               i.name.toLowerCase() === bindName.toLowerCase());
             if (bind) {
               const now = Math.max(0, TBE.num(bind.system?.value, 0) - amount);
-              try { await bind.update({ "system.value": now }); } catch (e) {}
+              const ws = await TBE.writeItem(bind, { "system.value": now }, "the permanent Weave Scar");
               body += "<div><b>Weave Scar</b>: <b>" + esc(bindName) + "</b> permanently &minus;" + amount +
-                " &rarr; <b>" + now + "</b>. The Tapestry reweaves the caster's own Pattern (p.302).</div>";
+                " &rarr; <b>" + now + "</b>. The Tapestry reweaves the caster's own Pattern (p.302)." +
+                (ws.ok ? "" : " <b>Not applied.</b> " + esc(ws.notice)) + "</div>";
             } else {
               body += "<div><b>Weave Scar</b>: &minus;" + amount + " permanently to <b>" + esc(bindName) +
                 "</b>, which is not a skill on this sheet &mdash; apply it by hand.</div>";

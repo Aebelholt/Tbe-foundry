@@ -97,7 +97,7 @@ if (!me) {
       let spent = Math.min(cost, resolveNow);
       let brokeOnCost = false;
       if (won && !affordable) { won = false; brokeOnCost = true; why = "the counter landed but only " + resolveNow + " of the " + cost + " Resolve it cost was there"; }
-      try { await me.update({ "system.resolve.value": resolveNow - spent }); } catch (e) {}
+      const wSpend = await TBE.write(me, { "system.resolve.value": resolveNow - spent }, "the " + spent + " Resolve");
 
       let body =
         "<div><b>" + me.name + "</b> Holds to Interrupt " + them + "'s spell" +
@@ -107,7 +107,8 @@ if (!me) {
           (res.success ? ", " + res.sl + " SL vs their " + theirSL : "") + "</div>" +
         "<div>Resolve cost: " + theirSL + " SL &minus; " + strandVal + " Strand = <b>" + cost + "</b>" +
           (spent < cost ? ", but only <b>" + spent + "</b> was available" : "") +
-          " &rarr; " + (resolveNow - spent) + " left. Spent either way (p.311).</div>";
+          " &rarr; " + (resolveNow - spent) + " left. Spent either way (p.311)." +
+          (wSpend.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(wSpend.notice) + "</span>") + "</div>";
 
       body += won
         ? '<div style="font-weight:bold;color:#1f7a1f;margin-top:4px">Countered &mdash; ' + why +

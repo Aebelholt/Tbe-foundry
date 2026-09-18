@@ -57,17 +57,16 @@ if (!gb.isGodbound) {
        * Miracles for 1d6 sessions. */
       const d6 = await new Roll("1d6").evaluate();
       rolls.push(d6);
-      try { await me.update({ "system.castOut": false, "system.noGreaterSessions": d6.total }); }
-      catch (e) { console.warn("TBE | could not record the atonement", e); }
-      body = "<div><b>" + esc(me.name) + "</b> completes an act of atonement and is returned to the god's good graces.</div>" +
+      const wAtone = await TBE.write(me, { "system.castOut": false, "system.noGreaterSessions": d6.total }, "the atonement");
+      body = "<div><b>" + esc(me.name) + "</b> completes an act of atonement and is returned to the god's good graces." +
+        (wAtone.ok ? "" : ' <span style="color:#8b1a1a">Not recorded on the sheet. ' + esc(wAtone.notice) + "</span>") + "</div>" +
         "<div>" + esc(q(CASTOUT, "afterAtonement")) + " &mdash; rolled <b>" + d6.total + "</b>.</div>" +
         "<div style='font-size:11px;opacity:.85'>Lesser and Middle Miracles may still occur, though their " +
         "manifestations may feel restrained. Piety can be earned again from here.</div>";
 
     } else if (data.mode === "session") {
       const left = Math.max(0, gb.noGreaterSessions - 1);
-      try { await me.update({ "system.noGreaterSessions": left }); }
-      catch (e) { console.warn("TBE | could not count the session", e); }
+      await TBE.write(me, { "system.noGreaterSessions": left }, "the session count");
       body = left
         ? "<div>A session passes. No Greater Miracles for another <b>" + left + "</b> session(s).</div>"
         : "<div style='color:#1f7a1f'>A session passes. The god's full favor returns: Greater Miracles may again be granted.</div>";
@@ -76,8 +75,7 @@ if (!gb.isGodbound) {
       /* The blessing is itself a Lesser Miracle, prayed for by ANOTHER
        * Godbound of the same deity with at least 70 Piety -- so this records
        * the outcome rather than rolling someone else's Piety here. */
-      try { await me.update({ "system.holySymbol": "d12" }); }
-      catch (e) { console.warn("TBE | could not restore the symbol", e); }
+      await TBE.write(me, { "system.holySymbol": "d12" }, "the restored holy symbol");
       body = "<div>The holy symbol is blessed and restored to <b>d12</b>.</div>" +
         "<div style='font-size:11px;opacity:.85'>" + esc(q(SYMQ, "blessing")) + " " +
         esc(q(SYMQ, "blessingIsMiracle")) + " Roll that prayer on the blesser's own sheet with TBE: Miracle.</div>";

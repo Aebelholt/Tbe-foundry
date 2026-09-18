@@ -24,14 +24,25 @@
     <li class="item flexrow" data-item-id="{{item._id}}">
       <div class="item-name">
         <img class="item-image" src="{{item.img}}" width="20" height="20"/>
-        <h4>{{item.name}}</h4>
+        {{!-- Clicking the weapon rolls the attack with it, the same way
+              clicking a skill rolls the skill. Everything past the roll --
+              hit location, damage, Maneuvers, wounds -- is still TBE: Attack's,
+              because it needs two actors. --}}
+        <h4 class="weapon-roll rollable" title="Roll an attack with {{item.name}}">{{item.name}}</h4>
         {{#if item.system.ranged}}<span class="tag">Ranged</span>{{/if}}
         {{#if item.system.nl}}<span class="tag">NL</span>{{/if}}
       </div>
       <div class="item-prop">{{item.system.dmg}}</div>
       <div class="item-prop">{{item.system.cl}} / {{item.system.cs}} / {{item.system.dis}} / {{item.system.t}}</div>
       <div class="item-prop">{{item.system.skillName}}</div>
-      <div class="item-prop">{{item.system.enc}} {{#if (eq item.system.carried "stored")}}(stored){{else if (eq item.system.carried "ready")}}(ready){{else}}(at hand){{/if}}</div>
+      {{!-- The label comes from the readiness owner, not a chain of eq helpers.
+            The chain that used to be here read "stored", then "ready", then
+            fell through to "at hand" for everything else -- so a DROPPED
+            weapon displayed as "(at hand)". That is the same negative-filter
+            bug v0.35.0/v0.37.0 chased through four files, in template form:
+            an else branch over an open enum is a default that silently
+            absorbs every value added later. --}}
+      <div class="item-prop">{{item.system.enc}} ({{item.readiness.short}})</div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
@@ -98,7 +109,8 @@
         <h4>{{item.name}}</h4>
       </div>
       <div class="item-prop">{{item.system.ap}}</div>
-      <div class="item-prop">{{item.system.enc}} {{#if (eq item.system.carried "stored")}}(stored){{else if (eq item.system.carried "ready")}}(ready){{else}}(at hand){{/if}}</div>
+      {{!-- Same owner as the weapon rows above, same reason. --}}
+      <div class="item-prop">{{item.system.enc}} ({{item.readiness.short}})</div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>

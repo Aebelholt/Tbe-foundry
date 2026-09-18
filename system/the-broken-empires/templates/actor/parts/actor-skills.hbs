@@ -20,7 +20,11 @@
           <h4 class="skill-roll rollable" title="Roll {{item.name}}">{{item.name}}{{#if item.system.savvy}} <span class="skill-savvy" title="Savvy: +1 when improving with XP">S</span>{{/if}}{{#if (gt item.system.expertise 1)}} <span class="skill-expertise" title="Expertise: minimum SLs on a success">Ex{{item.system.expertise}}</span>{{/if}}</h4>
         </div>
         <div class="skill-value">{{item.system.value}}</div>
-        <div class="skill-fighting">{{#if item.system.fighting}}<i class="fas fa-check"></i>{{/if}}</div>
+        {{!-- A fighting skill rolls a parry or a dodge. The tick already
+              marked which skills qualify and was the only thing in the column;
+              making it the button costs no space and puts the defence roll
+              where the player already looks for it. --}}
+        <div class="skill-fighting">{{#if item.system.fighting}}<a class="defence-roll rollable" title="Roll {{item.name}} as a defence (parry or dodge)"><i class="fas fa-shield-halved"></i></a>{{/if}}</div>
         <div class="item-controls">
           <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
           <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>

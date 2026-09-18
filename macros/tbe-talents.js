@@ -143,7 +143,7 @@ if (!me) {
            * counter with no ceiling on it tells the player nothing. */
           const st = rankState(t) || { cap: Infinity, ranks: TBE.num(existing.system?.ranks, 1) };
           const next = TBE.num(existing.system?.ranks, 1) + 1;
-          await existing.update({ "system.ranks": next });
+          await TBE.writeItem(existing, { "system.ranks": next }, "the extra rank of " + t.name);
           bumped.push(t.name + " (now &times;" + next + (st.cap === Infinity ? "" : " of " + st.cap) + ")");
           continue;
         }
@@ -159,7 +159,7 @@ if (!me) {
           if (!/^savvy$/i.test(t.name.trim())) continue;
           const target = (spec || "").trim();
           const skill = target && me.items.find((i) => i.type === "skill" && i.name.toLowerCase() === target.toLowerCase());
-          if (skill) await skill.update({ "system.savvy": true });
+          if (skill) await TBE.writeItem(skill, { "system.savvy": true }, "the Savvy mark");
           else ui.notifications?.warn("TBE: name the skill in \"Applies to\" so Savvy can mark it.");
         }
         /* GODBOUND (Ch.4 p.51): "acquire the Piety skill at a starting value of
@@ -175,7 +175,7 @@ if (!me) {
           const piety = me.items.find((i) => i.type === "skill" && i.name.trim().toLowerCase() === "piety");
           if (piety) {
             const next = Math.min(90, TBE.num(piety.system?.value, 0) + 30);
-            await piety.update({ "system.value": next });
+            await TBE.writeItem(piety, { "system.value": next }, "the Piety increase");
           } else {
             payload.push({
               name: "Piety", type: "skill", img: "icons/svg/book.svg",
@@ -187,9 +187,10 @@ if (!me) {
 
       let spentNote = "";
       if (charge && total) {
-        await me.update({ "system.experience.available": available - total });
+        const wSpend = await TBE.write(me, { "system.experience.available": available - total }, "the " + total + " XP");
         spentNote = "<div style='font-size:11px;opacity:.85'>" + total + " XP spent, " +
-          (available - total) + " remaining.</div>";
+          (available - total) + " remaining." +
+          (wSpend.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(wSpend.notice) + "</span>") + "</div>";
       } else if (!charge) {
         spentNote = "<div style='font-size:11px;opacity:.7'>No XP charged (character creation).</div>";
       }

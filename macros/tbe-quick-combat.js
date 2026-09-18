@@ -73,9 +73,10 @@ if (!pc) {
         const dt = foe.system?.deathThreshold;
         if (/cut|kill|take.*out|down|slay|defeat/i.test(data.intent || "") && dt && typeof dt.value === "number") {
           try {
-            await foe.update({ "system.deathThreshold.value": 0 });
-            await TBE.applyStatus(foe, "dead", {}).catch(() => {});
-            body += "<div><b>" + foe.name + " is taken out.</b></div>";
+            const wFoe = await TBE.write(foe, { "system.deathThreshold.value": 0 }, "the killing blow");
+            if (wFoe.ok) await TBE.applyStatus(foe, "dead", {}).catch(() => {});
+            body += "<div><b>" + foe.name + " is taken out.</b>" +
+              (wFoe.ok ? "" : ' <span style="color:#8b1a1a">The GM has to mark it: ' + TBE.esc(wFoe.notice) + "</span>") + "</div>";
           } catch (e) {}
         }
       } else if (fr.success) {

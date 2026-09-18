@@ -152,7 +152,11 @@ check(/rankState\(t\)/.test(read("macros/tbe-talents.js")),
 /* ---------------------------------------------------------------- 3. Haggle */
 section("Haggle settles the price");
 const haggleSrc = read("macros/tbe-haggle.js");
-check(/await me\.update\(\{ "system\.silver": after \}\)/.test(haggleSrc), "the settled price moves real coin");
+/* Same note as tier3's Weave Scar: the write goes through the permission
+   owner now (v0.38.0), and a settlement that cannot be written says so rather
+   than reporting coin that never moved. */
+check(/TBE\.write\(me, \{ "system\.silver": after \}/.test(haggleSrc), "the settled price moves real coin");
+check(/wCoin\.ok/.test(haggleSrc), "...and an unwritable settlement is reported, not claimed");
 check(/buying && finalPrice > before/.test(haggleSrc) && /short by/.test(haggleSrc),
   "buying beyond the purse is refused, not silently clamped to 0 by the schema's min");
 check(/name="settle" checked/.test(haggleSrc), "settling is offered, and on by default");

@@ -132,9 +132,12 @@ if (data) {
         " has " + before + " sp and the deal costs " + finalPrice + " sp, short by " + (finalPrice - before) + " sp.</div>";
     } else {
       const after = buying ? before - finalPrice : before + finalPrice;
-      await me.update({ "system.silver": after });
-      settled = '<div style="margin-top:4px"><b>Settled</b> &mdash; ' + me.name + " " +
-        (buying ? "pays " : "takes ") + finalPrice + " sp: " + before + " &rarr; <b>" + after + " sp</b>.</div>";
+      const wCoin = await TBE.write(me, { "system.silver": after }, "the " + finalPrice + " sp");
+      settled = wCoin.ok
+        ? '<div style="margin-top:4px"><b>Settled</b> &mdash; ' + me.name + " " +
+          (buying ? "pays " : "takes ") + finalPrice + " sp: " + before + " &rarr; <b>" + after + " sp</b>.</div>"
+        : '<div style="margin-top:4px;color:#8b1a1a"><b>Not settled</b> &mdash; the price stands at ' + finalPrice +
+          " sp but the coin did not move. " + TBE.esc(wCoin.notice) + "</div>";
     }
   } else if (me && me.type === "character") {
     settled = '<div style="margin-top:4px;font-size:11px;opacity:.75">Not settled &mdash; move the ' +

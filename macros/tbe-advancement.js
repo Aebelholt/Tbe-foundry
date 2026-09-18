@@ -200,7 +200,8 @@ if (!me || me.type !== "character") {
     const spend = async (cost) => {
       if (xp.available < cost) return false;
       xp.available -= cost;
-      await me.update({ "system.experience.available": xp.available });
+      const w = await TBE.write(me, { "system.experience.available": xp.available }, "the XP");
+      if (!w.ok) return false;
       return true;
     };
 
@@ -217,14 +218,14 @@ if (!me || me.type !== "character") {
       if (amt <= 0) { body = "<div>Nothing ticked and no amount entered, so no XP awarded.</div>"; }
       else {
         xp.available += amt; xp.earned += amt;
-        await me.update({ "system.experience.available": xp.available, "system.experience.earned": xp.earned });
+        const wXp = await TBE.write(me, { "system.experience.available": xp.available, "system.experience.earned": xp.earned }, "the " + amt + " XP");
         /* Mark the goals paid so the next session cannot pay them again. */
         if (doneGoals.length) {
           const next = TBE.clone(me.system?.goals || []);
           for (const g of doneGoals) if (next[g.idx]) { next[g.idx].awarded = true; next[g.idx].done = true; }
-          try { await me.update({ "system.goals": next }); } catch (err) { console.warn("TBE | could not mark goals awarded", err); }
+          await TBE.write(me, { "system.goals": next }, "the awarded goals");
         }
-        body = "<div><b>" + me.name + "</b> is awarded <b>" + amt + " XP</b> (now " + xp.available + " available, " + xp.earned + " lifetime).</div>" +
+        body = "<div><b>" + me.name + "</b> is awarded <b>" + amt + " XP</b> (now " + xp.available + " available, " + xp.earned + " lifetime)." + (wXp.ok ? "" : ' <span style="color:#8b1a1a">Not written. ' + TBE.esc(wXp.notice) + "</span>") + "</div>" +
           (ticked.length || doneGoals.length ? "<div style='font-size:11px;opacity:.85'>" +
             ticked.map(([, label, v]) => label + " +" + v)
               .concat(doneGoals.map((g) => "completed " + (g.kind === "shared" ? "shared" : "individual") +

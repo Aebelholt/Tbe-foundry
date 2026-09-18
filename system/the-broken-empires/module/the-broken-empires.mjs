@@ -12,6 +12,8 @@ import * as models from './data/_module.mjs';
 import * as migration from './migration/migration.mjs';
 import * as resolution from './rules/resolution.mjs';
 import * as visibility from './rules/visibility.mjs';
+import * as permission from './rules/permission.mjs';
+import * as combat from './rules/combat.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -44,6 +46,26 @@ Hooks.once('init', function () {
         applyVisibility: visibility.applyVisibility,
         isHidden: visibility.isHidden,
         MODES: visibility.MODES
+      },
+      /* The opposed-roll cascade and the shield question, now that the
+         sheet rolls attacks and defences too (v0.38.0). docs/ownership.md
+         has named combat.mjs as the cascade's home since v0.24.0. */
+      combat: {
+        opposedResolve: combat.opposedResolve,
+        defendingShield: combat.defendingShield,
+        shieldLine: combat.shieldLine
+      },
+      /* Actor writes. One answer to "may this user change this actor", and
+         one honest report when they may not (v0.38.0). The macro pack's 68
+         write sites go through this rather than each deciding for itself --
+         or, as half of them did, catching the permission error and printing
+         the cost to chat anyway. */
+      permission: {
+        canWrite: permission.canWrite,
+        pickActor: permission.pickActor,
+        denialNotice: permission.denialNotice,
+        applyWrite: permission.applyWrite,
+        applyItemWrite: permission.applyItemWrite
       }
     }
   };

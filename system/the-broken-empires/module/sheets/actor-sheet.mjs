@@ -5,6 +5,8 @@ import {
 import { TBE } from '../helpers/config.mjs';
 import * as RULES from '../rules/resolution.mjs';
 import * as VISIBILITY from '../rules/visibility.mjs';
+import * as PERMISSION from '../rules/permission.mjs';
+import * as COMBAT from '../rules/combat.mjs';
 
 /**
  * The TBE actor sheet. Combat, wounds, casting, and every other action stay
@@ -122,9 +124,14 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     for (const i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'skill') (skills[i.system.group] ??= []).push(i);
-      else if (i.type === 'weapon') weapons.push(i);
+      /* The readiness record comes from the owner (TBE.READINESS via
+         readinessOf) rather than being re-derived in the template. The
+         template used to test `carried` with a chain of eq helpers ending in
+         an else, which meant every carry state added after the chain was
+         written displayed as whatever the else said. */
+      else if (i.type === 'weapon') { i.readiness = TBE.readinessOf(i); weapons.push(i); }
       else if (i.type === 'armor') armor.push(i);
-      else if (i.type === 'shield') shields.push(i);
+      else if (i.type === 'shield') { i.readiness = TBE.readinessOf(i); shields.push(i); }
       else if (i.type === 'talent') (talents[i.system.category] ??= []).push(i);
       else if (i.type === 'strand') strands.push(i);
       else if (i.type === 'thread') threads.push(i);
@@ -391,6 +398,27 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
      * you do not own and rolling its skill is harmless, and the Resolve
      * spend below checks permission separately rather than failing silently. */
     html.on('click', '.skill-roll', this._onSkillRoll.bind(this));
+    /* Same reasoning as above, one step further: a weapon row rolls the attack
+       and a fighting skill rolls a defence. Both go through the same dialog,
+       the same resolve() and the same visibility owner as .skill-roll -- they
+       are additional ENTRY POINTS, not additional rules. */
+    html.on('click', '.weapon-roll', this._onWeaponRoll.bind(this));
+    html.on('click', '.defence-roll', this._onDefenceRoll.bind(this));
+
+    /* B4: the chargen-derived maxima are readonly until the lock is clicked.
+       Deliberately NOT a permission question -- the owner of the sheet is
+       exactly who this protects, from their own fat finger mid-fight. */
+    html.on('click', '.stat-max-lock', (ev) => {
+      ev.preventDefault();
+      const a = ev.currentTarget;
+      const input = a.parentElement?.querySelector('.stat-max');
+      if (!input) return;
+      const locking = !input.readOnly;
+      input.readOnly = locking;
+      a.innerHTML = `<i class="fas fa-${locking ? 'lock' : 'lock-open'}"></i>`;
+      a.title = `${locking ? 'Unlock' : 'Lock'} this maximum`;
+      if (!locking) input.focus();
+    });
 
     if (!this.isEditable) return;
 
@@ -530,10 +558,114 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     const li = $(event.currentTarget).parents('.item');
     const item = this.actor.items.get(li.data('itemId'));
     if (!item) return;
+    return this._rollSkill({
+      name: item.name,
+      base: Number(item.system?.value) || 0,
+      expertise: Number(item.system?.expertise) || 0,
+      savvy: !!item.system?.savvy
+    });
+  }
 
-    const base = Number(item.system?.value) || 0;
-    const expertise = Number(item.system?.expertise) || 0;
-    const savvy = !!item.system?.savvy;
+  /**
+   * Click a weapon, roll the attack with it.
+   *
+   * The weapon does not carry a skill value -- it names one (`skillName`), and
+   * the number comes from the matching skill Item. A character who has never
+   * written that skill down is not unskilled, they are untrained at the book's
+   * 20 (p.104), which is exactly the gap `TBE.skillOptions` was built to close
+   * for the macro picker; the same rule has to hold here or clicking a sword
+   * you own but have no Item for silently rolls against 0.
+   *
+   * What this does NOT do: hit location, damage, Combat Maneuvers, the size
+   * table, wounds. Those need two actors and a whole exchange and stay in
+   * TBE: Attack. This is the roll, and a line telling you what you are holding.
+   * @private
+   */
+  async _onWeaponRoll(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents('.item');
+    const weapon = this.actor.items.get(li.data('itemId'));
+    if (!weapon) return;
+
+    const wanted = String(weapon.system?.skillName || '').trim();
+    const skill = wanted
+      ? this.actor.items.find((i) => i.type === 'skill' &&
+          i.name.trim().toLowerCase() === wanted.toLowerCase())
+      : null;
+    const base = skill ? Number(skill.system?.value) || 0 : TBE.BASE_SKILL;
+
+    /* Readiness (p.129) is shown, never charged -- Seb declined enforcement on
+       2026-09-17. A weapon that is Stored or on the floor can still be rolled
+       here; what it cannot do is have that fact hidden. */
+    const ready = TBE.readinessOf ? TBE.readinessOf(weapon) : null;
+    const readyNote = ready && ready.pool !== TBE.CARRY_POOL?.HAND
+      ? `<p style="font-size:11px;color:#8b1a1a;margin:.3em 0 0">${weapon.name} is <b>${ready.label}</b> &mdash; ${ready.cost} before it can be used (p.129).</p>`
+      : '';
+
+    const shieldNote = this._shieldNote();
+
+    return this._rollSkill({
+      name: `${weapon.name}${wanted ? ` (${wanted})` : ''}`,
+      base,
+      expertise: skill ? Number(skill.system?.expertise) || 0 : 0,
+      savvy: skill ? !!skill.system?.savvy : false,
+      untrained: !skill,
+      extraHtml: readyNote + (shieldNote ? `<p style="font-size:11px;opacity:.85;margin:.3em 0 0">${shieldNote}</p>` : ''),
+      cardExtra: shieldNote
+    });
+  }
+
+  /**
+   * Click a fighting skill, roll a parry or a dodge.
+   *
+   * `system.fighting` marks which skills qualify and is derived rather than
+   * independent: a skill is a fighting skill iff its group is Combat. The
+   * template decides which rows get this class; this method does not re-derive
+   * the rule.
+   * @private
+   */
+  async _onDefenceRoll(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents('.item');
+    const item = this.actor.items.get(li.data('itemId'));
+    if (!item) return;
+    const shieldNote = this._shieldNote();
+    return this._rollSkill({
+      name: `${item.name} (defence)`,
+      base: Number(item.system?.value) || 0,
+      expertise: Number(item.system?.expertise) || 0,
+      savvy: !!item.system?.savvy,
+      extraHtml: shieldNote ? `<p style="font-size:11px;opacity:.85;margin:.3em 0 0">${shieldNote}</p>` : '',
+      cardExtra: shieldNote,
+      note: 'Task Modifiers do not apply to opposed rolls, and a defence is one. The GM sets the difficulty.'
+    });
+  }
+
+  /**
+   * B1, in Seb's words: "If shielding make it clear during the attack macro."
+   *
+   * The shield was always in the arithmetic and never in the sentence. This
+   * asks the combat owner the same POSITIVE question tbe-attack.js asks --
+   * is a shield in hand -- so the line and the number cannot disagree, which
+   * is the only thing that makes the line worth printing.
+   * @private
+   */
+  _shieldNote() {
+    const shield = COMBAT.defendingShield(this.actor, TBE.carryPool, TBE.CARRY_POOL?.HAND ?? 'hand');
+    return COMBAT.shieldLine(shield, { defenderName: this.actor.name });
+  }
+
+  /**
+   * The one roll implementation the three entry points above share.
+   *
+   * The sheet still owns no rules: this does arithmetic (`base + task + favor
+   * x FAVOR_STEP`), hands the result to the same `resolve()` every macro uses,
+   * routes the card through the visibility owner and the Resolve spend through
+   * the permission owner. Every decision the book makes is made elsewhere.
+   * @private
+   */
+  async _rollSkill({ name, base, expertise = 0, savvy = false, untrained = false,
+                     extraHtml = '', cardExtra = null, note = '' } = {}) {
     const resolveLeft = Number(this.actor.system?.resolve?.value) || 0;
     /* You cannot spend Resolve you do not have, and the book caps Favor on a
      * single roll at 3 whatever it is sourced from. */
@@ -548,7 +680,7 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
 
     const content = `
       <form>
-        <p style="margin:.2em 0"><b>${item.name}</b> ${base}${expertise >= 2 ? ` <span title="Expertise">Ex${expertise}</span>` : ''}${savvy ? ' <span title="Savvy">S</span>' : ''}</p>
+        <p style="margin:.2em 0"><b>${name}</b> ${base}${expertise >= 2 ? ` <span title="Expertise">Ex${expertise}</span>` : ''}${savvy ? ' <span title="Savvy">S</span>' : ''}${untrained ? ` <span style="font-size:11px;opacity:.8">untrained, ${TBE.BASE_SKILL} (p.104)</span>` : ''}</p>
         <div class="form-group">
           <label>Task Modifier</label>
           <select name="task">${mods}</select>
@@ -560,14 +692,15 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
         <p style="font-size:11px;opacity:.8;margin:.4em 0 0">
           Resolve left: ${resolveLeft}. Up to ${RULES.FAVOR_CAP} Favor on any one roll,
           <i>from any source</i>, so Favor or Leverage already spent here counts against the same ${RULES.FAVOR_CAP}.
-          Task Modifiers do not apply to opposed rolls, which set their own difficulty.
+          ${note || 'Task Modifiers do not apply to opposed rolls, which set their own difficulty.'}
         </p>
+        ${extraHtml}
         <p class="tbe-roll-total" style="margin:.4em 0 0"><b>Rolling against ${base}</b></p>
       </form>`;
 
     const spend = await new Promise((resolve) => {
       new Dialog({
-        title: `Roll ${item.name}`,
+        title: `Roll ${name}`,
         content,
         buttons: {
           roll: { label: 'Roll', callback: (dlg) => {
@@ -603,13 +736,22 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
      * actually write to the actor. Warning beats a silent no-op. */
     let spent = 0;
     if (spend.favor > 0) {
-      if (this.actor.isOwner) {
-        const cur = Number(this.actor.system?.resolve?.value) || 0;
-        await this.actor.update({ 'system.resolve.value': Math.max(0, cur - spend.favor) });
-        spent = spend.favor;
-      } else {
-        ui.notifications?.warn(`You do not own ${this.actor.name}, so the ${spend.favor} Resolve was not spent. The roll still used the bonus.`);
-      }
+      const cur = Number(this.actor.system?.resolve?.value) || 0;
+      /* OWNERSHIP: module/rules/permission.mjs. This method carried the only
+         correct unowned-actor handling in the codebase for several releases;
+         it is now the owner's, so the macro pack says the same thing rather
+         than each site inventing its own wording -- or, as nine of them did,
+         swallowing the error and printing the cost anyway. */
+      const w = await PERMISSION.applyWrite(
+        this.actor,
+        { 'system.resolve.value': Math.max(0, cur - spend.favor) },
+        {
+          what: `the ${spend.favor} Resolve`,
+          user: game.user,
+          notify: (msg) => ui.notifications?.warn(`${msg} The roll still used the bonus.`)
+        }
+      );
+      if (w.ok) spent = spend.favor;
     }
 
     const bits = [];
@@ -624,9 +766,12 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
        user's own selection decides. */
     const messageData = {
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `<b>${item.name}</b> &mdash; ${line}<br>` +
+      flavor: `<b>${name}</b> &mdash; ${line}<br>` +
         `<b>${RULES.outcomeLabel(res)}</b>${res.success ? ` with ${res.sl} SL` : ''}` +
-        (res.notes.length ? `<br><span style="font-size:11px;opacity:.85">${res.notes.join('; ')}</span>` : '')
+        (res.notes.length ? `<br><span style="font-size:11px;opacity:.85">${res.notes.join('; ')}</span>` : '') +
+        /* B1: say at the moment of the roll that a shield is up and what it
+           contributes. Same source as the number, so they cannot disagree. */
+        (cardExtra ? `<br><span style="font-size:11px;opacity:.85">${cardExtra}</span>` : '')
     };
     VISIBILITY.prepare(messageData, {
       settingsGet: (ns, key) => game.settings.get(ns, key),

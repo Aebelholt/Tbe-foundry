@@ -4,7 +4,17 @@
     <div class="resource-content flexrow flex-center flex-between">
       <input type="text" name="system.deathThreshold.value" value="{{system.deathThreshold.value}}" data-dtype="Number"/>
       <span>/</span>
-      <input type="text" name="system.deathThreshold.max" value="{{system.deathThreshold.max}}" data-dtype="Number"/>
+{{!-- B4. Seb, after the first real session: Resolve went 12/12 to 12/11
+     with the pool untouched, almost certainly a player reaching for the
+     pool mid-fight and hitting the box beside it. These two maxima are
+     chargen-derived ceilings, not live resources -- nothing in the
+     codebase writes them in play -- and losing one is permanent with no
+     signal and nothing to restore it from. Readonly until deliberately
+     unlocked. The name is unchanged, so the data path and rule 12 both
+     hold: the lock is an anchor, not a second control. --}}
+      <input type="text" class="stat-max" name="system.deathThreshold.max" value="{{system.deathThreshold.max}}" data-dtype="Number" readonly
+             title="Death Threshold maximum is set at character creation, not in play. Click the lock to edit."/>
+      <a class="stat-max-lock" title="Unlock the Death Threshold maximum"><i class="fas fa-lock"></i></a>
     </div>
   </div>
   <div class="resource flex-group-center">
@@ -12,7 +22,17 @@
     <div class="resource-content flexrow flex-center flex-between">
       <input type="text" name="system.resolve.value" value="{{system.resolve.value}}" data-dtype="Number"/>
       <span>/</span>
-      <input type="text" name="system.resolve.max" value="{{system.resolve.max}}" data-dtype="Number"/>
+{{!-- B4. Seb, after the first real session: Resolve went 12/12 to 12/11
+     with the pool untouched, almost certainly a player reaching for the
+     pool mid-fight and hitting the box beside it. These two maxima are
+     chargen-derived ceilings, not live resources -- nothing in the
+     codebase writes them in play -- and losing one is permanent with no
+     signal and nothing to restore it from. Readonly until deliberately
+     unlocked. The name is unchanged, so the data path and rule 12 both
+     hold: the lock is an anchor, not a second control. --}}
+      <input type="text" class="stat-max" name="system.resolve.max" value="{{system.resolve.max}}" data-dtype="Number" readonly
+             title="Resolve maximum is set at character creation, not in play. Click the lock to edit."/>
+      <a class="stat-max-lock" title="Unlock the Resolve maximum"><i class="fas fa-lock"></i></a>
     </div>
   </div>
   <div class="resource flex-group-center">

@@ -162,16 +162,18 @@ if (!me) {
       const fatigueCap = { safe: 3, neutral: 2, precarious: 1, dangerous: 0 }[data.area || "neutral"];
       const resolve = me.system?.resolve;
       let resolveGained = 0;
+      let wResolve = { ok: true, notice: null };
       if (resolve && typeof resolve.value === "number" && typeof resolve.max === "number" && resolve.value < resolve.max) {
         const missing = resolve.max - resolve.value;
         resolveGained = Math.min(missing, resolveCap);
-        if (resolveGained > 0) { try { await me.update({ "system.resolve.value": resolve.value + resolveGained }); } catch (e) {} }
+        if (resolveGained > 0) wResolve = await TBE.write(me, { "system.resolve.value": resolve.value + resolveGained }, "the recovered Resolve");
       }
       const curFatigue = TBE.num(me.system?.fatigue, 0);
       const rest = await TBE.removeFatigue(me, fatigueCap);
       const fatigueRemoved = rest.removed;
       body += "<div>Rest in a <b>" + (data.area || "neutral") + "</b> area: recovers <b>" + resolveGained + " Resolve</b>" +
-        ", removes <b>" + fatigueRemoved + " Fatigue</b>" + (curFatigue > fatigueRemoved ? " (" + (curFatigue - fatigueRemoved) + " left)" : "") + ".</div>" +
+        ", removes <b>" + fatigueRemoved + " Fatigue</b>" + (curFatigue > fatigueRemoved ? " (" + (curFatigue - fatigueRemoved) + " left)" : "") + "." +
+        (wResolve.ok ? "" : ' <span style="color:#8b1a1a">The Resolve was not written: ' + TBE.esc(wResolve.notice) + "</span>") + "</div>" +
         (rest.woundHealed
           ? "<div>The same rest takes <b>" + rest.woundHealed + " WP</b> off the " +
             [...new Set(rest.kinds)].join(" / ") + " wound (p.189).</div>"
@@ -250,8 +252,9 @@ if (!me) {
         if (wasSeptic) {
           w[loc].septic = false;
           const penalty = TBE.num(me.system?.lethalityPenalty, 0) + 1;
-          try { await me.update({ "system.lethalityPenalty": penalty }); } catch (ePen) {}
-          body += "<div>The infection is cleaned out, but surviving sepsis costs " + me.name + " a permanent <b>-1 Lethality Level</b> (total -" + penalty + " so far).</div>";
+          const wPen = await TBE.write(me, { "system.lethalityPenalty": penalty }, "the permanent Lethality Level loss");
+          body += "<div>The infection is cleaned out, but surviving sepsis costs " + me.name + " a permanent <b>-1 Lethality Level</b> (total -" + penalty + " so far)." +
+            (wPen.ok ? "" : ' <b>Not recorded.</b> ' + TBE.esc(wPen.notice)) + "</div>";
         } else body += "<div>The infection is cleaned out.</div>";
       } else if (wasSeptic) {
         body += "<div>Still septic. One more failed attempt today and only an emergency amputation (Heal at -20) can save " + me.name + ".</div>";
@@ -273,8 +276,9 @@ if (!me) {
      * Dying/Lethality Level alongside it -- see TBE.deathThresholdNote. */
     const dtNote = TBE.deathThresholdNote(me, TBE.totalWp(w));
     if (dtNote) {
-      try { await me.update({ "system.deathThreshold.value": dtNote.left }); } catch (e) {}
-      body += "<div style='border-top:1px solid #7a6a4f;margin-top:4px;padding-top:4px'>" + dtNote.line + "</div>";
+      const wDt = await TBE.write(me, { "system.deathThreshold.value": dtNote.left }, "the Death Threshold");
+      body += "<div style='border-top:1px solid #7a6a4f;margin-top:4px;padding-top:4px'>" + dtNote.line +
+        (wDt.ok ? "" : ' <span style="color:#8b1a1a">Not recorded. ' + TBE.esc(wDt.notice) + "</span>") + "</div>";
     }
     body += TBE.woundTable(w);
     await TBE.say(TBE.card("Wounds & Recovery", body), rolls);

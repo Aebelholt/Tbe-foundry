@@ -1,3 +1,48 @@
+## Multiplayer readiness + sheet roll parity — Built in v0.38.0, 2026-09-18
+
+Seb asked for "multiplayer + sheet update" in one pass after the scheduled
+overnight runs turned out to be unable to see this repo at all (a fresh cloud
+container per firing; nothing persists). Done hands-on instead.
+
+**Built.** `module/rules/permission.mjs` (owner of "may this user write to this
+actor", with `TBE.canWrite`/`TBE.write`/`TBE.writeItem` deferring), the `TBE.me()`
+wrong-actor fix, conversion of every in-play write that spends something and then
+describes it, `module/rules/combat.mjs` (opposed-roll cascade moved out of
+`_lib.js`, plus `defendingShield`/`shieldLine`), weapon and defence rolls on both
+sheets, B1 (shield line on the card and the prompt), B4 (locked chargen maxima),
+the carry-state label fix, and `permission_check.mjs` (104 checks).
+
+**The finding worth remembering**: the defect was not the missing permission
+check, it was nine sites that caught the permission error, discarded it, and had
+the chat card assert the cost anyway. See the v0.38.0 changelog entry.
+
+### Still open from this area
+
+- **Chargen-time writes are still unguarded** (`tbe-character-wizard.js`,
+  `tbe-build-character.js`, `tbe-finish-character.js`). Deliberate: they throw
+  visibly rather than swallowing, and they run against a character the player
+  just made and therefore owns. The case that would bite is a GM building a
+  character *for* a player on an actor the player already owns. Low frequency,
+  visible when it happens, so not worth the churn today.
+- **GM journal tooling is unguarded** (`tbe-clocks.js`, `tbe-log.js`,
+  `tbe-npc.js`). These write JournalEntries, not actors, and are GM tools by
+  nature. If a player ever gets a button that reaches them, they need the same
+  treatment — permission on a Journal is a different document class, so
+  `permission.mjs` would need a third entry point rather than a copy.
+- **Eight macros define a private `esc()`** with an identical body. `TBE.esc` now
+  exists in `_lib.js` and anything new uses it, but the eight were left alone:
+  they shadow harmlessly and removing them is not what brought anyone into
+  those files. Opportunistic cleanup when something else takes you there.
+- **Idempotence on shared chat cards** (the third scope question) is still not
+  addressed anywhere. Nothing shipped in v0.38.0 adds a clickable card, so it
+  did not become urgent, but B3 ("remember the last attack") and any future
+  apply-damage button will make it so. The Zweihänder message-flag pattern is
+  logged in the prior-art section.
+- **B2 (radial modifier buttons with a memory)** and **B3 (remember the last
+  attack)** were not reached. Both are table-feel rather than correctness, and
+  B3 carries the safeguard that matters: prefill the choice, never the commit,
+  or the memory spends Resolve nobody chose this round.
+
 # Backlog
 
 Sequencing lives in `ROADMAP.md` (the maturity-based phase model and where the

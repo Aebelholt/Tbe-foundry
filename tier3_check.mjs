@@ -133,8 +133,15 @@ check(/async snagBuckle\(/.test(castSrc) && /body = await this\.snagBuckle\(roll
   "every further spell attempt rolls the buckle die");
 check(/Weave Scar/.test(castSrc) && /permanent/.test(castSrc),
   "the two Weave Scar rows are told apart, temporary from permanent");
-check(/bind\.update\(\{ "system\.value": now \}\)/.test(castSrc),
+/* v0.38.0 moved every actor/item write behind the permission owner, so this
+   no longer asserts the literal `bind.update(...)` it used to. What is being
+   protected is unchanged: the scar reaches the Bind. The spelling changed;
+   the guarantee did not, and pinning a spelling is how tier3_check sat red
+   across two releases in v0.37.0. */
+check(/TBE\.writeItem\(bind, \{ "system\.value": now \}/.test(castSrc),
   "a permanent scar is written into the Bind, because that is what permanent means");
+check(/ws\.ok \?/.test(castSrc),
+  "...and the card only claims the scar when the write actually landed");
 check(/const against = b\.effective/.test(castSrc) && /TBE\.resolve\(r\.total, b \? b\.effective : 40/.test(castSrc),
   "and the casting rolls against the scarred value");
 check(/TBE\.clearWeaveDay\(me\)/.test(read("macros/tbe-wounds.js")),

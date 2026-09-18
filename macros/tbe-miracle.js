@@ -136,8 +136,7 @@ if (!gb.isGodbound) {
         sls += TBE.SYMBOL_SLS;
         const stepped = sd.total <= 2 ? TBE.stepSymbol(gb.symbol) : gb.symbol;
         if (stepped !== gb.symbol) {
-          try { await me.update({ "system.holySymbol": stepped }); }
-          catch (e) { console.warn("TBE | could not step the holy symbol", e); }
+          await TBE.write(me, { "system.holySymbol": stepped }, "the holy symbol step");
         }
         symbolNote = "<div>Holy symbol " + gb.symbol + ": <b>" + sd.total + "</b> &rarr; +" + TBE.SYMBOL_SLS + " SLs" +
           (stepped !== gb.symbol

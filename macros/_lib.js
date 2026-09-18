@@ -832,7 +832,10 @@ TBE.addFatigue = async function (actor, amount, kind = "Weary") {
   out.marked = Math.min(room, amt);
   out.overflow = amt - out.marked;
   out.fatigueNow = TBE.num(actor.system?.fatigue, 0) + out.marked;
-  if (out.marked) { try { await actor.update({ "system.fatigue": out.fatigueNow }); } catch (e) { /* no permission */ } }
+  /* `out.write` carries whether the Fatigue actually landed. The old body
+     swallowed a permission error and left `out.marked` non-zero, so every
+     caller's card reported Fatigue that was never marked. */
+  if (out.marked) out.write = await TBE.write(actor, { "system.fatigue": out.fatigueNow }, "the Fatigue");
   if (!out.overflow) return out;
 
   const def = TBE.FATIGUE_WOUND[kind] || TBE.FATIGUE_WOUND.Weary;
@@ -848,7 +851,7 @@ TBE.addFatigue = async function (actor, amount, kind = "Weary") {
   wounds[loc].wp = TBE.num(wounds[loc].wp, 0) + 1;
   wounds[loc].fw = TBE.num(wounds[loc].fw, 0) + 1;
   wounds[loc].fwKind = kind;
-  try { await TBE.setWounds(actor, wounds); } catch (e) { /* no permission */ }
+  out.write = await TBE.setWounds(actor, wounds);
   out.loc = loc;
   out.wpNow = wounds[loc].fw;
   return out;
@@ -862,7 +865,9 @@ TBE.removeFatigue = async function (actor, amount) {
   if (!actor || !amt) return out;
   const cur = TBE.num(actor.system?.fatigue, 0);
   out.removed = Math.min(cur, amt);
-  if (out.removed) { try { await actor.update({ "system.fatigue": cur - out.removed }); } catch (e) {} }
+  /* Same contract as markFatigue: `out.write` says whether the rest actually
+     landed, so TBE: Wounds can report "2 Fatigue removed" only when it was. */
+  if (out.removed) out.write = await TBE.write(actor, { "system.fatigue": cur - out.removed }, "the Fatigue removed by resting");
 
   let left = out.removed;
   if (!left) return out;
@@ -880,7 +885,7 @@ TBE.removeFatigue = async function (actor, amount) {
     if (!w.fw) w.fwKind = "";
     touched = true;
   }
-  if (touched) { try { await TBE.setWounds(actor, wounds); } catch (e) {} }
+  if (touched) out.write = await TBE.setWounds(actor, wounds);
   return out;
 };
 
@@ -892,12 +897,14 @@ TBE.wounds = function (actor) {
   for (const loc of TBE.LOCATIONS) if (!w[loc]) w[loc] = TBE.emptyWoundLoc();
   return w;
 };
-TBE.setWounds = async (actor, w) => actor.update({ "system.wounds": w });
+/* Returns TBE.write's report, so a caller can say whether the wounds were
+ * actually recorded instead of assuming. */
+TBE.setWounds = async (actor, w) => TBE.write(actor, { "system.wounds": w }, "the wounds");
 
 /* Whole-character Shock (Ch.11) is its own boolean field now, not a synthetic
  * "__shock" key folded into the wounds object. */
 TBE.shock = (actor) => !!actor?.system?.shock;
-TBE.setShock = async (actor, val) => actor.update({ "system.shock": !!val });
+TBE.setShock = async (actor, val) => TBE.write(actor, { "system.shock": !!val }, "the Shock state");
 
 /* Encumbrance (Ch.9 p.129-130): Weapons at Hand (max 6 ENC, shared by weapon
  * and shield items carried "hand"), and general Inventory ENC (max 6 + a
@@ -927,7 +934,7 @@ TBE.weaveState = (actor) => Object.assign({ scars: [], snag: false }, TBE.clone(
  * update the actor should get a card that still says what happened, not an
  * exception that swallows the whole casting result. */
 TBE.setWeaveState = async function (actor, st) {
-  try { await actor.update({ "flags.tbe.weave": st }); } catch (e) { console.warn("TBE | could not record Weave state", e); }
+  await TBE.write(actor, { "flags.tbe.weave": st }, "the Weave state");
   return st;
 };
 
@@ -1172,10 +1179,6 @@ TBE.setPiety = async function (actor, value, opts) {
    * "modifiers can temporarily raise it to 100 or beyond", which is a
    * different number and never written back here. */
   const after = Math.max(0, Math.min(TBE.PIETY_CAP, Math.round(TBE.num(value, 0))));
-  if (skill) {
-    try { await skill.update({ "system.value": after }); }
-    catch (e) { console.warn("TBE | could not write Piety", e); }
-  }
   const out = {
     before, after, delta: after - before,
     castOut: after <= 0,
@@ -1183,9 +1186,12 @@ TBE.setPiety = async function (actor, value, opts) {
     encouraged: after >= TBE.PIETY_ENCOURAGEMENT && before < TBE.PIETY_ENCOURAGEMENT,
     cappedAt90: TBE.num(value, 0) > TBE.PIETY_CAP
   };
+  /* `out.write` rather than a swallowed error: Piety is the resource whose
+     silent non-write is worst, because being Cast Out at zero is permanent
+     and the card that announces it is the only record anyone sees. */
+  if (skill) out.write = await TBE.writeItem(skill, { "system.value": after }, "the Piety change");
   if (out.castOut && !o.noCastOut && actor) {
-    try { await actor.update({ "system.castOut": true }); }
-    catch (e) { console.warn("TBE | could not mark Cast Out", e); }
+    out.castOutWrite = await TBE.write(actor, { "system.castOut": true }, "the Cast Out state");
   }
   return out;
 };
@@ -1464,7 +1470,7 @@ TBE.riderNote = function (actor) {
 
 TBE.SUPPLY_STEPS = [6, 8, 10, 12];
 TBE.supply = (actor) => Object.assign({ gear: 8, ammo: 8, medical: 8, rations: 8 }, TBE.clone(actor?.system?.supply ?? {}));
-TBE.setSupply = async (actor, s) => actor.update({ "system.supply": s });
+TBE.setSupply = async (actor, s) => TBE.write(actor, { "system.supply": s }, "the Supply");
 
 /* Roll a supply die: 1-2 steps it down; a d6 that steps down is depleted (0). */
 TBE.rollSupply = async function (actor, key, force) {
@@ -1503,8 +1509,125 @@ TBE.woundTable = function (w) {
     }).join("") + "</table>";
 };
 
-/* The actor a solo player is driving right now. */
-TBE.me = () => canvas.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
+/* Escape text bound for a chat card. Eight macros each define a private
+ * `esc` with this exact body; those are left alone (they shadow harmlessly
+ * and ripping them out is not this task -- logged in BACKLOG), but anything
+ * new uses this one rather than adding a ninth. */
+TBE.esc = (s) => String(s == null ? "" : s)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+/* ------------------------------------------------------------------ *
+ *  Actor writes: who is acting, and may they?
+ *
+ *  OWNERSHIP: module/rules/permission.mjs, published on
+ *  game.thebrokenempires.rules.permission. These defer at runtime the same
+ *  way TBE.resolve/TBE.say/TBE.carryPool do, and keep a fallback body only
+ *  for the Node harnesses and the legacy standalone pack, where no CONFIG
+ *  exists. Do not add a second permission check in a macro: if a macro needs
+ *  to know, it asks TBE.canWrite, and if it needs to change something, it
+ *  goes through TBE.write and prints what comes back.
+ * ------------------------------------------------------------------ */
+
+const _perm = () =>
+  (typeof game !== "undefined" && game?.thebrokenempires?.rules?.permission) || null;
+
+/* May the current user change this actor? */
+TBE.canWrite = function (actor) {
+  const P = _perm();
+  const user = (typeof game !== "undefined" && game?.user) || null;
+  if (P) return P.canWrite(actor, user);
+  if (!actor) return false;
+  if (user && typeof actor.testUserPermission === "function") return !!actor.testUserPermission(user, "OWNER");
+  /* ABSENT is not FALSE -- see permission.mjs. A plain object with no opinion
+     about ownership is a harness stub or the legacy pack, not a Document
+     refusing. Kept byte-for-byte equivalent to the owner's branch; if these
+     two disagree, permission_check.mjs section 5 fails. */
+  if ("isOwner" in actor || actor.isOwner !== undefined) return !!actor.isOwner;
+  return true;
+};
+
+/* The actor this user is driving right now.
+ *
+ * This used to be `canvas.tokens?.controlled?.[0]?.actor ?? game.user?.character`,
+ * which was exactly right while this was a solo system and silently wrong the
+ * moment it was not: a player who left a creature's token selected got the
+ * GM's creature, and every write in the macro they then opened aimed at an
+ * actor they do not own. The selection is still preferred -- for a GM it is
+ * the only way to say which of forty creatures they mean -- but it now has to
+ * be a selection they can actually write to. See permission.mjs for the full
+ * reasoning; the rule lives there so a check can execute it. */
+TBE.me = function () {
+  const P = _perm();
+  const controlled = (typeof canvas !== "undefined" && canvas?.tokens?.controlled) || [];
+  const assigned = (typeof game !== "undefined" && game?.user?.character) || null;
+  const user = (typeof game !== "undefined" && game?.user) || null;
+  if (P) return P.pickActor({ controlled, assigned, user }).actor;
+  const writable = controlled.map((t) => t?.actor).filter(Boolean).find((a) => TBE.canWrite(a));
+  if (writable) return writable;
+  return assigned ?? controlled[0]?.actor ?? null;
+};
+
+/* The same pick, with its reasoning, for a caller that wants to say "you had
+ * the Bandit selected, so this was rolled for Elspeth instead" rather than
+ * quietly switching actors. */
+TBE.whoAmI = function () {
+  const P = _perm();
+  const controlled = (typeof canvas !== "undefined" && canvas?.tokens?.controlled) || [];
+  const assigned = (typeof game !== "undefined" && game?.user?.character) || null;
+  const user = (typeof game !== "undefined" && game?.user) || null;
+  if (P) return P.pickActor({ controlled, assigned, user });
+  return { actor: TBE.me(), reason: "fallback" };
+};
+
+/* Write to an actor, or report why not. Returns { ok, notice, error }.
+ *
+ * The contract that matters: when `ok` is false, `notice` is a sentence the
+ * player should be shown, and the change did NOT happen. A macro that writes
+ * `body += r.ok ? "1 Resolve spent." : r.notice` is correct. A macro that
+ * ignores the return value and asserts the cost anyway is the bug this
+ * replaced -- see permission.mjs's header for what that looked like. */
+TBE.write = async function (actor, changes, what) {
+  const P = _perm();
+  const user = (typeof game !== "undefined" && game?.user) || null;
+  const notify = (msg) => { try { ui?.notifications?.warn(msg); } catch (e) {} };
+  if (P) return P.applyWrite(actor, changes, { what, user, notify });
+  if (!actor) return { ok: false, notice: "No actor to change.", error: null };
+  if (!TBE.canWrite(actor)) {
+    const notice = "You do not own " + (actor.name || "that actor") + ", so " + (what || "the change") +
+      " was not applied. Ask the GM to apply it.";
+    notify(notice);
+    return { ok: false, notice, error: null };
+  }
+  try { await actor.update(changes); return { ok: true, notice: null, error: null }; }
+  catch (err) {
+    const notice = (what || "The change") + " could not be saved to " + actor.name + ": " + (err?.message ?? err);
+    notify(notice);
+    return { ok: false, notice, error: err };
+  }
+};
+
+/* The same, for an embedded Item. Permission on an Item is its parent
+ * actor's permission. */
+TBE.writeItem = async function (item, changes, what) {
+  const P = _perm();
+  const user = (typeof game !== "undefined" && game?.user) || null;
+  const notify = (msg) => { try { ui?.notifications?.warn(msg); } catch (e) {} };
+  if (P) return P.applyItemWrite(item, changes, { what, user, notify });
+  if (!item) return { ok: false, notice: "No item to change.", error: null };
+  const owner = item.parent ?? item;
+  if (!TBE.canWrite(owner)) {
+    const notice = "You do not own " + (owner?.name || item.name) + ", so " + (what || "the change") +
+      " was not applied. Ask the GM to apply it.";
+    notify(notice);
+    return { ok: false, notice, error: null };
+  }
+  try { await item.update(changes); return { ok: true, notice: null, error: null }; }
+  catch (err) {
+    const notice = (what || "The change") + " could not be saved to " + item.name + ": " + (err?.message ?? err);
+    notify(notice);
+    return { ok: false, notice, error: err };
+  }
+};
 
 /* Run another TBE macro by name, from inside a macro. `game.macros.getName`
  * only searches the WORLD macro directory, which stays empty until someone
@@ -1885,6 +2008,13 @@ TBE.halveUp = (n) => Math.max(0, Math.ceil(n / 2));
  * canonical cascade -- checked against p.20 and confirmed correct in the
  * ownership audit (docs/ownership.md); don't re-derive it a third time. */
 TBE.opposedResolve = function (A, B) {
+  /* OWNERSHIP: module/rules/combat.mjs. The body below is the Node/legacy
+     fallback, kept for the harnesses and the standalone pack the same way
+     TBE.resolve and TBE.carryPool keep theirs. resolution_check-style
+     sweeps compare the two, so if you change one, change both -- or better,
+     change the owner and let this defer. */
+  const C = (typeof game !== "undefined" && game?.thebrokenempires?.rules?.combat) || null;
+  if (C && typeof C.opposedResolve === "function") return C.opposedResolve(A, B);
   let winner = null, dos = 0, why = "";
   if (A.ok && B.ok) {
     if (A.sl > B.sl) { winner = A; dos = A.sl - B.sl; why = "higher SLs"; }
@@ -2091,12 +2221,17 @@ TBE._addFrayingOnce = async function (actor, amount, why) {
   const add = Math.max(0, TBE.num(amount, 0));
   if (!actor || !add) return { added: 0, total: TBE.num(actor?.system?.fraying, 0), risk: 0, roll: null, purged: false, html: "" };
   const total = TBE.num(actor.system?.fraying, 0) + add;
-  try { await actor.update({ "system.fraying": total }); } catch (e) { console.warn("TBE | could not write Fraying", e); }
+  const frayWrite = await TBE.write(actor, { "system.fraying": total }, "the Fraying");
   const max = TBE.num(actor.system?.resolve?.max, 0);
   const over = total - max;
   let html = "<div><b>" + actor.name + "</b> gains <b>" + add + " Fraying</b>" + (why ? " (" + why + ")" : "") +
     " &mdash; now <b>" + total + "</b> against Max Resolve " + max + ".";
   html += ' <span style="font-size:11px;opacity:.8">Fraying can never be reduced.</span></div>';
+  /* Fraying is permanent and cumulative, so a card announcing it against a
+     sheet that never received it is the most misleading card this pack can
+     post. Say when it did not land. */
+  if (!frayWrite.ok) html += '<div style="font-size:11px;color:#8b1a1a">Not written to the sheet. ' +
+    TBE.esc(frayWrite.notice) + "</div>";
   if (over <= 0) {
     html += '<div style="font-size:11px;opacity:.85">Still at or under Max Resolve, so no Fraying Roll yet: ' +
       (max - total) + " point(s) of room left.</div>";

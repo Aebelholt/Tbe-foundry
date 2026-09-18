@@ -59,10 +59,10 @@ if (data) {
   const skill = base + mod;
 
   if (favor < asked) ui.notifications?.info("TBE: only " + favor + " Resolve was available, so that is what was spent as Favor.");
+  let favorWrite = { ok: true, notice: null };
   if (favor && actor) {
     const cur = TBE.num(actor.system?.resolve?.value, 0);
-    try { await actor.update({ "system.resolve.value": Math.max(0, cur - favor) }); }
-    catch (err) { console.warn("TBE | could not spend Favor Resolve", err); }
+    favorWrite = await TBE.write(actor, { "system.resolve.value": Math.max(0, cur - favor) }, "the " + favor + " Resolve");
   }
 
   const roll = await TBE.d100();
@@ -77,7 +77,8 @@ if (data) {
     '<div style="font-weight:bold;color:' + TBE.colour(res) + '">' + TBE.tag(res) +
     (res.success ? " &mdash; " + res.sl + " SL" : "") + "</div>" +
     (res.notes.length ? '<div style="font-size:11px;opacity:.8">' + res.notes.join(" &middot; ") + "</div>" : "") +
-    (favor ? '<div style="font-size:11px;opacity:.85">' + favor + " Resolve spent as Favor (+" + favor * 10 + ").</div>" : "") +
+    (favor ? '<div style="font-size:11px;opacity:.85">' + favor + " Resolve spent as Favor (+" + favor * 10 + ")." +
+      (favorWrite.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(favorWrite.notice) + "</span>") + "</div>" : "") +
     (ogrePen ? '<div style="font-size:11px;color:#8b1a1a">-20 for untrained armor (' + ogreArmor.pieces.join(", ") + ").</div>" : "") +
     breaking;
 

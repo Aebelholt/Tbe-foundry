@@ -38,10 +38,15 @@ and they should be checked on any change that touches chat, actors or state:
    (p.251) was hidden only by never being displayed at all. See the chat
    visibility owner below.
 2. **Who owns this actor?** A macro that writes to an actor is now often
-   being run by someone who may not own it. `_onSkillRoll` already models the
-   right behaviour — it warns that the Resolve was not spent rather than
-   failing silently. Anything that writes to an actor needs an answer for the
-   unowned case, and the answer is a sentence, not damage (rule 6).
+   being run by someone who may not own it. Answered in v0.38.0:
+   `module/rules/permission.mjs` owns the question, and `TBE.write(actor,
+   changes, what)` is how a macro asks it. It returns `{ok, notice}` and the
+   caller prints `notice` when `ok` is false. **Never write `try { await
+   actor.update(...) } catch (e) {}`** — that was the shape of the actual bug,
+   nine times over: the error was caught, dropped, and the chat card asserted
+   the cost regardless, so the log claimed a spend that never happened and no
+   one saw an error. An unguarded write is better than a hidden one. The answer
+   for the unowned case is a sentence, not damage (rule 6).
 3. **Can two clients do this at once?** A chat card with a button on it can
    be clicked by a player and the GM in the same second. Any action a shared
    card offers needs to be idempotent or guarded.
@@ -534,6 +539,24 @@ scope at least one pass at the player-facing output itself.
   changelog and two scheduled prompts before the release baseline caught it.
   **If a harness disagrees with a macro that demonstrably runs at a real table,
   the harness is what is wrong.**
+- `node permission_check.mjs` — 104 checks over who may write to an actor, the
+  second rule the scope change created. Read it before adding any `.update()` to
+  a macro. The bug it exists to stop is not a missing guard, it is a guard's
+  absence being *hidden*: nine sites did `try { await actor.update(...) } catch
+  (e) {}` and then had the chat card assert the cost anyway, so a player without
+  write permission got a log entry saying they spent Resolve they still have.
+  **A swallowed permission error is worse than an unguarded write**, because an
+  unguarded write at least fails loudly. `TBE.write()` returns a report and the
+  report carries the sentence to print, so the truthful path is the short one.
+  The check executes the real owner and the real `_lib.js` in both the deferral
+  and fallback paths, proves the deferral with a sentinel, and greps every macro
+  for the swallow pattern so a tenth site cannot appear quietly. Also pins that
+  `TBE.me()` prefers a token the user can actually write to — it used to return
+  whatever was selected, which under multiplayer is routinely someone else's
+  actor. One thing it encodes that is easy to get backwards: in `canWrite`,
+  **ABSENT is not FALSE**. A plain object with no `isOwner` is a harness stub,
+  not a Document refusing; treating it as a refusal turned seven check scripts
+  red at once.
 - `node macro_sync_check.mjs` — 33 checks over `TBE: Update Macros`, which
   brings a world's macro copies up to the installed system by matching on NAME
   and updating in place. Read it before touching how macros reach a world. The

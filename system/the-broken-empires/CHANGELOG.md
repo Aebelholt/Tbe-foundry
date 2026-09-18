@@ -1,3 +1,109 @@
+# 0.38.0 — 2026-09-18
+
+**The chat log was telling the table things that had not happened.**
+
+The scope change of 2026-09-17 ("this is no longer a solo module in scope") left
+one obvious job outstanding: the macro pack had 68 actor-write sites across 24
+files and not one permission check. That was the expected finding. The actual
+finding was worse, and it was already in the code:
+
+    try { await this.actor.update({ "system.resolve.value": cur - 1 }); }
+    catch (e) {}
+    body += "<div>The spell is not cast. 1 Resolve spent.</div>";
+
+Foundry throws when you write to a document you do not own. The throw was
+caught, discarded, and the card asserted the cost regardless. Nine sites did
+some version of this. Under solo not one of them was reachable — one user, who
+was the GM, who owned everything. With players they are reachable constantly,
+and what they produce is not an error but a chat log stating that Resolve was
+spent, a Weave Scar was burned in permanently, a Death Threshold moved, when
+none of it happened and every sheet still shows the old number.
+
+- **`module/rules/permission.mjs` is the new owner** of "may this user write to
+  this actor". `TBE.canWrite` / `TBE.write` / `TBE.writeItem` defer to it at
+  runtime with a Node/legacy fallback, the same shape as `resolve`, `say` and
+  `carryPool`. `applyWrite()` returns a *report* rather than a boolean, and the
+  report carries the sentence to print. That is deliberate: a guard that costs
+  more keystrokes than `try { } catch {}` loses to `try { } catch {}`, so the
+  honest path is the short one. Every converted site now reads
+  `body += w.ok ? "1 Resolve spent." : w.notice`.
+- **`TBE.me()` was returning the wrong actor.** It was
+  `canvas.tokens.controlled[0].actor ?? game.user.character` — perfect for solo,
+  where the selection IS the intent. With players, a player who clicks a
+  creature to read its Armour and leaves it selected had every write in the next
+  macro aimed at the GM's creature. It now prefers the first controlled token
+  the user can actually *write to*, and reports what it ignored rather than
+  switching actors in silence. A GM is unaffected: they own everything, so their
+  selection still wins.
+- **Converted the sites that spend something and then describe it**: Cast (the
+  failed-spell Resolve, Mitigation, the permanent Weave Scar, the Favor spend),
+  Attack (the Shock Resolve spend and the Death Threshold, both on the *target*,
+  which is almost never the roller's actor), Wounds, Counterspell, Statuses,
+  Skill Roll, Talents, Advancement, Haggle, Quick Combat, Miracle, Pious Act, and
+  the `_lib.js` helpers behind them (`setWounds`, `setShock`, `setSupply`,
+  `markFatigue`, `removeFatigue`, `setPiety`, `addFraying`). Chargen-time writes
+  (Wizard, Build, Finish) were deliberately left: they throw visibly rather than
+  swallowing, and they run against a character the player just made.
+- **`permission_check.mjs`**, 104 checks. Runs both paths, proves the deferral
+  with a sentinel, and greps every macro for the swallow pattern so a tenth site
+  cannot appear quietly.
+
+**Sheet roll parity.** Clicking a weapon rolls the attack with it; clicking a
+fighting skill rolls a parry or dodge. Both are additional *entry points* on the
+same dialog, the same `resolve()`, the same visibility owner and the same
+permission owner that `.skill-roll` has used since v0.31.0 — not a second
+implementation. A weapon whose skill the character has never written down rolls
+against the book's untrained 20 (p.104) rather than 0. Everything past the roll
+— hit location, damage, Maneuvers, wounds — stays in TBE: Attack, because it
+needs two actors and a whole exchange.
+
+**`module/rules/combat.mjs`** now owns the opposed-roll cascade, moved out of
+`_lib.js` where `docs/ownership.md` has said it belongs since v0.24.0. The body
+was transplanted rather than retyped: the branch a re-derivation keeps dropping
+is "a normal failure beats a critical failure", and dropping it is exactly how
+Haggle shipped a third, subtly wrong copy.
+
+**B1, Seb's note from the first session — "if shielding make it clear during the
+attack macro."** The shield was always in the arithmetic and never in the
+sentence. The attack card and the defence prompt now say which shield is up, the
+AP it adds and the SL cost to circumvent it, read through `defendingShield()`,
+which asks `carryPool` the same positive question `tbe-attack.js` asks. Same
+source as the number, so the line cannot name a shield the roll did not count.
+
+**B4 — the Resolve maximum that quietly ate a point.** Seb reported Resolve
+going 12/12 → 12/11 with the pool untouched; no spend in the codebase can do
+that, so it was a hand-edit, almost certainly someone reaching for the pool
+mid-fight and hitting the identical box beside it. Resolve max and Death
+Threshold max are chargen-derived ceilings, not live resources, and losing one
+is permanent with nothing to restore it from. Both are now readonly behind a
+lock toggle. The live `.value` fields stay freely editable — locking those would
+be the opposite bug.
+
+**A dropped weapon displayed as "(at hand)".** The weapon and shield rows
+labelled carry state with a chain of `eq` helpers ending in an `else`, so every
+state added after that chain was written fell into the default. The same
+negative-filter bug this project has now chased through four files, in template
+form. The label comes from the readiness owner.
+
+**Four stale assertions fixed, not worked around.** `resolution_check` (x2),
+`tier0_check` and `tier3_check` pinned the literal source spelling of writes
+that moved behind the permission owner. Each was rewritten to assert the
+guarantee it existed to protect rather than the wording — and, where the new
+code allows it, to additionally assert that the card only claims what landed.
+This is the same failure v0.37.0 found sitting red for two releases; the lesson
+is that an assertion on source text has a shelf life.
+
+**One real bug found while fixing the above.** The first cut of `canWrite()`
+treated an absent `isOwner` as "no", which turned seven check scripts red at
+once: a harness stub is a plain object with no opinion about ownership, and
+refusing to write to it protects nobody while making every helper silently do
+nothing outside Foundry. ABSENT is now distinguished from FALSE. In real Foundry
+every Document has `isOwner`, so the branch is unreachable in production and
+cannot loosen anything there.
+
+Full suite green, enumerated from disk rather than from a list: 28 check scripts,
+plus `simtest.js` (51) and the Salt-Run pregens (648).
+
 # 0.37.0 — 2026-09-17
 
 **A dropped shield was still defending you**, and the tooling that found it.
