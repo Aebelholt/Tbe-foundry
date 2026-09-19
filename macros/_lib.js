@@ -929,12 +929,12 @@ TBE.setShock = async (actor, val) => TBE.write(actor, { "system.shock": !!val },
  * A permanent scar is written into the Bind skill itself, because that is what
  * permanent means. The until-sunrise ones are actor flags, so they can be
  * cleared when the sun comes up without unpicking a skill value. */
-TBE.weaveState = (actor) => Object.assign({ scars: [], snag: false }, TBE.clone(actor?.flags?.tbe?.weave ?? {}));
+TBE.weaveState = (actor) => Object.assign({ scars: [], snag: false }, TBE.clone(TBE.flagOf(actor, "weave") ?? {}));
 /* Defensive like the other actor writers here: a player without permission to
  * update the actor should get a card that still says what happened, not an
  * exception that swallows the whole casting result. */
 TBE.setWeaveState = async function (actor, st) {
-  await TBE.write(actor, { "flags.tbe.weave": st }, "the Weave state");
+  await TBE.write(actor, { [TBE.flagPath("weave")]: st }, "the Weave state");
   return st;
 };
 
@@ -1507,6 +1507,40 @@ TBE.woundTable = function (w) {
       if (x.rb !== undefined && x.rb !== null) tags.push("RB " + (x.rb >= 0 ? "+" : "") + x.rb);
       return "<tr><td>" + (TBE.LOC_LABELS[k] || k) + "</td><td>" + TBE.num(x.wp, 0) + "</td><td>" + (tags.join(", ") || "&mdash;") + "</td></tr>";
     }).join("") + "</table>";
+};
+
+/* ------------------------------------------------------------------ *
+ *  Flag namespace
+ *
+ *  OWNERSHIP: TBE.FLAG_SCOPE in helpers/config.mjs. Foundry accepts only
+ *  "core", "world", the system id and module ids as flag scopes, and
+ *  setFlag/getFlag throw on anything else -- this system's id is
+ *  "the-broken-empires", so "tbe" was never a scope it could use. Direct
+ *  `update({"flags.tbe.x": ...})` writes never validated, which is why the
+ *  split survived so long and why the one file that used the documented API
+ *  was the one that broke.
+ *
+ *  READ TOLERANTLY, WRITE CANONICALLY. `flagOf` falls back to the legacy
+ *  namespace so a world that has not run the 0.39.0 migration yet (or the
+ *  legacy standalone pack, which has no system and therefore no migration at
+ *  all) still finds its data; every WRITE goes to the current namespace, so
+ *  the fallback drains rather than becoming permanent. A tolerant read with a
+ *  tolerant write is how a split lasts forever.
+ * ------------------------------------------------------------------ */
+TBE.FLAG_SCOPE_FALLBACK = "the-broken-empires";
+Object.defineProperty(TBE, "FLAG_SCOPE", {
+  get() {
+    return (typeof CONFIG !== "undefined" && CONFIG?.TBE?.FLAG_SCOPE) || TBE.FLAG_SCOPE_FALLBACK;
+  }
+});
+
+/** Path for an update object: TBE.flagPath("weave") -> "flags.the-broken-empires.weave" */
+TBE.flagPath = (key) => "flags." + TBE.FLAG_SCOPE + "." + key;
+
+/** Current namespace first, legacy second. See the note above. */
+TBE.flagOf = function (doc, key) {
+  const cur = doc?.flags?.[TBE.FLAG_SCOPE]?.[key];
+  return cur === undefined ? doc?.flags?.tbe?.[key] : cur;
 };
 
 /* Escape text bound for a chat card. Eight macros each define a private

@@ -439,7 +439,17 @@ const withWorld = async (world, fn) => { globalThis.game = world; try { return a
   const bad = mkActor("Bram", { tbe: { toughness: 4 } }, { toughness: 0 }, { failWrite: true });
   const w = mkWorld({ actors: [good, bad] });
   const r = await withWorld(w, () => MIGMOD.migrateAll());
-  check(r.failed.length === 1, "partial failure: the failing document is reported", r.failed.length);
+  /* One document, now failing in two steps: the 0.22.0 Toughness harvest and
+     the 0.39.0 flag move both write to it, and both report. What this
+     assertion has always meant is "the failing DOCUMENT is reported", so it
+     counts documents rather than write attempts -- a raw count here would
+     have to be edited every time a step that touches the same doc is added,
+     which is how an assertion drifts from what it is for. */
+  const failedDocs = [...new Set(r.failed.map((f) => f.doc))];
+  check(failedDocs.length === 1 && failedDocs[0] === "Bram",
+    "partial failure: the failing document is reported", failedDocs);
+  check(r.failed.length >= 1 && r.failed.every((f) => f.doc === "Bram"),
+    "...and nothing else is blamed for it", r.failed);
   check(r.committed === false, "partial failure: the version is NOT committed");
   check(w.__store["the-broken-empires.worldSchemaVersion"] === "0.21.0",
     "partial failure: the world still records the OLD version, so the next load retries",
@@ -461,7 +471,24 @@ const withWorld = async (world, fn) => { globalThis.game = world; try { return a
       { name: "Doom Clock", have: 1, need: 8 },   // same label, different clock
       { name: "Finished",  have: 6, need: 6, done: true },
       { name: "Blown",     have: 2, need: 6, failed: true }
-    ] } } };
+    ] } },
+    /* The 0.39.0 flag move walks journals too, so this literal needs an
+       update or the step lands in runSteps' try/catch and `blockedBy` reads
+       "failures" instead of "stranded clocks" -- a fixture artefact that
+       looks exactly like a real regression. */
+    updates: [],
+    update: async function (u) {
+      this.updates.push(u);
+      for (const [k, v] of Object.entries(u)) {
+        const parts = k.split(".");
+        const rawLeaf = parts.pop();
+        const del = rawLeaf.startsWith("-=");
+        const leaf = del ? rawLeaf.slice(2) : rawLeaf;
+        let t = this;
+        for (const seg of parts) { if (t[seg] === undefined || t[seg] === null) t[seg] = {}; t = t[seg]; }
+        if (del) delete t[leaf]; else t[leaf] = v;
+      }
+    } };
   const w = mkWorld({ journal: [j] });
   const r = await withWorld(w, () => MIGMOD.migrateAll());
   check(r.clocks.length === 2, "stranded clocks: only OPEN clocks are counted (done and failed skipped)",
@@ -497,8 +524,12 @@ const withWorld = async (world, fn) => { globalThis.game = world; try { return a
   const w = mkWorld({ actors: [keep, zero, none] });
   await withWorld(w, () => MIGMOD.migrateAll());
   check(keep.system.toughness === 2, "a real sheet value is never overwritten by a stale flag", keep.system.toughness);
-  check(zero.updates.length === 1 && zero.updates[0]["system.toughness"] === 0,
-    "a legacy zero is still a value, not an absence");
+  /* Two writes now, not one: the 0.22.0 harvest and the 0.39.0 flag move both
+     touch this actor. What the assertion is about is that a legacy 0 is
+     carried across as a VALUE rather than skipped as an absence, so it looks
+     for that write instead of counting them. */
+  check(zero.updates.some((u) => u["system.toughness"] === 0),
+    "a legacy zero is still a value, not an absence", zero.updates);
   check(none.updates.length === 0, "an actor that never had the flag is untouched");
 }
 
@@ -594,12 +625,20 @@ check(!/flags\.thebrokenempires/.test(stripComments(read(`${SYS}/module/document
 
 /* Talent effect scaling is declared, not inferred. */
 const ITEMJS = read(`${SYS}/module/documents/item.mjs`);
-check(/flags\?\.tbe\?\.perRank === false\) continue/.test(ITEMJS),
+check(/perRank === false\) continue/.test(ITEMJS),
   "an effect can declare itself not-per-rank, and that declaration is honoured");
+/* v0.39.0 moved the generated flag onto the system id. perRank is regenerated
+   data rather than world state, so it is read tolerantly instead of migrated
+   -- and the tolerance has to be real, because a world upgraded today still
+   holds Talents stamped with the old namespace. */
+check(/readFlag/.test(ITEMJS) && /flags\?\.tbe\?\.perRank/.test(ITEMJS),
+  "...and is still found on a Talent stamped before the namespace moved");
 check(!/perRank === undefined/.test(ITEMJS),
   "...but an UNMARKED effect still scales, so a hand-made one is not silently inert");
+const perRankOf = (e) =>
+  e?.flags?.["the-broken-empires"]?.perRank ?? e?.flags?.tbe?.perRank;
 const unmarked = tItems.filter((t) => (t.effects || []).some(
-  (e) => e?.flags?.tbe?.perRank === undefined));
+  (e) => perRankOf(e) === undefined));
 check(unmarked.length === 0,
   "every generated stat effect carries an explicit perRank decision, so unmarked can only mean deliberate",
   unmarked.map((t) => t.name));

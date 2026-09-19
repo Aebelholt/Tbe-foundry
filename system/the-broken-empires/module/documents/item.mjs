@@ -56,7 +56,17 @@ export class TheBrokenEmpiresItem extends Item {
        * every effect it generates and audit_check.mjs fails the build if one
        * lacks an explicit decision, so for shipped data nothing is inferred at
        * all; the default only governs effects this system did not write. */
-      if (effect.flags?.tbe?.perRank === false) continue;
+      /* Read tolerantly here, and ONLY here. `perRank` is generated data:
+         build_talents.py stamps it, it flows compendium -> world when a Talent
+         is added to an actor, and every new copy carries the current
+         namespace. The keys the 0.39.0 migration moves are world state nothing
+         will ever re-create, which is why those are migrated instead. Sweeping
+         ActiveEffects nested inside Items inside Actors to relabel data that
+         regenerates itself would be a deep migration bought for nothing. */
+      const perRank = CONFIG?.TBE?.readFlag
+        ? CONFIG.TBE.readFlag(effect, "perRank")
+        : (effect.flags?.[CONFIG?.TBE?.FLAG_SCOPE ?? "the-broken-empires"]?.perRank ?? effect.flags?.tbe?.perRank);
+      if (perRank === false) continue;
       for (const change of effect.changes ?? []) {
         if (change.mode !== CONST.ACTIVE_EFFECT_MODES.ADD) continue;
         const base = Number(change.value);

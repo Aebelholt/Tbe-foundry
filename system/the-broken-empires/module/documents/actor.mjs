@@ -29,11 +29,14 @@ export class TheBrokenEmpiresActor extends Actor {
     const actorData = this;
     /* There is no `flags.thebrokenempires` in this system and nothing has ever
        written one -- that read was template boilerplate, assigned to a variable
-       nothing then used. The two flag scopes actually in use are `tbe` (clocks,
-       funnel, session, weave; written via setFlag("tbe", ...)) and
-       `the-broken-empires` (chargenLedger, freeArmor). Consolidating those two
-       is a real decision with a migration attached, not a tidy-up, so it is
-       logged in BACKLOG rather than done quietly here. */
+       nothing then used. This comment used to record that the system ALSO used
+       two different flag scopes, `tbe` and `the-broken-empires`, and that
+       consolidating them was a real decision with a migration attached.
+       Consolidated in v0.39.0: `TBE.FLAG_SCOPE` is the one namespace, the
+       0.39.0 migration steps move the owned keys, and the split turned out to
+       be hiding a live bug -- "tbe" is not a scope Foundry accepts, so the one
+       file that used setFlag/getFlag rather than writing the path by hand
+       (TBE: Funnel Roster) threw on every call. */
 
     /* Bulk & Initiative Penalty (Ch.9 p.141): "Add up the Bulk from each piece
      * of worn armor and divide by 3, rounding up. The result is the Initiative

@@ -76,10 +76,21 @@ section("Weave Scar and Reality Snag (Ch.14 p.302-303)");
 const actorW = () => {
   const a = { name: "Fionnah", flags: {}, system: { resolve: { value: 4, max: 6 }, fatigue: 0, wounds: {} },
     items: [], update: async function (d) {
+      /* Apply dotted paths the way Foundry does, including the `-=` key
+         deletion prefix, rather than matching literal path strings. The
+         earlier version tested `k === "flags.tbe.weave"` and so silently
+         stopped applying anything the moment v0.39.0 moved the Weave flag to
+         the system's real namespace -- the stub kept passing writes into the
+         void and the reads came back empty. A stub that only understands the
+         exact strings it was written against is a trap for the next change. */
       for (const [k, v] of Object.entries(d)) {
-        if (k === "flags.tbe.weave") { a.flags.tbe = a.flags.tbe || {}; a.flags.tbe.weave = v; }
-        if (k === "system.fatigue") a.system.fatigue = v;
-        if (k === "system.wounds") a.system.wounds = v;
+        const parts = k.split(".");
+        const rawLeaf = parts.pop();
+        const del = rawLeaf.startsWith("-=");
+        const leaf = del ? rawLeaf.slice(2) : rawLeaf;
+        let t = a;
+        for (const seg of parts) { if (t[seg] === undefined || t[seg] === null) t[seg] = {}; t = t[seg]; }
+        if (del) delete t[leaf]; else t[leaf] = v;
       }
       return a;
     } };

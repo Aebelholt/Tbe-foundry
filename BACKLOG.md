@@ -1,3 +1,44 @@
+## Flag namespace consolidation — Built in v0.39.0, 2026-09-19
+
+Logged as a tidy-up with a migration attached. It was hiding a live bug.
+
+`tbe` is not a flag scope Foundry accepts — the valid set is `core`, `world`,
+the system id and installed module ids — but only `setFlag`/`getFlag` validate.
+A hand-written `update({"flags.tbe.x": v})` writes the path without complaint.
+So every site that spelled the path out worked, and `TBE: Funnel Roster`, the
+one file that used the documented API, threw on every call and could not list,
+update or convert a single townsfolk. No check covers that macro.
+
+**Built.** `TBE.FLAG_SCOPE` / `TBE.OWNED_FLAGS` in `helpers/config.mjs`,
+`TBE.flagPath`/`TBE.flagOf` in `_lib.js`, two 0.39.0 migration steps sharing
+one `moveOwnedFlags` body, the funnel roster fix, `perRank` regenerated into
+the new namespace with a tolerant reader, `findStrandedClocks` reading both,
+and fixtures K-O.
+
+**The design decision worth keeping**: the step moves a NAMED LIST, not the
+namespace. Salt-Run Ambush stores live tracker state in
+`flags.tbe.saltRunAmbush`, ships its own installer, and is not updated by a
+system upgrade — a whole-namespace sweep would move state out from under a
+running adventure whose installed copy we cannot patch. Fixture N seeds the
+naive sweep and confirms the damage.
+
+### Still open from this area
+
+- **The adventure still uses an invalid scope for its own flags.** Salt-Run
+  Ambush writes `flags.tbe.saltRunAmbush` through direct updates, which works,
+  and never calls setFlag, so nothing throws. It is not this system's namespace
+  to move. If the adventure is ever reissued it should pick `world` or its own
+  module id; until then the system deliberately leaves it alone.
+- **No check covers `tbe-funnel-roster.js`.** The fix above is asserted by
+  grep, not by running the macro. It is the only macro with a dialog flow and
+  zero behavioural coverage, which is exactly how a total failure sat there
+  unnoticed. A `funnel_roster_check.mjs` running the real macro against a stub
+  world is the obvious follow-up.
+- **`setFlag`/`getFlag` are now unused everywhere.** Every site writes paths
+  directly. That is fine and consistent, but it means the scope validation that
+  would have caught this can never fire again. A cheap guard is a check that
+  greps for any `flags.tbe.` write outside the migration and the adventure.
+
 ## Multiplayer readiness + sheet roll parity — Built in v0.38.0, 2026-09-18
 
 Seb asked for "multiplayer + sheet update" in one pass after the scheduled

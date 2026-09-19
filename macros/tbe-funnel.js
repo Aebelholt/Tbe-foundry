@@ -112,7 +112,10 @@ if (data) {
             "<p><b>Ability Scores:</b> " + f.build.abilityLines.join("; ") + "</p>" +
             "<p><b>Agenda:</b> " + f.trait.agenda + "<br><b>Trigger:</b> " + f.trait.trigger + "</p>"
         },
-        flags: { tbe: { funnel: {
+        /* The system id, not "tbe": see TBE.FLAG_SCOPE. This is a create,
+           not an update, so it never validated -- which is exactly why the
+           roster that reads it with getFlag() was the half that broke. */
+        flags: { [TBE.FLAG_SCOPE]: { funnel: {
           town, owner: "Player " + (f.owner + 1), status: "alive",
           trade: f.build.trade.name, standing: f.build.standing,
           stake: f.build.trade.stake,

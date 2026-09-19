@@ -30,6 +30,10 @@
  */
 
 const FLAG_SCOPE = "the-broken-empires";
+
+/* Mirrors CONFIG.TBE.OWNED_FLAGS for the Node harnesses, which have no CONFIG.
+   If these two lists drift, migration_fixtures_check.mjs section 0 fails. */
+const OWNED_FLAGS_FALLBACK = ["weave", "clocks", "session", "funnel", "toughness"];
 const VERSION_KEY = "worldSchemaVersion";
 
 const num = (v, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
@@ -43,6 +47,35 @@ const num = (v, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
  * "world" for anything that is not a document sweep. `apply` returns a flat
  * update object or null; null is the common case and is not a failure.
  * ----------------------------------------------------------------------- */
+/**
+ * Move this system's own flags out of the legacy `tbe` namespace and into the
+ * system id, which is the only scope Foundry will accept from us.
+ *
+ * Shared by the two 0.39.0 steps below, which differ only in the collection
+ * they walk (actors-and-token-actors, and journal entries). One body, so the
+ * actor sweep and the journal sweep cannot come to disagree about what a move
+ * means -- the exact class of bug `docs/ownership.md` exists to track.
+ */
+export function moveOwnedFlags(doc) {
+  const legacy = doc.flags?.tbe;
+  if (!legacy || typeof legacy !== "object") return null;
+
+  const owned = (typeof CONFIG !== "undefined" && CONFIG?.TBE?.OWNED_FLAGS) || OWNED_FLAGS_FALLBACK;
+  const scope = (typeof CONFIG !== "undefined" && CONFIG?.TBE?.FLAG_SCOPE) || FLAG_SCOPE;
+  const current = doc.flags?.[scope] ?? {};
+  const update = {};
+
+  for (const key of owned) {
+    if (!(key in legacy)) continue;
+    /* Delete the legacy copy whether or not the value is carried across:
+       leaving it behind is what lets the two namespaces drift apart again,
+       which is the whole defect. Foundry's `-=` prefix removes a key. */
+    update["flags.tbe.-=" + key] = null;
+    if (current[key] === undefined) update["flags." + scope + "." + key] = legacy[key];
+  }
+  return Object.keys(update).length ? update : null;
+}
+
 export const STEPS = [
   {
     version: "0.22.0",
@@ -88,6 +121,59 @@ export const STEPS = [
       const good = raw.split(",").map((p) => p.trim()).filter((p) => p !== "" && Number.isFinite(Number(p)));
       return { "system.initiative": good.length ? good[0] : "" };
     }
+  },
+  {
+    version: "0.39.0",
+    collection: "tokens",
+    label: "Flags split across two namespaces, one of them not a valid scope",
+    /* The system id is "the-broken-empires". Foundry accepts "core", "world",
+       the system id and installed module ids as flag scopes, and `setFlag` /
+       `getFlag` throw on anything else. This codebase wrote BOTH
+       `flags.tbe.*` and `flags.the-broken-empires.*` for its whole life,
+       decided per line by which spelling whoever wrote it reached for.
+
+       It went unnoticed because `update({ "flags.tbe.weave": x })` does not
+       validate the scope -- only setFlag/getFlag do. So all the direct-update
+       sites worked, and the single file that used the documented API,
+       tbe-funnel-roster.js, is the one that was broken. The incentive was
+       exactly backwards: using the API correctly was the thing that failed.
+
+       WHAT THIS MOVES: the keys in TBE.OWNED_FLAGS, one at a time, and
+       nothing else. The temptation is to move the whole `flags.tbe` object in
+       one go, and that would be wrong: the Salt-Run Ambush adventure stores
+       its live tracker in `flags.tbe.saltRunAmbush`, ships as its own
+       installer, and is NOT updated by a system upgrade. A whole-namespace
+       sweep would move state out from under a running adventure whose code
+       still reads the old path, and whose copy in the GM's world we have no
+       way to update. Tidying a namespace is not worth breaking somebody's
+       session over, so keys this system does not own stay exactly where they
+       are.
+
+       CONFLICT RULE: if a key somehow exists under both, the CURRENT namespace
+       wins and the legacy copy is dropped. The only way to hold both is a
+       half-finished earlier run, and in that case the new one is the value
+       today's code has been reading and writing.
+
+       IDEMPOTENT: a document with no legacy keys returns null. Running it
+       twice is indistinguishable from running it once, which fixture K
+       asserts by doing exactly that.
+
+       ORDER: this sits after the 0.22.0 Toughness step, which READS
+       `flags.tbe.toughness`. runSteps applies each step's update before the
+       next step sees the document, so on a 0.21.0 world the Toughness value
+       is harvested into `system.toughness` first and the leftover flag is
+       cleared here. Reversing the order would silently skip the Toughness
+       repair on exactly the oldest worlds that need it. */
+    apply: moveOwnedFlags
+  },
+  {
+    version: "0.39.0",
+    collection: "journal",
+    label: "Journal flags split across two namespaces",
+    /* Clocks and the session counter live on a JournalEntry, not an actor, so
+       the same move needs a second pass over a different collection. Same
+       body, same owned-key list; `COLLECTIONS` decides what it walks. */
+    apply: moveOwnedFlags
   }
 ];
 
@@ -202,7 +288,13 @@ export async function runSteps(from, { dryRun = false } = {}) {
 export function findStrandedClocks() {
   const found = [];
   for (const entry of game.journal ?? []) {
-    const clocks = entry.flags?.tbe?.clocks;
+    /* Both namespaces on purpose. This is a DETECTOR, and it runs on the ready
+       hook against a world at any version -- including one that has not taken
+       the 0.39.0 move yet, and one that took it seconds ago. A detector that
+       reads only the post-migration path reports "no stranded clocks" on
+       precisely the old worlds it exists to warn. */
+    const scope = (typeof CONFIG !== "undefined" && CONFIG?.TBE?.FLAG_SCOPE) || FLAG_SCOPE;
+    const clocks = entry.flags?.[scope]?.clocks ?? entry.flags?.tbe?.clocks;
     if (!Array.isArray(clocks) || !clocks.length) continue;
     for (const [i, c] of clocks.entries()) {
       if (!c || c.done || c.failed) continue;      // same filter the macro uses

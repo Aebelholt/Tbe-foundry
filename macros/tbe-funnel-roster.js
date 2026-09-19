@@ -1,7 +1,7 @@
 /* TBE: Funnel Roster — who is still alive, what it cost them, and who becomes
  * a character.
  *
- * Reads the flags TBE: Funnel wrote (flags.tbe.funnel) rather than keeping its
+ * Reads the flags TBE: Funnel wrote rather than keeping its
  * own list, so the roster cannot disagree with the actors. Three jobs:
  *   - show the town's people by player and by status,
  *   - record a death, a flight, or a Scar during the sack,
@@ -12,7 +12,22 @@
  * funnel actor is worth keeping as the record of who they were before. */
 
 const STATUSES = ["alive", "wounded", "fled", "broken", "dead", "converted"];
-const funnelActors = () => game.actors.filter((a) => a.getFlag("tbe", "funnel"));
+/* This macro used getFlag("tbe", ...) / setFlag("tbe", ...) for its whole
+ * life, and "tbe" is not a scope Foundry accepts: the valid set is "core",
+ * "world", the SYSTEM id and installed module ids, and this system's id is
+ * "the-broken-empires". setFlag/getFlag throw on anything else, so every call
+ * here raised -- meaning TBE: Funnel Roster could not list a single townsfolk,
+ * record a death or convert a survivor.
+ *
+ * Nothing caught it because nothing tests this macro, and because the sibling
+ * that CREATES these actors passes a flags object to Actor.create, which does
+ * not validate at all. So the half that used the documented API was the half
+ * that failed, and the half that wrote the path by hand worked fine. That is
+ * the whole shape of the flag-namespace defect in one pair of files.
+ *
+ * TBE.flagOf reads the current namespace and falls back to the legacy one, so
+ * townsfolk created before the 0.39.0 migration are still found. */
+const funnelActors = () => game.actors.filter((a) => TBE.flagOf(a, "funnel"));
 
 const all = funnelActors();
 if (!all.length) {
@@ -20,7 +35,7 @@ if (!all.length) {
 } else {
   const byOwner = {};
   for (const a of all) {
-    const f = a.getFlag("tbe", "funnel");
+    const f = TBE.flagOf(a, "funnel");
     (byOwner[f.owner] = byOwner[f.owner] || []).push({ actor: a, f });
   }
 
@@ -41,9 +56,9 @@ if (!all.length) {
       rows + "</table></div>";
   }).join("");
 
-  const living = all.filter((a) => ["alive", "wounded"].indexOf(a.getFlag("tbe", "funnel").status) > -1);
+  const living = all.filter((a) => ["alive", "wounded"].indexOf(TBE.flagOf(a, "funnel").status) > -1);
   const actorOpts = (list) => list.map((a) => '<option value="' + a.id + '">' + a.name +
-    " (" + a.getFlag("tbe", "funnel").trade + ")</option>").join("");
+    " (" + TBE.flagOf(a, "funnel").trade + ")</option>").join("");
 
   const content =
     '<div style="font-size:13px">' + summary +
@@ -73,7 +88,7 @@ if (!all.length) {
      * biography, because a scar the GM cannot see at the table is not a scar. */
     if (data.who) {
       const a = game.actors.get(data.who);
-      const f = TBE.clone(a.getFlag("tbe", "funnel"));
+      const f = TBE.clone(TBE.flagOf(a, "funnel"));
       if (data.status) { f.status = data.status; notes.push(a.name + " is now <b>" + data.status + "</b>."); }
       if (data.scar) {
         const scar = TBE_FUNNEL.scars.find((s) => s.name === data.scar);
@@ -81,7 +96,7 @@ if (!all.length) {
         notes.push(a.name + " carries <b>" + scar.name + "</b> — " + scar.line);
         await a.update({ "system.biography": (a.system.biography || "") + "<p><b>Scar — " + scar.name + ":</b> " + scar.line + "</p>" });
       }
-      await a.setFlag("tbe", "funnel", f);
+      await TBE.write(a, { [TBE.flagPath("funnel")]: f, "flags.tbe.-=funnel": null }, "the roster change");
     }
 
     /* Conversion. Everything they already are carries over: skills with their
@@ -89,7 +104,7 @@ if (!all.length) {
      * Personality Traits. The night adds one skill and one Goal. */
     if (data.conv && game.user.isGM) {
       const src = game.actors.get(data.conv);
-      const f = TBE.clone(src.getFlag("tbe", "funnel"));
+      const f = TBE.clone(TBE.flagOf(src, "funnel"));
       let folder = game.folders.find((x) => x.name === "TBE Survivors" && x.type === "Actor");
       if (!folder) folder = await Folder.create({ name: "TBE Survivors", type: "Actor" });
 
@@ -130,7 +145,7 @@ if (!all.length) {
       });
       await pc.createEmbeddedDocuments("Item", skills.concat(talents));
       f.status = "converted";
-      await src.setFlag("tbe", "funnel", f);
+      await TBE.write(src, { [TBE.flagPath("funnel")]: f, "flags.tbe.-=funnel": null }, "the roster change");
       notes.push("<b>" + pc.name + "</b> is a character now, in <b>TBE Survivors</b>" +
         (data.grew ? ", " + data.grew + " +10" : "") + (data.goal ? ', with the goal "' + data.goal + '"' : "") + ".");
       notes.push('<span style="font-size:11px;opacity:.8">Run TBE: Finish Character on them to spend what a real character still owes: career, Cultural Background, Life Events, the rest of their Goals.</span>');

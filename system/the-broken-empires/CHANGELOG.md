@@ -1,3 +1,76 @@
+# 0.39.0 — 2026-09-19
+
+**One flag namespace, and the bug the split was hiding.**
+
+This was logged as tidy-up: the system wrote `flags.tbe.*` in some places and
+`flags.the-broken-empires.*` in others, and picking one meant a data migration.
+Looking at it turned up something else. Foundry accepts exactly four kinds of
+flag scope — `core`, `world`, the **system id**, and installed module ids — and
+`setFlag`/`getFlag` throw on anything else. This system's id is
+`the-broken-empires`. `tbe` was never a namespace it could legally use.
+
+It survived for the system's whole life because `update({"flags.tbe.x": v})`
+does **not** validate the scope; it just writes the path. Only `setFlag` and
+`getFlag` check. So every site that wrote the path by hand worked perfectly,
+and the single file that used the documented API — `TBE: Funnel Roster` —
+threw on every call. The incentive was exactly inverted: using the API
+correctly was the thing that failed, and nothing noticed, because no check
+covers that macro at all.
+
+- **`TBE: Funnel Roster` was broken.** `getFlag("tbe", "funnel")` and
+  `setFlag("tbe", "funnel", …)` raised every time, so it could not list a
+  single townsfolk, record a death or a Scar, or convert a survivor into a
+  character. Its sibling `TBE: Funnel` creates those actors by passing a flags
+  object to `Actor.create`, which never validates, so the town generated fine
+  and the tool for playing it out did not.
+- **`TBE.FLAG_SCOPE` is the owner**, with `TBE.OWNED_FLAGS` naming the keys
+  this system may move. Macros go through `TBE.flagPath()` and `TBE.flagOf()`.
+- **Two 0.39.0 migration steps**, one over actors *and unlinked token actors*,
+  one over journals, sharing a single `moveOwnedFlags` body so the two sweeps
+  cannot come to disagree about what a move means.
+- **It moves a named list, not the namespace.** The obvious implementation —
+  lift the whole `flags.tbe` object across and delete it — would have moved
+  the Salt-Run Ambush adventure's live tracker out from under it. That
+  adventure ships its own installer, a system upgrade does not touch it, and
+  the copy in a GM's world cannot be updated by us, so its code would go on
+  reading a path whose data had been moved. Tidying a namespace is not worth
+  breaking somebody's session. Fixture L asserts the adventure's keys survive,
+  and fixture N seeds the naive sweep and confirms it does the damage.
+- **Read tolerantly, write canonically.** Reads fall back to the legacy
+  namespace so a world that has not migrated yet still finds its data; writes
+  always go to the system id, so the fallback drains rather than becoming a
+  permanent second implementation.
+- **`perRank` is the deliberate exception**: it is *generated* data that flows
+  compendium → world whenever a Talent is added, so `build_talents.py` now
+  stamps the current namespace and `documents/item.mjs` reads both. Sweeping
+  ActiveEffects nested inside Items inside Actors to relabel data that
+  regenerates itself would be a deep migration bought for nothing.
+- **`findStrandedClocks` reads both namespaces on purpose.** It is a detector
+  that runs on the ready hook against a world at any version, including one
+  that has not migrated yet — which is precisely the world it exists to warn.
+
+**Four test stubs were lying, and the same lie each time.** `tier3_check`,
+`phase5_check`, `audit_check` and `migration_fixtures_check` all had document
+stubs whose `update()` matched *literal path strings* (`k === "flags.tbe.clocks"`)
+or handled only `system.*`. The moment a path moved, those stubs silently
+stopped applying writes, so correct macros failed their assertions and the
+migration's own idempotence claim could not have been tested at all. All four
+now apply dotted paths the way Foundry does, including the `-=` key-deletion
+prefix. A stub that only understands the exact strings it was written against
+is a trap for whoever changes the path next.
+
+Fixtures K through O cover the move: owned keys move and the legacy copy is
+deleted rather than duplicated, foreign keys stay put, running twice is
+indistinguishable from running once, a half-finished earlier run resolves in
+favour of the current namespace, and the fallback key list in `migration.mjs`
+is asserted identical to `CONFIG.TBE.OWNED_FLAGS`.
+
+Fixture I — the closest thing the suite has to Seb's real world — now also
+asserts that his Campaign Clocks journal moves and its legacy key is gone.
+
+Full suite green, enumerated from disk: 28 check scripts, `simtest.js` (51),
+Salt-Run pregens (648).
+
 # 0.38.0 — 2026-09-18
 
 **The chat log was telling the table things that had not happened.**

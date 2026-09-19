@@ -3,6 +3,8 @@ plus a reference journal. Names and text come from parse_talents.py, which
 verified every name verbatim against the rulebook."""
 import json
 
+FLAG_SCOPE = "the-broken-empires"   # must match TBE.FLAG_SCOPE in helpers/config.mjs
+
 # Talents that change a tracked number on the actor. Until v0.13.0 every one
 # of these was inert: the Item appeared on the sheet and the number it
 # promises never moved, including the five offered by the Ability Score step
@@ -43,7 +45,11 @@ def stat_effect(name):
         "name": name, "img": "icons/svg/upgrade.svg", "disabled": False, "transfer": True,
         "changes": [{"key": spec["key"], "mode": 2, "value": str(spec["per"]), "priority": 20}],
         "duration": {}, "description": "<p>" + spec["quote"] + "</p>",
-        "flags": {"tbe": {"perRank": spec["per"], "maxRanks": spec["max"], "statKey": spec["key"]}},
+        # The system id, not "tbe". Foundry accepts only "core", "world", the
+        # system id and module ids as flag scopes; "tbe" is none of those.
+        # Regenerated data, so no migration is needed -- documents/item.mjs
+        # reads both namespaces for exactly this reason (v0.39.0).
+        "flags": {FLAG_SCOPE: {"perRank": spec["per"], "maxRanks": spec["max"], "statKey": spec["key"]}},
     }
 
 

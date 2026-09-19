@@ -94,17 +94,49 @@ const mkWorld = ({ version, actors = [], items = [], journal = [], scenes = [] }
   };
 };
 
+/* Apply an update the way Foundry would, so a second pass sees what the first
+   one wrote. Idempotence is a claim about the SECOND run, and a stub that
+   swallows writes cannot test it.
+
+   Handles two shapes the 0.39.0 flag move needs and the original stub did not:
+   a dotted `flags.<scope>.<key>` path, and Foundry's `-=` key-deletion prefix
+   (`flags.tbe.-=weave` removes `weave`). A stub that ignored the deletion
+   would report a perfectly clean migration while leaving every legacy key in
+   place, which is the exact failure the move exists to prevent. */
+function applyUpdate(doc, u) {
+  for (const [k, v] of Object.entries(u)) {
+    const parts = k.split(".");
+    const leafRaw = parts.pop();
+    const deleting = leafRaw.startsWith("-=");
+    const leaf = deleting ? leafRaw.slice(2) : leafRaw;
+
+    let target = doc;
+    for (const seg of parts) {
+      if (target[seg] === undefined || target[seg] === null) target[seg] = {};
+      target = target[seg];
+    }
+    if (deleting) delete target[leaf];
+    else target[leaf] = v;
+  }
+}
+
 const mkActor = (name, flags = {}, system = {}, type = "character") => ({
   name, flags, system, type, updates: [],
   update: async function (u) {
     this.updates.push(u);
-    /* Write the update through the way Foundry would, so a second pass sees
-       the repaired value. Idempotence is a claim about the SECOND run, and a
-       stub that swallows writes cannot test it. */
-    for (const [k, v] of Object.entries(u)) {
-      const leaf = k.replace(/^system\./, "");
-      if (!leaf.includes(".")) this.system[leaf] = v;
-    }
+    applyUpdate(this, u);
+  }
+});
+
+/* Journal fixtures were plain literals with no `update`, which was fine while
+   no step wrote to a journal. The 0.39.0 move does, and a missing `update`
+   would land in runSteps' try/catch and be reported as a FAILED step rather
+   than a migrated one -- green-looking for the wrong reason. */
+const mkJournal = (name, flags = {}, extra = {}) => ({
+  name, id: "j-" + name.toLowerCase().replace(/\W+/g, "-"), flags, updates: [], ...extra,
+  update: async function (u) {
+    this.updates.push(u);
+    applyUpdate(this, u);
   }
 });
 
@@ -117,7 +149,7 @@ const mkScene = (name, tokens = []) => ({ name, tokens: col(tokens) });
 const withWorld = async (world, fn) => { globalThis.game = world; try { return await fn(); } finally { globalThis.game = undefined; } };
 
 console.log(`\n0. Sanity: the STEPS list is exactly what the header above claims`);
-check(MIGMOD.STEPS.map((s) => s.version).join(",") === "0.22.0,0.33.0",
+check(MIGMOD.STEPS.map((s) => s.version).join(",") === "0.22.0,0.33.0,0.39.0,0.39.0",
   "confirms the scope claim above rather than assuming it", MIGMOD.STEPS.map((s) => s.version));
 
 /* ===================================================================
@@ -180,11 +212,11 @@ console.log("\nC. A 0.27.0 world (Divine Magic actors, nothing schema-relevant a
  * =================================================================== */
 console.log("\nD. A 0.28.0 world with an in-progress campaign clock");
 {
-  const j = { name: "Session 4 Notes", id: "j-s4", flags: { tbe: { clocks: [
+  const j = mkJournal("Session 4 Notes", { tbe: { clocks: [
     { name: "The Watch Grows Suspicious", have: 2, need: 6 },
     { name: "Escape the City", have: 6, need: 6, done: true },
     { name: "Raise the Militia", have: 1, need: 8, failed: true }
-  ] } } };
+  ] } }, { id: "j-s4" });
   const party = ["Eira", "Bram"].map((n) => mkActor(n, {}, { toughness: 0 }));
   const w = mkWorld({ version: "0.28.0", actors: party, journal: [j] });
   const r = await withWorld(w, () => MIGMOD.migrateAll());
@@ -310,15 +342,15 @@ console.log("\nI. Seb's world: 0.29.x -> current, in one jump, with a clock stil
   const scene = mkScene("The ambush", [tokElspeth, tokMorrk, tokRenn, tokArmand, rann].map(mkToken));
 
   /* A world that has been played in tends to have one of these. */
-  const j = { name: "Campaign Clocks", id: "j-seb", flags: { tbe: { clocks: [
+  const j = mkJournal("Campaign Clocks", { tbe: { clocks: [
     { name: "The Salt-Run", have: 2, need: 6 }
-  ] } } };
+  ] } }, { id: "j-seb" });
 
   const w = mkWorld({ version: "0.29.0", actors: [], scenes: [scene], journal: [j] });
   const due = await withWorld(w, () => MIGMOD.stepsDue("0.29.0"));
 
-  check(due.map((x) => x.version).join(",") === "0.33.0",
-    "from 0.29.0 the only step due is the Initiative repair -- 0.22.0 is already behind him",
+  check(due.map((x) => x.version).join(",") === "0.33.0,0.39.0,0.39.0",
+    "from 0.29.0 the Initiative repair and both halves of the flag move are due -- 0.22.0 is already behind him",
     due.map((x) => x.version));
 
   const r = await withWorld(w, () => MIGMOD.migrateAll());
@@ -330,7 +362,15 @@ console.log("\nI. Seb's world: 0.29.x -> current, in one jump, with a clock stil
   check(rann.updates.length === 0, "the player character is untouched", rann.updates);
 
   /* THE ONE THAT MATTERS. */
-  check(r.touched === 4, "all four corrupted creatures were repaired in the one pass", r.touched);
+  /* Five, not four: the four creatures plus his Campaign Clocks journal, whose
+     clocks move out of the legacy namespace in the same pass. Worth stating
+     rather than loosening the number -- this fixture is the closest thing the
+     suite has to Seb's real world, so what it touches is what his upgrade
+     touches. */
+  check(r.touched === 5, "the four corrupted creatures AND the clocks journal are handled in the one pass", r.touched);
+  check(j.flags["the-broken-empires"].clocks.length === 1 && j.flags.tbe?.clocks === undefined,
+    "his clocks moved to the valid namespace and the legacy copy is gone",
+    { moved: j.flags["the-broken-empires"]?.clocks, legacy: j.flags.tbe });
   check(r.clocks.length === 1, "the open clock is still found and reported", r.clocks);
   check(r.committed === false, "the version is held back because of the clock");
   check(r.blockedBy === "stranded clocks", "...and says which of the two reasons held it", r.blockedBy);
@@ -442,5 +482,144 @@ const BROKEN = await import("file:///tmp/tbe_mutated_migration.mjs");
 }
 
 console.error = quietErr;
+/* ===================================================================
+ * Fixture K: the flag namespace move (0.39.0), on an actor.
+ *
+ * The system id is "the-broken-empires". Foundry accepts "core", "world", the
+ * system id and installed module ids as flag scopes and throws on anything
+ * else, so `flags.tbe.*` was never a namespace this system could legally use
+ * via setFlag/getFlag -- and it used both spellings for its whole life,
+ * because a direct `update({"flags.tbe.x": v})` does not validate.
+ *
+ * What makes this a migration rather than a rename is that the data is live:
+ * a played world has Weave scars and funnel townsfolk sitting under the old
+ * path, and nothing will ever re-create them.
+ * =================================================================== */
+console.log("\nK. The 0.39.0 flag move: owned keys move, foreign keys are left alone");
+{
+  const scarred = mkActor("Elspeth", { tbe: { weave: { scars: [{ bind: "Fire", amount: 2 }], snag: true } } });
+  const townsfolk = mkActor("Wren", { tbe: { funnel: { town: "Saltmarsh", status: "alive" } } });
+  const clean = mkActor("Bram", { "the-broken-empires": { chargenLedger: { xp: 5 } } });
+  const w = mkWorld({ version: "0.38.0", actors: [scarred, townsfolk, clean] });
+  await withWorld(w, () => MIGMOD.migrateAll());
+
+  check(scarred.flags["the-broken-empires"].weave.scars[0].bind === "Fire",
+    "a Weave scar moves across with its value intact", scarred.flags["the-broken-empires"].weave);
+  check(scarred.flags.tbe?.weave === undefined,
+    "and the legacy copy is DELETED, not merely duplicated -- leaving it is how the split comes back",
+    scarred.flags.tbe);
+  check(townsfolk.flags["the-broken-empires"].funnel.status === "alive",
+    "a funnel townsfolk moves too", townsfolk.flags["the-broken-empires"].funnel);
+  check(clean.updates.length === 0,
+    "an actor already on the current namespace is not touched at all", clean.updates);
+}
+
+/* ===================================================================
+ * Fixture L: the key that must NOT move, and why the step names its keys.
+ *
+ * The Salt-Run Ambush adventure keeps its live tracker in
+ * `flags.tbe.saltRunAmbush`. It ships as its own installer, a system upgrade
+ * does not touch it, and the copy in a GM's world cannot be updated by us. A
+ * whole-namespace sweep -- the obvious implementation -- would move that state
+ * out from under a running adventure whose code still reads the old path.
+ *
+ * So the step moves a NAMED LIST (TBE.OWNED_FLAGS) and leaves everything else
+ * exactly where it found it. This fixture is the reason that list exists.
+ * =================================================================== */
+console.log("\nL. A key this system does not own is left where the adventure put it");
+{
+  const both = mkActor("Renn", { tbe: {
+    weave: { scars: [], snag: false },
+    saltRunAmbush: { talkedDown: true },
+    somebodyElsesModule: { keep: "me" }
+  } });
+  const j = mkJournal("The Salt-Run Ambush", { tbe: {
+    clocks: [{ name: "The caravan escapes", have: 1, need: 4 }],
+    saltRunAmbush: { hazard: "Obscured", beat: 3 }
+  } });
+  const w = mkWorld({ version: "0.38.0", actors: [both], journal: [j] });
+  await withWorld(w, () => MIGMOD.migrateAll());
+
+  check(both.flags.tbe.saltRunAmbush.talkedDown === true,
+    "the adventure's own actor flag is untouched", both.flags.tbe.saltRunAmbush);
+  check(both.flags.tbe.somebodyElsesModule.keep === "me",
+    "so is a flag belonging to something we have never heard of", both.flags.tbe.somebodyElsesModule);
+  check(both.flags["the-broken-empires"].weave !== undefined && both.flags.tbe.weave === undefined,
+    "while the key we DO own moved out from beside it");
+  check(j.flags.tbe.saltRunAmbush.hazard === "Obscured",
+    "the adventure's journal tracker survives the journal sweep too", j.flags.tbe.saltRunAmbush);
+  check(j.flags["the-broken-empires"].clocks.length === 1 && j.flags.tbe.clocks === undefined,
+    "and the clocks beside it still moved");
+}
+
+/* ===================================================================
+ * Fixture M: idempotence and conflict, the two ways a move goes wrong twice.
+ * =================================================================== */
+console.log("\nM. Running the move twice is indistinguishable from running it once");
+{
+  const a = mkActor("Elspeth", { tbe: { weave: { scars: [{ bind: "Fire", amount: 2 }] } } });
+  const w1 = mkWorld({ version: "0.38.0", actors: [a] });
+  await withWorld(w1, () => MIGMOD.migrateAll());
+  const after = a.updates.length;
+
+  const w2 = mkWorld({ version: "0.38.0", actors: [a] });
+  await withWorld(w2, () => MIGMOD.migrateAll());
+  check(a.updates.length === after, "the second pass writes nothing", a.updates.length - after);
+  check(a.flags["the-broken-empires"].weave.scars.length === 1,
+    "and the value is still there, once", a.flags["the-broken-empires"].weave);
+
+  /* A half-finished earlier run is the only way to hold both. The current
+     namespace is what today's code reads and writes, so it wins. */
+  const split = mkActor("Pike", {
+    tbe: { weave: { scars: ["stale"] } },
+    "the-broken-empires": { weave: { scars: ["current"] } }
+  });
+  const w3 = mkWorld({ version: "0.38.0", actors: [split] });
+  await withWorld(w3, () => MIGMOD.migrateAll());
+  check(split.flags["the-broken-empires"].weave.scars[0] === "current",
+    "on a conflict the current namespace wins", split.flags["the-broken-empires"].weave);
+  check(split.flags.tbe?.weave === undefined,
+    "and the stale legacy copy is dropped rather than left to be found later");
+}
+
+/* ===================================================================
+ * Fixture N: mutation -- the whole-namespace sweep that would have been
+ * written if nobody had looked for foreign keys.
+ * =================================================================== */
+console.log("\nN. Mutation: a whole-namespace sweep breaks the running adventure");
+{
+  const naive = (doc) => {
+    const legacy = doc.flags?.tbe;
+    if (!legacy) return null;
+    return { "flags.the-broken-empires": { ...legacy }, "flags.-=tbe": null };
+  };
+  const victim = { flags: { tbe: { weave: {}, saltRunAmbush: { hazard: "Rough" } } } };
+  const u = naive(victim);
+  check(u["flags.-=tbe"] === null && u["flags.the-broken-empires"].saltRunAmbush !== undefined,
+    "CONFIRMED: the obvious implementation moves the adventure's state too");
+  const careful = MIGMOD.moveOwnedFlags(victim);
+  check(careful["flags.tbe.-=weave"] === null && careful["flags.tbe.-=saltRunAmbush"] === undefined,
+    "...and the shipped one touches only what it owns", Object.keys(careful));
+}
+
+/* ===================================================================
+ * Fixture O: the owned-key list exists twice and must not drift.
+ * =================================================================== */
+console.log("\nO. The Node fallback list matches the system's own");
+{
+  const CFG = await import(`file://${process.cwd()}/${SYS}/module/helpers/config.mjs`);
+  const MIGSRC = read(`${SYS}/module/migration/migration.mjs`);
+  const fallback = /OWNED_FLAGS_FALLBACK = \[([^\]]+)\]/.exec(MIGSRC)?.[1] ?? "";
+  const parsed = fallback.split(",").map((x) => x.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
+  check(parsed.join(",") === CFG.TBE.OWNED_FLAGS.join(","),
+    "migration.mjs's fallback list matches CONFIG.TBE.OWNED_FLAGS exactly",
+    { fallback: parsed, owner: CFG.TBE.OWNED_FLAGS });
+  check(CFG.TBE.FLAG_SCOPE === "the-broken-empires",
+    "and the scope is the system id, which is the only one Foundry will accept from us");
+  check(!CFG.TBE.OWNED_FLAGS.includes("saltRunAmbush") && !CFG.TBE.OWNED_FLAGS.includes("perRank"),
+    "the adventure's key and the regenerated perRank are deliberately NOT owned",
+    CFG.TBE.OWNED_FLAGS);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);

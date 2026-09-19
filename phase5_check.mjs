@@ -288,7 +288,22 @@ section("   ...and TBE: Clocks migrates an old world exactly once");
       { name: "A finished clock", need: 6, have: 6, interval: "a day", limit: 0, used: 3, done: true, failed: false }
     ] } },
     pages: { contents: [page] },
-    update: async function (u) { if ("flags.tbe.clocks" in u) this.flags.tbe.clocks = u["flags.tbe.clocks"]; } };
+    /* Apply dotted paths generically, including Foundry's `-=` deletion
+       prefix, rather than matching one literal path. Matching the literal
+       string meant this stub stopped applying anything when v0.39.0 moved the
+       clocks flag onto the system's real namespace, so the emptying assertion
+       below failed against a macro that was working correctly. */
+    update: async function (u) {
+      for (const [k, v] of Object.entries(u)) {
+        const parts = k.split(".");
+        const rawLeaf = parts.pop();
+        const del = rawLeaf.startsWith("-=");
+        const leaf = del ? rawLeaf.slice(2) : rawLeaf;
+        let t = this;
+        for (const seg of parts) { if (t[seg] === undefined || t[seg] === null) t[seg] = {}; t = t[seg]; }
+        if (del) delete t[leaf]; else t[leaf] = v;
+      }
+    } };
   const journals = { "TBE Clocks": j };
   const a = makeActor();
 
@@ -299,7 +314,12 @@ section("   ...and TBE: Clocks migrates an old world exactly once");
     && moved[0].intervalsUsed === 2 && moved[0].limit === 5,
     "...as an extended tracker carrying its progress, interval count and limit", moved[0]);
   check(/retired/.test(out) && /Extended Roll/.test(out), "the card says what happened and where to go", out);
-  check(j.flags.tbe.clocks.length === 0, "the journal is emptied so a second run cannot duplicate");
+  /* The macro now writes the emptied list to the system's own namespace and
+     deletes the legacy key in the same update (v0.39.0), so the assertion
+     follows the data rather than the old path. */
+  check(j.flags["the-broken-empires"].clocks.length === 0 && j.flags.tbe?.clocks === undefined,
+    "the journal is emptied so a second run cannot duplicate, and the legacy key is gone",
+    { moved: j.flags["the-broken-empires"]?.clocks, legacy: j.flags.tbe });
 
   const out2 = await run("tbe-clocks.js", {}, { store, actor: a, journals });
   check(Object.values(store.encounters).length === 1, "running it again creates nothing");

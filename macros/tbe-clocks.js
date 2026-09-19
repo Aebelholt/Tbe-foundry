@@ -21,7 +21,7 @@
 const JOURNAL = "TBE Clocks";
 
 const j = game.journal.getName(JOURNAL);
-const clocks = j?.flags?.tbe?.clocks ?? [];
+const clocks = TBE.flagOf(j, "clocks") ?? [];
 const open = clocks.filter((c) => !c.done && !c.failed);
 
 if (!clocks.length) {
@@ -55,7 +55,7 @@ if (!clocks.length) {
 
   /* The journal is emptied rather than deleted: a world that ran this twice
      must not create the same tracker twice, and a GM may still want the page. */
-  await j.update({ "flags.tbe.clocks": [] });
+  await j.update({ [TBE.flagPath("clocks")]: [], "flags.tbe.-=clocks": null });
   const page = j.pages?.contents?.[0];
   if (page) {
     await page.update({ "text.content":

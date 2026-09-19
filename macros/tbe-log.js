@@ -20,7 +20,7 @@ if (!j) {
 } else {
   const page = j.pages?.contents?.[0];
   const me = TBE.me();
-  const sessionNo = TBE.num(j.flags?.tbe?.session, 1);
+  const sessionNo = TBE.num(TBE.flagOf(j, "session"), 1);
 
   const data = await TBE.prompt(
     "Session log",
@@ -39,7 +39,7 @@ if (!j) {
     let entry = "";
 
     if (data.newsession === "on") {
-      await j.update({ "flags.tbe.session": sessionNo + 1 });
+      await j.update({ [TBE.flagPath("session")]: sessionNo + 1, "flags.tbe.-=session": null });
       entry += "<hr><h2>Session " + (sessionNo + 1) + " &mdash; " + stamp + "</h2>";
     }
     if (data.head) entry += "<h3>" + data.head + "</h3>";

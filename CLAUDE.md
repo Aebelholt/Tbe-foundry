@@ -480,6 +480,18 @@ scope at least one pass at the player-facing output itself.
   three of those four versions genuinely need nothing (and that "nothing to
   do" still advances the recorded version rather than looping forever) and
   that 0.28.0 is exactly where the stranded-clocks path has to fire.
+- `node migration_fixtures_check.mjs` also covers the v0.39.0 flag-namespace
+  move (fixtures K-O). Two things in it are worth knowing before touching
+  flags. First, **`tbe` was never a legal flag scope**: Foundry accepts `core`,
+  `world`, the system id and module ids, and throws on anything else, but only
+  via `setFlag`/`getFlag` — a hand-written `update({"flags.tbe.x": v})` writes
+  happily. That asymmetry is why the split survived for years and why the one
+  macro using the documented API was the broken one. Second, the migration
+  moves a **named list of keys** (`TBE.OWNED_FLAGS`), never the whole
+  namespace, because the Salt-Run Ambush adventure keeps live state under
+  `flags.tbe.saltRunAmbush` and a system upgrade cannot update its installed
+  copy. Fixture N seeds the whole-namespace sweep and confirms it breaks the
+  adventure.
 - `node skill_picker_check.mjs` — 63 checks that execute the real
   `TBE.skillOptions` out of `macros/_lib.js` against stub actors. It exists
   because the picker was built from the sheet's skill Items alone, so any

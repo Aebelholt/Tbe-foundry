@@ -310,3 +310,52 @@ TBE.rankCap = function (rank) {
   const n = Number(key);
   return Number.isFinite(n) && n > 0 ? n : 1;
 };
+
+/* ------------------------------------------------------------------ *
+ *  Flag namespace
+ * ------------------------------------------------------------------ */
+
+/**
+ * The one namespace this system stores flags under, and the only one Foundry
+ * considers valid for it.
+ *
+ * Foundry accepts exactly four kinds of flag scope: "core", "world", the
+ * SYSTEM id, and an installed module id. `setFlag`/`getFlag` throw on anything
+ * else. This system's id is "the-broken-empires", so "tbe" is not a scope it
+ * may use -- and the codebase used both, for its whole life, split by which
+ * spelling whoever wrote the line happened to reach for:
+ *
+ *   flags.tbe.*                  weave, clocks, session, funnel, perRank
+ *   flags.the-broken-empires.*   freeArmor, chargenLedger
+ *
+ * Why nobody noticed: `document.update({ "flags.tbe.weave": x })` does NOT
+ * validate the scope, it just writes the path. Only `setFlag`/`getFlag` check.
+ * So every direct-update site worked perfectly, and the one file that used the
+ * documented API -- `tbe-funnel-roster.js` -- is the one that was broken, which
+ * is an almost perfectly inverted incentive. The migration step for 0.39.0
+ * moves the data; this constant is what stops it splitting again.
+ *
+ * NOT everything under `flags.tbe` belongs to this system. The Salt-Run Ambush
+ * adventure keeps its tracker state in `flags.tbe.saltRunAmbush` and is a
+ * separate deliverable with its own installer, which a world upgrade does not
+ * touch. Moving keys this system does not own would break a running adventure
+ * to tidy up a namespace, so the migration moves a NAMED LIST and leaves the
+ * rest where it found it.
+ */
+TBE.FLAG_SCOPE = "the-broken-empires";
+
+/** The flag keys this system owns and may migrate. Anything not listed here
+ *  belongs to something else and is left alone -- see above. */
+TBE.OWNED_FLAGS = Object.freeze(["weave", "clocks", "session", "funnel", "toughness"]);
+
+/** Build a flag path for an update object. */
+TBE.flagPath = (key) => "flags." + TBE.FLAG_SCOPE + "." + key;
+
+/** Read a flag, preferring the current namespace and falling back to the
+ *  legacy one. Used only where a tolerant read is the right answer -- see
+ *  `perRank` in documents/item.mjs. State the system owns is MIGRATED, not
+ *  read tolerantly forever, or the split never actually ends. */
+TBE.readFlag = (doc, key) => {
+  const cur = doc?.flags?.[TBE.FLAG_SCOPE]?.[key];
+  return cur === undefined ? doc?.flags?.tbe?.[key] : cur;
+};
