@@ -1,3 +1,60 @@
+# 0.40.0 — 2026-09-20
+
+**"Still to choose" — the wizard now says what it gave you and you have not taken.**
+
+Seb shared a standalone TBE character-creation web app (The Tapestry) and asked
+what was worth copying. Its best idea is a single function that enumerates every
+decision the character has been granted and not yet made, rendered as a list of
+links that jump to the step that resolves each one. This is that, adapted.
+
+It earns its place because TBE: Character Wizard hands out grants across fifteen
+steps and said nothing when one went unclaimed — the failure class
+`phase5_check.mjs` exists for, where every step does exactly what it says, every
+script is green, and the player still ends up missing a Talent the book gave
+them.
+
+**The sharpest case is not a missing pick, it is a step that looks finished.**
+The Ability Score step's Expertise, Talent and Descriptor selects carry no blank
+option. The moment a score is chosen they render showing their first entry,
+while the draft still holds `null` — the value only commits when the step is
+actually visited and read. There is nothing on screen to notice. The panel is
+the only thing that can tell you.
+
+- `pendingChoices()` returns `{label, stepKey}` and **defers to the detector
+  that already owns each grant**: `raceChoices()` for racial grants,
+  `isCaster()`/`pattern()` for magic, `usesHumanCulture()` for the d100 homeland
+  table. It never decides a grant by comparing a race name, which is the
+  duplicate ownership this project keeps paying for.
+- Steps are addressed by **key, never index**. The Magic step exists only for a
+  caster, so an index would point one page off for everyone else; an item whose
+  step is not in `steps()` is dropped rather than rendered as a dead link.
+- The panel states plainly that nothing in it blocks Create Character. It is
+  advice, not a gate (rule 6).
+
+**`pending_check.mjs`, 46 checks, and most of them are about silence.** Rule 6
+cuts both ways: a panel that nags about a decision already made, or one the book
+never granted, trains the player to ignore it, and an ignored warning panel is
+worth less than none. So the case carrying the most weight is the fully-decided
+draft reporting nothing at all, and rendering as nothing rather than an empty
+box. It executes the real method sliced out of the macro against hand-built
+drafts, against a `this` that supplies exactly the collaborators the method may
+use — anything else it reached for would throw.
+
+**One finding from the comparison, not a change here.** The Tapestry computes
+Death Threshold as `Math.max(20 + points × 2, raceOverride)`. The book makes a
+race's DT its *starting* value (p.83: an Ogre "starts with … a Death Threshold
+of 22") with +2 per Attribute point on top (p.87), so an Ogre spending exactly
+one point should reach 24 and instead gets `max(22, 22)` — the point buys
+nothing, silently, and two points is right again by accident. Ours does
+`raceDT + 2 × points` and is correct. Recorded in BACKLOG for whoever maintains
+that tool.
+
+Three more Tapestry ideas are logged and ranked in BACKLOG: the always-visible
+live sheet, provenance tags, and draft persistence.
+
+Full suite green, enumerated from disk: 29 check scripts, `simtest.js` (51),
+Salt-Run pregens (648), and `wizard_visual_check.mjs` across all 15 steps.
+
 # 0.39.0 — 2026-09-19
 
 **One flag namespace, and the bug the split was hiding.**

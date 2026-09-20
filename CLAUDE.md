@@ -569,6 +569,22 @@ scope at least one pass at the player-facing output itself.
   **ABSENT is not FALSE**. A plain object with no `isOwner` is a harness stub,
   not a Document refusing; treating it as a refusal turned seven check scripts
   red at once.
+- `node pending_check.mjs` — 46 checks over the wizard's "Still to choose"
+  panel, which names every grant the character has been given and has not yet
+  claimed. Read it before adding a grant to chargen, because a grant with no
+  entry here is one the player can silently lose. Idea borrowed from the
+  standalone Tapestry tool's `computePendingChoices()`. Two things it encodes:
+  the panel DEFERS to the detector that already owns each grant
+  (`raceChoices()`, `isCaster()`, `usesHumanCulture()`) rather than deciding
+  from a race name, and it addresses steps by KEY rather than index, because
+  the Magic step exists only for a caster and an index would point at the wrong
+  page for everyone else. Most of the check is about **silence**: rule 6 cuts
+  both ways, and a panel that nags about a decision already made, or one the
+  book never granted, trains the player to ignore it. The sharpest case it
+  covers is the Ability Score step's Expertise/Talent/Descriptor selects, which
+  carry no blank option — they LOOK filled the moment a score is picked and
+  stay null until the step is actually visited, so an unvisited step reads on
+  screen as a complete one.
 - `node macro_sync_check.mjs` — 33 checks over `TBE: Update Macros`, which
   brings a world's macro copies up to the installed system by matching on NAME
   and updating in place. Read it before touching how macros reach a world. The

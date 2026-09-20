@@ -749,6 +749,102 @@ if (!actor) {
       this.draft.roAllocFor = key;
     }
 
+    /* ------------------------------------------------------------------ *
+     *  What has this character been GRANTED that still needs a decision?
+     *
+     *  ONE owner of that question, borrowed from the standalone Tapestry
+     *  tool, whose `computePendingChoices()` does the same job and does it
+     *  well. Everything here DEFERS to the detector that already owns each
+     *  grant -- `raceChoices()` for racial grants, `isCaster()` for whether
+     *  magic applies, `usesHumanCulture()` for the d100 homeland table --
+     *  rather than re-deriving them from race names, which is the duplicate
+     *  ownership this project keeps paying for.
+     *
+     *  WHY IT EARNS ITS PLACE. This wizard grants things across fifteen
+     *  steps and, until now, said nothing when a grant went unclaimed. That
+     *  is the exact failure class `phase5_check.mjs` exists for: the tool
+     *  does everything it says, every test passes, and the player ends up
+     *  with a character quietly missing a Talent the book gave them. Worse
+     *  for the sub-selects on the Ability Score step, which carry no blank
+     *  option: they LOOK filled in and stay null until the step is actually
+     *  visited, so an unvisited step reads as a complete one.
+     *
+     *  WHAT IT MUST NOT DO (rule 6): nag about something that is fine. An
+     *  entry here has to mean a decision the book says is the player's and
+     *  that the draft genuinely does not hold yet. When in doubt, leave it
+     *  out -- a panel that cries wolf gets ignored, and then it is worth
+     *  less than nothing.
+     *
+     *  Steps are named by KEY, never by index: the Magic step only exists
+     *  for a caster, so an index would point at the wrong step for everyone
+     *  else. An item whose step is not in `steps()` is dropped.
+     * ------------------------------------------------------------------ */
+    pendingChoices() {
+      const d = this.draft;
+      const out = [];
+      const keys = this.steps().map((s) => s.key);
+      const add = (label, stepKey) => { if (keys.indexOf(stepKey) > -1) out.push({ label, stepKey }); };
+      const blank = (v) => v === null || v === undefined || String(v).trim() === "";
+
+      /* Racial grants. raceChoices() owns which ones this race actually has. */
+      const rc = this.raceChoices();
+      const raceName = this.race()?.name || "your race";
+      if (rc.choosesSavvy && blank(d.raceSavvyPick)) add("Choose your " + raceName + " bonus Savvy skill", "race");
+      if (rc.extraExpertise && blank(d.raceExpertisePick)) add("Choose the skill for your " + raceName + " Expertise level", "race");
+      if (rc.bindBonus && blank(d.raceBindPick)) add("Choose which Bind gets your " + raceName + " +10", "race");
+
+      /* The d100 homeland table sets the native language (p.81-82), and it
+         lives on the Race step -- see the v0.8.1 step-fidelity fix. */
+      if (this.usesHumanCulture() && blank(d.humanCultureName)) {
+        add("Roll or choose your homeland, which sets your native Language", "race");
+      }
+
+      /* Ability Scores (p.85). The score select has a "(none)" option so a
+         blank really is unchosen; the three sub-selects do NOT, so a null
+         means the step was never visited and the shown value was never
+         committed. Both are worth surfacing, for different reasons. */
+      for (let i = 0; i < 2; i++) {
+        const n = i + 1;
+        if (blank(d.abilityPicks[i])) { add("Pick Ability Score " + n, "ability"); continue; }
+        const who = d.abilityPicks[i];
+        if (blank(d.abilityExpertise[i])) add("Choose the Expertise skill for " + who, "ability");
+        if (blank(d.abilityTalent[i])) add("Choose the Talent for " + who, "ability");
+        if (blank(d.abilityDescriptor[i])) add("Choose a descriptor for " + who, "ability");
+      }
+
+      /* Rounding Out grants three Savvy picks (p.104). */
+      const savvyLeft = (d.roSavvy || []).filter(blank).length;
+      if (savvyLeft) add("Choose your " + savvyLeft + " remaining bonus Savvy skill" + (savvyLeft > 1 ? "s" : ""), "rounding");
+
+      /* Magic picks exist only for a caster, and the Magic step only exists
+         for one too, so `add` drops these for everybody else. */
+      if (this.isCaster()) {
+        if (blank(d.trueName)) add("Choose your True Name", "magic");
+        if (this.pattern() === "spellweaver") {
+          if (blank(d.bindExpertise)) add("Choose which Bind takes your Expertise level", "magic");
+          if (blank(d.threadAttunement)) add("Choose your starting d8 Thread Die", "magic");
+        }
+      }
+
+      return out;
+    }
+
+    /* The panel itself. Rendered under the step bar, so it is visible from
+       every step rather than only on a review page nobody reaches until the
+       end -- which would defeat the point. */
+    _pendingHtml() {
+      const pending = this.pendingChoices();
+      if (!pending.length) return "";
+      const keys = this.steps().map((s) => s.key);
+      return '<div style="border:1px solid #9a4b12;border-left-width:3px;border-radius:4px;' +
+        'background:#fdf6ec;padding:6px 8px;margin-bottom:8px;font-size:11px">' +
+        '<div style="font-weight:bold;color:#9a4b12;margin-bottom:3px">Still to choose (' + pending.length + ")</div>" +
+        pending.map((p) => '<div><a href="#" data-pending-step="' + keys.indexOf(p.stepKey) + '" ' +
+          'style="color:#7a2e2e;text-decoration:underline">' + p.label + "</a></div>").join("") +
+        '<div style="opacity:.7;margin-top:3px">These are grants the book gives you that the draft does not hold yet. ' +
+        "Nothing here blocks Create Character.</div></div>";
+    }
+
     async _renderInner() { return $(this._html()); }
 
     _progressHtml() {
@@ -1426,6 +1522,7 @@ if (!actor) {
       const key = steps[this.step].key;
       const body = this["_step_" + key].call(this);
       return '<form autocomplete="off" style="font-size:13px;padding:4px">' + this._progressHtml() +
+        this._pendingHtml() +
         '<div style="margin-bottom:6px">Target: <b>' + this.actor.name + "</b></div>" +
         '<div class="tbe-step-body" style="max-height:420px;overflow-y:auto;padding-right:4px">' + body + "</div>" + this._footerHtml() + "</form>";
     }
@@ -1605,6 +1702,18 @@ if (!actor) {
           this._readCurrentStep(root);
           this.draft.lifeSub = el.dataset.lifeSub;
           this.render(true);
+        });
+      });
+
+      /* A pending-choice link jumps to the step that resolves it. It reads
+         the CURRENT step list rather than a stored index, because the Magic
+         step appears and disappears with the draft's Pattern and a stale
+         index would land on the wrong page. */
+      root.querySelectorAll("[data-pending-step]").forEach((a) => {
+        a.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          const i = Number(a.dataset.pendingStep);
+          if (Number.isFinite(i) && i >= 0) { this._readCurrentStep(root); this.step = i; this.render(true); }
         });
       });
 

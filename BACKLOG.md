@@ -1,3 +1,52 @@
+## Borrowed from the Tapestry — "Still to choose", built in v0.40.0
+
+Seb shared a standalone TBE character-creation web app (The Tapestry) and
+asked what was worth copying. Four things were; this is the first.
+
+**Built.** `pendingChoices()` and `_pendingHtml()` on TBE: Character Wizard,
+plus `pending_check.mjs` (46 checks). The panel sits under the step bar on
+every step and lists every grant the draft has not claimed, each a link that
+jumps to the step that resolves it.
+
+The sharpest thing it catches is not a missing pick, it is an **unvisited
+step that looks complete**: the Ability Score step's Expertise/Talent/
+Descriptor selects carry no blank option, so they render showing the first
+entry while the draft still holds null, and the value only commits when the
+step is visited and read. On screen there is nothing to see.
+
+**Comparison finding, for the record.** The Tapestry computes Death Threshold
+as `Math.max(20 + points x 2, raceOverride)`. The book (p.83, p.87) makes a
+race's DT its STARTING value, with +2 per Attribute point on top, so an Ogre
+spending exactly one point should reach 24 and instead gets `max(22, 22)` =
+22 — the point buys nothing, silently. Two points is right again by accident.
+Ours does `raceDT + 2 x points` and is correct. Not our bug to fix, but worth
+telling whoever maintains that tool.
+
+### Still to copy from the Tapestry, in order
+
+- **The always-visible live sheet.** A sticky second column showing the
+  character as it stands, collapsing to a tab on narrow windows, filtering
+  skills to the ones actually touched rather than forty rows of 20. This is
+  CLAUDE.md rule 3's second half applied to every step at once, where the
+  v0.10.1 fix applied it to two. Biggest remaining win, and the largest build.
+- **Provenance tags.** "This comes from your Cultural Background selection:
+  Highland Clans", placed where the bonus appears. Cheap, and it answers "why
+  is this here" at the moment the question occurs.
+- **Draft persistence.** The Tapestry saves to localStorage on every step and
+  offers to resume. Closes the "No cross-session draft persistence" item
+  already open under Tooling/UX. Copy the behaviour, not the mechanism: in
+  Foundry this belongs on a user or actor flag (`tbe.characterCreationDraft`),
+  and after v0.39.0 that means `TBE.flagPath("characterCreationDraft")`.
+- Smaller: the buy-button flash confirmation, compare-before-you-pick tables
+  with a summary column, and dotted-underline affordances on tooltips.
+
+**Deliberately NOT copied.** Its custom modal exists because a published
+artifact page cannot use native `confirm`/`prompt`; Foundry has `Dialog` and
+the pack has `TBE.prompt`, so that solves a problem this project does not
+have. And its closing note tells the player the tool is not the character's
+permanent home and to transfer to paper, which is right for a standalone page
+and exactly backwards here, where the Foundry actor IS the permanent home.
+
 ## Flag namespace consolidation — Built in v0.39.0, 2026-09-19
 
 Logged as a tidy-up with a migration attached. It was hiding a live bug.
