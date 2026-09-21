@@ -1,3 +1,94 @@
+# 0.41.1 — 2026-09-20
+
+**The exported sheet was nearly blank, and the reason was a defect this
+project already had a check for.**
+
+Seb exported a character and got a page with no skills on it. Not a rendering
+failure: `TBE: Export Sheets` listed the actor's skill **Items**, and a TBE
+actor deliberately records only the skills that differ from the book's
+untrained 20 (p.104). A character with two skill Items printed two skills.
+
+That is exactly the defect `skill_picker_check.mjs` exists to stop, reproduced
+in a second file — because when the roll picker was fixed, the fix was left
+inside `TBE.skillOptions`, which returns HTML. The only way to ask "what are
+this character's skills" was to build a `<select>` and read it back, and
+`skillOptions` took no actor: it called `TBE.me()`. So the exporter could not
+have used it even if whoever wrote it had thought to.
+
+- **`TBE.allSkills(actor)` is the extracted owner** of that merge: the skills
+  written on the sheet, plus the whole catalogue at 20, each marked `trained`
+  so a caller that needs to tell them apart still can. `TBE.skillOptions` now
+  defers to it for its two optgroups, and `TBE.actorSkills` takes the actor as
+  a parameter instead of assuming `TBE.me()`.
+- The printed sheet now carries the full catalogue, with untrained entries in
+  grey so a glance still finds the trained ones — which is what Seb's own
+  spreadsheet does, and what a real TBE sheet looks like.
+- An actor with no race, culture or career now says so rather than printing an
+  empty line.
+
+**My own check passed straight through this.** `export_check.mjs` asserted
+that a trained skill and its value appeared, which was true in both the broken
+and the fixed version. The assertion that catches it has to be about what is
+ABSENT — an untrained skill appearing at 20 — and that is the harder one to
+remember to write. Four assertions added, including a count of the whole
+catalogue.
+
+Full suite green, enumerated from disk: 30 check scripts, `simtest.js` (51),
+Salt-Run pregens (648).
+
+# 0.41.0 — 2026-09-20
+
+**TBE: Export Sheets — every character in the world, on paper.**
+
+Foundry cannot print a character. Ctrl+P on an actor sheet gives you the
+application's UI chrome, tab strips, scroll containers clipped mid-row, and
+only whichever tab happens to be open. Core's right-click "Export Data" gives
+raw JSON, which is the right answer for moving an actor between worlds and the
+wrong one for a table. This sits between them: a GM-gated macro that renders
+the world's player characters as a self-contained printable document, opened in
+a new tab to print or save as PDF.
+
+Scoped with Seb: printable, GM-only, whole world. Everything starts ticked, so
+the default IS the whole world and deselecting is the deliberate act — a played
+world accumulates retired and dead characters and nobody wants forty pages.
+
+**The rule it follows: read, never derive.** Every number comes from the actor
+(`initiativeEffective`, `lethalityLevel`, `totalWp`, `dying`) or from the helper
+that already owns that arithmetic (`TBE.encStatus`, `TBE.readiness`, `TBE.binds`,
+`TBE.strands`). This matters more here than anywhere else in the pack, because
+the failure mode is not a crash: it is a printed sheet that quietly disagrees
+with the screen, carried to a table, played off for a session, with no way to
+tell afterwards which of the two lied. `export_check.mjs` (72 checks) seeds
+deliberately impossible actors — a Lethality Level that is not ceil(DT/3), a
+totalWp that disagrees with its own wound grid — so a recomputing version prints
+different numbers and fails.
+
+The sheet carries identity, the eight vitals, skills grouped and marked for
+Savvy and Expertise, weapons with damage and the CL/CS/Dis/T line and their
+carry state, shields with their Circumvent cost, armour with Bulk and coverage,
+the wound grid with a blank column to mark in play, Talents, both encumbrance
+pools, the Weave block for a caster only, goals and notes. A blocked popup falls
+back to a download and **says so**, because a popup blocker does not.
+
+**Two corrections this turned up, both about the harness rather than the code.**
+
+- **`node -c` is the wrong syntax check for a Foundry macro, and this file's own
+  verification list said to use it.** `node --check` parses as CommonJS, where
+  top-level `await` is illegal; Foundry runs a macro inside an async wrapper
+  where it is perfectly legal. `syntax_check.mjs` has known this since it was
+  written and says so in its own header — the CLAUDE.md line simply never caught
+  up, and has now been corrected.
+- **The reflex fix for that false alarm is worse than the alarm.** Wrapping a
+  macro body in a self-invoking async IIFE silences `node -c`, and also means
+  `Macro#execute` never awaits the macro: it resolves instantly while the real
+  work runs detached, and any error inside surfaces as an unhandled rejection
+  with no context. This macro was briefly written that way. The check caught it
+  because nothing was ever written to the Blob — which is the second time in two
+  releases that the harness disagreeing with Foundry was the harness's fault.
+
+Full suite green, enumerated from disk: 30 check scripts, `simtest.js` (51),
+Salt-Run pregens (648), `syntax_check.mjs` across every macro.
+
 # 0.40.0 — 2026-09-20
 
 **"Still to choose" — the wizard now says what it gave you and you have not taken.**

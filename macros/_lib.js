@@ -353,8 +353,42 @@ TBE.eventHtml = function (e) {
 };
 
 /* Skill list off the selected token / assigned actor, system-agnostic. */
-TBE.actorSkills = function () {
-  const actor = TBE.me();
+/* Every skill this character can actually roll, with its value: the ones
+ * written on the sheet, plus the whole catalogue at the book's untrained 20
+ * (p.104). THE OWNER of that merge.
+ *
+ * It used to live inside `TBE.skillOptions`, which returns HTML, so the only
+ * way to ask "what are this character's skills" was to build a <select> and
+ * read it back. `TBE: Export Sheets` needed the same answer as DATA and for
+ * an ARBITRARY actor rather than `TBE.me()`, and the first version of that
+ * macro did the obvious wrong thing: it listed the skill Items and nothing
+ * else, so a character who had written down two skills printed a sheet with
+ * two skills on it. That is exactly the defect `skill_picker_check.mjs`
+ * exists to stop, reproduced in a second file because the fix had never been
+ * extracted from the picker that received it.
+ *
+ * `trained` marks which side an entry came from, so a caller that wants to
+ * tell them apart (the picker's two optgroups) still can. */
+TBE.allSkills = function (actor) {
+  const own = TBE.actorSkills(actor);
+  const ownNames = own.map((x) => x.name);
+  const untrained = [];
+  for (const group of Object.keys(TBE.SKILL_GROUPS)) {
+    for (const name of TBE.SKILL_GROUPS[group]) {
+      if (ownNames.indexOf(name) === -1) {
+        untrained.push({ name, value: TBE.BASE_SKILL, expertise: 0, savvy: false, group, trained: false });
+      }
+    }
+  }
+  untrained.sort((a, b) => a.name.localeCompare(b.name));
+  return own.map((x) => Object.assign({ trained: true }, x)).concat(untrained);
+};
+
+/* The skills actually written on the sheet. The actor is a parameter now:
+ * it defaulted to TBE.me() and nothing else could be asked about, which is
+ * why the exporter could not use it. */
+TBE.actorSkills = function (actor) {
+  actor = actor || TBE.me();
   const out = [];
   if (!actor) return out;
   for (const i of actor.items ?? []) {
@@ -392,20 +426,12 @@ TBE.skillOptions = function (fieldName = "pick", label = "Skill", filterGroup = 
   /* No token and no assigned character: there is nothing to roll for, so
    * fall through to the typed number rather than offering a phantom list. */
   if (!TBE.me()) return "";
-  const own = TBE.actorSkills();
-  const ownNames = own.map((x) => x.name);
-  const untrained = [];
-  for (const group of Object.keys(TBE.SKILL_GROUPS)) {
-    for (const name of TBE.SKILL_GROUPS[group]) {
-      if (ownNames.indexOf(name) === -1) {
-        untrained.push({ name, value: TBE.BASE_SKILL, expertise: 0, savvy: false, group });
-      }
-    }
-  }
-  untrained.sort((a, b) => a.name.localeCompare(b.name));
+  /* The merge has one owner now (TBE.allSkills); this splits its result back
+     into the two optgroups the picker shows. */
+  const all = TBE.allSkills(TBE.me());
   const keep = (x) => !filterGroup || x.group === filterGroup;
-  const mine = own.filter(keep);
-  const rest = untrained.filter(keep);
+  const mine = all.filter((x) => x.trained).filter(keep);
+  const rest = all.filter((x) => !x.trained).filter(keep);
   if (!mine.length && !rest.length) return "";
   const opt = (x) =>
     '<option value="' + x.value + "|" + x.name + "|" + x.expertise + "|" + (x.savvy ? 1 : 0) + '">' +

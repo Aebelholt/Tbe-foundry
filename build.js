@@ -186,6 +186,7 @@ const MACROS = [
   ["TBE: Social Encounter", "tbe-social-encounter.js", "icons/svg/angel.svg"],
   ["TBE: Chase", "tbe-chase.js", "icons/svg/wing.svg"],
   ["TBE: Loadout", "tbe-loadout.js", "icons/svg/shield.svg"],
+  ["TBE: Export Sheets", "tbe-export-sheets.js", "icons/svg/book.svg"],
   ["TBE: Status", "tbe-status.js", "icons/svg/aura.svg"],
   ["TBE: Session Log", "tbe-log.js", "icons/svg/book.svg"],
   ["TBE: Solo Panel", "tbe-solo-panel.js", "icons/svg/dice-target.svg"],
