@@ -1,3 +1,35 @@
+# 0.42.0 — 2026-09-21
+
+**Bestiary skills: every creature's Dodge was an Adventuring skill.**
+
+Open any of the 56 Ch.18 creatures and every skill sat under the Adventuring
+heading, Dodge and Might and every weapon included, none of them marked as
+fighting skills. The builder hardcoded the group instead of asking the
+skill catalogue, the same defect NPC generation shipped once before.
+
+- **Groups come from the catalogue.** `TBE.creatureSkillGroup` (in the macro
+  library) decides: the catalogue first, then a `-wise` is a Wise, then
+  anything the stat block prints as an attack ("Spear 70", "Bite 60") is
+  Combat. `fighting` follows from the group. A name none of those can place
+  now stops the build rather than getting a guessed heading.
+- **Expertise reaches the roll.** 20 skills carried their Expertise in the
+  name ("Might Ex4"), where the roll never read it, and the skill picker
+  offered that beside an untrained "Might" at 20. It now sits in the skill's
+  Expertise field, so the Dragon rolls Might 90 Ex4 and the picker shows one
+  Might.
+- **Attack Expertise is kept.** 13 attacks ("Broadsword 90 Ex3", the
+  Werewolf's "Claw 70 Ex2") had it read and thrown away. Kept now.
+- The Orc's Mace and Shortbow, the Hobgoblin's Bearded Axe, the Tical
+  soldier's Halberd and the Lich's Touch are Combat skills now. Those
+  creatures still lack weapon Items for their alternate loadouts; that is an
+  extractor fix and needs the rulebook text (logged in BACKLOG).
+
+New check: `bestiary_skills_check.mjs`, 41 assertions over the built pack,
+with mutations for each defect.
+
+Full suite green: 31 check scripts (`intrigue_check.mjs` needs the rulebook
+text and cannot run in this session), `simtest.js` (51).
+
 # 0.41.1 — 2026-09-20
 
 **The exported sheet was nearly blank, and the reason was a defect this

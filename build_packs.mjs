@@ -160,6 +160,17 @@ const TOKEN_SIZE = {
   Massive: { grid: 4, scale: 1 }, Gargantuan: { grid: 5, scale: 1 },
   Colossal: { grid: 6, scale: 1 }
 };
+/* The skill catalogue has one owner, TBE.SKILL_GROUPS in macros/_lib.js. The
+ * packs load the real library rather than copying the table, because the copy
+ * is how this went wrong: every creature skill was stamped "Adventuring", so a
+ * Dragon's Dodge sat under Adventuring and was not a fighting skill. */
+const LIBTBE = new Function("canvas", "game", "foundry", "ui", "CONFIG",
+  readFileSync("macros/_lib.js", "utf8") + "\n;return TBE;")(
+  { tokens: { controlled: [] } }, { user: { character: null } },
+  { utils: { duplicate: (o) => JSON.parse(JSON.stringify(o)) } },
+  { notifications: { warn() {}, error() {}, info() {} } }, undefined);
+
+const unclassified = [];
 const beasts = read("bestiary_docs.json").map((c, i) => {
   const dt = Number(c.dt) || 10;
   const armour = LOCS.reduce((o, l) => { o[l] = { natural: 0, worn: 0 }; return o; }, {});
@@ -169,14 +180,23 @@ const beasts = read("bestiary_docs.json").map((c, i) => {
   }
   const aid = idFor("beast:" + c.name);
   const items = [];
-  const mkSkill = (n, v, fighting) => ({
-    _id: idFor("beast:" + c.name + ":skill:" + n), name: n, type: "skill",
-    img: "icons/svg/book.svg", sort: (items.length + 1) * 1000,
-    system: { group: "Adventuring", value: Number(v) || 0, fighting: !!fighting, description: "" },
-    effects: [], folder: null, ownership: { default: 0 }, flags: {}, _stats: STATS()
-  });
-  for (const s of c.skills) items.push(mkSkill(s.name + (s.ex ? " Ex" + s.ex : ""), s.value, false));
-  for (const a of c.attacks) if (a.value !== null) items.push(mkSkill(a.name, a.value, true));
+  /* Expertise goes in system.expertise, where resolve() reads it. It used to
+   * be glued onto the name ("Might Ex4"), which the roll never saw, and which
+   * made the picker offer both "Might Ex4" at 90 and an untrained "Might" at
+   * 20, because to the catalogue they were two different skills. */
+  const mkSkill = (n, v, ex, isAttack) => {
+    const group = LIBTBE.creatureSkillGroup(n, isAttack);
+    if (!group) unclassified.push(c.name + ": " + n);
+    return {
+      _id: idFor("beast:" + c.name + ":skill:" + n), name: n, type: "skill",
+      img: "icons/svg/book.svg", sort: (items.length + 1) * 1000,
+      system: { group: group || "Adventuring", value: Number(v) || 0, expertise: Number(ex) || 0,
+        fighting: group === "Combat", savvy: false, description: "" },
+      effects: [], folder: null, ownership: { default: 0 }, flags: {}, _stats: STATS()
+    };
+  };
+  for (const s of c.skills) items.push(mkSkill(s.name, s.value, s.ex, !!s.attack));
+  for (const a of c.attacks) if (a.value !== null) items.push(mkSkill(a.name, a.value, a.ex, true));
   for (const a of c.attacks) items.push({
     _id: idFor("beast:" + c.name + ":weapon:" + a.name), name: a.name, type: "weapon",
     img: "icons/svg/sword.svg", sort: (items.length + 1) * 1000,
@@ -212,6 +232,10 @@ const beasts = read("bestiary_docs.json").map((c, i) => {
     flags: { tbe: c.flags }, _stats: STATS()
   };
 });
+if (unclassified.length) {
+  throw new Error("bestiary skills with no known group (add them to TBE.SKILL_GROUPS " +
+    "or fix the extractor, do not default them): " + unclassified.join("; "));
+}
 await writePack("tbe-bestiary", "Actor", beasts);
 
 /* ---- Macros, tables, journals ------------------------------------------- */

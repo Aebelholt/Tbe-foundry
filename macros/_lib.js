@@ -488,6 +488,20 @@ TBE.skillGroup = function (name) {
  * passed it by hand and could disagree with the group it stamped. */
 TBE.isFighting = (name) => TBE.skillGroup(name) === "Combat";
 
+/* Which heading a stat-block skill belongs under (Ch.18 creatures, and any NPC
+ * written the same way). The catalogue answers first. Past it, a stat block
+ * names a skill in only two other ways: a "-wise" (the Guard Captain's
+ * Law-wise) or a weapon or natural attack ("Spear 70", "Bite 60"), which is a
+ * fighting skill whatever it is called. Anything else returns null: guessing
+ * a heading is how every creature skill came to be stamped "Adventuring". */
+TBE.creatureSkillGroup = function (name, isAttack) {
+  const g = TBE.skillGroup(name);
+  if (g) return g;
+  if (/-wise$/i.test(String(name || ""))) return "Wise";
+  if (isAttack) return "Combat";
+  return null;
+};
+
 /* Expertise ladder: no skill has Ex0 or Ex1 (p.53), so the first step lands on
  * Ex2 and each later one adds 1 to a maximum of Ex4. */
 TBE.raiseExpertise = (cur) => (TBE.num(cur, 0) === 0 ? 2 : Math.min(4, TBE.num(cur, 0) + 1));

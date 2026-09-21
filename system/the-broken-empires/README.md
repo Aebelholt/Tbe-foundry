@@ -32,7 +32,7 @@ Six compendium packs, grouped under one folder in the Compendium tab:
 
 | Pack | Holds |
 |---|---|
-| TBE Tools | the 39 play macros (Attack, Wounds & Recovery, Cast, Extended Roll, Social Encounter, Advancement, Status, Character Wizard, Finish Character, Haggle, Solo Panel...) |
+| TBE Tools | the 40 play macros (Attack, Wounds & Recovery, Cast, Extended Roll, Social Encounter, Advancement, Status, Character Wizard, Finish Character, Haggle, Solo Panel...) |
 | TBE Talents | all 150 Chapter 4 Talents |
 | TBE Weapons, Armor & Shields | the 50 equipment entries |
 | TBE Bestiary | 56 creatures, each with its skills and attacks already attached |

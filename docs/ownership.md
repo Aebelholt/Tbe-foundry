@@ -79,3 +79,4 @@ against the live source.
 - ~~Whether the encumbrance-prefill gap affects all four named macros or a
   subset~~ — checked in v0.19.0: three of the four had the field hardcoded to
   0, Extended Roll had no modifier field at all. Row moved to the table above.
+| Which skill heading a creature's skill sits under | `build_packs.mjs` (and the parked legacy `TBE-Bestiary-Installer.js`) stamped every creature skill `"Adventuring"` and passed `fighting` by hand, ignoring `TBE.SKILL_GROUPS`. Same defect class as NPC generation's, which was fixed earlier, surviving in a second place | `TBE.creatureSkillGroup(name, isAttack)` in `macros/_lib.js`, deferring to `TBE.skillGroup` for the catalogue. `build_packs.mjs` loads the real `_lib.js` rather than copying the table, and throws on an unclassified name. Expertise goes in `system.expertise`, never the name | **Fixed in v0.42.0**, `bestiary_skills_check.mjs`, mutation-tested. Legacy installer left as is (not delivered) |

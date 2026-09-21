@@ -1,3 +1,46 @@
+## Bestiary skills — built in v0.42.0, 2026-09-21
+
+Fixed (the "Bestiary (Ch.18)" item below, plus two defects found doing it):
+- Every creature skill was stamped `group: "Adventuring"`. The group now comes
+  from `TBE.creatureSkillGroup(name, isAttack)` in `_lib.js`: catalogue first,
+  then `-wise` -> Wise, then anything the book prints as an attack -> Combat,
+  else null. `build_packs.mjs` loads the real `_lib.js` and throws on null.
+  `fighting` is derived from the group.
+- Expertise lived in the skill NAME ("Might Ex4", 20 skills). `resolve()` never
+  saw it, and `TBE.allSkills` offered "Might Ex4" at 90 beside an untrained
+  "Might" at 20. Now `system.expertise`.
+- An attack's Expertise ("Broadsword 90 Ex3", 13 attacks) was matched by
+  `attack_header` and discarded. Now captured.
+
+Open, needs `/tmp/tbe.txt` (the extractor reads the book, not bestiary.json):
+- **`parse_bestiary.py` misreads stat blocks that print alternate loadouts
+  ("#1 - Mace 50, Dmg 4 ... #2 - Shortbow 40, ...").** Hobgoblin, Orc and Tical
+  Dondallan Soldier. Their loadout weapons are filed as skills, so they get no
+  weapon Item (the Orc has a Dagger and nothing else), "Parry" is parsed as an
+  attack NAME (Hobgoblin, Tical), and "1H Spear" loses its "1". The Lich's
+  "Touch 65, Dmg 3" is filed the same way. v0.42.0 classifies those skills
+  correctly (Combat, from the book's own attack signature in the raw text),
+  but the missing weapon Items are an extractor fix, not a builder fix.
+- The legacy `TBE-Bestiary-Installer.js` (not delivered) still carries the old
+  hardcoded `mkSkill`. Out of scope while the installer path is parked.
+
+## Export Sheets — built in v0.41.0/v0.41.1, 2026-09-20
+
+- `TBE: Export Sheets`, GM-only, printable sheet per actor or whole world.
+  v0.41.1: listed skill Items only; now `TBE.allSkills(actor)`, the extracted
+  owner of "sheet skills plus the catalogue at 20".
+- `node -c` reports top-level await as an error in a macro; that is a false
+  alarm (Foundry wraps the body in an async block). v0.41.0 wrapped the macro
+  in an IIFE to silence it, which was wrong and has been reverted. Use
+  `syntax_check.mjs`.
+- Risk, not yet a bug: `TBE.LOCATIONS` is an ARRAY in `_lib.js` and an OBJECT
+  in the system's `config.mjs`. Same name, two shapes. Anything that reads one
+  expecting the other breaks silently.
+- Option not built: a party roster page (one sheet, all PCs, summary lines).
+- Recovered 2026-09-21 from the shipped v0.41.1 zip after the session
+  container was reclaimed before a bundle was sent. Every release now ships
+  zip AND bundle.
+
 ## Borrowed from the Tapestry — "Still to choose", built in v0.40.0
 
 Seb shared a standalone TBE character-creation web app (The Tapestry) and
@@ -1506,7 +1549,7 @@ same output raises and nobody has decided yet:
   check it against the book's own move and range numbers before writing any
   code.
 
-## Bestiary (Ch.18) — open, found 2026-09-15 while building adventure content
+## Bestiary (Ch.18) — found 2026-09-15, FIXED in v0.42.0 (see top of file)
 
 - **Every bestiary creature's skills are stamped `group: "Adventuring"`,
   including Dodge, Might and every weapon skill.** `build_bestiary.py`'s

@@ -214,7 +214,7 @@ between them. Instead:
   changelog entry covering the whole batch (the 0.17.0 and 0.18.0 entries
   are the right model — several fixes under one version), update
   `BACKLOG.md`, then build and deliver.
-- Before that delivery: `node -c` every edited macro, run the regression
+- Before that delivery: `node syntax_check.mjs <files>` on every edited macro, run the regression
   suites, and do the player-perspective walk-through this file already
   calls for, especially for anything touching `tbe-character-wizard.js` or
   the Attack/Wounds flow.
@@ -440,7 +440,12 @@ scope at least one pass at the player-facing output itself.
 
 ## Verification before calling anything done
 
-- `node -c <file>.js` on every edited macro (syntax only, fast).
+- `node syntax_check.mjs <file>.js ...` on every edited macro (syntax only,
+  fast). **Not `node -c`**: a macro body runs inside Foundry's async block, so
+  top-level `await` and `return` are legal, and `node -c` parses the file as
+  CommonJS and reports them as errors. v0.41.0 "fixed" that false alarm by
+  wrapping a macro in an IIFE, which is the wrong fix: the macro was never
+  broken. `syntax_check.mjs` wraps the source the way Foundry does.
 - `node simtest.js` — 51-test regression suite (combat/armor mechanics,
   Talents, Extended Roll, Social Encounter). Must stay 51/51.
 - `node magic_check.mjs` — 87 checks over Ch.14: the generated
@@ -612,6 +617,24 @@ scope at least one pass at the player-facing output itself.
   (`this.wp`/`.ll`/`.isDying`/`.sizeIdx`, nothing ever read them) are gone
   from `base-actor.mjs` without breaking the live getters underneath them.
 
+- `node export_check.mjs` — 66 checks over `TBE: Export Sheets`, the GM-only
+  printable sheet for every actor in the world. Read it before changing the
+  sheet's content or `TBE.allSkills`. The first version listed the actor's
+  skill Items and nothing else, so a character printed with two skills; the
+  check that should have caught it asserted a trained skill was PRESENT, which
+  was true of the broken version too. **Assert what must not be absent**: an
+  untrained catalogue skill at 20 appearing is the assertion that fails.
+- `node bestiary_skills_check.mjs` — 41 checks over the Ch.18 creatures'
+  skills, read out of the BUILT `tbe-bestiary` pack (from a copy: opening a
+  LevelDB writes LOCK/LOG files that must never ship). Read it before
+  touching `build_bestiary.py`, the bestiary part of `build_packs.mjs`, or the
+  skill catalogue. Every creature skill used to be stamped `"Adventuring"`
+  with `fighting` passed by hand, and Expertise was glued onto the name
+  ("Might Ex4") where `resolve()` never saw it. The group now comes from
+  `TBE.creatureSkillGroup` in `_lib.js`, which build_packs.mjs loads rather
+  than copies, and a skill name nothing can classify stops the build instead
+  of getting a guessed heading. Carries mutations for the hardcode, a
+  hand-passed `fighting`, the Ex-in-name, and a guessing owner.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

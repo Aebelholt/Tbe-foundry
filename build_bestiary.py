@@ -22,11 +22,24 @@ def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def attack_header(text):
-    """'Hand Axe 50, Dmg 2 (...)' -> ('Hand Axe', 50)"""
-    m = re.match(r"([A-Z][A-Za-z'\-/ ]{1,24}?)\s+(\d{1,3})\s*(?:Ex\d)?\s*[,(]", text)
+    """'Broadsword 90 Ex3, Dmg 4 (...)' -> ('Broadsword', 90, 3)
+
+    The Expertise used to be matched and thrown away, so 13 attacks shipped
+    as if the creature had none (Bandit Lord's Broadsword Ex3, the Werewolf's
+    Claw Ex2) and rolled without the crit range the book gives them."""
+    m = re.match(r"([A-Z][A-Za-z'\-/ ]{1,24}?)\s+(\d{1,3})\s*(?:Ex(\d))?\s*[,(]", text)
     if m:
-        return m.group(1).strip(), int(m.group(2))
-    return None, None
+        return m.group(1).strip(), int(m.group(2)), int(m.group(3)) if m.group(3) else 0
+    return None, None, 0
+
+# A stat block prints an attack as "Name NN[ ExN], Parry/Reach/Dmg/Thrown".
+# Some blocks print a creature's alternate loadouts ("#1 - Mace 50, Dmg 4 ...")
+# or a template's attack (the Lich's "Touch 65, Dmg 3") in a shape the
+# extractor files under skills. Those skills are still fighting skills, and
+# the book text says so: the same signature the attack parser keys on.
+def printed_as_attack(raw, name, value):
+    return bool(re.search(re.escape(name) + r"\s+" + str(value) +
+                          r"(?:\s*Ex\d)?\s*,\s*(?:Parry|Reach|Dmg|Thrown)\b", raw))
 
 def attack_details(text):
     """Pull the CoC7-relevant bits out of a TBE attack line."""
@@ -59,15 +72,16 @@ for c in CREATURES:
     attack_names = set()
     attack_items = []
     for a in c["attacks"]:
-        nm, val = attack_header(a)
+        nm, val, ex = attack_header(a)
         det = attack_details(a)
         if nm:
             attack_names.add(nm)
-            attack_items.append(dict({"name": nm, "value": val, "text": dehyph(a)}, **det))
+            attack_items.append(dict({"name": nm, "value": val, "ex": ex, "text": dehyph(a)}, **det))
         else:
-            attack_items.append(dict({"name": "Attack", "value": None, "text": dehyph(a)}, **det))
+            attack_items.append(dict({"name": "Attack", "value": None, "ex": 0, "text": dehyph(a)}, **det))
 
-    skills = [s for s in c["skills"] if s["name"] not in attack_names]
+    skills = [dict(s, attack=printed_as_attack(c["raw"], s["name"], s["value"]))
+              for s in c["skills"] if s["name"] not in attack_names]
 
     grid_rows = ""
     for a in c["armour"]:

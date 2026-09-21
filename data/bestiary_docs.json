@@ -13,37 +13,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 90
+    "value": 90,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Scimitar",
     "value": 80,
+    "ex": 2,
     "text": "Scimitar 80 Ex2, Dmg 4 + Poison (CL3, CS3, Dis4, T5) + Small Shield (3 AP)",
     "cl": 3,
     "cs": 3,
@@ -58,6 +66,7 @@
    {
     "name": "Shortbow",
     "value": 70,
+    "ex": 0,
     "text": "Shortbow 70, Dmg 2 (CL4, CS5, Dis5, T5) 2H, Range 3",
     "cl": 4,
     "cs": 5,
@@ -126,33 +135,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 35
+    "value": 35,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Hand Axe",
     "value": 50,
+    "ex": 0,
     "text": "Hand Axe 50, Dmg 2 (CL3, CS2, Dis5, T6) + Small Shield (3 AP)",
     "cl": 3,
     "cs": 2,
@@ -221,41 +237,50 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Intimidate",
-    "value": 70
+    "value": 70,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Spear",
     "value": 90,
+    "ex": 0,
     "text": "Spear 90, Parry 70, Reach 1, Dmg 3 + P1 (CL3, CS3, Dis5, T5), Thrown, Range 1",
     "cl": 3,
     "cs": 3,
@@ -270,6 +295,7 @@
    {
     "name": "Broadsword",
     "value": 90,
+    "ex": 3,
     "text": "Broadsword 90 Ex3, Dmg 4 (CL3, CS3, Dis4, T5) + Med Shield (4 AP)",
     "cl": 3,
     "cs": 3,
@@ -338,33 +364,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bearded Axe",
     "value": 80,
+    "ex": 0,
     "text": "Bearded Axe 80, Parry 60, Dmg 4 (CL3, CS2, Dis3, T5) + Med Shield (4 AP)",
     "cl": 3,
     "cs": 2,
@@ -433,41 +466,50 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Intimidate",
-    "value": 60
+    "value": 60,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Spear",
     "value": 70,
+    "ex": 0,
     "text": "Spear 70, Parry 50, Reach 1, Dmg 3 + P1 (CL3, CS3, Dis5, T5), Thrown, Range 1 + Med Shield (4 AP)",
     "cl": 3,
     "cs": 3,
@@ -482,6 +524,7 @@
    {
     "name": "Longbow",
     "value": 70,
+    "ex": 0,
     "text": "Longbow 70, Dmg 3 (CL6, CS5, Dis5, T5), Range 4",
     "cl": 6,
     "cs": 5,
@@ -551,37 +594,45 @@
    {
     "name": "Dodge",
     "value": 50,
-    "ex": 2
+    "ex": 2,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bite",
     "value": 40,
+    "ex": 0,
     "text": "Bite 40, Dmg 3 + Venom (CL3, CS2, Dis3, T3)",
     "cl": 3,
     "cs": 2,
@@ -630,37 +681,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bite",
     "value": 60,
+    "ex": 0,
     "text": "Bite 60, Dmg 4 (CL3, CS2, Dis3, T2)",
     "cl": 3,
     "cs": 2,
@@ -710,37 +769,45 @@
    {
     "name": "Dodge",
     "value": 50,
-    "ex": 2
+    "ex": 2,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Tusks",
     "value": 60,
+    "ex": 0,
     "text": "Tusks 60, Dmg 3 + P2 (CL3, CS3, Dis4, T3)",
     "cl": 3,
     "cs": 3,
@@ -789,37 +856,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 75
+    "value": 75,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Broadsword",
     "value": 50,
+    "ex": 0,
     "text": "Broadsword 50, Dmg 4 (CL3, CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -888,46 +963,56 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Survival",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Track",
     "value": 75,
-    "ex": 2
+    "ex": 2,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 45
+    "value": 45,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Longbow",
     "value": 70,
+    "ex": 0,
     "text": "Longbow 70, Dmg 3 (CL6, CS5, Dis5, T5), 2H, Range 4",
     "cl": 6,
     "cs": 5,
@@ -942,6 +1027,7 @@
    {
     "name": "Whip",
     "value": 65,
+    "ex": 0,
     "text": "Whip 65, Reach 1, Dmg 1 (CL2, CS2, Dis5, T3), cannot parry Broadsword 55, Dmg 4 (CL3, CS3, Dis4, T5)",
     "cl": 2,
     "cs": 2,
@@ -1010,37 +1096,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 65,
+    "ex": 0,
     "text": "Claw 65, Dmg 6 (CL3, CS2, Dis4, T4)",
     "cl": 3,
     "cs": 2,
@@ -1055,6 +1149,7 @@
    {
     "name": "Biting Maw",
     "value": 70,
+    "ex": 0,
     "text": "Biting Maw 70, Dmg 3 + P4 (CL2, CS2)",
     "cl": 2,
     "cs": 2,
@@ -1123,37 +1218,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 85
+    "value": 85,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 60
+    "value": 60,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claws",
     "value": 65,
+    "ex": 2,
     "text": "Claws 65 Ex2, Dmg 3 (CL2, CS3, Dis4, T5)",
     "cl": 2,
     "cs": 3,
@@ -1168,6 +1271,7 @@
    {
     "name": "Sling",
     "value": 70,
+    "ex": 0,
     "text": "Sling 70, Dmg 1 (CL6, CS5, Dis5, T5)",
     "cl": 6,
     "cs": 5,
@@ -1236,33 +1340,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 85
+    "value": 85,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 90
+    "value": 90,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 60
+    "value": 60,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Runesword",
     "value": 120,
+    "ex": 0,
     "text": "Runesword 120, Parry 100, Ex3, Dmg 6 (CL5, CS5, Dis3, T2, DB2) + Large Shield (5 AP)",
     "cl": 5,
     "cs": 5,
@@ -1331,33 +1442,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Mace",
     "value": 50,
+    "ex": 0,
     "text": "Mace 50, Dmg 4 (CL3, CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -1372,6 +1490,7 @@
    {
     "name": "Lt Crossbow",
     "value": 55,
+    "ex": 0,
     "text": "Lt Crossbow 55, Dmg 3 + P1 (CL6, CS5, Dis5, T5), 2H, Range 2, Reload 1 If Godbound: Piety 60, Domains Wrath, Water, Dreams, Magic",
     "cl": 6,
     "cs": 5,
@@ -1440,44 +1559,53 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
     "value": 90,
-    "ex": 4
+    "ex": 4,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 105
+    "value": 105,
+    "attack": false
    },
    {
     "name": "Perception",
     "value": 80,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Willpower",
     "value": 90,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Wit",
-    "value": 65
+    "value": 65,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claws or Bite",
     "value": 95,
+    "ex": 0,
     "text": "Claws or Bite 95, Reach 2, Ex4, Dmg 10 + P3 (CL4, CS5, Dis5, T3)",
     "cl": 4,
     "cs": 5,
@@ -1492,6 +1620,7 @@
    {
     "name": "Tail Sweep",
     "value": 70,
+    "ex": 0,
     "text": "Tail Sweep 70, Reach 3, Dmg 8 + Knockback (DB 3)",
     "cl": 3,
     "cs": 3,
@@ -1540,33 +1669,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 65
+    "value": 65,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Staff",
     "value": 65,
+    "ex": 0,
     "text": "Staff 65, Parry 75, Reach 1, Dmg 4 NL (CL3, CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -1635,37 +1771,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 85
+    "value": 85,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 80
+    "value": 80,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Tree limb arm strike",
     "value": 85,
+    "ex": 2,
     "text": "Tree limb arm strike 85 Ex2, Dmg 6 (CL3, CS3, Dis3, T2); either arm can be used for this attack.",
     "cl": 3,
     "cs": 3,
@@ -1734,33 +1878,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 35
+    "value": 35,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Flame Tendril",
     "value": 65,
+    "ex": 0,
     "text": "Flame Tendril 65, Dmg 3 + special (CL3, CS3, Dis3, T3) 1-0 Flaming Form 0 AP",
     "cl": 3,
     "cs": 3,
@@ -1798,42 +1949,51 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 90
+    "value": 90,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 90
+    "value": 90,
+    "attack": false
    },
    {
     "name": "Willpower",
     "value": 75,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Ice cold touch",
     "value": 70,
+    "ex": 0,
     "text": "Ice cold touch 70, Dmg 3 + P6 (CL2, CS3, Dis4, T5) 1-0 Ghostly Form 0 AP",
     "cl": 2,
     "cs": 3,
@@ -1871,45 +2031,55 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Intimidate",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Law-wise",
-    "value": 70
+    "value": 70,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Broadsword",
     "value": 75,
+    "ex": 2,
     "text": "Broadsword 75 Ex2, Dmg 4 (CL3, CS3, Dis3, T5) + Med Shield (4 AP)",
     "cl": 3,
     "cs": 3,
@@ -1978,37 +2148,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Halberd",
     "value": 50,
+    "ex": 0,
     "text": "Halberd 50, Parry 30, Reach 1, Dmg 6 (CL5, CS5, Dis3, T2), +10 vs mounted, Overbearing (DB2)",
     "cl": 5,
     "cs": 5,
@@ -2077,37 +2255,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Intimidate",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Spear",
     "value": 50,
+    "ex": 0,
     "text": "Spear 50, Parry 30, Reach 1, Dmg 3 + P1 (CL3, CS3, Dis5, T5), Thrown, Range 1",
     "cl": 3,
     "cs": 3,
@@ -2122,6 +2308,7 @@
    {
     "name": "Broadsword",
     "value": 50,
+    "ex": 0,
     "text": "Broadsword 50, Dmg 4 (CL3, CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -2190,38 +2377,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
     "value": 80,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Greatclub",
     "value": 75,
+    "ex": 0,
     "text": "Greatclub 75, Parry 55, Reach 1, Dmg 6 (CL5, CS5, Dis3, T2, ClSh), 2H",
     "cl": 5,
     "cs": 5,
@@ -2290,33 +2485,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 85
+    "value": 85,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 95
+    "value": 95,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Log",
     "value": 85,
+    "ex": 0,
     "text": "Log 85, Parry 65, Ex2, Reach 1, Dmg 8 (CL5, CS4, Dis3, T2)",
     "cl": 5,
     "cs": 4,
@@ -2385,37 +2587,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Bearded Axe",
-    "value": 40
+    "value": 40,
+    "attack": true
    }
   ],
   "attacks": [
    {
     "name": "Parry",
     "value": 20,
+    "ex": 0,
     "text": "Parry 20, Dmg 4 (CL3, CS2, Dis3, T5) + Small Shield (3 AP) #2 - 1",
     "cl": 3,
     "cs": 2,
@@ -2430,6 +2640,7 @@
    {
     "name": "H Spear",
     "value": 45,
+    "ex": 0,
     "text": "H Spear 45, Parry 25, Reach 1, Dmg 3 + P1 (CL3, CS3, Dis5, T5), Thrown, Range 1 + Small Shield (3 AP) #3 - Shortbow 35, Dmg 2 (CL6, CS5, Dis5, T5), 2H, Range 3",
     "cl": 3,
     "cs": 3,
@@ -2498,33 +2709,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Kick",
     "value": 50,
+    "ex": 0,
     "text": "Kick 50, Dmg 4 (CL3, CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -2573,34 +2791,41 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 85
+    "value": 85,
+    "attack": false
    },
    {
     "name": "Endurance",
     "value": 105,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 85
+    "value": 85,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Longsword",
     "value": 90,
+    "ex": 3,
     "text": "Longsword 90 Ex3, Dmg 5 (CL5, CS5, Dis3, T2) + Med Shield (4 AP)",
     "cl": 5,
     "cs": 5,
@@ -2669,41 +2894,50 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Sail/Boat",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 45
+    "value": 45,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bearded Axe",
     "value": 60,
+    "ex": 0,
     "text": "Bearded Axe 60, Parry 40, Dmg 4 (CL3, CS2, Dis3, T5) + Med Shield (4 AP)",
     "cl": 3,
     "cs": 2,
@@ -2718,6 +2952,7 @@
    {
     "name": "Spear",
     "value": 60,
+    "ex": 0,
     "text": "Spear 60, Parry 40, Reach 1, Dmg 3 + P1 (CL3, CS3, Dis5, T5), Thrown, Range 1",
     "cl": 3,
     "cs": 3,
@@ -2786,7 +3021,8 @@
   "skills": [
    {
     "name": "Touch",
-    "value": 65
+    "value": 65,
+    "attack": true
    }
   ],
   "attacks": [],
@@ -2846,38 +3082,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Might",
     "value": 70,
-    "ex": 2
+    "ex": 2,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 90
+    "value": 90,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claws and Teeth",
     "value": 80,
+    "ex": 3,
     "text": "Claws and Teeth 80 Ex3, Dmg 6 + P2 (CL2, CS3, Dis4, T4)",
     "cl": 2,
     "cs": 3,
@@ -2946,41 +3190,50 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Divinity",
-    "value": 60
+    "value": 60,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Staff",
     "value": 55,
+    "ex": 0,
     "text": "Staff 55, Parry 65, Reach 1, Dmg 4 NL (CL3, CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -3049,37 +3302,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Mace",
-    "value": 50
+    "value": 50,
+    "attack": true
    },
    {
     "name": "Shortbow",
-    "value": 40
+    "value": 40,
+    "attack": true
    }
   ],
   "attacks": [
    {
     "name": "Dagger",
     "value": 50,
+    "ex": 0,
     "text": "Dagger 50, Dmg 1 + P5 on Prone or Grappled (CL2, CS2, Dis5, T6), Thrown, Range 0",
     "cl": 2,
     "cs": 2,
@@ -3148,38 +3409,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
     "value": 60,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Intimidate",
-    "value": 70
+    "value": 70,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Battle-Axe",
     "value": 80,
+    "ex": 0,
     "text": "Battle-Axe 80, Parry 60, Dmg 6 (CL5, CS5, Dis3, T2), 2H, ClSh",
     "cl": 5,
     "cs": 5,
@@ -3248,37 +3517,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 30
+    "value": 30,
+    "attack": false
    },
    {
     "name": "Sail/Boat",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Cutlass",
     "value": 50,
+    "ex": 0,
     "text": "Cutlass 50, Dmg 2 (CL2, CS2, Dis5, T6)",
     "cl": 2,
     "cs": 2,
@@ -3293,6 +3570,7 @@
    {
     "name": "Lt Crossbow",
     "value": 40,
+    "ex": 0,
     "text": "Lt Crossbow 40, Dmg 3 + P1 (CL6, CS5, Dis5, T5), 2H, Reload 1, Range 2",
     "cl": 6,
     "cs": 5,
@@ -3361,53 +3639,65 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Sail/Boat",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Deceive",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Intimidate",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Wit",
-    "value": 65
+    "value": 65,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Rapier",
     "value": 75,
+    "ex": 0,
     "text": "Rapier 75, Parry 85, Ex2, Dmg 2 (CL2, CS2, Dis4, T7) + Parrying Dagger (AP 1), Secondary Attack (3 SLs)",
     "cl": 2,
     "cs": 2,
@@ -3476,33 +3766,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 30
+    "value": 30,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bite",
     "value": 50,
+    "ex": 0,
     "text": "Bite 50, Dmg 2 + Infection (CL3, CS3, Dis4, T3)",
     "cl": 3,
     "cs": 3,
@@ -3551,33 +3848,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 65,
+    "ex": 0,
     "text": "Claw 65, Dmg 6 + P2 (CL3, CS3, Dis3, T2)",
     "cl": 3,
     "cs": 3,
@@ -3636,38 +3940,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Ride",
     "value": 80,
-    "ex": 2
+    "ex": 2,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Shortbow",
     "value": 60,
+    "ex": 0,
     "text": "Shortbow 60, Dmg 3 (CL6, CS5, Dis5, T5), 2H, Range 3",
     "cl": 6,
     "cs": 5,
@@ -3682,6 +3994,7 @@
    {
     "name": "Scimitar",
     "value": 50,
+    "ex": 0,
     "text": "Scimitar 50, Dmg 4 (CL3, CS3, Dis4, T5) + Buckler (1 AP)",
     "cl": 3,
     "cs": 3,
@@ -3750,37 +4063,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 10
+    "value": 10,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Pincer",
     "value": 50,
+    "ex": 0,
     "text": "Pincer 50, Dmg 4 (CL2, CS2, Dis4, T4)",
     "cl": 2,
     "cs": 2,
@@ -3795,6 +4116,7 @@
    {
     "name": "Tail Stinger",
     "value": 50,
+    "ex": 0,
     "text": "Tail Stinger 50, Reach 1, Dmg 2 + Poison (CL 3, T3)",
     "cl": 3,
     "cs": 3,
@@ -3843,33 +4165,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 20
+    "value": 20,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Mace",
     "value": 50,
+    "ex": 0,
     "text": "Mace 50, Dmg 4 (CS3, Dis4, T5) + Med Shield (4 AP)",
     "cl": 3,
     "cs": 3,
@@ -3938,33 +4267,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 35
+    "value": 35,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Scimitar",
     "value": 65,
+    "ex": 0,
     "text": "Scimitar 65, Dmg 4 (CS3, Dis4, T5)",
     "cl": 3,
     "cs": 3,
@@ -4043,37 +4379,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 30
+    "value": 30,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 35
+    "value": 35,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Pincer",
     "value": 50,
+    "ex": 0,
     "text": "Pincer 50, Dmg 3 (CL4, CS3, Dis4, T3)",
     "cl": 4,
     "cs": 3,
@@ -4122,37 +4466,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 35
+    "value": 35,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bite",
     "value": 35,
+    "ex": 0,
     "text": "Bite 35, Dmg 2 + Poison (CL2, CS3, Dis5, T5)",
     "cl": 2,
     "cs": 3,
@@ -4201,53 +4553,65 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 30
+    "value": 30,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 30
+    "value": 30,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Insight",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Inspire",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Persuade",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Protocol",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Wit",
-    "value": 65
+    "value": 65,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Rapier",
     "value": 60,
+    "ex": 0,
     "text": "Rapier 60, Dmg 2 (CL2, CS2, Dis4, T7)",
     "cl": 2,
     "cs": 2,
@@ -4316,38 +4680,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Stealth",
     "value": 80,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Fangs",
     "value": 65,
+    "ex": 0,
     "text": "Fangs 65, Dmg 3 + Poison (CL3, CS3, Dis5, T5) Web 70 (Short range, opposed Dodge to evade, see description)",
     "cl": 3,
     "cs": 3,
@@ -4396,33 +4768,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 45
+    "value": 45,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 65,
+    "ex": 0,
     "text": "Claw 65, Dmg 5 + P2 (CL3, CS3, Dis3, T4)",
     "cl": 3,
     "cs": 3,
@@ -4481,23 +4860,28 @@
   "skills": [
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [],
@@ -4526,38 +4910,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
     "value": 80,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 20
+    "value": 20,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 60,
+    "ex": 0,
     "text": "Claw 60, Dmg 6 (CL3, CS3, Dis3, T3, Gr2)",
     "cl": 3,
     "cs": 3,
@@ -4572,6 +4964,7 @@
    {
     "name": "Bite",
     "value": 40,
+    "ex": 2,
     "text": "Bite 40 Ex2, Dmg 3 + P5 (CL2, CS3, Dis5, T5)",
     "cl": 2,
     "cs": 3,
@@ -4620,37 +5013,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Sail/Boat",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Halberd",
-    "value": 50
+    "value": 50,
+    "attack": true
    }
   ],
   "attacks": [
    {
     "name": "Parry",
     "value": 30,
+    "ex": 0,
     "text": "Parry 30, Reach 1, Dmg 6 (CL5, CS5, Dis3, T2), 2H, +10 vs mounted, Overbearing (DB2) #2 - Cutlass 50, Dmg 2 (CL2, CS2, Dis5, T6) + Small Shield (3 AP)",
     "cl": 5,
     "cs": 5,
@@ -4688,37 +5089,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 55
+    "value": 55,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 55
+    "value": 55,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Log Club",
     "value": 65,
+    "ex": 0,
     "text": "Log Club 65, Dmg 6 (CL5, CS5, Dis4, T3)",
     "cl": 5,
     "cs": 5,
@@ -4733,6 +5142,7 @@
    {
     "name": "Claw",
     "value": 60,
+    "ex": 0,
     "text": "Claw 60, Dmg 4 + P1 (CL3, CS3, Dis4, T4)",
     "cl": 3,
     "cs": 3,
@@ -4801,33 +5211,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 35
+    "value": 35,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 80,
+    "ex": 3,
     "text": "Claw 80 Ex3, Dmg 7 (CL3, CS2, Dis4, T2)",
     "cl": 3,
     "cs": 2,
@@ -4842,6 +5259,7 @@
    {
     "name": "Bite",
     "value": 60,
+    "ex": 2,
     "text": "Bite 60 Ex2, Dmg 4 + P3 (CL3, CS3, T4)",
     "cl": 3,
     "cs": 3,
@@ -4890,38 +5308,46 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Willpower",
     "value": 75,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Talons",
     "value": 75,
+    "ex": 2,
     "text": "Talons 75 Ex2, Dmg 4 + P5 (CL2, CS3, Dis4, T5)",
     "cl": 2,
     "cs": 3,
@@ -4990,39 +5416,47 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 70
+    "value": 70,
+    "attack": false
    },
    {
     "name": "Endurance",
     "value": 85,
-    "ex": 2
+    "ex": 2,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Stealth",
     "value": 80,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 50
+    "value": 50,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bite",
     "value": 75,
+    "ex": 2,
     "text": "Bite 75 Ex2, Dmg 4 + Poison (CL3, CS4, Dis3, T3)",
     "cl": 3,
     "cs": 4,
@@ -5072,39 +5506,47 @@
    {
     "name": "Dodge",
     "value": 80,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 75
+    "value": 75,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Endurance",
     "value": 70,
-    "ex": 3
+    "ex": 3,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 80
+    "value": 80,
+    "attack": false
    },
    {
     "name": "Stealth",
     "value": 90,
-    "ex": 4
+    "ex": 4,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 60
+    "value": 60,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 70,
+    "ex": 2,
     "text": "Claw 70 Ex2, Dmg 4 + P3 (CL3, CS2, Dis3, T4)",
     "cl": 3,
     "cs": 2,
@@ -5119,6 +5561,7 @@
    {
     "name": "Bite",
     "value": 80,
+    "ex": 0,
     "text": "Bite 80, Dmg 5 + Special (CL3, CS3, Dis3, T4)",
     "cl": 3,
     "cs": 3,
@@ -5156,37 +5599,45 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 45
+    "value": 45,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 60
+    "value": 60,
+    "attack": false
    },
    {
     "name": "Stealth",
-    "value": 65
+    "value": 65,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 40
+    "value": 40,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Bite",
     "value": 50,
+    "ex": 0,
     "text": "Bite 50, Dmg 3 (CL2, CS2, Dis4, T3)",
     "cl": 2,
     "cs": 2,
@@ -5235,33 +5686,40 @@
   "skills": [
    {
     "name": "Dodge",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Might",
-    "value": 40
+    "value": 40,
+    "attack": false
    },
    {
     "name": "Athletics",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Endurance",
-    "value": 50
+    "value": 50,
+    "attack": false
    },
    {
     "name": "Perception",
-    "value": 35
+    "value": 35,
+    "attack": false
    },
    {
     "name": "Willpower",
-    "value": 20
+    "value": 20,
+    "attack": false
    }
   ],
   "attacks": [
    {
     "name": "Claw",
     "value": 45,
+    "ex": 0,
     "text": "Claw 45, Dmg 1 + Infection (CL3, CS4, Dis3, T5)",
     "cl": 3,
     "cs": 4,
