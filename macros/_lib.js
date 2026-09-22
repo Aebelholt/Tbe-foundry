@@ -221,6 +221,18 @@ TBE.card = function (title, bodyHtml, actor) {
  * legacy standalone pack, where that global does not exist. */
 TBE.MODES = { PUBLIC: "publicroll", PRIVATE: "gmroll", BLIND: "blindroll", SELF: "selfroll" };
 
+/* Which weapons spend ammunition, p.156: "Shooting a ranged weapon that uses
+ * ammunition requires the roll of an Ammo Supply Die after your action."
+ * Bows, crossbows and slings. A throwable weapon (dagger, hand axe, spear,
+ * javelin, throwing knives) is flagged `ranged` because it CAN be thrown, and
+ * that flag used to be read as "shoots": every melee stab with a spear rolled
+ * the Ammo die (the stray d8 on the attack card). */
+TBE.AMMO_WEAPON = /(^|[^a-z])(long|short)?bow(s)?\b|crossbow|(^|[^a-z])sling\b/i;
+TBE.weaponUsesAmmo = (w) => TBE.AMMO_WEAPON.test(String(w?.name ?? "")) || TBE.AMMO_WEAPON.test(String(w?.system?.skillName ?? w?.skillName ?? "").replace(/^missile$/i, ""));
+/* Can be thrown, but is not a missile weapon: whether THIS attack is a throw
+ * is the attacker's choice, asked on the attack dialog. */
+TBE.weaponThrowable = (w) => !TBE.weaponUsesAmmo(w) && !!(w?.system?.ranged ?? w?.ranged);
+
 /* Wait for Dice So Nice to finish animating a posted message's dice, so a
  * follow-up dialog (TBE: Attack's maneuvers) opens after the roll is seen
  * rather than on top of it. Without Dice So Nice there is no animation and
@@ -1836,17 +1848,20 @@ TBE.talentEligibility = function (catalogue, ownedNames, race, allRaces, opts) {
 };
 
 /* ------------------------------------------------------------------ */
-/* Character <-> spreadsheet exchange ("TBE-CSV v1"), for TBE: Sheet   */
-/* Exchange. THE OWNER of the file format: one row per fact,           */
-/*   section, name, value, expertise, note                             */
-/* so Google Sheets can import it into a tab and a character creator   */
-/* sheet can look values up by name, and a block of cells copied back  */
-/* out of Sheets (which pastes as tab-separated) imports as-is.         */
+/* Character <-> sheet exchange. THE OWNER of three formats and the one */
+/* planner and writer they all go through:                              */
+/*   TBE-CSV v1  one row per fact: section, name, value, expertise, note */
+/*   Creator     Vasco Brown's "Character Creator" v0.6.5, its           */
+/*               "Character Sheet" tab downloaded as CSV (read only)     */
+/*   PDF         the official fillable B/W character sheet v13, by its   */
+/*               567 named form fields (filled on export, read on import)*/
+/* Creator and PDF are converted to TBE-CSV rows first, so there is one  */
+/* planner (TBE.sheetCsv.plan) and one writer (TBE.sheetCsv.apply).      */
 /*                                                                      */
 /* Import is conservative on purpose. It never deletes anything (rows   */
 /* missing from the file are reported, not removed), never guesses a    */
 /* skill's category (a name outside the catalogue needs its group in    */
-/* the file, or it is reported and skipped: guessing a heading is the   */
+/* the note, or it is reported and skipped: guessing a heading is the   */
 /* Adventuring bug again), and writes each field separately so one bad  */
 /* value cannot sink the rest.                                          */
 /* ------------------------------------------------------------------ */
@@ -1869,11 +1884,40 @@ TBE.sheetCsv.FIELDS = [
   ["resolve", "system.resolve.max", "int"],
   ["toughness", "system.toughness", "int"],
   ["initiative", "system.initiative", "int"],
+  ["fraying", "system.fraying", "int"],
   ["deity", "system.deity", "text"]
 ];
 TBE.sheetCsv.ITEM_TYPES = ["weapon", "armor", "shield"];
+TBE.sheetCsv.LOC_KEYS = ["head", "body", "rArm", "lArm", "rLeg", "lLeg"];
 
 const _path = (o, p) => p.split(".").reduce((a, k) => (a == null ? a : a[k]), o);
+const _norm = (s) => String(s ?? "").toLowerCase().replace(/^\s*(bind|strand)\s*:\s*/, "").replace(/[^a-z0-9]+/g, "");
+
+/* Spellings other sheets use for the same thing. Only for names that can be
+ * matched no other way; everything else goes through matchName's rules. */
+TBE.sheetCsv.ALIASES = {
+  decieve: "Deceive", slightofhand: "Sleight of Hand", brassknucles: "Brass Knuckles",
+  parryingdager: "Parrying Dagger", replaced: "The Replaced", dimunitive: "Diminutive",
+  marchant: "Merchant", longsword1handed: "Longsword, used 1H", longsword2handed: "Longsword, used 2H",
+  fistskicks: "Fists / Kicks"
+};
+
+/* The one candidate a name means, or null. Exact (ignoring case and
+ * punctuation) first, then an alias, then "X (thrown)" as "X, thrown", then
+ * one part of a "Broadsword / Mace / Scimitar / Flail" style entry. Never a
+ * nearest guess: an unmatched name is reported, not approximated. */
+TBE.sheetCsv.matchName = function (name, candidates) {
+  const n = _norm(name);
+  if (!n) return null;
+  const byNorm = new Map(candidates.map((c) => [_norm(c), c]));
+  if (byNorm.has(n)) return byNorm.get(n);
+  const alias = TBE.sheetCsv.ALIASES[n];
+  if (alias && byNorm.has(_norm(alias))) return byNorm.get(_norm(alias));
+  const thrown = /^(.*)\(thrown\)\s*$/i.exec(String(name));
+  if (thrown && byNorm.has(_norm(thrown[1] + " thrown"))) return byNorm.get(_norm(thrown[1] + " thrown"));
+  const parts = candidates.filter((c) => /\s\/\s/.test(c) && c.split(/\s*\/\s*/).some((p) => _norm(p) === n));
+  return parts.length === 1 ? parts[0] : null;
+};
 
 /* The rows for one actor. Skills come from TBE.allSkills, so the file lists
  * the whole catalogue (untrained at 20, noted), the same answer the printed
@@ -1886,14 +1930,20 @@ TBE.sheetCsv.rowsFor = function (actor) {
     rows.push(["actor", name, v == null ? "" : String(v), "", ""]);
   }
   for (const s of TBE.allSkills(actor)) {
-    rows.push(["skill", s.name, String(s.value), s.expertise ? String(s.expertise) : "",
-      (s.trained ? "" : "untrained") + (s.group && !TBE.skillGroup(s.name) ? (s.trained ? "" : "; ") + "group " + s.group : "")]);
+    const notes = [];
+    if (!s.trained) notes.push("untrained");
+    if (s.savvy) notes.push("savvy");
+    if (s.group && !TBE.skillGroup(s.name)) notes.push("group " + s.group);
+    rows.push(["skill", s.name, String(s.value), s.expertise ? String(s.expertise) : "", notes.join("; ")]);
   }
+  for (const st of TBE.strands(actor)) rows.push(["strand", st.name, String(st.level), "", st.thin ? "thin" : ""]);
   for (const i of actor?.items ?? []) {
     if (i.type === "talent") rows.push(["talent", i.name, String(TBE.num(i.system?.ranks, 1)), "", i.system?.specialization || ""]);
   }
   for (const i of actor?.items ?? []) {
-    if (TBE.sheetCsv.ITEM_TYPES.includes(i.type)) rows.push(["item", i.name, i.type, "", ""]);
+    if (!TBE.sheetCsv.ITEM_TYPES.includes(i.type)) continue;
+    const locs = i.type === "armor" ? TBE.sheetCsv.LOC_KEYS.filter((k) => i.system?.locations?.[k]) : [];
+    rows.push(["item", i.name, i.type, "", locs.length ? "locations " + locs.join(",") : ""]);
   }
   return rows;
 };
@@ -1906,8 +1956,10 @@ TBE.sheetCsv.toCsv = function (rows) {
   return rows.map((r) => r.map(cell).join(",")).join("\r\n") + "\r\n";
 };
 
-/* CSV or TSV (what Google Sheets puts on the clipboard), quoted or not. */
-TBE.sheetCsv.parse = function (text) {
+/* CSV or TSV (what Google Sheets puts on the clipboard), quoted or not.
+ * `keepBlank` keeps empty rows and cells, which a fixed-position layout
+ * (the Creator) needs to count rows by. */
+TBE.sheetCsv.parse = function (text, keepBlank = false) {
   const src = String(text ?? "").replace(/^﻿/, "");
   const first = src.split(/\r?\n/)[0] || "";
   const delim = first.indexOf("\t") > -1 ? "\t" : ",";
@@ -1927,13 +1979,289 @@ TBE.sheetCsv.parse = function (text) {
     } else cell += ch;
   }
   if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
-  return rows.map((r) => r.map((c) => c.trim())).filter((r) => r.some((c) => c !== ""));
+  const trimmed = rows.map((r) => r.map((c) => c.trim()));
+  return keepBlank ? trimmed : trimmed.filter((r) => r.some((c) => c !== ""));
+};
+
+/* Which of the three formats some text or bytes are. */
+TBE.sheetCsv.detect = function (text) {
+  const t = String(text ?? "");
+  if (t.startsWith("%PDF")) return "pdf";
+  const rows = TBE.sheetCsv.parse(t, true);
+  if (rows.some((r) => r[0]?.toLowerCase() === "meta" && r[2] === TBE.sheetCsv.FORMAT)) return "tbe-csv";
+  if (TBE.sheetCsv.creatorCheck(rows).ok) return "creator";
+  return "unknown";
+};
+
+/* ---- Vasco Brown's Character Creator v0.6.5, "Character Sheet" tab ---- */
+/* Fixed cells, pinned by the labels around them: if a later version moves */
+/* anything, the check fails and nothing is read, rather than reading the  */
+/* wrong cells.                                                            */
+const _cell = (rows, ref) => {
+  const m = /^([A-Z]+)(\d+)$/.exec(ref);
+  const col = m[1].split("").reduce((a, ch) => a * 26 + ch.charCodeAt(0) - 64, 0) - 1;
+  return (rows[Number(m[2]) - 1] ?? [])[col] ?? "";
+};
+TBE.sheetCsv.CREATOR_LABELS = {
+  A2: "Name", A3: "Race", A9: "Previous Career", A10: "Size", A20: "Max Resolve", A25: "Death Threshold",
+  A28: "Combat", D28: "Adventuring", G28: "Social", J28: "Lore", M28: "Binds", R28: "Strands",
+  M34: "Language", A41: "Name", R1: "Talents", D23: "Silver Pieces"
+};
+TBE.sheetCsv.creatorCheck = function (rows) {
+  const wrong = Object.entries(TBE.sheetCsv.CREATOR_LABELS)
+    .filter(([ref, label]) => _cell(rows, ref).toLowerCase() !== label.toLowerCase())
+    .map(([ref, label]) => ref + " should read \"" + label + "\" but reads \"" + _cell(rows, ref) + "\"");
+  return { ok: !wrong.length, wrong };
+};
+TBE.sheetCsv.fromCreator = function (rows) {
+  const chk = TBE.sheetCsv.creatorCheck(rows);
+  if (!chk.ok) return { rows: null, problems: ["This does not look like the Character Creator v0.6.5 \"Character Sheet\" tab: " + chk.wrong.slice(0, 3).join("; ")] };
+  const c = (ref) => _cell(rows, ref);
+  const blank = (v) => !v || /^(none|choose one|n\/a\*?)$/i.test(v) || /^_+-wise$/i.test(v);
+  const out = [TBE.sheetCsv.HEADER.slice(), ["meta", "format", TBE.sheetCsv.FORMAT, "1", "from Character Creator v0.6.5"]];
+  const problems = [];
+  const field = (name, v) => { if (!blank(v)) out.push(["actor", name, String(v).trim(), "", ""]); };
+  field("name", c("B2"));
+  const race = TBE.sheetCsv.matchName(c("B3"), ["Human", "Half-Orc", "Dwarf", "Ogre", "Bolg Fiir", "The Replaced"]);
+  if (race) field("race", race); else if (!blank(c("B3"))) problems.push("Race \"" + c("B3") + "\" is not one the system knows.");
+  field("culture", c("B7"));
+  const career = TBE.sheetCsv.matchName(c("B9"), ["Warrior", "Rogue", "Ranger", "Speaker", "Bard", "Civilian", "Loremaster", "Merchant", "Godbound", "Spellweaver"]);
+  field("career", career || c("B9"));
+  const size = TBE.sheetCsv.matchName(c("B10"), ["Minute", "Diminutive", "Tiny", "Little", "Small", "Medium", "Large", "Huge", "Massive", "Gargantuan", "Colossal"]);
+  if (size) field("size", size);
+  field("xp available", c("B11"));
+  field("resolve", c("B20"));
+  field("initiative", c("B21"));
+  field("toughness", c("B24"));
+  field("death threshold", c("B25"));
+  field("silver", c("F23"));
+  field("status", c("F24"));
+  /* Skill blocks: name, %, EX. A trailing "*" is the Creator's Savvy mark. */
+  const skill = (nameRef, pctRef, exRef, group) => {
+    let n = c(nameRef);
+    if (blank(n)) return;
+    const savvy = /\*\s*$/.test(n);
+    n = n.replace(/\*\s*$/, "").trim();
+    const known = TBE.sheetCsv.matchName(n, TBE.SKILL_ALL);
+    const name = known || n;
+    const g = known ? null : (/-wise$/i.test(n) ? "Wise" : group);
+    const notes = [savvy ? "savvy" : "not savvy"];
+    if (g) notes.push("group " + g);
+    out.push(["skill", name, c(pctRef), c(exRef) === "0" ? "" : c(exRef), notes.join("; ")]);
+  };
+  for (let r = 29; r <= 39; r++) {
+    skill("A" + r, "B" + r, "C" + r, "Combat");
+    skill("D" + r, "E" + r, "F" + r, "Adventuring");
+    skill("G" + r, "H" + r, "I" + r, "Social");
+    skill("J" + r, "K" + r, "L" + r, "Lore");
+  }
+  for (let r = 29; r <= 33; r++) skill("M" + r, "P" + r, "Q" + r, "Bind");
+  for (let r = 35; r <= 39; r++) skill("M" + r, "P" + r, "Q" + r, /-wise/i.test(c("M" + r)) ? "Wise" : "Language");
+  for (let r = 29; r <= 38; r++) {
+    const n = c("R" + r).trim(), lvl = c("S" + r);
+    if (n && Number(lvl) > 0) out.push(["strand", n, lvl, "", ""]);
+  }
+  if (Number(c("S39")) > 0) out.push(["skill", "Piety", c("S39"), "", "group Lore"]);
+  for (let r = 2; r <= 21; r++) if (!blank(c("R" + r))) out.push(["talent", c("R" + r).trim(), "1", "", ""]);
+  for (let r = 42; r <= 45; r++) if (!blank(c("A" + r))) out.push(["item", c("A" + r).trim(), "weapon", "", ""]);
+  const armour = {};
+  for (const [ref, loc] of [["J3", "body"], ["O3", "head"], ["J12", "rArm"], ["O12", "lArm"], ["J21", "rLeg"], ["O21", "lLeg"]]) {
+    if (!blank(c(ref))) (armour[c(ref).trim()] ??= []).push(loc);
+  }
+  for (const [name, locs] of Object.entries(armour)) out.push(["item", name, "armor", "", "locations " + locs.join(",")]);
+  if (!blank(c("D7"))) out.push(["item", c("D7").trim(), "shield", "", ""]);
+  return { rows: out, problems };
+};
+
+/* ---- The official fillable B/W character sheet (v13) ---- */
+TBE.sheetPdf = {};
+/* Catalogue skill -> [percent field, expertise field, Savvy checkbox].
+ * The Savvy boxes are numbered down each column of the printed sheet, and
+ * the Lore column prints Craft: Practical ABOVE Craft: Artistic, so this is a
+ * table and not an index into TBE.SKILL_GROUPS. */
+TBE.sheetPdf.SKILLS = {
+  "Dodge": ["dodge_pct", "dodge_ex", "Savvy_1"], "Melee: Light": ["melee_light_pct", "melee_light_ex", "Savvy_2"],
+  "Melee: Medium": ["melee_medium_pct", "melee_medium_ex", "Savvy_3"], "Melee: Heavy": ["melee_heavy_pct", "melee_heavy_ex", "Savvy_4"],
+  "Might": ["might_pct", "might_ex", "Savvy_5"], "Missile": ["missile_pct", "missile_ex", "Savvy_6"], "Thrown": ["thrown_pct", "thrown_ex", "Savvy_7"],
+  "Athletics": ["athletics_pct", "athletics_ex", "Savvy2_1"], "Endurance": ["endurance_pct", "endurance_ex", "Savvy2_2"],
+  "Locks & Traps": ["locks_traps_pct", "locks_traps_ex", "Savvy2_3"], "Perception": ["perception_pct", "perception_ex", "Savvy2_4"],
+  "Ride": ["ride_pct", "ride_ex", "Savvy2_5"], "Sail/Boat": ["sail_boat_pct", "sail_boat_ex", "Savvy2_6"],
+  "Sleight of Hand": ["sleight_of_hand_pct", "sleight_of_hand_ex", "Savvy2_7"], "Stealth": ["stealth_pct", "stealth_ex", "Savvy2_8"],
+  "Survival": ["survival_pct", "survival_ex", "Savvy2_9"], "Track": ["track_pct", "track_ex", "Savvy2_10"],
+  "Willpower": ["willpower_pct", "willpower_ex", "Savvy2_11"],
+  "Deceive": ["deceive_pct", "deceive_ex", "Savvy3_1"], "Insight": ["insight_pct", "insight_ex", "Savvy3_2"],
+  "Inspire": ["inspire_pct", "inspire_ex", "Savvy3_3"], "Intimidate": ["intimidate_pct", "intimidate_ex", "Savvy3_4"],
+  "Perform": ["perform_pct", "perform_ex", "Savvy3_5"], "Persuade": ["persuade_pct", "persuade_ex", "Savvy3_6"],
+  "Protocol": ["protocol_pct", "protocol_ex", "Savvy3_7"], "Seduce": ["seduce_pct", "seduce_ex", "Savvy3_8"], "Wit": ["wit_pct", "wit_ex", "Savvy3_9"],
+  "Ancient Lore": ["ancient_lore_pct", "ancient_lore_ex", "Savvy4_1"], "Arcana": ["arcana_pct", "arcana_ex", "Savvy4_2"],
+  "Commerce": ["commerce_pct", "commerce_ex", "Savvy4_3"], "Common Lore": ["common_lore_pct", "common_lore_ex", "Savvy4_4"],
+  "Craft: Practical": ["craft_practical_pct", "craft_practical_ex", "Savvy4_5"], "Craft: Artistic": ["craft_art_pct", "craft_art_ex", "Savvy4_6"],
+  "Divinity": ["divinity_pct", "divinity_ex", "Savvy4_7"], "Heal": ["heal_pct", "heal_ex", "Savvy4_8"],
+  "Naturewise": ["naturewise_pct", "naturewise_ex", "Savvy4_9"], "Streetwise": ["streetwise_pct", "streetwise_ex", "Savvy4_10"]
+};
+TBE.sheetPdf.BINDS = { Change: ["change_pct", "change_ex", "Savvy5_1"], Conjure: ["conjure_pct", "conjure_ex", "Savvy5_2"],
+  Control: ["control_pct", "control_ex", "Savvy5_3"], Destroy: ["destroy_pct", "destroy_ex", "Savvy5_4"], Witness: ["witness_pct", "witness_ex", "Savvy5_5"] };
+TBE.sheetPdf.LANGUAGES = [["Language_1_name", "language_pct", "language_ex", "Savvy5_6"], ["Language_2_name", "language2_pct", "language2_ex", "Savvy5_7"],
+  ["Language_3_name", "language3_pct", "language3_ex", "Savvy5_8"]];
+/* Three write-in rows: one under Lore, two under the Binds column. */
+TBE.sheetPdf.WISES = [["lore_wise_name", "lore_wise_custom_pct", "lore_wise_custom_ex", "Savvy4_11"],
+  ["bind_wise_1_name", "bind_wise_1_pct", "bind_wise_1_ex", "Savvy5_9"], ["bind_wise_2_name", "bind_wise_2_pct", "bind_wise_2_ex", "Savvy5_10"]];
+TBE.sheetPdf.STRANDS = ["Air", "Beast", "Body", "Earth", "Fire", "Plant", "Spheres", "Spirit", "Thought", "Water"];
+TBE.sheetPdf.LOCS = { head: ["head", "head_imp1", "head"], body: ["body", "body_imp", "body"], rArm: ["right_arm", "right_arm_imp", "rarm"],
+  lArm: ["left_arm", "left_arm_imp", "larm"], rLeg: ["right_leg", "right_leg_imp", "rleg"], lLeg: ["left_leg", "left_leg_imp", "lleg"] };
+
+/* Every field to fill, as { text: {field: string}, check: {field: bool} }.
+ * READS, never derives (the Export Sheets rule): derived numbers come off
+ * the actor, where prepareDerivedData put them. */
+TBE.sheetPdf.fieldsFor = function (actor) {
+  const s = actor?.system ?? {};
+  const text = {}, check = {}, overflow = [];
+  const put = (f, v) => { if (v !== undefined && v !== null && v !== "") text[f] = String(v); };
+  put("name", actor?.name); put("page2_name", actor?.name);
+  put("race", s.race); put("culture", s.culture); put("previous_career", s.career); put("size", s.size);
+  put("xp", s.experience?.available);
+  (s.personalityTraits ?? []).slice(0, 3).forEach((t, i) => put("personality_trait_" + (i + 1), t));
+  const all = TBE.allSkills(actor);
+  const byName = new Map(all.map((x) => [_norm(x.name), x]));
+  const skillOut = (sk, [pct, ex, sv]) => {
+    put(pct, sk.value);
+    if (TBE.num(sk.expertise, 0) >= 2) put(ex, sk.expertise);
+    check[sv] = !!sk.savvy;
+  };
+  for (const [name, f] of Object.entries(TBE.sheetPdf.SKILLS)) { const sk = byName.get(_norm(name)); if (sk) skillOut(sk, f); }
+  for (const b of TBE.binds(actor) ?? []) {
+    const f = TBE.sheetPdf.BINDS[TBE.sheetCsv.matchName(b.name, Object.keys(TBE.sheetPdf.BINDS))];
+    const sk = all.find((x) => _norm(x.name) === _norm(b.name));
+    if (f && sk) skillOut(sk, f); else overflow.push("Bind " + b.name + " " + b.value);
+  }
+  const langs = all.filter((x) => x.group === "Language");
+  langs.forEach((l, i) => { const f = TBE.sheetPdf.LANGUAGES[i]; if (f) { put(f[0], l.name); skillOut(l, f.slice(1)); } else overflow.push("Language " + l.name + " " + l.value); });
+  const wises = all.filter((x) => x.group === "Wise");
+  wises.forEach((w, i) => { const f = TBE.sheetPdf.WISES[i]; if (f) { put(f[0], w.name); skillOut(w, f.slice(1)); } else overflow.push(w.name + " " + w.value); });
+  const piety = all.find((x) => /^piety$/i.test(x.name));
+  if (piety) put("starting_piety_level", piety.value);
+  const strands = TBE.strands(actor) ?? [];
+  TBE.sheetPdf.STRANDS.forEach((n, i) => {
+    const st = strands.find((x) => _norm(x.name) === _norm(n));
+    if (st) { put(n.toLowerCase() + "_level", st.level); check["thin_strand_" + (i + 1)] = !!st.thin; }
+  });
+  put("fraying_points", s.fraying);
+  put("max_resolve", s.resolve?.max); put("initiative", s.initiative); put("init_penalty", s.armorInitPenalty);
+  put("total_initiative", s.initiativeEffective); put("toughness", s.toughness); put("death_threshold", s.deathThreshold?.max);
+  put("lethality_level", s.lethalityLevel); put("total_lethal_wp", s.totalWp);
+  check.shock = !!s.shock;
+  /* Armour and wounds by location. Several pieces covering one location is
+     not legal (p.140: "may not be layered"), so the strongest one is shown. */
+  const armor = (actor?.items ?? []).filter((i) => i.type === "armor" && i.system?.equipped !== false);
+  const wounds = TBE.wounds(actor) ?? {};
+  for (const [key, [p, imp, box]] of Object.entries(TBE.sheetPdf.LOCS)) {
+    const pieces = armor.filter((a) => a.system?.locations?.[key]).sort((a, b) => TBE.num(b.system?.ap, 0) - TBE.num(a.system?.ap, 0));
+    if (pieces[0]) { put(p + "_armor", pieces[0].name); put(p + "_ap", TBE.num(pieces[0].system?.ap, 0)); put(p + "_bulk", pieces[0].system?.bulk); }
+    const w = wounds[key] || {};
+    if (TBE.num(w.wp, 0) > 0) put(p + "_wp_1", w.wp);
+    check[imp] = TBE.num(w.imp, 0) >= 1;
+    check[box + "_INF1"] = !!(w.inf || w.septic);
+  }
+  const shield = (actor?.items ?? []).find((i) => i.type === "shield");
+  if (shield) {
+    put("shield_size", shield.name); put("shield_ap", shield.system?.ap); put("shield_enc", shield.system?.enc);
+    if (typeof shield.system?.shb === "number") put("shield_shb", shield.system.shb);
+  }
+  const weapons = (actor?.items ?? []).filter((i) => i.type === "weapon");
+  weapons.forEach((w, i) => {
+    if (i >= 4) { overflow.push("Weapon " + w.name); return; }
+    const p = "weapon_" + (i + 1) + "_";
+    const sk = byName.get(_norm(w.system?.skillName || w.name));
+    put(p + "name_type", w.name + (w.system?.skillName ? " (" + w.system.skillName + ")" : ""));
+    if (sk) put(p + "att", sk.value);
+    put(p + "dmg", w.system?.dmg); put(p + "cl", w.system?.cl); put(p + "cs", w.system?.cs);
+    put(p + "dis", w.system?.dis); put(p + "t", w.system?.t); put(p + "enc", w.system?.enc);
+    put(p + "notes", [w.system?.ranged ? "Ranged" : "", w.system?.nl ? "NL" : ""].filter(Boolean).join(", "));
+  });
+  const talents = (actor?.items ?? []).filter((i) => i.type === "talent");
+  talents.forEach((t, i) => {
+    const label = t.name + (TBE.num(t.system?.ranks, 1) > 1 ? " x" + TBE.num(t.system.ranks, 1) : "");
+    if (i < 10) put("talent_" + (i + 1), label); else overflow.push("Talent " + label);
+  });
+  const threads = (actor?.items ?? []).filter((i) => i.type === "thread");
+  threads.slice(0, 13).forEach((t, i) => put("thread_" + (i + 1), t.name));
+  const goals = s.goals ?? [];
+  goals.slice(0, 12).forEach((g, i) => {
+    const f = (i < 6 ? "goal_left_" + (i + 1) : "goal_right_" + (i - 5));
+    put(f, g.text); check[f + "_shared"] = g.kind === "shared";
+  });
+  const sup = s.supply ?? {};
+  for (const k of ["gear", "ammo", "rations", "medical"]) if (sup[k]) put("supply_" + k, "d" + sup[k]);
+  put("silver_pieces", s.silver); put("status", s.status);
+  return { text, check, overflow };
+};
+
+/* PDF fields -> TBE-CSV rows, for the one planner. `get(name)` returns the
+ * field's text ("" when empty), `on(name)` whether a box is ticked. */
+TBE.sheetPdf.rowsFrom = function (get, on) {
+  const out = [TBE.sheetCsv.HEADER.slice(), ["meta", "format", TBE.sheetCsv.FORMAT, "1", "from the fillable character sheet PDF"]];
+  const problems = [];
+  const field = (name, f) => { const v = String(get(f) ?? "").trim(); if (v) out.push(["actor", name, v, "", ""]); };
+  field("name", "name"); field("culture", "culture"); field("career", "previous_career");
+  const race = TBE.sheetCsv.matchName(get("race"), ["Human", "Half-Orc", "Dwarf", "Ogre", "Bolg Fiir", "The Replaced"]);
+  if (race) out.push(["actor", "race", race, "", ""]); else if (String(get("race") ?? "").trim()) problems.push("Race \"" + get("race") + "\" is not one the system knows.");
+  const size = TBE.sheetCsv.matchName(get("size"), ["Minute", "Diminutive", "Tiny", "Little", "Small", "Medium", "Large", "Huge", "Massive", "Gargantuan", "Colossal"]);
+  if (size) out.push(["actor", "size", size, "", ""]);
+  field("xp available", "xp"); field("resolve", "max_resolve"); field("initiative", "initiative");
+  field("toughness", "toughness"); field("death threshold", "death_threshold"); field("fraying", "fraying_points");
+  field("silver", "silver_pieces"); field("status", "status");
+  const skill = (name, [pct, ex, sv], group) => {
+    const v = String(get(pct) ?? "").trim();
+    if (!v) return;
+    const notes = [on(sv) ? "savvy" : "not savvy"];
+    if (group) notes.push("group " + group);
+    out.push(["skill", name, v, String(get(ex) ?? "").trim(), notes.join("; ")]);
+  };
+  for (const [name, f] of Object.entries(TBE.sheetPdf.SKILLS)) skill(name, f);
+  for (const [name, f] of Object.entries(TBE.sheetPdf.BINDS)) skill(name, f, "Bind");
+  for (const [nameF, ...f] of TBE.sheetPdf.LANGUAGES) { const n = String(get(nameF) ?? "").trim(); if (n) skill(n, f, "Language"); }
+  for (const [nameF, ...f] of TBE.sheetPdf.WISES) { const n = String(get(nameF) ?? "").trim(); if (n) skill(n, f, "Wise"); }
+  const piety = String(get("starting_piety_level") ?? "").trim();
+  if (Number(piety) > 0) out.push(["skill", "Piety", piety, "", "group Lore"]);
+  TBE.sheetPdf.STRANDS.forEach((n, i) => {
+    const lvl = String(get(n.toLowerCase() + "_level") ?? "").trim();
+    if (Number(lvl) > 0) out.push(["strand", n, lvl, "", on("thin_strand_" + (i + 1)) ? "thin" : ""]);
+  });
+  for (let i = 1; i <= 10; i++) {
+    const t = String(get("talent_" + i) ?? "").trim();
+    if (t) out.push(["talent", t.replace(/\s+x\d+$/i, ""), (/\s+x(\d+)$/i.exec(t) || [0, "1"])[1], "", ""]);
+  }
+  for (let i = 1; i <= 4; i++) {
+    const w = String(get("weapon_" + i + "_name_type") ?? "").trim();
+    if (w) out.push(["item", w.replace(/\s*\([^)]*\)\s*$/, ""), "weapon", "", ""]);
+  }
+  const armour = {};
+  for (const [key, [p]] of Object.entries(TBE.sheetPdf.LOCS)) {
+    const n = String(get(p + "_armor") ?? "").trim();
+    if (n && !/^none$/i.test(n)) (armour[n] ??= []).push(key);
+  }
+  for (const [n, locs] of Object.entries(armour)) out.push(["item", n, "armor", "", "locations " + locs.join(",")]);
+  const sh = String(get("shield_size") ?? "").trim();
+  if (sh && !/^none$/i.test(sh)) out.push(["item", sh, "shield", "", ""]);
+  return { rows: out, problems };
+};
+
+/* pdf-lib ships inside the system (MIT, lib/pdf-lib.esm.min.js) and is only
+ * loaded when a PDF is actually read or filled. */
+TBE.pdfLib = async function () {
+  const id = (typeof game !== "undefined" && game?.system?.id) || "the-broken-empires";
+  let path = "systems/" + id + "/lib/pdf-lib.esm.min.js";
+  /* getRoute honours a hosted world's route prefix; an absolute URL keeps
+     the import from resolving against wherever the macro text came from. */
+  try { if (typeof foundry !== "undefined" && foundry?.utils?.getRoute) path = foundry.utils.getRoute(path); } catch (e) {}
+  const base = (typeof window !== "undefined" && window.location) ? window.location.href : "http://localhost/";
+  return import(new URL(path, base).href);
 };
 
 /* What an import WOULD do, without doing it. Pure: tests run it on plain
  * objects, and the macro shows it to the user before anything is written. */
 TBE.sheetCsv.plan = function (actor, rows) {
-  const plan = { fields: [], skillUpdates: [], skillCreates: [], talents: [], items: [], problems: [], notInFile: [] };
+  const plan = { fields: [], skillUpdates: [], skillCreates: [], strandUpdates: [], strandCreates: [], talents: [], items: [], problems: [], notInFile: [] };
   const body = rows.slice();
   if (body.length && body[0][0]?.toLowerCase() === "section") body.shift();
   const meta = body.find((r) => r[0]?.toLowerCase() === "meta" && r[1]?.toLowerCase() === "format");
@@ -1943,7 +2271,9 @@ TBE.sheetCsv.plan = function (actor, rows) {
   }
   if (TBE.num(meta[3], 0) > TBE.sheetCsv.VERSION) plan.problems.push("File is TBE-CSV v" + meta[3] + "; this system reads v" + TBE.sheetCsv.VERSION + ". Newer rows may be ignored.");
   const fieldByName = Object.fromEntries(TBE.sheetCsv.FIELDS.map((f) => [f[0], f]));
-  const own = new Map((actor?.items ?? []).filter((i) => i.type === "skill").map((i) => [i.name.toLowerCase(), i]));
+  const items = actor?.items ?? [];
+  const own = new Map(items.filter((i) => i.type === "skill").map((i) => [_norm(i.name), i]));
+  const ownStrands = new Map(items.filter((i) => i.type === "strand").map((i) => [_norm(i.name), i]));
   const seenSkills = new Set();
   for (const r of body) {
     const [section, name, value, ex, note] = [r[0]?.toLowerCase(), r[1] ?? "", r[2] ?? "", r[3] ?? "", r[4] ?? ""];
@@ -1964,34 +2294,104 @@ TBE.sheetCsv.plan = function (actor, rows) {
       if (!Number.isInteger(v) || v < 0) { plan.problems.push("Skill " + name + ": \"" + value + "\" is not a skill value, skipped."); continue; }
       const e = ex === "" ? 0 : Number(ex);
       if (!Number.isInteger(e) || e < 0 || e > 4 || e === 1) { plan.problems.push("Skill " + name + ": Expertise \"" + ex + "\" is not 0 or 2-4 (p.53), skipped."); continue; }
-      seenSkills.add(name.toLowerCase());
-      const item = own.get(name.toLowerCase());
+      /* Savvy only changes when the row says so either way. */
+      const savvy = /(^|;)\s*not savvy\s*(;|$)/i.test(note) ? false : /(^|;)\s*savvy\s*(;|$)/i.test(note) ? true : null;
+      seenSkills.add(_norm(name));
+      const item = own.get(_norm(name));
       if (item) {
         const ch = {};
         if (TBE.num(item.system?.value, 0) !== v) ch["system.value"] = v;
         if (TBE.num(item.system?.expertise, 0) !== e) ch["system.expertise"] = e;
+        if (savvy !== null && !!item.system?.savvy !== savvy) ch["system.savvy"] = savvy;
         if (Object.keys(ch).length) plan.skillUpdates.push({ item, name: item.name, changes: ch });
-      } else if (v !== TBE.BASE_SKILL || e > 0) {
+      } else if (v !== TBE.BASE_SKILL || e > 0 || savvy === true) {
         const m = /group\s+([A-Za-z]+)/i.exec(note);
         const group = TBE.skillGroup(name) || (m ? m[1] : null);
         if (!group) { plan.problems.push("Skill " + name + " is not in the catalogue and the row names no group (note \"group Wise\", \"group Language\"...), skipped."); continue; }
-        plan.skillCreates.push({ name, value: v, expertise: e, group, fighting: group === "Combat" });
+        /* Binds are named "Bind: X" on a sheet (TBE.binds strips it). */
+        const itemName = group === "Bind" && !/^bind\s*:/i.test(name) ? "Bind: " + name : name;
+        plan.skillCreates.push({ name: itemName, value: v, expertise: e, group, fighting: group === "Combat", savvy: savvy === true });
       }
+    } else if (section === "strand") {
+      const lvl = Number(value);
+      if (!Number.isInteger(lvl) || lvl < 0) { plan.problems.push("Strand " + name + ": \"" + value + "\" is not a level, skipped."); continue; }
+      const thin = /thin/i.test(note);
+      const item = ownStrands.get(_norm(name));
+      if (item) {
+        const ch = {};
+        if (TBE.num(item.system?.level, 0) !== lvl) ch["system.level"] = lvl;
+        if (!!item.system?.thin !== thin) ch["system.thin"] = thin;
+        if (Object.keys(ch).length) plan.strandUpdates.push({ item, name: item.name, changes: ch });
+      } else plan.strandCreates.push({ name, level: lvl, thin });
     } else if (section === "talent") {
-      if (!(actor?.items ?? []).some((i) => i.type === "talent" && i.name.toLowerCase() === name.toLowerCase())) plan.talents.push({ name, ranks: Math.max(1, TBE.num(value, 1)) });
+      if (!items.some((i) => i.type === "talent" && _norm(i.name) === _norm(name))) plan.talents.push({ name, ranks: Math.max(1, TBE.num(value, 1)) });
     } else if (section === "item") {
       const type = value.toLowerCase();
       if (!TBE.sheetCsv.ITEM_TYPES.includes(type)) { plan.problems.push("Item " + name + ": type \"" + value + "\" is not weapon, armor or shield, skipped."); continue; }
-      if (!(actor?.items ?? []).some((i) => i.type === type && i.name.toLowerCase() === name.toLowerCase())) plan.items.push({ name, type });
+      const lm = /locations\s+([A-Za-z,\s]+)/i.exec(note);
+      const locations = lm ? lm[1].split(/[,\s]+/).filter((k) => TBE.sheetCsv.LOC_KEYS.includes(k)) : [];
+      if (!items.some((i) => i.type === type && _norm(i.name) === _norm(name))) plan.items.push({ name, type, locations });
     } else {
       plan.problems.push("Row \"" + r.join(", ") + "\" has an unknown section, skipped.");
     }
   }
-  for (const [lower, item] of own) if (!seenSkills.has(lower)) plan.notInFile.push(item.name);
+  for (const [n, item] of own) if (!seenSkills.has(n)) plan.notInFile.push(item.name);
   return plan;
 };
 
-TBE.sheetCsv.isEmpty = (p) => !p.fields.length && !p.skillUpdates.length && !p.skillCreates.length && !p.talents.length && !p.items.length;
+TBE.sheetCsv.isEmpty = (p) => !p.fields.length && !p.skillUpdates.length && !p.skillCreates.length &&
+  !(p.strandUpdates?.length) && !(p.strandCreates?.length) && !p.talents.length && !p.items.length;
+
+/* Carry out a plan. Every write goes through TBE.write / TBE.writeItem, and
+ * Talents and gear come from the system's compendiums by name (matchName),
+ * never invented. Returns { done: [...], failed: [...] }. */
+TBE.sheetCsv.apply = async function (actor, plan) {
+  const done = [], failed = [];
+  for (const f of plan.fields) {
+    if (f.path === "name" && actor.name === f.to) continue;
+    const r = await TBE.write(actor, { [f.path]: f.to }, f.label);
+    (r.ok ? done : failed).push(f.label + (r.ok ? "" : ": " + r.notice));
+  }
+  for (const u of [...plan.skillUpdates, ...(plan.strandUpdates ?? [])]) {
+    const r = await TBE.writeItem(u.item, u.changes, u.name);
+    (r.ok ? done : failed).push(u.name + (r.ok ? "" : ": " + r.notice));
+  }
+  const fromPack = async (packId, name, type) => {
+    const pack = game.packs?.get(packId);
+    if (!pack) return null;
+    const idx = Array.from(await pack.getIndex()).filter((e) => !type || e.type === type);
+    const hit = TBE.sheetCsv.matchName(name, idx.map((e) => e.name));
+    if (!hit) return null;
+    const doc = await pack.getDocument(idx.find((e) => e.name === hit)._id);
+    return doc?.toObject?.() ?? null;
+  };
+  const creates = plan.skillCreates.map((s) => ({ name: s.name, type: "skill",
+    system: { value: s.value, expertise: s.expertise, group: s.group, fighting: s.fighting, savvy: !!s.savvy } }));
+  for (const st of plan.strandCreates ?? []) creates.push({ name: st.name, type: "strand", system: { level: st.level, thin: st.thin } });
+  for (const t of plan.talents) {
+    const d = await fromPack("the-broken-empires.tbe-talents", t.name, "talent");
+    if (!d) { failed.push("Talent " + t.name + ": not found in the TBE Talents compendium"); continue; }
+    delete d._id; d.system = Object.assign({}, d.system, { ranks: t.ranks });
+    creates.push(d);
+  }
+  for (const it of plan.items) {
+    const d = await fromPack("the-broken-empires.tbe-equipment", it.name, it.type);
+    if (!d) { failed.push(it.type + " " + it.name + ": not found in the TBE Equipment compendium"); continue; }
+    delete d._id;
+    if (it.type === "armor" && it.locations?.length) {
+      d.system = Object.assign({}, d.system, { locations: Object.fromEntries(TBE.sheetCsv.LOC_KEYS.map((k) => [k, it.locations.includes(k)])) });
+    }
+    creates.push(d);
+  }
+  if (creates.length) {
+    if (!TBE.canWrite(actor)) failed.push(creates.length + " new item(s): you do not own " + actor.name);
+    else {
+      try { await actor.createEmbeddedDocuments("Item", creates); done.push(creates.length + " item(s) added"); }
+      catch (e) { failed.push("adding items: " + (e?.message ?? e)); }
+    }
+  }
+  return { done, failed };
+};
 
 TBE.runMacro = async function (name) {
   let m = game.macros?.getName?.(name);

@@ -28,7 +28,7 @@ const AF = Object.getPrototypeOf(async function () {}).constructor;
 
 const skill = (name, value, fighting = true) => ({ type: "skill", name, system: { value, fighting, expertise: 0 } });
 
-function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuverAnswer = {}, system = true, regions = null, bow = false, attackAnswer = null }) {
+function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuverAnswer = {}, system = true, regions = null, bow = false, spear = false, attackAnswer = null }) {
   const timeline = [];
   const queue = rolls.slice();
   class Roll {
@@ -46,7 +46,10 @@ function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuve
   };
   const attacker = {
     id: "A", name: "Renn", type: "character", isOwner: true,
-    items: bow
+    items: spear
+      ? [skill("Melee: Medium", 80), { type: "weapon", id: "w1", name: "Spear",
+          system: { dmg: 3, skillName: "Melee: Medium", cl: 3, cs: 3, dis: 5, t: 5, ranged: true, carried: "hand" } }]
+      : bow
       ? [skill("Missile", 70), { type: "weapon", id: "w1", name: "Shortbow",
           system: { dmg: 2, skillName: "Missile", cl: 6, cs: 5, dis: 5, t: 5, ranged: true, carried: "hand" } }]
       : [skill("Melee: Medium", 80), { type: "weapon", id: "w1", name: "Broadsword",
@@ -190,7 +193,37 @@ console.log("\n6. Zone Hazards reach the roll");
   check(sword.timeline.some((e) => e.ev === "post" && /Melee: Medium 80/.test(e.content)), "a sword through the same fog is not penalised");
 }
 
-console.log("\n7. Mutation: the old order is caught");
+console.log("\n7. The Ammo Supply Die: only for a shot (p.156)");
+{
+  const melee = world({ rolls: [12, 95, 6, 6, 6], spear: true });
+  await melee.run();
+  const p1 = melee.timeline.find((e) => e.ev === "post");
+  check(p1.rolls === 2 && !/Ammo:/.test(p1.content), "a spear thrust rolls attack and defence only, no Ammo die (the stray d8)", p1.rolls);
+  const dlg = melee.timeline.find((e) => e.ev === "attack dialog");
+  check(/name="thrown"/.test(dlg?.content || ""), "the dialog offers \"Throw it\" for a throwable weapon");
+  const thrown = world({ rolls: [12, 95, 6, 6, 6], spear: true, attackAnswer: { weapon: "0", def: "0", atkMod: "0", defMod: "0", thrown: "on" } });
+  await thrown.run();
+  const p2 = thrown.timeline.find((e) => e.ev === "post");
+  check(p2.rolls === 2 && /Thrown\./.test(p2.content) && !/Ammo:/.test(p2.content), "a thrown spear is a ranged attack but spends no ammunition");
+  const shot = world({ rolls: [12, 95, 6, 6, 6], bow: true, regions: [] });
+  await shot.run();
+  const p3 = shot.timeline.find((e) => e.ev === "post");
+  check(p3.rolls === 3 && /Ammo: ammo d8/.test(p3.content), "a bow shot rolls the Ammo Supply Die", p3.content.slice(0, 200));
+  const cf = world({ rolls: [100, 10, 6], bow: true, regions: [] });
+  await cf.run();
+  check(cf.timeline.some((e) => e.ev === "post" && /unintended target/.test(e.content)), "a ranged critical failure says what the book says (p.156)");
+}
+
+console.log("\n8. Mutation: reading `ranged` as \"shoots\" again is caught");
+{
+  const mutated = COMMAND.replace("if (w.usesAmmo) {", "if (w.ranged) {");
+  check(mutated !== COMMAND, "(sanity) mutation applied");
+  const w = world({ rolls: [12, 95, 6, 6, 6], spear: true, command: mutated });
+  await w.run();
+  check(w.timeline.find((e) => e.ev === "post").rolls === 3, "the mutated macro rolls a d8 on a spear thrust, which section 7 rejects");
+}
+
+console.log("\n9. Mutation: the old order is caught");
 {
   /* Remove the early post: the dialog then opens before anything reaches chat. */
   const mutated = COMMAND.replace(/const rollMsg = await TBE\.say\([\s\S]*?\), rolls\);/, "const rollMsg = null;");

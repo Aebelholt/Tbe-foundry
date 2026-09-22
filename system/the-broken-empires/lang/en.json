@@ -16,6 +16,10 @@
       "ChatPopupSeconds": {
         "Name": "Chat pop-up duration (seconds)",
         "Hint": "How long a new chat card stays on screen as a pop-up while the chat sidebar is closed. Foundry's default is 5. Applies to you only. Foundry V13 and later."
+      },
+      "SheetPdfPath": {
+        "Name": "Blank character sheet PDF",
+        "Hint": "Your copy of the blank fillable character sheet (TBE_RPG_Character_Sheet_BW_Fillable_v13). Upload it anywhere in your Data folder and pick it here; TBE: Sheet Exchange then fills it without asking."
       }
     }
   },

@@ -60,6 +60,7 @@ if (!attacker) {
     return {
       id: i.id, name: i.name, dmg,
       nl: !!s.nl, ranged: !!s.ranged,
+      usesAmmo: TBE.weaponUsesAmmo(i), throwable: TBE.weaponThrowable(i),
       /* Weapon Readiness (p.129): a stored greatsword and a drawn one are not
          equally available, and nothing here used to say so. */
       readiness: TBE.readiness(i), readinessNote: TBE.readinessNote(i),
@@ -178,6 +179,10 @@ if (!attacker) {
       '<div style="font-size:13px">' +
       "<div><b>" + attacker.name + "</b> attacks <b>" + target.name + "</b></div>" +
       '<label style="display:block;margin-top:4px">Weapon: <select name="weapon" style="width:100%">' + wOpts + "</select></label>" +
+      (weapons.some((w) => w.throwable)
+        ? '<label style="display:block"><input type="checkbox" name="thrown"> Throw it (' +
+          weapons.filter((w) => w.throwable).map((w) => w.name).join(", ") + ' can be thrown; leave unticked to strike in melee)</label>'
+        : "") +
       '<label style="display:block">Attack modifier: <input type="number" name="atkMod" value="' + atkEnc.penalty + '" style="width:100%"></label>' +
       TBE.encNote(attacker) +
       TBE.riderNote(attacker) +
@@ -204,7 +209,10 @@ if (!attacker) {
     if (data) {
       const w = weapons[TBE.num(data.weapon, 0)];
       const sizeToHit = sizeFx ? sizeFx.toHit : 0;
-      const isRanged = w.ranged || /bow|sling|crossbow|dart|javelin|throwing/i.test(w.name);
+      /* A shot (bow, crossbow, sling) or a throw the attacker chose. Only a
+         shot spends ammunition (p.156). */
+      const isThrow = w.throwable && data.thrown === "on";
+      const isRanged = w.usesAmmo || isThrow;
       const undefended = data.def === "none" || !legalDef.length;
       const defPick = undefended ? null : legalDef[TBE.num(data.def, 0)] ?? legalDef[0] ?? null;
       const hz = zoneFx
@@ -226,12 +234,12 @@ if (!attacker) {
         rolls.push(dRoll);
       }
 
-      /* A ranged or thrown shot spends ammunition whether it lands or not.
-         Always report, even at 0 -- TBE.rollSupply already handles a depleted
-         stock gracefully ("already exhausted"), so gating this on ammo > 0
-         used to silently skip the one message that's supposed to say "you're
-         out," and the attack proceeded as if ammo were unlimited. */
-      if (isRanged) {
+      /* A shot spends ammunition whether it lands or not (p.156). A thrown
+         dagger or spear does not: it IS the ammunition. Always report, even
+         at 0 -- TBE.rollSupply already handles a depleted stock gracefully
+         ("already exhausted"), so gating this on ammo > 0 used to silently
+         skip the one message that's supposed to say "you're out." */
+      if (w.usesAmmo) {
         const am = await TBE.rollSupply(attacker, "ammo");
         if (am.roll) rolls.push(am.roll);
         var ammoLine = '<div style="font-size:11px;opacity:.85">Ammo: ' + am.text + "</div>";
@@ -263,6 +271,9 @@ if (!attacker) {
         (dRes ? "<div>Defence: <b>" + TBE.face(dRes.roll) + "</b> " + TBE.tag(dRes) + (dRes.success ? ", " + dSL + " SL" : "") + "</div>" : "");
 
       if (typeof ammoLine === "string") body += ammoLine;
+      if (isThrow) body += '<div style="font-size:11px;opacity:.85">Thrown.</div>';
+      if (isRanged && aRes.critFail) body += '<div style="font-size:11px">Critical failure on a ranged attack: it strikes an unintended target that could reasonably be hit; otherwise ' +
+        (w.usesAmmo ? "the Ammo Supply Die drops one step" : "it simply misses") + " (p.156, GM's call).</div>";
       if (tieNote) body += '<div style="font-size:11px;opacity:.8">' + tieNote + "</div>";
       if (!attackerWins) {
         body += '<div style="margin-top:4px;font-weight:bold;color:#6b2b2b">The attack is turned aside.</div>';

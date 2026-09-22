@@ -1,3 +1,19 @@
+## Sheet Exchange formats + Ammo die — built in v0.46.0, 2026-09-22
+
+- Not mapped yet from the PDF: armour penalties, base recovery, rounds
+  dying, resolve track, inventory rows, relationship NPCs, life events,
+  ability score descriptors (no Foundry field for the last three). Wounds
+  export as a location total in the first row; import does not read wounds.
+- Creator import: personality traits, life events, goals, inventory, notes
+  not read. Its "EX 1" is reported (p.53 has no Ex1); ask Vasco what the
+  column means before converting it.
+- Not supported: TBE Char Gen Worksheet, TBE-Sheet Character Worksheet
+  (Google), Enemy Creator WIP (a creature importer is its own feature).
+- pdf-lib loads by dynamic import from systems/<id>/lib. Not yet tried on
+  The Forge, which serves system files from its asset CDN.
+- `TBE.AMMO_WEAPON` classifies by name (bow/crossbow/sling). A weapon field
+  would be better than a name; logged, not built.
+
 ## Zone Hazards + Sheet Exchange — built in v0.45.0, 2026-09-22
 
 - Zone Hazards: attack-side only so far. Not built: Rough prompts on Charge /

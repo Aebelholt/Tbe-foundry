@@ -1,3 +1,43 @@
+# 0.46.0 — 2026-09-22
+
+**The official character sheet, both ways; the Character Creator in; and
+the stray d8 on attacks.**
+
+**TBE: Sheet Exchange** now speaks three formats:
+- **The fillable B/W character sheet (v13).** Export fills it from the
+  actor: identity, every skill with Expertise and its Savvy box, Binds,
+  Languages, -wises, Strands (with the thin box), Piety, Resolve,
+  Initiative (base, armour penalty, total), Toughness, Death Threshold,
+  Lethality Level, armour and wounds by location, shield, four weapons, ten
+  Talents, Threads, goals, Supply Dice, silver and Status. Import reads a
+  filled sheet back onto a character. Whatever does not fit (a fifth weapon,
+  an eleventh Talent) is listed, not dropped silently. The blank sheet is
+  the publisher's, so it is not shipped: the GM sets their copy once under
+  Configure Settings, "Blank character sheet PDF", or picks it each time.
+- **The Character Creator v0.6.5** (Vasco Brown's Google Sheet): download
+  its "Character Sheet" tab as CSV, or copy it from cell A1 and paste. Its
+  spellings ("Decieve", "Slight of Hand", "Longsword (1-handed)") are read
+  as the book's, a trailing * is Savvy, and armour is placed on the
+  locations the sheet puts it. If a later version of the Creator moves its
+  headings, the import refuses rather than reading the wrong cells.
+- **TBE-CSV** as before, now also carrying Savvy and Strands.
+The format is recognised on its own. Every import shows its plan first,
+never deletes, and pulls Talents and gear from the compendiums by name.
+PDF work uses pdf-lib (MIT), shipped in `lib/` and loaded only when used.
+
+**The stray d8 on attacks was the Ammo Supply Die.** Daggers, hand axes,
+spears and javelins are marked as throwable, and TBE: Attack read that as
+"shoots", so a spear thrust rolled the Ammo die. p.156: only "a ranged
+weapon that uses ammunition" rolls it. Now:
+- bows, crossbows and slings roll the Ammo Supply Die;
+- a throwable weapon gets a "Throw it" box on the attack dialog; a throw is
+  a ranged attack (so Obscured applies) but spends no ammunition;
+- a critical failure on a ranged attack says what p.156 says.
+
+New checks: `sheet_exchange_check.mjs` now 63 (a real fill-and-read-back
+of the PDF, the Creator tab, and name matching); `attack_order_check.mjs`
+now 34.
+
 # 0.45.0 — 2026-09-22
 
 **Zone Hazards on the map, and characters to a spreadsheet and back.**

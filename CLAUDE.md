@@ -660,10 +660,15 @@ scope at least one pass at the player-facing output itself.
   verifies every quote and page against the rulebook text (TBE_BOOK, else
   /home/claude/book/rulebook.txt, else /tmp/tbe.txt). Modifiers are OFFERED
   pre-ticked, never forced: "clearly seen" is the GM's ruling.
-- `node sheet_exchange_check.mjs` — 34 checks over `TBE: Sheet Exchange` and
-  its format owner `TBE.sheetCsv` in `_lib.js` (TBE-CSV v1). The SEQUENTIAL
-  claim: export then import the same file plans no change. Import never
-  deletes and never guesses a skill group.
+- `node sheet_exchange_check.mjs` — 63 checks over `TBE: Sheet Exchange` and
+  its owners in `_lib.js`: `TBE.sheetCsv` (TBE-CSV v1, the Character Creator
+  v0.6.5 converter, `matchName`, the one planner and the one writer) and
+  `TBE.sheetPdf` (the fillable B/W sheet v13 field map). The SEQUENTIAL
+  claims: export then import the same CSV plans no change, and fill the real
+  PDF then read it back plans no change. Section 8 needs the blank PDF
+  (TBE_SHEET_PDF); it is the publisher's and is NOT committed. The Creator
+  fixture is `test-fixtures/creator_v065_character_sheet.csv`. Import never
+  deletes, never guesses a skill group, and never approximates a name.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

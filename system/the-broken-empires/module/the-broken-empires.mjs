@@ -211,6 +211,19 @@ Hooks.once('init', function () {
     onChange: (v) => chatPopups.applyChatPopupDuration(v, chatPopups.chatLogClasses())
   });
 
+  /* Where the blank fillable character sheet lives, so TBE: Sheet Exchange
+   * can fill it without asking every time. The PDF is the publisher's, so it
+   * is not shipped with the system: the GM uploads their own copy. */
+  game.settings.register('the-broken-empires', 'sheetPdfPath', {
+    name: 'TBE.Settings.SheetPdfPath.Name',
+    hint: 'TBE.Settings.SheetPdfPath.Hint',
+    scope: 'world',
+    config: true,
+    type: String,
+    filePicker: 'any',
+    default: ''
+  });
+
   // The world's schema version has to exist as a setting before the ready
   // hook can compare against it.
   migration.registerSettings();

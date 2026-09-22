@@ -4,7 +4,7 @@
  * against stub actors. The central claim is SEQUENTIAL (rule 9): export, then
  * import the same file, changes nothing.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 
 let pass = 0, fail = 0;
 const check = (cond, label, extra) => {
@@ -115,7 +115,7 @@ console.log("\n4. The real macro");
     return log;
   };
   const a = renn();
-  const ex = await runMacro({ actor: a, answers: [{ mode: "export", actor: "renn" }] });
+  const ex = await runMacro({ actor: a, answers: [{ mode: "csv", actor: "renn" }] });
   check(ex.saved && ex.saved.type === "text/csv" && /Renn_Kestrel\.tbe\.csv$/.test(ex.saved.name), "export downloads Renn_Kestrel.tbe.csv", ex.saved?.name);
   check(ex.saved?.data === C.toCsv(C.rowsFor(renn())), "the file is exactly what TBE.sheetCsv produces");
 
@@ -142,7 +142,95 @@ console.log("\n4. The real macro");
   check(/own no characters/.test(deny.warn.join()) && !deny.updates.length, "a player who owns nothing is told so, nothing written");
 }
 
-console.log("\n5. Mutation: a planner that guesses a group is caught");
+console.log("\n6. The Character Creator v0.6.5 \"Character Sheet\" tab");
+{
+  const csv = readFileSync("test-fixtures/creator_v065_character_sheet.csv", "utf8");
+  check(C.detect(csv) === "creator", "recognised as the Creator layout");
+  const conv = C.fromCreator(C.parse(csv, true));
+  const rows = conv.rows;
+  const find = (sec, name) => rows.find((r) => r[0] === sec && r[1] === name);
+  check(find("actor", "name")?.[2] === "Dorcan Cairlan" && find("actor", "career")?.[2] === "Ranger", "identity read from B2 / B9");
+  check(find("actor", "death threshold")?.[2] === "20" && find("actor", "silver")?.[2] === "45", "DT 20 and 45 silver");
+  check(find("skill", "Dodge")?.[2] === "55", "Dodge 55");
+  check(find("skill", "Deceive")?.[2] === "25", "\"Decieve\" is read as Deceive", find("skill", "Deceive"));
+  check(find("skill", "Sleight of Hand")?.[2] === "20", "\"Slight of Hand\" is read as Sleight of Hand");
+  check(/(^|; )savvy/.test(find("skill", "Perception")?.[4] || ""), "a trailing * is Savvy (Perception*)", find("skill", "Perception"));
+  check(/not savvy/.test(find("skill", "Dodge")?.[4] || ""), "no * is explicitly not Savvy");
+  check(find("skill", "Locks & Traps")?.[3] === "2", "Expertise column read (Locks & Traps EX 2)");
+  check(find("skill", "Gael")?.[4]?.includes("group Language") && find("skill", "Gael")?.[2] === "70", "Languages carry their group (Gael 70)");
+  check(!rows.some((r) => /n\/a|_+-wise/i.test(r[1])), "placeholder rows (n/a, __-Wise) are not skills");
+  check(find("talent", "Enduring Watch") && find("talent", "On Through the Night"), "Talents from R2:R21");
+  const p = C.plan({ name: "", items: [], system: {} }, rows);
+  check(p.skillCreates.some((x) => x.name === "Dodge" && x.value === 55 && x.group === "Combat"), "plans Dodge 55 onto a new character");
+  check(p.problems.some((x) => /Common Lore.*Expertise "1"/.test(x)), "the Creator's EX 1 (no such thing, p.53) is reported, not guessed", p.problems);
+  const broken = C.parse(csv, true); broken[27][0] = "Fighting";
+  check(C.detect(C.toCsv(broken)) !== "creator" && C.fromCreator(broken).rows === null, "a moved heading (A28) refuses the whole file");
+}
+
+console.log("\n7. Names from other sheets resolve to the compendium, or are reported");
+{
+  const eq = JSON.parse(readFileSync("data/equipment_docs.json", "utf8"));
+  const weapons = eq.weapons.map((w) => w.name);
+  const creatorWeapons = ["Fists/Kicks", "Brass Knucles", "Dagger", "Parrying Dager", "Shortsword", "Cutlass", "Hand Axe", "Cudgel", "Rapier",
+    "Javelin", "Blackjack", "Whip", "Torch", "Broadsword ", "Mace", "Scimitar", "Flail", "Bearded Axe", "Warhammer", "Club", "Staff", "Spear",
+    "Battle-Axe", "Longsword (1-handed)", "Longsword (2-handed)", "Two-Handed Sword", "Longspear/Pike", "Halberd/Bill Hook", "Heavy Flail",
+    "War Staff", "Maul", "Lance", "Sling", "Light Crossbow", "Shortbow", "Longbow", "Heavy Crossbow", "Throwing Knives", "Dagger (thrown)",
+    "Hand Axe (thrown)", "Spear (thrown)", "Javelin (thrown)"];
+  const miss = creatorWeapons.filter((n) => !C.matchName(n, weapons));
+  check(!miss.length, "all 42 Creator weapon names find their compendium weapon", miss);
+  check(C.matchName("Dagger (thrown)", weapons) === "Dagger, thrown" && C.matchName("Mace", weapons) === "Broadsword / Mace / Scimitar / Flail", "thrown and shared entries map exactly");
+  check(C.matchName("Dagger", weapons) === "Dagger", "an exact name wins over a thrown variant");
+  const armor = eq.armor.map((a) => a.name), shields = eq.shields.map((a) => a.name);
+  check(["Padding", "Quilt", "Leather", "Reinforced Leather", "Mail", "Bone", "Scale", "Plate"].every((n) => C.matchName(n, armor)), "Creator armour names");
+  check(["Buckler", "Small Shield", "Medium Shield", "Large Shield"].every((n) => C.matchName(n, shields)), "Creator shield names");
+  check(C.matchName("Vorpal Blade", weapons) === null, "an unknown name is null, never the nearest guess");
+}
+
+console.log("\n8. The fillable character sheet PDF: fill, read back, nothing changes");
+{
+  const pdfPath = [process.env.TBE_SHEET_PDF,
+    "/root/.claude/uploads/00ae96c0-f40b-5382-9bd6-204fa7af46fd/d7ac060d-TBE_RPG_Character_Sheet_BW_Fillable_v13_non-adobe.pdf"]
+    .find((p) => p && existsSync(p));
+  if (!pdfPath) { console.log("  SKIP  no blank sheet PDF (set TBE_SHEET_PDF); the PDF is the publisher's and is not in the repo"); }
+  else {
+    const lib = await import("./system/the-broken-empires/lib/pdf-lib.esm.min.js");
+    const doc = await lib.PDFDocument.load(readFileSync(pdfPath));
+    const form = doc.getForm();
+    const names = new Set(form.getFields().map((f) => f.getName()));
+    const P = TBE.sheetPdf;
+    const every = [...Object.values(P.SKILLS).flat(), ...Object.values(P.BINDS).flat(), ...P.LANGUAGES.flat(), ...P.WISES.flat(),
+      ...P.STRANDS.map((n) => n.toLowerCase() + "_level"), ...P.STRANDS.map((_, i) => "thin_strand_" + (i + 1)),
+      ...Object.values(P.LOCS).flatMap(([p, imp, box]) => [p + "_armor", p + "_ap", p + "_wp_1", imp, box + "_INF1"])];
+    const absent = every.filter((n) => !names.has(n));
+    check(!absent.length, "every field the map names exists in the real PDF (" + every.length + ")", absent);
+    const a = renn();
+    a.items.push({ type: "strand", name: "Fire", system: { level: 2, thin: true } });
+    a.items.push({ type: "skill", name: "Gael", system: { value: 70, group: "Language", expertise: 0 } });
+    a.items.find((i) => i.name === "Perception").system.savvy = true;
+    a.system.wounds = { head: { wp: 0 }, body: { wp: 3, imp: 1 }, rArm: {}, lArm: {}, rLeg: {}, lLeg: {} };
+    TBE.strands = (actor) => (actor.items ?? []).filter((i) => i.type === "strand").map((i) => ({ name: i.name, level: i.system.level, thin: i.system.thin }));
+    const { text, check: boxes } = P.fieldsFor(a);
+    for (const [n, v] of Object.entries(text)) if (names.has(n)) form.getTextField(n).setText(v);
+    for (const [n, on] of Object.entries(boxes)) if (names.has(n)) { const cb = form.getCheckBox(n); on ? cb.check() : cb.uncheck(); }
+    const saved = await doc.save();
+    const back = (await lib.PDFDocument.load(saved)).getForm();
+    const byName = new Map(back.getFields().map((f) => [f.getName(), f]));
+    const get = (n) => { const f = byName.get(n); return f && f.getText ? (f.getText() ?? "") : ""; };
+    const on = (n) => { const f = byName.get(n); return !!(f && f.isChecked && f.isChecked()); };
+    check(get("common_lore_pct") === "70" && get("common_lore_ex") === "2", "Common Lore 70 Ex2 written to the real form");
+    check(on("Savvy2_4") && !on("Savvy2_3"), "Perception's Savvy box (Savvy2_4) ticked, Locks & Traps' not");
+    check(get("body_wp_1") === "3" && on("body_imp"), "Body 3 WP and its impairment box");
+    check(get("fire_level") === "2" && on("thin_strand_5"), "Fire Strand 2, thin");
+    check(get("Language_1_name") === "Gael" && get("language_pct") === "70", "a Language row");
+    const conv = P.rowsFrom(get, on);
+    const p = C.plan(a, conv.rows);
+    const real = p.skillUpdates.concat(p.skillCreates, p.strandUpdates, p.strandCreates, p.fields);
+    check(!real.length && !conv.problems.length, "read back onto the same character: nothing to change", real.map((x) => x.name || x.label));
+    check(p.talents.length === 0 && p.items.length === 0, "Talents and gear already on the sheet are not added twice", p.items);
+  }
+}
+
+console.log("\n9. Mutation: a planner that guesses a group is caught");
 {
   const mutated = LIB.replace("const group = TBE.skillGroup(name) || (m ? m[1] : null);", 'const group = TBE.skillGroup(name) || (m ? m[1] : "Adventuring");');
   check(mutated !== LIB, "(sanity) mutation applied");

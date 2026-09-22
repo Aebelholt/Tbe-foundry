@@ -1,0 +1,78 @@
+Identity,,,Wounds,,,,Body (1-5),,,,,Head (0),,,,,Talents,
+Name,Dorcan Cairlan,,Total Lethal WP,,0,,T?,AP,Armor,Sund,Bulk,T?,AP,Armor,Sund,Bulk,Enduring Watch,
+Race,Human,,Base Recovery,,50,,0,0,NONE,0,0,0,0,NONE,0,0,Travel  Planner,
+Sex,Male,,Shock?,,FALSE,,WP,NL?,Wounds,INF,RB,WP,NL?,Wounds,INF,RB,On Through the Night,
+"Age, Relative",Adult,,Rounds Dying,,,,,FALSE,,,,,FALSE,,,,Ease of Pasage,
+Age in Years,33,,Shield,,,,,FALSE,,,,,FALSE,,,,,
+Cultural Background,"Civilized, Rural",,NONE,,,,,FALSE,,,,,FALSE,,,,,
+Region of Origin,Dunblaine,,Armor Points,,0,,,FALSE,,,,,FALSE,,,,,
+Previous Career,Ranger,,Shield Bash,,0,,,FALSE,,,,,FALSE,,,,,
+Size,Medium,,Encumberance,,0,,Right Arm (6),,,,,Left Arm (7),,,,,,
+XP,0,,Split?,,FALSE,,T?,AP,Armor,Sund,Bulk,T?,AP,Armor,Sund,Bulk,,
+Ability Score,Descriptor,,Armor Penalties,,,,0,0,NONE,0,0,0,0,NONE,0,0,,
+Constitution,Rugged,,Athletics,,0,,WP,NL?,Wounds,INF,RB,WP,NL?,Wounds,INF,RB,,
+Intelligence,Cunning,,Rise from Prone,,0,,,FALSE,,,,,FALSE,,,,,
+Personality Traits,,,Stealth,,0,,,FALSE,,,,,FALSE,,,,,
+CHOOSE ONE,,,Dodge,,0,,,FALSE,,,,,FALSE,,,,,
+CHOOSE ONE,,,Perception,,0,,,FALSE,,,,,FALSE,,,,,
+CHOOSE ONE,,,Resources,,,,,FALSE,,,,,FALSE,,,,,
+Attributes,,,Gear Die,,,,Right Leg (8),,,,,Left Leg (9),,,,,,
+Max Resolve,10,,Ammo Die,,,,T?,AP,Armor,Sund,Bulk,T?,AP,Armor,Sund,Bulk,,
+Initative,11,,Rations Die,,,,0,0,NONE,0,0,0,0,NONE,0,0,,
+Initiative Penalty,0,,Medical Die,,,,WP,NL?,Wounds,INF,RB,WP,NL?,Wounds,INF,RB,,
+Initiative Total,11,,Silver Pieces,,45,,,FALSE,,,,,FALSE,,,,,
+Toughness,2,,Status,,,,,FALSE,,,,,FALSE,,,,,
+Death Threshold,20,,,,,,,FALSE,,,,,FALSE,,,,,
+Lethality Level,7,,,,,,,FALSE,,,,,FALSE,,,,Fraying,
+,,,,,,,,FALSE,,,,,FALSE,,,,Points,
+Combat,%,EX,Adventuring,%,EX,Social,%,EX,Lore,%,EX,Binds,,,%,EX,Strands,Lvl
+Dodge,55,0,Athletics,30,0,Decieve,25,0,Ancient Lore,30,0,Change,,,0,0,Air,0
+Melee: Light,20,0,Endurance,50,0,Insight,50,0,Arcana,25,0,Conjure,,,0,0,Beast,0
+Melee: Medium,50,0,Locks & Traps,60,2,Inspire*,40,0,Commerce,40,0,Control,,,0,0,Body,0
+Melee: Heavy,20,0,Perception*,45,0,Intimidate,20,0,Common Lore*,55,1,Destroy,,,0,0,Earth,0
+Might,25,0,Ride,40,0,Perform,25,0,Craft: Practical,50,0,Witness,,,0,0,Fire,0
+Missile,70,0,Sail/Boat,20,0,Persuade,35,0,Craft: Artistic,20,0,Language,,,%,EX,Plant,0
+Thrown,20,0,Slight of Hand,20,0,Protocol,25,0,Divinity,35,0,Gael*,,,70,0,Spheres,0
+,,,Stealth,40,0,Seduce,25,0,Heal,30,0,Low Vestrian*,,,20,0,Spirit,0
+,,,Survival*,50,0,Wit,30,0,Naturewise,50,3,n/a*,,,20,0,Thought,0
+,,,Track,55,1,,,,Streetwise,20,0,__________-Wise,,,20,0,Water,0
+,,,Willpower,30,0,,,,__________-Wise,20,0,__________-Wise,,,20,0, Starting Piety,0
+Weapons,,,,,,,,,,,,,,,,,,
+Name,Type,ATT,PRY,RCH,DMG,CL,CS,DIS,T,ENC,RNG,Notes,,,,,,
+NONE,,,,,,,,,,,,,,,,,,
+NONE,,,,,,,,,,,,,,,,,,
+NONE,,,,,,,,,,,,,,,,,,
+NONE,,,,,,,,,,,,,,,,,,
+Life Events,,,,,,,,,Relationship NPCs,,,,,,,,,
+Name,Description,,,,,,,,Type,Description,,,,,,,,
+Blightmarked,"Your family were outcasts, due to having unintentionally spread a terrible contagion among your people. What was the nature of that disease? Why did your siblings always believe your family was unjustly blamed? And why have you always been immune to the effects of the sickness? Add +10 to Heal or Insight.",,,,,,,,CHOOSE ONE,,,,,,,,,
+Forbidden Lesson,"You studied the ways of the Weave under the tutelage of a reclusive mentor. One day, you were left alone to observe a summoned entity. The strain tested your mental fortitude as the being attempted to break free. What was the nature of the entity? Did you succeed in holding it at bay, or did it escape? What mark did the encounter leave on you? If you plan to choose the Spellweaver career, add +10 to Bind: Control; if not, add +10 to Willpower or Arcana.",,,,,,,,CHOOSE ONE,,,,,,,,,
+Lover's Lock,"You charmed, distracted, or gained the trust of someone in possession of a valuable item, long enough to lay your hands on it without their notice. What was the item? How did you get away? And what strong emotion do you still feel for the person you decieved? Add +10 to Locks & Traps or Seduce.",,,,,,,,CHOOSE ONE,,,,,,,,,
+Goals,,,,,,,,Shared,Goals,,,,,,,,,Shared
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+Inventory,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Notes,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
