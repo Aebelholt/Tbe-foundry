@@ -1,3 +1,23 @@
+# 0.44.0 — 2026-09-22
+
+**Dice So Nice: attack, defence and Wound Die in their own colours.**
+
+When the GM runs both sides of a fight, every die used to be the GM's colour.
+TBE: Attack now tags its dice by what they are, not who rolled them:
+
+- Attack roll: crimson and brass.
+- Defence roll (and the defender's Endurance roll against Shock): steel blue.
+- Wound Die: bone.
+
+These are Dice So Nice "dice roles", so they can be changed: the GM in Dice
+So Nice's Dice Roles table, each player in their own appearance settings,
+under "The Broken Empires". On an older Dice So Nice without roles the
+colours still apply, as fixed colorsets. Without Dice So Nice nothing
+changes.
+
+New check: `dice_roles_check.mjs` (16); `attack_order_check.mjs` now also
+asserts which colour each die carries (20).
+
 # 0.43.0 — 2026-09-22
 
 **Chat pop-ups linger, and TBE: Attack shows the roll before the maneuvers.**

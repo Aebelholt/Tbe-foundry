@@ -196,12 +196,12 @@ if (!attacker) {
       const def = defPick ? defPick.value + TBE.num(data.defMod, 0) : 0;
       const woundDie = data.d20 === "on" ? 20 : 10;
 
-      const aRoll = await TBE.d100();
+      const aRoll = await TBE.d100("attack");
       const aRes = TBE.resolve(aRoll.total, atk, w.skillExpertise);
       const rolls = [aRoll];
       let dRes = null;
       if (!undefended && defPick) {
-        const dRoll = await TBE.d100();
+        const dRoll = await TBE.d100("defence");
         dRes = TBE.resolve(dRoll.total, def, defPick.expertise);
         rolls.push(dRoll);
       }
@@ -421,6 +421,7 @@ if (!attacker) {
           wounds[schemaLoc].wp += wp;
 
           const wd = await new Roll("1d" + woundDie).evaluate();
+          TBE.tagDice(wd, "wound");
           rolls.push(wd);
           const natTen = wd.total === woundDie;
           const impaired = !natTen && wd.total + toughness <= wounds[schemaLoc].wp;
@@ -443,7 +444,7 @@ if (!attacker) {
             } else if (loc === "Body") {
               const endSkill = actorSkillList(target).filter((s) => /endurance/i.test(s.name))[0];
               if (endSkill) {
-                const eRoll = await TBE.d100();
+                const eRoll = await TBE.d100("defence");
                 rolls.push(eRoll);
                 const eRes = TBE.resolve(eRoll.total, endSkill.value);
                 body += "<div>Body impaired: Endurance " + endSkill.value + " roll <b>" + TBE.face(eRes.roll) + "</b> " + TBE.tag(eRes) + ".</div>";

@@ -46,9 +46,23 @@ TBE.num = (v, d = 0) => {
   return Number.isFinite(n) ? n : d;
 };
 
-TBE.d100 = async function () {
+TBE.d100 = async function (role) {
   const roll = await new Roll("1d100").evaluate();
+  if (role) TBE.tagDice(roll, role);
   return roll;
+};
+
+/* Colour a roll's dice by what the roll IS (attack, defence, wound) so a GM
+ * running both sides of a fight can tell them apart in Dice So Nice. The ids
+ * and the tagging rule are owned by the system (module/helpers/dice-roles.mjs)
+ * and read here at runtime; without the system global nothing is tagged,
+ * rather than guessing ids a second place could drift from. */
+TBE.tagDice = function (roll, key) {
+  const owner = (typeof game !== "undefined" && game?.thebrokenempires?.rules?.diceRoles) || null;
+  if (!owner || !roll) return 0;
+  const id = owner.ROLE[key];
+  if (!id) return 0;
+  return owner.tagRoll(roll, id, game.dice3d);
 };
 
 /* Display "00" for 100, zero-pad 1-9. */

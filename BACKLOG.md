@@ -1,3 +1,25 @@
+## Dice So Nice roles — built in v0.44.0, 2026-09-22
+
+- TBE: Attack tags attack / defence / wound dice (roles tbe-attack,
+  tbe-defence, tbe-wound). Not yet tagged: TBE: Quick Combat (PC vs foes),
+  Opposed Roll, Haggle, the sheet's skill roll. Open question for those: is
+  the split "attack vs defence" or "PC vs opposition"?
+- Checked against Dice So Nice's published API docs and a stub, not yet at a
+  live table.
+
+## Modules looked at, 2026-09-22 (no fork needed for either)
+
+- **Zone Movement** (Hod Publishing, V13+, verified 14.365, system agnostic).
+  Set the scene's grid unit to "zone", draw each zone as a Region with a
+  "Modify Movement Cost" behaviour; the ruler and token drag then count zones.
+  Its optional distance labels are Coriolis range names; leave them off.
+  Configure-only. See the range-band note further down for Alternate Zone
+  Movement, the other candidate.
+- **Data Inspector** (Koboldworks, system agnostic). Read-only view of an
+  actor's roll data, derived data, source data and flags. A GM debugging aid:
+  e.g. confirms a creature's skill now carries system.expertise. Nothing to
+  build.
+
 ## Chat pop-ups and Attack order — built in v0.43.0, 2026-09-22
 
 Seb's request: "make the chat pop up linger, and change the order of the

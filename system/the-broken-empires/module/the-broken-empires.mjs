@@ -15,6 +15,7 @@ import * as visibility from './rules/visibility.mjs';
 import * as permission from './rules/permission.mjs';
 import * as combat from './rules/combat.mjs';
 import * as chatPopups from './helpers/chat-popups.mjs';
+import * as diceRoles from './helpers/dice-roles.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -32,6 +33,8 @@ Hooks.once('init', function () {
      * sheet's own roll button and `TBE.resolve()` in macros/_lib.js both go
      * through this one implementation. */
     rules: {
+      /* Dice So Nice roles (attack / defence / wound); see dice-roles.mjs. */
+      diceRoles: { ROLE: diceRoles.ROLE, tagRoll: diceRoles.tagRoll },
       resolve: resolution.resolve,
       isDoubles: resolution.isDoubles,
       face: resolution.face,
@@ -221,6 +224,12 @@ Hooks.once('init', function () {
  * with the clocks still stranded -- and the next load, seeing a current
  * version, returned before it could notice. migrateAll() runs every stage and
  * commits once, last, only if nothing is outstanding. */
+/* Dice So Nice fires this once its API is up; absent the module it never
+ * fires and nothing here runs. */
+Hooks.once('diceSoNiceReady', (dice3d) => {
+  diceRoles.registerDiceRoles(dice3d, game.system.id);
+});
+
 /* Applied at ready, for every user, before the GM-only migration below. */
 Hooks.once('ready', function () {
   chatPopups.applyChatPopupDuration(

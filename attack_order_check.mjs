@@ -13,6 +13,7 @@
  * die appeared at the very end, in one card.
  */
 import { readFileSync } from "node:fs";
+import * as diceRoles from "./system/the-broken-empires/module/helpers/dice-roles.mjs";
 
 let pass = 0, fail = 0;
 const check = (cond, label, extra) => {
@@ -26,12 +27,12 @@ const AF = Object.getPrototypeOf(async function () {}).constructor;
 
 const skill = (name, value, fighting = true) => ({ type: "skill", name, system: { value, fighting, expertise: 0 } });
 
-function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuverAnswer = {} }) {
+function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuverAnswer = {}, system = true }) {
   const timeline = [];
   const queue = rolls.slice();
   class Roll {
     constructor(formula) { this.formula = formula; }
-    async evaluate() { this.total = queue.length ? queue.shift() : 1; return this; }
+    async evaluate() { this.total = queue.length ? queue.shift() : 1; this.dice = [{ options: {} }]; return this; }
   }
   const wounds = {};
   for (const k of ["head", "body", "rArm", "lArm", "rLeg", "lLeg"]) wounds[k] = { wp: 0, imp: 0, inf: false, septic: false, rb: null };
@@ -55,7 +56,8 @@ function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuve
     applyRollMode(data) { return data; },
     async create(data) {
       const id = "m" + (++msgN);
-      timeline.push({ ev: "post", id, rolls: (data.rolls || []).length, content: data.content });
+      timeline.push({ ev: "post", id, rolls: (data.rolls || []).length, content: data.content,
+        roles: (data.rolls || []).map((r) => r.dice?.[0]?.options?.dsnRole ?? null) });
       return { id };
     }
   };
@@ -63,10 +65,11 @@ function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuve
     user: { id: "U", isGM: true, character: null, targets: new Set([{ actor: target }]) },
     settings: { get: () => "publicroll" },
     dice3d: dsn ? {
+      addRole() {},
       waitFor3DAnimationByMessageID: (id) => dsnHangs ? new Promise(() => {}) :
         new Promise((r) => setTimeout(() => { timeline.push({ ev: "dice done", id }); r(true); }, 20))
     } : undefined,
-    thebrokenempires: undefined
+    thebrokenempires: system ? { rules: { diceRoles: { ROLE: diceRoles.ROLE, tagRoll: diceRoles.tagRoll } } } : undefined
   };
   const foundry = {
     utils: { duplicate: (o) => JSON.parse(JSON.stringify(o)), deepClone: (o) => JSON.parse(JSON.stringify(o)) },
@@ -138,7 +141,21 @@ console.log("\n4. A miss is one card, no maneuver dialog");
   check(!t.some((e) => e.ev === "dialog" && e.title === "Combat Maneuvers"), "no maneuver dialog on a miss");
 }
 
-console.log("\n5. Mutation: the old order is caught");
+console.log("\n5. Dice So Nice colours: attack, defence and Wound Die are told apart");
+{
+  const w = world({ rolls: [12, 95, 6, 6, 6] });
+  await w.run();
+  const posts = w.timeline.filter((e) => e.ev === "post");
+  check(JSON.stringify(posts[0].roles) === JSON.stringify(["tbe-attack", "tbe-defence"]),
+    "roll card: the attack die is tbe-attack, the defence die tbe-defence", posts[0].roles);
+  check(posts[posts.length - 1].roles.includes("tbe-wound"), "outcome card: the Wound Die is tbe-wound", posts[posts.length - 1].roles);
+  const bare = world({ rolls: [12, 95, 6, 6, 6], system: false });
+  await bare.run();
+  check(bare.timeline.filter((e) => e.ev === "post").every((p) => p.roles.every((r) => r === null)),
+    "without the system global nothing is tagged, and the attack still runs");
+}
+
+console.log("\n6. Mutation: the old order is caught");
 {
   /* Remove the early post: the dialog then opens before anything reaches chat. */
   const mutated = COMMAND.replace(/const rollMsg = await TBE\.say\([\s\S]*?\), rolls\);/, "const rollMsg = null;");

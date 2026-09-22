@@ -644,6 +644,12 @@ scope at least one pass at the player-facing output itself.
 - `node chat_popup_check.mjs` — 14 checks over the per-user "Chat pop-up
   duration" setting (`module/helpers/chat-popups.mjs`), which sets
   `ChatLog.NOTIFY_DURATION` only on a class that already has one (V13+).
+- `node dice_roles_check.mjs` — 16 checks over the Dice So Nice roles
+  (attack / defence / wound). The ids and colours have one owner,
+  `module/helpers/dice-roles.mjs`; `TBE.tagDice` in `_lib.js` reads them off
+  `game.thebrokenempires.rules.diceRoles` and tags nothing without it, rather
+  than keeping a copy of the ids. Tag a new roll with `TBE.d100("attack")` or
+  `TBE.tagDice(roll, "wound")`, never with a hand-typed id.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is
