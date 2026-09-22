@@ -1,3 +1,16 @@
+## Chat pop-ups and Attack order — built in v0.43.0, 2026-09-22
+
+Seb's request: "make the chat pop up linger, and change the order of the
+combat maneuvers, so they reveal after the roll finishes".
+- Per-user setting `chatPopupSeconds` (default 15) sets `ChatLog.NOTIFY_DURATION`.
+  Verified against the V13 API docs (NOTIFY_DURATION 5000 ms) and a stubbed
+  class, not yet at a live table. If the pop-up still vanishes at 5 s in V14,
+  the core reads the value somewhere else and the helper needs a second shape.
+- Attack posts the roll card first, awaits `TBE.waitForDice` (Dice So Nice's
+  `waitFor3DAnimationByMessageID`, capped), then asks for maneuvers.
+- Not done, possible follow-up: other two-step macros (Cast, Social Encounter)
+  may have the same "dialog before the dice" shape. Not checked.
+
 ## Bestiary skills — built in v0.42.0, 2026-09-21
 
 Fixed (the "Bestiary (Ch.18)" item below, plus two defects found doing it):

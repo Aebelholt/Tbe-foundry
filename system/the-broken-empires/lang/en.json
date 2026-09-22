@@ -11,6 +11,12 @@
       "Temporary": "Temporary Effects",
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
+    },
+    "Settings": {
+      "ChatPopupSeconds": {
+        "Name": "Chat pop-up duration (seconds)",
+        "Hint": "How long a new chat card stays on screen as a pop-up while the chat sidebar is closed. Foundry's default is 5. Applies to you only. Foundry V13 and later."
+      }
     }
   },
   "TYPES": {

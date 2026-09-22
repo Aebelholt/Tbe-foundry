@@ -1,3 +1,24 @@
+# 0.43.0 — 2026-09-22
+
+**Chat pop-ups linger, and TBE: Attack shows the roll before the maneuvers.**
+
+- **Chat pop-up duration.** New per-user setting under Configure Settings,
+  "Chat pop-up duration (seconds)", default 15 (Foundry's own is 5), range
+  5-120. It sets how long a new chat card stays on screen while the chat
+  sidebar is closed. Foundry V13 and later; V12 has no pop-up pane and is
+  left alone.
+- **Attack order.** On a hit, the attack and defence roll now goes to chat
+  first. The Combat Maneuvers dialog opens once the dice have finished
+  rolling (with Dice So Nice; at once without it), and the outcome card with
+  hit location, maneuvers and Wound Die follows. Before, the dialog opened
+  over a roll nobody had seen yet and every die appeared at the end in one
+  card. The wait is capped at 15 seconds so a stuck animation can never hold
+  the dialog back. A miss is still a single card.
+
+New checks: `attack_order_check.mjs` (17, runs the built macro and asserts
+the order of events, with a mutation restoring the old order) and
+`chat_popup_check.mjs` (14).
+
 # 0.42.0 — 2026-09-21
 
 **Bestiary skills: every creature's Dodge was an Adventuring skill.**

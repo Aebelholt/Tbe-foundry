@@ -635,6 +635,15 @@ scope at least one pass at the player-facing output itself.
   than copies, and a skill name nothing can classify stops the build instead
   of getting a guessed heading. Carries mutations for the hardcode, a
   hand-passed `fighting`, the Ex-in-name, and a guessing owner.
+- `node attack_order_check.mjs` — 17 checks that run the BUILT `TBE: Attack`
+  (from `data/solo_docs.json`) against stubbed Foundry globals and record a
+  timeline. On a hit: the roll card posts, Dice So Nice finishes, THEN the
+  Combat Maneuvers dialog opens, then the outcome card. Read it before moving
+  anything in Attack's flow. Also covers no Dice So Nice, a hung animation
+  (the wait is capped by `TBE.DICE_WAIT_CAP_MS`), and a miss.
+- `node chat_popup_check.mjs` — 14 checks over the per-user "Chat pop-up
+  duration" setting (`module/helpers/chat-popups.mjs`), which sets
+  `ChatLog.NOTIFY_DURATION` only on a class that already has one (V13+).
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

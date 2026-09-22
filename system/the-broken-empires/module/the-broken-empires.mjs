@@ -14,6 +14,7 @@ import * as resolution from './rules/resolution.mjs';
 import * as visibility from './rules/visibility.mjs';
 import * as permission from './rules/permission.mjs';
 import * as combat from './rules/combat.mjs';
+import * as chatPopups from './helpers/chat-popups.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -187,6 +188,19 @@ Hooks.once('init', function () {
     default: { roles: [], streaks: [], troubles: [] }
   });
 
+  /* Per user: how long a chat card lingers as a pop-up when the sidebar is
+   * closed. Foundry's own 5 seconds is too short to read an attack card. */
+  game.settings.register('the-broken-empires', 'chatPopupSeconds', {
+    name: 'TBE.Settings.ChatPopupSeconds.Name',
+    hint: 'TBE.Settings.ChatPopupSeconds.Hint',
+    scope: 'client',
+    config: true,
+    type: Number,
+    range: { min: chatPopups.MIN_SECONDS, max: chatPopups.MAX_SECONDS, step: 1 },
+    default: chatPopups.DEFAULT_SECONDS,
+    onChange: (v) => chatPopups.applyChatPopupDuration(v, chatPopups.chatLogClasses())
+  });
+
   // The world's schema version has to exist as a setting before the ready
   // hook can compare against it.
   migration.registerSettings();
@@ -207,6 +221,12 @@ Hooks.once('init', function () {
  * with the clocks still stranded -- and the next load, seeing a current
  * version, returned before it could notice. migrateAll() runs every stage and
  * commits once, last, only if nothing is outstanding. */
+/* Applied at ready, for every user, before the GM-only migration below. */
+Hooks.once('ready', function () {
+  chatPopups.applyChatPopupDuration(
+    game.settings.get('the-broken-empires', 'chatPopupSeconds'), chatPopups.chatLogClasses());
+});
+
 Hooks.once('ready', async function () {
   if (!game.user?.isGM) return;
   const from = migration.worldVersion();

@@ -207,6 +207,24 @@ TBE.card = function (title, bodyHtml, actor) {
  * legacy standalone pack, where that global does not exist. */
 TBE.MODES = { PUBLIC: "publicroll", PRIVATE: "gmroll", BLIND: "blindroll", SELF: "selfroll" };
 
+/* Wait for Dice So Nice to finish animating a posted message's dice, so a
+ * follow-up dialog (TBE: Attack's maneuvers) opens after the roll is seen
+ * rather than on top of it. Without Dice So Nice there is no animation and
+ * this returns at once. Capped, so a stalled animation can never leave the
+ * attacker without their dialog. */
+TBE.DICE_WAIT_CAP_MS = 15000;
+TBE.waitForDice = async function (msg) {
+  const d3 = (typeof game !== "undefined" && game) ? game.dice3d : null;
+  if (!msg || !msg.id || !d3 || typeof d3.waitFor3DAnimationByMessageID !== "function") return false;
+  try {
+    await Promise.race([
+      d3.waitFor3DAnimationByMessageID(msg.id),
+      new Promise((r) => setTimeout(r, TBE.DICE_WAIT_CAP_MS))
+    ]);
+    return true;
+  } catch (e) { return false; }
+};
+
 TBE.say = async function (content, rolls = [], opts = {}) {
   const data = {
     speaker: ChatMessage.getSpeaker(),

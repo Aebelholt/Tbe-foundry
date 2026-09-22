@@ -327,6 +327,19 @@ if (!attacker) {
           return row;
         }).join("");
 
+        /* The roll goes to chat FIRST, and the maneuver dialog opens only once
+           its dice have finished (Dice So Nice), so the table sees the hit
+           land before anyone chooses what to do with it. The dialog used to
+           open straight after the silent roll, and every die, attack,
+           defence and wound, only appeared at the very end, in one card. The
+           outcome card below carries the rest (maneuvers, wound die). */
+        const rollMsg = await TBE.say(TBE.card("TBE Attack", body +
+          '<div style="margin-top:4px"><b>The attack lands</b>, ' + aSL + " SL, DoS " + dos +
+          ". Choosing maneuvers.</div>"), rolls);
+        await TBE.waitForDice(rollMsg);
+        rolls.length = 0;
+        body = "<div><b>" + attacker.name + "</b>, " + w.name + " vs <b>" + target.name + "</b></div>";
+
         const md = await TBE.prompt(
           "Combat Maneuvers",
           '<div style="font-size:13px"><div>Rolled <b>' + aSL + " SL</b>" + (aRes.crit ? ", critical: two maneuvers allowed" : "") +
