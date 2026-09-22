@@ -1,3 +1,33 @@
+# 0.45.0 — 2026-09-22
+
+**Zone Hazards on the map, and characters to a spreadsheet and back.**
+
+**TBE: Zone Hazards** (new, GM). Mark the scene's Regions with the book's
+Zone Hazards (Ch.10 pp.151-152): Confined, Rough, Obscured, Blocked,
+Damaging (with its fixed damage) and Other. TBE: Attack then reads them:
+- Obscured anywhere on the line between shooter and target (into, out of or
+  through): -20 to a ranged attack, p.151.
+- Confined: -20 to Dodge and Melee: Heavy, for whichever side is standing in
+  it, p.151.
+- Both are offered pre-ticked on the attack dialog and apply only to the kind
+  of roll the book names (a sword through fog is not penalised). Untick one
+  when the fiction says otherwise, e.g. the target can be clearly seen. The
+  card says which applied and cites the page.
+- Rough, Blocked, Damaging and Other show as reminders on the attack dialog.
+Regions are the same zones Zone Movement counts, so one drawing does both.
+
+**TBE: Sheet Exchange** (new). Export a character to a .csv (Google Sheets:
+File > Import), or import one back, from a file or cells pasted straight out
+of Google Sheets. One row per fact: section, name, value, expertise, note.
+Import shows every change before writing, never deletes anything, pulls
+Talents and gear from the compendiums by name, reports whatever it could not
+place, and never guesses a skill's category (a -wise needs "group Wise" in
+its note, which the export writes for you).
+
+New checks: `zones_check.mjs` (42; every hazard quote verified against the
+rulebook text and its page), `sheet_exchange_check.mjs` (34; export then
+import changes nothing), `attack_order_check.mjs` now 27.
+
 # 0.44.0 — 2026-09-22
 
 **Dice So Nice: attack, defence and Wound Die in their own colours.**

@@ -239,6 +239,31 @@ TBE.waitForDice = async function (msg) {
   } catch (e) { return false; }
 };
 
+/* Zone Hazards (Ch.10 pp.151-152) are owned by the system
+ * (module/rules/zones.mjs). Null without it: no hazard is ever guessed. */
+TBE.zones = function () {
+  return (typeof game !== "undefined" && game?.thebrokenempires?.rules?.zones) || null;
+};
+
+/* What the zones mean for an attack between two tokens on the current scene,
+ * or null when there is no owner, no scene, or no token to place. */
+TBE.attackHazards = function (attackerToken, targetToken) {
+  const Z = TBE.zones();
+  const scene = (typeof canvas !== "undefined" && canvas) ? canvas.scene : null;
+  if (!Z || !scene || !attackerToken || !targetToken) return null;
+  const regions = Array.from(scene.regions ?? []);
+  if (!regions.length) return null;
+  const pt = (t) => {
+    const c = t.center ?? { x: (t.document?.x ?? t.x ?? 0), y: (t.document?.y ?? t.y ?? 0) };
+    return { x: c.x, y: c.y, elevation: t.document?.elevation ?? t.elevation ?? 0 };
+  };
+  return Z.attackHazards({
+    regions, inside: Z.insideRegion,
+    attacker: pt(attackerToken), target: pt(targetToken),
+    attackerName: attackerToken.name ?? attackerToken.actor?.name, targetName: targetToken.name ?? targetToken.actor?.name
+  });
+};
+
 TBE.say = async function (content, rolls = [], opts = {}) {
   const data = {
     speaker: ChatMessage.getSpeaker(),
@@ -1809,6 +1834,164 @@ TBE.talentEligibility = function (catalogue, ownedNames, race, allRaces, opts) {
   };
   return { blockedReason, missingPrereq, catalogueNames, stripNegation, atRankCap, rankState };
 };
+
+/* ------------------------------------------------------------------ */
+/* Character <-> spreadsheet exchange ("TBE-CSV v1"), for TBE: Sheet   */
+/* Exchange. THE OWNER of the file format: one row per fact,           */
+/*   section, name, value, expertise, note                             */
+/* so Google Sheets can import it into a tab and a character creator   */
+/* sheet can look values up by name, and a block of cells copied back  */
+/* out of Sheets (which pastes as tab-separated) imports as-is.         */
+/*                                                                      */
+/* Import is conservative on purpose. It never deletes anything (rows   */
+/* missing from the file are reported, not removed), never guesses a    */
+/* skill's category (a name outside the catalogue needs its group in    */
+/* the file, or it is reported and skipped: guessing a heading is the   */
+/* Adventuring bug again), and writes each field separately so one bad  */
+/* value cannot sink the rest.                                          */
+/* ------------------------------------------------------------------ */
+TBE.sheetCsv = {};
+TBE.sheetCsv.FORMAT = "TBE-CSV";
+TBE.sheetCsv.VERSION = 1;
+TBE.sheetCsv.HEADER = ["section", "name", "value", "expertise", "note"];
+/* The actor fields the file carries: [row name, document path, kind]. */
+TBE.sheetCsv.FIELDS = [
+  ["name", "name", "text"],
+  ["race", "system.race", "text"],
+  ["culture", "system.culture", "text"],
+  ["career", "system.career", "text"],
+  ["size", "system.size", "text"],
+  ["silver", "system.silver", "int"],
+  ["status", "system.status", "int"],
+  ["xp available", "system.experience.available", "int"],
+  ["xp earned", "system.experience.earned", "int"],
+  ["death threshold", "system.deathThreshold.max", "int"],
+  ["resolve", "system.resolve.max", "int"],
+  ["toughness", "system.toughness", "int"],
+  ["initiative", "system.initiative", "int"],
+  ["deity", "system.deity", "text"]
+];
+TBE.sheetCsv.ITEM_TYPES = ["weapon", "armor", "shield"];
+
+const _path = (o, p) => p.split(".").reduce((a, k) => (a == null ? a : a[k]), o);
+
+/* The rows for one actor. Skills come from TBE.allSkills, so the file lists
+ * the whole catalogue (untrained at 20, noted), the same answer the printed
+ * sheet gives. */
+TBE.sheetCsv.rowsFor = function (actor) {
+  const rows = [TBE.sheetCsv.HEADER.slice()];
+  rows.push(["meta", "format", TBE.sheetCsv.FORMAT, String(TBE.sheetCsv.VERSION), ""]);
+  for (const [name, path] of TBE.sheetCsv.FIELDS) {
+    const v = _path(actor, path);
+    rows.push(["actor", name, v == null ? "" : String(v), "", ""]);
+  }
+  for (const s of TBE.allSkills(actor)) {
+    rows.push(["skill", s.name, String(s.value), s.expertise ? String(s.expertise) : "",
+      (s.trained ? "" : "untrained") + (s.group && !TBE.skillGroup(s.name) ? (s.trained ? "" : "; ") + "group " + s.group : "")]);
+  }
+  for (const i of actor?.items ?? []) {
+    if (i.type === "talent") rows.push(["talent", i.name, String(TBE.num(i.system?.ranks, 1)), "", i.system?.specialization || ""]);
+  }
+  for (const i of actor?.items ?? []) {
+    if (TBE.sheetCsv.ITEM_TYPES.includes(i.type)) rows.push(["item", i.name, i.type, "", ""]);
+  }
+  return rows;
+};
+
+TBE.sheetCsv.toCsv = function (rows) {
+  const cell = (c) => {
+    const s = String(c ?? "");
+    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+  return rows.map((r) => r.map(cell).join(",")).join("\r\n") + "\r\n";
+};
+
+/* CSV or TSV (what Google Sheets puts on the clipboard), quoted or not. */
+TBE.sheetCsv.parse = function (text) {
+  const src = String(text ?? "").replace(/^﻿/, "");
+  const first = src.split(/\r?\n/)[0] || "";
+  const delim = first.indexOf("\t") > -1 ? "\t" : ",";
+  const rows = [];
+  let row = [], cell = "", q = false;
+  for (let i = 0; i < src.length; i++) {
+    const ch = src[i];
+    if (q) {
+      if (ch === '"' && src[i + 1] === '"') { cell += '"'; i++; }
+      else if (ch === '"') q = false;
+      else cell += ch;
+    } else if (ch === '"' && cell === "") q = true;
+    else if (ch === delim) { row.push(cell); cell = ""; }
+    else if (ch === "\n" || ch === "\r") {
+      if (ch === "\r" && src[i + 1] === "\n") i++;
+      row.push(cell); rows.push(row); row = []; cell = "";
+    } else cell += ch;
+  }
+  if (cell !== "" || row.length) { row.push(cell); rows.push(row); }
+  return rows.map((r) => r.map((c) => c.trim())).filter((r) => r.some((c) => c !== ""));
+};
+
+/* What an import WOULD do, without doing it. Pure: tests run it on plain
+ * objects, and the macro shows it to the user before anything is written. */
+TBE.sheetCsv.plan = function (actor, rows) {
+  const plan = { fields: [], skillUpdates: [], skillCreates: [], talents: [], items: [], problems: [], notInFile: [] };
+  const body = rows.slice();
+  if (body.length && body[0][0]?.toLowerCase() === "section") body.shift();
+  const meta = body.find((r) => r[0]?.toLowerCase() === "meta" && r[1]?.toLowerCase() === "format");
+  if (!meta || meta[2] !== TBE.sheetCsv.FORMAT) {
+    plan.problems.push("This is not a TBE-CSV file (no \"meta, format, TBE-CSV\" row). Export a character first to get the layout.");
+    return plan;
+  }
+  if (TBE.num(meta[3], 0) > TBE.sheetCsv.VERSION) plan.problems.push("File is TBE-CSV v" + meta[3] + "; this system reads v" + TBE.sheetCsv.VERSION + ". Newer rows may be ignored.");
+  const fieldByName = Object.fromEntries(TBE.sheetCsv.FIELDS.map((f) => [f[0], f]));
+  const own = new Map((actor?.items ?? []).filter((i) => i.type === "skill").map((i) => [i.name.toLowerCase(), i]));
+  const seenSkills = new Set();
+  for (const r of body) {
+    const [section, name, value, ex, note] = [r[0]?.toLowerCase(), r[1] ?? "", r[2] ?? "", r[3] ?? "", r[4] ?? ""];
+    if (!name || section === "meta") continue;
+    if (section === "actor") {
+      const f = fieldByName[name.toLowerCase()];
+      if (!f) { plan.problems.push("Unknown actor field \"" + name + "\", skipped."); continue; }
+      let v = value;
+      if (f[2] === "int") {
+        if (value === "") continue;
+        v = Number(value);
+        if (!Number.isInteger(v)) { plan.problems.push(name + ": \"" + value + "\" is not a whole number, skipped."); continue; }
+      }
+      const cur = _path(actor, f[1]);
+      if (String(cur ?? "") !== String(v)) plan.fields.push({ label: name, path: f[1], from: cur, to: v });
+    } else if (section === "skill") {
+      const v = Number(value);
+      if (!Number.isInteger(v) || v < 0) { plan.problems.push("Skill " + name + ": \"" + value + "\" is not a skill value, skipped."); continue; }
+      const e = ex === "" ? 0 : Number(ex);
+      if (!Number.isInteger(e) || e < 0 || e > 4 || e === 1) { plan.problems.push("Skill " + name + ": Expertise \"" + ex + "\" is not 0 or 2-4 (p.53), skipped."); continue; }
+      seenSkills.add(name.toLowerCase());
+      const item = own.get(name.toLowerCase());
+      if (item) {
+        const ch = {};
+        if (TBE.num(item.system?.value, 0) !== v) ch["system.value"] = v;
+        if (TBE.num(item.system?.expertise, 0) !== e) ch["system.expertise"] = e;
+        if (Object.keys(ch).length) plan.skillUpdates.push({ item, name: item.name, changes: ch });
+      } else if (v !== TBE.BASE_SKILL || e > 0) {
+        const m = /group\s+([A-Za-z]+)/i.exec(note);
+        const group = TBE.skillGroup(name) || (m ? m[1] : null);
+        if (!group) { plan.problems.push("Skill " + name + " is not in the catalogue and the row names no group (note \"group Wise\", \"group Language\"...), skipped."); continue; }
+        plan.skillCreates.push({ name, value: v, expertise: e, group, fighting: group === "Combat" });
+      }
+    } else if (section === "talent") {
+      if (!(actor?.items ?? []).some((i) => i.type === "talent" && i.name.toLowerCase() === name.toLowerCase())) plan.talents.push({ name, ranks: Math.max(1, TBE.num(value, 1)) });
+    } else if (section === "item") {
+      const type = value.toLowerCase();
+      if (!TBE.sheetCsv.ITEM_TYPES.includes(type)) { plan.problems.push("Item " + name + ": type \"" + value + "\" is not weapon, armor or shield, skipped."); continue; }
+      if (!(actor?.items ?? []).some((i) => i.type === type && i.name.toLowerCase() === name.toLowerCase())) plan.items.push({ name, type });
+    } else {
+      plan.problems.push("Row \"" + r.join(", ") + "\" has an unknown section, skipped.");
+    }
+  }
+  for (const [lower, item] of own) if (!seenSkills.has(lower)) plan.notInFile.push(item.name);
+  return plan;
+};
+
+TBE.sheetCsv.isEmpty = (p) => !p.fields.length && !p.skillUpdates.length && !p.skillCreates.length && !p.talents.length && !p.items.length;
 
 TBE.runMacro = async function (name) {
   let m = game.macros?.getName?.(name);

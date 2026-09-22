@@ -187,6 +187,8 @@ const MACROS = [
   ["TBE: Chase", "tbe-chase.js", "icons/svg/wing.svg"],
   ["TBE: Loadout", "tbe-loadout.js", "icons/svg/shield.svg"],
   ["TBE: Export Sheets", "tbe-export-sheets.js", "icons/svg/book.svg"],
+  ["TBE: Zone Hazards", "tbe-zone-hazards.js", "icons/svg/hazard.svg"],
+  ["TBE: Sheet Exchange", "tbe-sheet-exchange.js", "icons/svg/down.svg"],
   ["TBE: Status", "tbe-status.js", "icons/svg/aura.svg"],
   ["TBE: Session Log", "tbe-log.js", "icons/svg/book.svg"],
   ["TBE: Solo Panel", "tbe-solo-panel.js", "icons/svg/dice-target.svg"],

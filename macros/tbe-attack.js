@@ -161,6 +161,19 @@ if (!attacker) {
     const dOpts = legalDef.map((s, i) => '<option value="' + i + '">' + s.name + " (" + s.value + TBE.expertiseTag(s.expertise) + ")</option>").join("") +
       '<option value="none">Undefended (surprised)</option>';
 
+    /* Zone Hazards (p.151): offered pre-ticked, applied only if the chosen
+       weapon and defence are the kind the hazard names. The GM unticks one
+       when the fiction says otherwise (the target is clearly seen). */
+    const attackerToken = canvas.tokens?.controlled?.[0] ?? null;
+    const zoneFx = TBE.attackHazards(attackerToken, targetToken);
+    const zoneHtml = zoneFx && (zoneFx.mods.length || zoneFx.notes.length)
+      ? '<div style="font-size:12px;margin-top:4px;padding:4px;border:1px dashed #7a6a4f;border-radius:4px"><b>Zone hazards</b>' +
+        zoneFx.mods.map((m) => '<label style="display:block"><input type="checkbox" name="hz_' + m.id + '" checked> ' +
+          m.label + " (p." + m.page + ")" + (m.note ? '<div style="font-size:11px;opacity:.8;margin-left:20px">' + m.note + "</div>" : "") + "</label>").join("") +
+        zoneFx.notes.map((n) => '<div style="font-size:11px;opacity:.85">' + n.text + " (p." + n.page + ")</div>").join("") +
+        "</div>"
+      : "";
+
     const content =
       '<div style="font-size:13px">' +
       "<div><b>" + attacker.name + "</b> attacks <b>" + target.name + "</b></div>" +
@@ -172,6 +185,7 @@ if (!attacker) {
       '<label style="display:block">Defence modifier: <input type="number" name="defMod" value="' + (defEnc ? defEnc.penalty : 0) + '" style="width:100%"></label>' +
       (defEnc ? TBE.encNote(target) : "") +
       TBE.riderNote(target) +
+      zoneHtml +
       (difficulty && ["Challenging", "Hard", "Severe", "Extreme"].includes(difficulty)
         ? '<div style="color:#b04040;font-size:12px;margin-top:4px"><b>' + difficulty + ' foe.</b> Against a starting PC this fight is heavily against you. Fleeing, talking, and ambushes are also actions.</div>'
         : "") +
@@ -190,10 +204,16 @@ if (!attacker) {
     if (data) {
       const w = weapons[TBE.num(data.weapon, 0)];
       const sizeToHit = sizeFx ? sizeFx.toHit : 0;
-      const atk = w.skillValue + TBE.num(data.atkMod, 0) + sizeToHit;
+      const isRanged = w.ranged || /bow|sling|crossbow|dart|javelin|throwing/i.test(w.name);
       const undefended = data.def === "none" || !legalDef.length;
       const defPick = undefended ? null : legalDef[TBE.num(data.def, 0)] ?? legalDef[0] ?? null;
-      const def = defPick ? defPick.value + TBE.num(data.defMod, 0) : 0;
+      const hz = zoneFx
+        ? TBE.zones().resolveHazardMods(zoneFx.mods, {
+            ticked: (id) => data["hz_" + id] === "on", ranged: isRanged,
+            attackSkill: w.skillName, defenceSkill: defPick ? defPick.name : "" })
+        : { attack: 0, defence: 0, applied: [] };
+      const atk = w.skillValue + TBE.num(data.atkMod, 0) + sizeToHit + hz.attack;
+      const def = defPick ? defPick.value + TBE.num(data.defMod, 0) + hz.defence : 0;
       const woundDie = data.d20 === "on" ? 20 : 10;
 
       const aRoll = await TBE.d100("attack");
@@ -211,7 +231,6 @@ if (!attacker) {
          stock gracefully ("already exhausted"), so gating this on ammo > 0
          used to silently skip the one message that's supposed to say "you're
          out," and the attack proceeded as if ammo were unlimited. */
-      const isRanged = w.ranged || /bow|sling|crossbow|dart|javelin|throwing/i.test(w.name);
       if (isRanged) {
         const am = await TBE.rollSupply(attacker, "ammo");
         if (am.roll) rolls.push(am.roll);
@@ -238,6 +257,8 @@ if (!attacker) {
         (w.readinessNote ? '<div style="font-size:11px;opacity:.85">' + w.readinessNote + "</div>" : "") +
         (sizeNotes.length ? '<div style="font-size:11px;opacity:.85">' + sizeNotes.join(" &middot; ") + "</div>" : "") +
         (sizeToHit ? '<div style="font-size:11px;opacity:.85">Attack skill includes +' + sizeToHit + " for the Size gap.</div>" : "") +
+        (hz.applied.length ? '<div style="font-size:11px;opacity:.85">Zone: ' +
+          hz.applied.map((m) => m.label + " (p." + m.page + ")").join(" &middot; ") + "</div>" : "") +
         "<div>Attack: <b>" + TBE.face(aRes.roll) + "</b> " + TBE.tag(aRes) + (aRes.success ? ", " + aSL + " SL" : "") + "</div>" +
         (dRes ? "<div>Defence: <b>" + TBE.face(dRes.roll) + "</b> " + TBE.tag(dRes) + (dRes.success ? ", " + dSL + " SL" : "") + "</div>" : "");
 

@@ -82,7 +82,10 @@ as a second implementation in a macro.
 ## The one rule that matters most: probe before build
 
 Every game-mechanic claim (a number, a formula, a rule's exact wording)
-gets verified against `/tmp/tbe.txt` (a plaintext dump of the rulebook)
+gets verified against `/tmp/tbe.txt` (a plaintext dump of the rulebook;
+since 2026-09-22 the rulebook HTML lives in the claude.ai TBE project as
+"TBE_RPG_Core_Rulebook_v1.0 (1).html", and stripping its tags gives a dump
+that `intrigue_check.mjs` and `funnel_check.mjs` pass against)
 **before** it's written into code, not after. Use `grep`/`sed` to pull the
 exact passage first. This has caught real bugs (Piety wrongly purchasable
 with XP; the SHIELDS false-positive in `equipment.py`'s own verify step)
@@ -650,6 +653,17 @@ scope at least one pass at the player-facing output itself.
   `game.thebrokenempires.rules.diceRoles` and tags nothing without it, rather
   than keeping a copy of the ids. Tag a new roll with `TBE.d100("attack")` or
   `TBE.tagDice(roll, "wound")`, never with a hand-typed id.
+- `node zones_check.mjs` — 42 checks over Zone Hazards (Ch.10 pp.151-152).
+  Owner: `module/rules/zones.mjs` (hazard table with book quotes, geometry,
+  which modifier applies to which roll); storage is a Region flag
+  `flags["the-broken-empires"].hazards`, set by `TBE: Zone Hazards`. Section 1
+  verifies every quote and page against the rulebook text (TBE_BOOK, else
+  /home/claude/book/rulebook.txt, else /tmp/tbe.txt). Modifiers are OFFERED
+  pre-ticked, never forced: "clearly seen" is the GM's ruling.
+- `node sheet_exchange_check.mjs` — 34 checks over `TBE: Sheet Exchange` and
+  its format owner `TBE.sheetCsv` in `_lib.js` (TBE-CSV v1). The SEQUENTIAL
+  claim: export then import the same file plans no change. Import never
+  deletes and never guesses a skill group.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

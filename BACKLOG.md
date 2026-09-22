@@ -1,3 +1,16 @@
+## Zone Hazards + Sheet Exchange — built in v0.45.0, 2026-09-22
+
+- Zone Hazards: attack-side only so far. Not built: Rough prompts on Charge /
+  Run / Drive Back, Blocked prompts on movement, Damaging rolls on entering or
+  starting a turn in a zone (would need a Region behaviour or a combat-turn
+  hook), and Cast / Opposed Roll reading Obscured.
+- Region testPoint: handled for V12 (point, elevation) and V13 ({x,y,elevation})
+  shapes by arity. Not yet run on a live V14 scene.
+- Sheet Exchange: generic TBE-CSV v1, not Seb's "Character Creator v0.6.5"
+  layout. That xlsx was lost with an earlier container; to map it directly
+  (a "Foundry" tab of lookups, or reading its cells), it has to be uploaded
+  again. Magic (Binds, Strands), wounds, goals and notes are not in v1.
+
 ## Dice So Nice roles — built in v0.44.0, 2026-09-22
 
 - TBE: Attack tags attack / defence / wound dice (roles tbe-attack,

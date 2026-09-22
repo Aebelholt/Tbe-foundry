@@ -14,6 +14,7 @@ import * as resolution from './rules/resolution.mjs';
 import * as visibility from './rules/visibility.mjs';
 import * as permission from './rules/permission.mjs';
 import * as combat from './rules/combat.mjs';
+import * as zones from './rules/zones.mjs';
 import * as chatPopups from './helpers/chat-popups.mjs';
 import * as diceRoles from './helpers/dice-roles.mjs';
 
@@ -35,6 +36,12 @@ Hooks.once('init', function () {
     rules: {
       /* Dice So Nice roles (attack / defence / wound); see dice-roles.mjs. */
       diceRoles: { ROLE: diceRoles.ROLE, tagRoll: diceRoles.tagRoll },
+      /* Zone Hazards, Ch.10 pp.151-152; see rules/zones.mjs. */
+      zones: {
+        SCOPE: zones.SCOPE, HAZARDS: zones.HAZARDS, PENALTY: zones.PENALTY,
+        hazardsOf: zones.hazardsOf, attackHazards: zones.attackHazards,
+        resolveHazardMods: zones.resolveHazardMods, insideRegion: zones.insideRegion
+      },
       resolve: resolution.resolve,
       isDoubles: resolution.isDoubles,
       face: resolution.face,

@@ -14,6 +14,7 @@
  */
 import { readFileSync } from "node:fs";
 import * as diceRoles from "./system/the-broken-empires/module/helpers/dice-roles.mjs";
+import * as zones from "./system/the-broken-empires/module/rules/zones.mjs";
 
 let pass = 0, fail = 0;
 const check = (cond, label, extra) => {
@@ -27,7 +28,7 @@ const AF = Object.getPrototypeOf(async function () {}).constructor;
 
 const skill = (name, value, fighting = true) => ({ type: "skill", name, system: { value, fighting, expertise: 0 } });
 
-function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuverAnswer = {}, system = true }) {
+function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuverAnswer = {}, system = true, regions = null, bow = false, attackAnswer = null }) {
   const timeline = [];
   const queue = rolls.slice();
   class Roll {
@@ -45,8 +46,11 @@ function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuve
   };
   const attacker = {
     id: "A", name: "Renn", type: "character", isOwner: true,
-    items: [skill("Melee: Medium", 80), { type: "weapon", id: "w1", name: "Broadsword",
-      system: { dmg: 4, skillName: "Melee: Medium", cl: 3, cs: 3, dis: 4, t: 5, carried: "hand" } }],
+    items: bow
+      ? [skill("Missile", 70), { type: "weapon", id: "w1", name: "Shortbow",
+          system: { dmg: 2, skillName: "Missile", cl: 6, cs: 5, dis: 5, t: 5, ranged: true, carried: "hand" } }]
+      : [skill("Melee: Medium", 80), { type: "weapon", id: "w1", name: "Broadsword",
+          system: { dmg: 4, skillName: "Melee: Medium", cl: 3, cs: 3, dis: 4, t: 5, carried: "hand" } }],
     system: { size: "Medium", wounds, supply: { ammo: 8 } },
     async update() { return this; }, getFlag() { return undefined; }, statuses: new Set()
   };
@@ -62,27 +66,30 @@ function world({ rolls, dsn = true, dsnHangs = false, command = COMMAND, maneuve
     }
   };
   const game = {
-    user: { id: "U", isGM: true, character: null, targets: new Set([{ actor: target }]) },
+    user: { id: "U", isGM: true, character: null, targets: new Set([{ actor: target, name: "Orc", center: { x: 950, y: 50 }, document: { elevation: 0 } }]) },
     settings: { get: () => "publicroll" },
     dice3d: dsn ? {
       addRole() {},
       waitFor3DAnimationByMessageID: (id) => dsnHangs ? new Promise(() => {}) :
         new Promise((r) => setTimeout(() => { timeline.push({ ev: "dice done", id }); r(true); }, 20))
     } : undefined,
-    thebrokenempires: system ? { rules: { diceRoles: { ROLE: diceRoles.ROLE, tagRoll: diceRoles.tagRoll } } } : undefined
+    thebrokenempires: system ? { rules: { diceRoles: { ROLE: diceRoles.ROLE, tagRoll: diceRoles.tagRoll },
+      zones: { SCOPE: zones.SCOPE, HAZARDS: zones.HAZARDS, PENALTY: zones.PENALTY, hazardsOf: zones.hazardsOf,
+        attackHazards: zones.attackHazards, resolveHazardMods: zones.resolveHazardMods, insideRegion: zones.insideRegion } } } : undefined
   };
   const foundry = {
     utils: { duplicate: (o) => JSON.parse(JSON.stringify(o)), deepClone: (o) => JSON.parse(JSON.stringify(o)) },
     applications: { api: { DialogV2: { prompt: async (o) => {
       const title = o.window.title;
       timeline.push({ ev: "dialog", title });
-      if (title === "TBE Attack") return { weapon: "0", def: "0", atkMod: "0", defMod: "0" };
+      if (title === "TBE Attack") { timeline.push({ ev: "attack dialog", content: o.content }); return attackAnswer ?? { weapon: "0", def: "0", atkMod: "0", defMod: "0" }; }
       if (title === "Combat Maneuvers") return maneuverAnswer;
       return {};
     } } } }
   };
   const ui = { notifications: { warn: (m) => timeline.push({ ev: "warn", m }), error: (m) => timeline.push({ ev: "error", m }), info() {} } };
-  const canvas = { tokens: { controlled: [{ actor: attacker }] } };
+  const canvas = { scene: regions ? { regions } : null,
+    tokens: { controlled: [{ actor: attacker, name: "Renn", center: { x: 50, y: 50 }, document: { elevation: 0 } }] } };
   const CONFIG = { sounds: { dice: "dice.wav" }, statusEffects: [] };
   const fn = new AF("canvas", "game", "foundry", "ui", "ChatMessage", "Roll", "CONFIG",
     "speaker", "actor", "token", "character", "scope", "event", "{" + command + "\n}");
@@ -155,7 +162,35 @@ console.log("\n5. Dice So Nice colours: attack, defence and Wound Die are told a
     "without the system global nothing is tagged, and the attack still runs");
 }
 
-console.log("\n6. Mutation: the old order is caught");
+console.log("\n6. Zone Hazards reach the roll");
+{
+  const fog = { name: "Reeds", flags: { [zones.SCOPE]: { hazards: { obscured: true } } },
+    testPoint(p) { return p.x >= 400 && p.x <= 600 && p.y >= 0 && p.y <= 100; } };
+  /* Missile 70, roll 60: a hit in clear air, a miss at -20 through the reeds. */
+  const clear = world({ rolls: [60, 95, 6, 6, 6], bow: true, regions: [] });
+  await clear.run();
+  check(clear.timeline.some((e) => e.ev === "post" && /The attack lands/.test(e.content)), "clear air: 60 vs Missile 70 lands");
+  const w = world({ rolls: [60, 95, 6, 6, 6], bow: true, regions: [fog],
+    attackAnswer: { weapon: "0", def: "0", atkMod: "0", defMod: "0", hz_obscured: "on" } });
+  await w.run();
+  const dlg = w.timeline.find((e) => e.ev === "attack dialog");
+  check(/name="hz_obscured" checked/.test(dlg?.content || ""), "the attack dialog offers Obscured, pre-ticked");
+  check(/p\.151/.test(dlg?.content || ""), "...citing p.151");
+  const post = w.timeline.find((e) => e.ev === "post");
+  check(/turned aside/.test(post?.content || "") && /Missile 50/.test(post?.content || ""),
+    "through the reeds: Missile 70 becomes 50 and the 60 misses", post?.content?.slice(0, 300));
+  check(/Zone: Obscured zone between/.test(post?.content || ""), "the card says why");
+  const gm = world({ rolls: [60, 95, 6, 6, 6], bow: true, regions: [fog],
+    attackAnswer: { weapon: "0", def: "0", atkMod: "0", defMod: "0" } });
+  await gm.run();
+  check(gm.timeline.some((e) => e.ev === "post" && /The attack lands/.test(e.content)), "GM unticks it (target clearly seen): the shot lands");
+  const sword = world({ rolls: [60, 95, 6, 6, 6], regions: [fog],
+    attackAnswer: { weapon: "0", def: "0", atkMod: "0", defMod: "0", hz_obscured: "on" } });
+  await sword.run();
+  check(sword.timeline.some((e) => e.ev === "post" && /Melee: Medium 80/.test(e.content)), "a sword through the same fog is not penalised");
+}
+
+console.log("\n7. Mutation: the old order is caught");
 {
   /* Remove the early post: the dialog then opens before anything reaches chat. */
   const mutated = COMMAND.replace(/const rollMsg = await TBE\.say\([\s\S]*?\), rolls\);/, "const rollMsg = null;");
