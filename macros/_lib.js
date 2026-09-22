@@ -2107,6 +2107,10 @@ TBE.sheetPdf.LANGUAGES = [["Language_1_name", "language_pct", "language_ex", "Sa
 TBE.sheetPdf.WISES = [["lore_wise_name", "lore_wise_custom_pct", "lore_wise_custom_ex", "Savvy4_11"],
   ["bind_wise_1_name", "bind_wise_1_pct", "bind_wise_1_ex", "Savvy5_9"], ["bind_wise_2_name", "bind_wise_2_pct", "bind_wise_2_ex", "Savvy5_10"]];
 TBE.sheetPdf.STRANDS = ["Air", "Beast", "Body", "Earth", "Fire", "Plant", "Spheres", "Spirit", "Thought", "Water"];
+/* Slots the Character Wizard creates empty for the player to rename. At zero
+ * they are not skills yet, so they do not belong on a printed sheet (and used
+ * to crowd out the three write-in rows). */
+TBE.sheetPdf.PLACEHOLDER = /^(wise: subject \d+|career wise\/language \d+|bind: name it \d+|cultural extra language)$/i;
 TBE.sheetPdf.LOCS = { head: ["head", "head_imp1", "head"], body: ["body", "body_imp", "body"], rArm: ["right_arm", "right_arm_imp", "rarm"],
   lArm: ["left_arm", "left_arm_imp", "larm"], rLeg: ["right_leg", "right_leg_imp", "rleg"], lLeg: ["left_leg", "left_leg_imp", "lleg"] };
 
@@ -2134,9 +2138,9 @@ TBE.sheetPdf.fieldsFor = function (actor) {
     const sk = all.find((x) => _norm(x.name) === _norm(b.name));
     if (f && sk) skillOut(sk, f); else overflow.push("Bind " + b.name + " " + b.value);
   }
-  const langs = all.filter((x) => x.group === "Language");
+  const langs = all.filter((x) => x.group === "Language" && !(TBE.sheetPdf.PLACEHOLDER.test(x.name) && !TBE.num(x.value, 0)));
   langs.forEach((l, i) => { const f = TBE.sheetPdf.LANGUAGES[i]; if (f) { put(f[0], l.name); skillOut(l, f.slice(1)); } else overflow.push("Language " + l.name + " " + l.value); });
-  const wises = all.filter((x) => x.group === "Wise");
+  const wises = all.filter((x) => x.group === "Wise" && !(TBE.sheetPdf.PLACEHOLDER.test(x.name) && !TBE.num(x.value, 0)));
   wises.forEach((w, i) => { const f = TBE.sheetPdf.WISES[i]; if (f) { put(f[0], w.name); skillOut(w, f.slice(1)); } else overflow.push(w.name + " " + w.value); });
   const piety = all.find((x) => /^piety$/i.test(x.name));
   if (piety) put("starting_piety_level", piety.value);
@@ -2760,6 +2764,32 @@ TBE.strands = function (actor) {
     level: TBE.num(i.system?.level, 0),
     thin: !!i.system?.thin
   })).sort((a, b) => b.level - a.level || a.name.localeCompare(b.name));
+};
+
+/* Who can actually reach the Weave. Mirrors TBE.godbound, and exists for the
+ * same reason: the presence of the five Bind skills is NOT the answer. Ch.7
+ * p.79 has every character start them: "Magic skills have their own starting
+ * values as detailed later; they all start at zero, and unless you are a
+ * Spellweaver, Fade, or Godbound, they are likely to remain at zero." So a
+ * Warrior legitimately owns Bind: Change at 0, and a tool that gates on "has
+ * a Bind skill" opens itself to everybody -- which is exactly how a Piety
+ * placeholder once Cast Out an ordinary character (v0.28.0, rule 6).
+ *
+ * Patterned (the Talent, Ch.4) or a Fade is the clear yes. A value above zero
+ * in any Bind or Strand is also a yes, because something granted it (the Bolg
+ * Fiir's +10, a GM's ruling) and refusing then would be the opposite mistake. */
+TBE.weaver = function (actor) {
+  const pattern = TBE.pattern(actor);
+  const binds = TBE.binds(actor) || [];
+  const strands = TBE.strands(actor) || [];
+  const bindMax = binds.reduce((n, b) => Math.max(n, TBE.num(b.value, 0)), 0);
+  const strandMax = strands.reduce((n, s) => Math.max(n, TBE.num(s.level, 0)), 0);
+  return {
+    pattern, bindMax, strandMax, binds: binds.length, strands: strands.length,
+    /* Bind skills that exist only because every sheet starts with them. */
+    placeholderBinds: binds.length > 0 && bindMax === 0 && strandMax === 0 && pattern === "none",
+    isWeaver: pattern !== "none" || bindMax > 0 || strandMax > 0
+  };
 };
 
 /** Bind skills, canonicalised the same way ("Bind: Control" -> "Control"). */

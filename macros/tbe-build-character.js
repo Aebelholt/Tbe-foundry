@@ -45,7 +45,8 @@ if (!actor) {
       '<option value="">(none)</option>' +
       SKILLS[cat].map((n) => '<option value="' + n + '">' + n + "</option>").join("") +
       "</select></label>").join("") +
-    '<label style="display:block">Blank -wise slots: <input type="number" name="wises" value="4" min="0" max="12" style="width:100%"></label>' +
+    '<label style="display:block">Extra blank -wise slots: <input type="number" name="wises" value="0" min="0" max="12" style="width:100%"></label>' +
+    '<div style="font-size:11px;opacity:.75">Leave at 0: Career, Culture, Life Events and Rounding Out create the ones the book grants.</div>' +
     '<label style="display:block">Blank Bind slots: <input type="number" name="binds" value="2" min="0" max="6" style="width:100%"></label>' +
     '<label style="display:block;margin-top:4px"><input type="checkbox" name="wipe" checked> Remove the actor\'s existing skills and Talents first</label>' +
     '<label style="display:block"><input type="checkbox" name="notes" checked> Seed the Notes tab</label>' +
@@ -190,7 +191,7 @@ if (!actor) {
     }
     for (const sk of race.startingSkills || []) payload.push(mk("Lore", sk.name, sk.value));
 
-    const wises = Math.max(0, TBE.num(data.wises, 4));
+    const wises = Math.max(0, TBE.num(data.wises, 0));
     for (let i = 0; i < wises; i++) payload.push(mk("Wise", "Wise: subject " + (i + 1), 0));  /* p.80: -wises and Languages start at zero */
     const binds = Math.max(0, TBE.num(data.binds, 2));
     for (let i = 0; i < binds; i++) payload.push(mk("Bind", "Bind: name it " + (i + 1), 0));

@@ -27,6 +27,14 @@ if (!MAGIC) {
   ui.notifications?.error("TBE: the Weave Magic data block is missing from this macro. Reinstall the system's macro compendium.");
 } else if (!me) {
   ui.notifications?.warn("TBE: select the caster's token first.");
+} else if (!TBE.weaver(me).isWeaver) {
+  /* Rule 6: a tool you turn out not to qualify for tells you so and leaves
+     you exactly as you were. Every character carries the five Bind skills at
+     zero (p.79), so "has a Bind" is not the question -- reaching the Weave is
+     (Ch.4, Patterned in the Weave). Nothing is rolled and nothing is spent. */
+  ui.notifications?.warn("TBE: " + me.name + " is not Patterned in the Weave. Every character sheet lists the five Binds at 0 (p.79), " +
+    "but casting needs a Bind above 0 and a Strand: the Patterned in the Weave Talent (Ch.4), the Spellweaver career, or a Faded Pattern. " +
+    "Nothing was rolled.");
 } else {
   const SHAPING = MAGIC.shaping || {};
   const EFFECTS = MAGIC.effects || [];

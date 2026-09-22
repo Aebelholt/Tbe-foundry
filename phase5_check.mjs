@@ -218,6 +218,59 @@ section("   ...and neither chargen path mints the placeholder");
     "...and gone from TBE: Build Character too");
 }
 
+/* ================================================================== 1b */
+section("1b. The Weave gate (TBE.weaver owns \"can this character cast?\")");
+{
+  /* Same shape as the Piety placeholder, found 2026-09-22 on a wizard-built
+     Dwarf Loremaster: every sheet carries the five Binds at 0 (p.79), so
+     "has a Bind skill" opens TBE: Cast to a Warrior. */
+  const withBinds = (value, extra) => {
+    const a = makeActor(extra);
+    for (const n of ["Change", "Conjure", "Control", "Destroy", "Witness"]) {
+      a.items.push({ id: "b" + n, type: "skill", name: "Bind: " + n, system: { value, group: "Bind" } });
+    }
+    return a;
+  };
+  check(TBE.weaver(makeActor()).isWeaver === false, "no Binds at all: not a weaver");
+  check(TBE.weaver(withBinds(0)).isWeaver === false, "the five Binds at 0, no Pattern: NOT a weaver");
+  check(TBE.weaver(withBinds(0)).placeholderBinds === true, "...and reported as the placeholder, so a macro can say why");
+  check(TBE.weaver(withBinds(40)).isWeaver === true, "a Bind above zero: a weaver");
+  check(TBE.weaver(withBinds(0, { system: { pattern: "spellweaver" } })).isWeaver === true, "Patterned, Binds still 0: a weaver");
+  check(TBE.weaver(withBinds(0, { system: { pattern: "fade" } })).isWeaver === true, "a Fade: a weaver");
+  const bolg = withBinds(0);
+  bolg.items.push({ id: "s1", type: "strand", name: "Earth", system: { level: 1 } });
+  check(TBE.weaver(bolg).isWeaver === true, "a Strand above zero (a grant, a GM ruling): a weaver, so the gate never refuses wrongly");
+}
+
+section("   ...and TBE: Cast refuses the placeholder without rolling");
+{
+  const plain = makeActor();
+  for (const n of ["Change", "Conjure", "Control", "Destroy", "Witness"]) {
+    plain.items.push({ id: "b" + n, type: "skill", name: "Bind: " + n, system: { value: 0, group: "Bind" } });
+  }
+  const out = await run("tbe-cast.js", {}, { actor: plain, blocks: ["magic"] });
+  check(/\[warn\].*not Patterned in the Weave/.test(out), "a character with five Bind-0 placeholders is turned away", out);
+  check(/Patterned in the Weave Talent|Spellweaver career|Faded Pattern/.test(out), "...and told what would let them cast");
+  check(!/Fraying|Weave Reaction/.test(out), "...and nothing is rolled or spent", out);
+  const weaver = makeActor({ system: { pattern: "spellweaver" } });
+  weaver.items.push({ id: "b1", type: "skill", name: "Bind: Change", system: { value: 40, group: "Bind" } });
+  weaver.items.push({ id: "s1", type: "strand", name: "Fire", system: { level: 2 } });
+  const out2 = await run("tbe-cast.js", {}, { actor: weaver, blocks: ["magic"] });
+  check(!/not Patterned/.test(out2), "a real Spellweaver is not turned away", out2);
+}
+
+section("   ...and chargen stops minting blank -wise slots");
+{
+  const a = makeActor();
+  await run("tbe-build-character.js", buildAnswers({ career: "Warrior" }), { actor: a, blocks: ["chargen"] });
+  const blanks = a.items.filter((i) => /^Wise: subject \d+$/.test(i.name));
+  check(blanks.length === 0, "TBE: Build Character creates no nameless -wise slots by default", blanks.map((b) => b.name));
+  const granted = a.items.filter((i) => /^Career wise\/Language/.test(i.name));
+  check(granted.length === 1 && granted[0].system.value === 20, "...but the Warrior's one Custom -wise at 20 (p.103) is still created", granted);
+  const wiz = read("macros/tbe-character-wizard.js");
+  check(/wises: 0,/.test(wiz) && /TBE\.num\(d\.wises, 0\)/.test(wiz), "TBE: Character Wizard defaults the same way");
+}
+
 /* ====================================================================== 2 */
 section("2. Career points lost to the 70 creation cap are reported, not swallowed");
 {
@@ -372,6 +425,18 @@ section("5. Creature names printed across lines are whole");
 
 /* ------------------------------------------------------------ mutations */
 section("Mutation guards (each breaks a fix and requires the check to fail)");
+{
+  /* The Weave gate, read the wrong way round: "has a Bind skill" is the bug. */
+  const mutated = LIB.replace("isWeaver: pattern !== \"none\" || bindMax > 0 || strandMax > 0",
+    "isWeaver: binds.length > 0 || pattern !== \"none\" || strandMax > 0");
+  const M = new Function("canvas", "game", "foundry", "ui", "CONFIG", mutated + "\n;return TBE;")(
+    { tokens: { controlled: [] } }, { user: {} }, { utils: {} },
+    { notifications: { warn() {}, error() {}, info() {} } }, undefined);
+  const a = makeActor();
+  for (const n of ["Change", "Witness"]) a.items.push({ id: "b" + n, type: "skill", name: "Bind: " + n, system: { value: 0, group: "Bind" } });
+  check(M.weaver(a).isWeaver === true, "gating on \"has a Bind skill\" lets a Warrior cast, which section 1b rejects");
+}
+
 {
   /* 1. Put the placeholder Piety back into TBE.godbound and the legacy sheet
         must start reading as a Godbound again. */

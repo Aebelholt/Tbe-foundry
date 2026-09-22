@@ -222,6 +222,17 @@ console.log("\n8. The fillable character sheet PDF: fill, read back, nothing cha
     check(get("body_wp_1") === "3" && on("body_imp"), "Body 3 WP and its impairment box");
     check(get("fire_level") === "2" && on("thin_strand_5"), "Fire Strand 2, thin");
     check(get("Language_1_name") === "Gael" && get("language_pct") === "70", "a Language row");
+    /* Nameless slots the Wizard creates are not skills yet (p.79-80): they
+       must not eat the sheet's three write-in rows. */
+    const ph = renn();
+    ph.items.push({ type: "skill", name: "Wise: subject 1", system: { value: 0, group: "Wise" } });
+    ph.items.push({ type: "skill", name: "Career wise/Language 1", system: { value: 30, group: "Wise" } });
+    const phf = P.fieldsFor(ph);
+    const wiseRows = [phf.text.lore_wise_name, phf.text.bind_wise_1_name, phf.text.bind_wise_2_name];
+    check(wiseRows.includes("Salt-wise") && wiseRows.includes("Career wise/Language 1") && !wiseRows.includes("Wise: subject 1"),
+      "a placeholder at 0 is skipped; the named and the granted slots take the rows", wiseRows);
+    check(!phf.overflow.some((x) => /Wise: subject/.test(x)), "and it is not reported as overflow either", phf.overflow);
+
     const conv = P.rowsFrom(get, on);
     const p = C.plan(a, conv.rows);
     const real = p.skillUpdates.concat(p.skillCreates, p.strandUpdates, p.strandCreates, p.fields);

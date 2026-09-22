@@ -589,7 +589,7 @@ if (!actor) {
         { key: "review", label: "Review" }
       ];
       this.draft = {
-        concept: "", conceptPicks: {}, base: 20, wises: 4, binds: 2,
+        concept: "", conceptPicks: {}, base: 20, wises: 0, binds: 2,
         boost: { Combat: null, Adventuring: null, Social: null, Lore: null },
         wipe: true, seedNotes: true,
         raceName: RACES[0]?.name || "", careerName: CAREERS[0]?.name || "",
@@ -900,7 +900,8 @@ if (!actor) {
         '<div style="font-size:11px;opacity:.75;margin-bottom:4px">A sentence or short phrase, not binding, the book expects it to shift ' +
         "as Race, Cultural Background and Life Events land. (Cultural background and language now live on the steps that determine them.)</div>" +
         '<label style="display:block">Base skill value (book default 20): <input type="number" name="base" value="' + d.base + '" style="width:100%"></label>' +
-        '<label style="display:block">Blank -wise slots: <input type="number" name="wises" value="' + d.wises + '" min="0" max="12" style="width:100%"></label>' +
+        '<label style="display:block">Extra blank -wise slots: <input type="number" name="wises" value="' + d.wises + '" min="0" max="12" style="width:100%"></label>' +
+        '<div style="font-size:11px;opacity:.75;margin-bottom:4px">Leave at 0. The book grants custom -wises through your Career, Cultural Background, Life Events and Rounding Out, and the Wizard creates those for you to rename. Extra blank slots are nameless skills at 0: they clutter the roll picker and the printed sheet.</div>' +
         (MAGIC
           ? '<div style="font-size:11px;opacity:.75">Magic skills all start at zero. The five Binds (' + BINDS.join(", ") +
             ') are created for you; Strands are not skills and appear only if you are Patterned. ' +
@@ -2023,7 +2024,7 @@ if (!actor) {
        * Languages under Lore; these may receive values in later steps, but
        * leave them at zero for now". Blank slots start empty; Career customs
        * and Rounding Out are what put values in them. */
-      const wises = Math.max(0, TBE.num(d.wises, 4));
+      const wises = Math.max(0, TBE.num(d.wises, 0));
       for (let i = 0; i < wises; i++) payload.push(mk("Wise", "Wise: subject " + (i + 1), 0));
       /* Ch.7 p.79: "Magic skills have their own starting values as detailed
        * later; they all start at zero." The five Binds are named and fixed,

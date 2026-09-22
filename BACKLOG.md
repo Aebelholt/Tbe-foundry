@@ -1,3 +1,14 @@
+## Wizard placeholders — built in v0.47.0, 2026-09-22
+
+- Open: a cleanup for characters already built (blank "Wise: subject N" at 0,
+  and the five Bind-0 skills on a non-caster). Both are harmless now that the
+  gate and the sheet ignore them, so nothing deletes them automatically.
+- Open: the five Binds at 0 on a non-caster are RAW (p.79) but still print as
+  five zeros in the Binds column. Ask Seb whether the sheet should leave the
+  column blank for a character with no Pattern.
+- TBE: Cast's gate is the only one; TBE: Ritual, TBE: Summoning and
+  TBE: Use Enchanted were not checked for the same shape.
+
 ## Sheet Exchange formats + Ammo die — built in v0.46.0, 2026-09-22
 
 - Not mapped yet from the PDF: armour penalties, base recovery, rounds

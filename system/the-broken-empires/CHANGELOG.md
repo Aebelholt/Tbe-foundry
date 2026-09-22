@@ -1,3 +1,31 @@
+# 0.47.0 — 2026-09-22
+
+**Two things a wizard-built character was carrying that it should not.**
+Found by exporting Seb's "Fresh face" (Dwarf, Barbarian, Loremaster) to the
+official sheet: four nameless -wise slots and five Bind skills at 0.
+
+- **Blank -wise slots now default to 0.** The Wizard and TBE: Build Character
+  offered "Blank -wise slots: 4" and created "Wise: subject 1-4" at 0. The
+  book grants custom -wises through the Career, Cultural Background, Life
+  Events and Rounding Out (a Loremaster gets three at 30, p.104), and those
+  are still created for you to rename. Nameless 0s only cluttered the roll
+  picker and crowded the sheet's three write-in rows. Existing characters are
+  untouched: delete the blank ones from the sheet if you want them gone.
+- **TBE: Cast now refuses a character who cannot reach the Weave.** Every
+  sheet lists the five Binds at 0 (p.79: "they all start at zero, and unless
+  you are a Spellweaver, Fade, or Godbound, they are likely to remain at
+  zero"), so "has a Bind skill" let a Warrior open Cast and roll a Bind at 0,
+  with the Weave Reaction and Fraying that follow. This is the Piety
+  placeholder defect (v0.28.0) in a second place. `TBE.weaver()` now owns the
+  question: Patterned, a Fade, or any Bind or Strand above zero is a yes, so a
+  Bolg Fiir's +10 or a GM's grant still counts. A character who is none of
+  those is told what would let them cast, and nothing is rolled.
+- **The printed sheet skips nameless slots.** A "Wise: subject 1" at 0 no
+  longer takes one of the three write-in rows on the PDF.
+
+Checks: `phase5_check.mjs` 76 (the new Weave gate, with a mutation that gates
+on "has a Bind skill"), `sheet_exchange_check.mjs` 65.
+
 # 0.46.0 — 2026-09-22
 
 **The official character sheet, both ways; the Character Creator in; and

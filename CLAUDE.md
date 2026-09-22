@@ -464,7 +464,7 @@ scope at least one pass at the player-facing output itself.
   Reaction tiers, the Ch.18 NPC shortcut's four branches, the magic Talents
   and the Fraying Roll.
 - `node enforcement_check.mjs` — Talent/Advancement/racial rule enforcement.
-- `node phase5_check.mjs` — 61 checks over the five defects the first played
+- `node phase5_check.mjs` — 76 checks over the five defects the first played
   session found (v0.28.0). Read it before adding a gate, a chargen grant or a
   tracker: every assertion in it exists because the other fourteen scripts
   were green while a player was being punished for doing a reasonable thing.
