@@ -8,12 +8,40 @@ a macro reads or writes is visible and editable right on the sheet.
 
 ## What this is, and isn't
 
-Combat, wounds, casting, and the rest of solo/GM play still run through the
+Combat, wounds, casting, and the rest of solo/GM play run through the
 companion macro pack (`TBE: Attack`, `TBE: Wounds & Recovery`, `TBE: Cast`,
-and friends) — this system deliberately does not add sheet-native
-click-to-roll buttons. The sheet's job is to be an honest data container; the
-macros carry the actual game logic (roll resolution, wound math, the
-maneuver table).
+and friends), which installs with the system. The sheet's own job is to be an
+honest data container: it carries no rules of its own. The one deliberate
+exception is that clicking a skill on the sheet rolls it, because a dropdown
+is a bad way to teach someone the core mechanic on their first roll. That
+button does arithmetic and nothing else, then hands the result to the same
+resolution the macros use.
+
+**You need the rulebook.** This is an unofficial system for playing *The
+Broken Empires*; it carries the numbers and procedures, not the text of the
+game. Rules quotes appear only where a macro cites the page it is following.
+
+## Requirements, and the modules that make it nicer
+
+**Required: nothing but Foundry.** Minimum version 12, verified on 14.365.
+No module is needed. Everything below is optional, and the system says so
+when a feature notices one is missing.
+
+| Module | What it adds | Without it |
+|---|---|---|
+| **Dice So Nice** | Attack, defence and Wound Die roll in their own colours, registered as "dice roles" under The Broken Empires, so the GM (Dice Roles table) and each player can recolour them. Useful when the GM runs both sides of a fight | Rolls work exactly the same, with no 3D dice |
+| **Zone Movement** (or Alternate Zone Movement) | TBE measures in zones, not squares. These make the ruler and token dragging count zones drawn as Scene Regions | Measure zones by eye; `TBE: Zone Hazards` still reads the Regions |
+
+Two things are **not** modules and still have to be supplied by you:
+
+- **The blank fillable character sheet PDF.** `TBE: Sheet Exchange` fills the
+  official B/W sheet (v13), but that PDF is the publisher's and is not shipped
+  here. Put your own copy in your Data folder and point the world setting
+  "Blank character sheet PDF" at it, or pick the file each time you export.
+- **A copy of the rulebook**, for everything the system deliberately leaves to
+  a human. `TBE: Rules Audit` cross-references each macro's formula to the
+  chapter and page it came from, so a player can check the maths against
+  their own book.
 
 ## Installing
 

@@ -1,3 +1,19 @@
+# 0.47.1 — 2026-09-24
+
+**Documentation: what a stranger needs before they install.** Nothing in the
+system behaved differently before this; the README simply did not say it.
+
+- **Requirements are stated: nothing but Foundry** (minimum 12, verified
+  14.365). Dice So Nice and Zone Movement are listed as optional, with what
+  each adds and what happens without it, and they are now declared in
+  `system.json` as `relationships.recommends`, so Foundry's own install
+  screen shows them.
+- **The two things the system cannot ship** are named: the publisher's blank
+  fillable character sheet PDF (for `TBE: Sheet Exchange`), and the rulebook
+  itself.
+- **A stale paragraph is corrected.** The README still claimed the sheet has
+  no click-to-roll; clicking a skill has rolled it since v0.31.0.
+
 # 0.47.0 — 2026-09-22
 
 **Two things a wizard-built character was carrying that it should not.**
