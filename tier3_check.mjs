@@ -175,7 +175,10 @@ check(/brokeOnCost/.test(cs) && /marks all remaining Resolve|All remaining Resol
 check(/all-or-nothing/.test(cs), "no partial success");
 check(/res\.critFail/.test(cs) && /1d20/.test(cs),
   "a critical failure hands the counterer their own Weave Reaction");
-check(/system\.resolve\.value": resolveNow - spent/.test(cs), "the Resolve actually leaves the sheet");
+/* v0.50.0: what can be paid is the free part of the track (resolveNow, unspent
+   less Fatigue); the write still comes off the unspent total. */
+check(/system\.resolve\.value": unspentNow - spent/.test(cs) && /const resolveNow = TBE\.availableResolve\(me\)/.test(cs),
+  "the Resolve actually leaves the sheet, capped by what the track has free");
 {
   /* TBE.strands() reports `level`; TBE.binds() reports `value`. Reading the
      wrong one ships a dropdown that says "Fire undefined" and discounts
