@@ -854,9 +854,14 @@ async function runShared(name, answers, store, quiet) {
     await runShared("TBE: Social Encounter",
       [{ tracker: "", mode: "competitive", name: "Council Vote", victory: "9999", sides: "Simon\nArn\nEdbert" }], store, true);
     const id = Object.keys(store.encounters)[0];
+    /* Alternate skills, as the Victory Condition test above does: p.255 bars
+       retrying a skill that just failed, and using one more than twice
+       running. Rolling Wit every time left Arn at 0 for all 30 tries whenever
+       the first roll failed (5% at 95), and this check went red on its own. */
+    const arnSkills = ["Wit", "Persuade"];
     for (let n = 0; n < 30 && store.encounters[id].sides[1].total < 3; n++) {
       await runShared("TBE: Social Encounter",
-        [{ tracker: id, act: "roll", who: "Arn", side: "1", intent: "support", skillName: "Wit", skillValue: "95" }], store, true);
+        [{ tracker: id, act: "roll", who: "Arn", side: "1", intent: "support", skillName: arnSkills[n % 2], skillValue: "95" }], store, true);
     }
     const { out } = await runShared("TBE: Social Encounter", [{ tracker: id, act: "end" }], store, true);
     console.log("\n### TBE: Social Encounter (Competitive, 3-side Council manual end)\n  -> " + out.slice(0, 300));
