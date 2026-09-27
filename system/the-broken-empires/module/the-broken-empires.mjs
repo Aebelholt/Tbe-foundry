@@ -23,6 +23,7 @@ import * as memory from './helpers/memory.mjs';
 import * as rollControls from './helpers/roll-controls.mjs';
 import { openCreator } from './chargen/creator.mjs';
 import { openShop } from './chargen/shop.mjs';
+import { RETIRED_MACROS } from './helpers/retired-macros.mjs';
 import * as chargenRules from './chargen/rules.mjs';
 
 /* -------------------------------------------- */
@@ -38,6 +39,8 @@ Hooks.once('init', function () {
     /* What a user last picked, per user (helpers/memory.mjs). A prefill,
        never a commit. */
     memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
+    /* Retired macros and their redirects (helpers/retired-macros.mjs). */
+    retiredMacros: RETIRED_MACROS,
     /* The character creation window (chargen/creator.mjs, v0.52.0): the
        book's twelve steps, a live sheet, one Create. */
     chargen: { open: openCreator, shop: openShop,

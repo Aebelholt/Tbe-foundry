@@ -34,6 +34,9 @@ const check = (cond, label, extra) => {
 };
 
 const MACRO = read("macros/tbe-update-macros.js");
+/* The retired list is the system's (module/helpers/retired-macros.mjs); in a
+   world the macro library reads it off game.thebrokenempires. */
+const { RETIRED_MACROS } = await import("./system/the-broken-empires/module/helpers/retired-macros.mjs");
 const LIB = read("macros/_lib.js");
 
 /* ---- a stub world that records every write ---- */
@@ -56,7 +59,8 @@ const build = ({ world, shipped, answer, users }) => {
     users: users ?? [{ hotbar: {} }],
     macros,
     packs: { get: (id) => (id === "the-broken-empires.tbe-macros" ? pack : null) },
-    settings: { get: () => "publicroll" }
+    settings: { get: () => "publicroll" },
+    thebrokenempires: { retiredMacros: RETIRED_MACROS }
   };
 
   const Macro = { create: async (d) => { log.created.push({ name: d.name, command: d.command }); } };

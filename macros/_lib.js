@@ -1823,30 +1823,15 @@ TBE.canWrite = function (actor) {
  * the only way to say which of forty creatures they mean -- but it now has to
  * be a selection they can actually write to. See permission.mjs for the full
  * reasoning; the rule lives there so a check can execute it. */
-/* Macros this system used to ship and has retired (v0.53.0, chargen rebuild
- * stage 3). A world that imported them still has copies, frozen at the old
- * version; TBE: Update Macros rewrites each such copy's command to the short
- * redirect below, in place, so a hotbar slot keeps working and points at the
- * replacement instead of running retired code. It never deletes them. */
-TBE.RETIRED_MACROS = (() => {
-  const openCreator = (name) =>
-    "/* " + name + " was retired in v0.53.0. TBE: Update Macros pointed this copy at its replacement,\n" +
-    " * the Create Character window (also on every character sheet's header). */\n" +
-    "const a = canvas.tokens?.controlled?.map((t) => t.actor).find((x) => x?.isOwner) ?? game.user?.character ?? null;\n" +
-    "const cg = game.thebrokenempires?.chargen;\n" +
-    "if (!cg?.open) ui.notifications?.warn(\"TBE: " + name + " was retired. Update The Broken Empires system to v0.53.0 or later for Create Character.\");\n" +
-    "else if (!a) ui.notifications?.warn(\"TBE: select your token, or assign a character to your user, then run this again.\");\n" +
-    "else cg.open(a);\n";
-  const finish =
-    "/* TBE: Finish Character was retired in v0.53.0. TBE: Update Macros replaced this copy with a pointer. */\n" +
-    "ui.notifications?.info(\"TBE: Finish Character was retired. New characters: Create on the character sheet's header. " +
-    "Gear and free armour: Buy equipment on the Gear tab. Goals: Add Goal on the sheet. Talents: TBE: Talents.\", { permanent: true });\n";
-  return {
-    "TBE: Character Wizard": { replacement: "Create Character", command: openCreator("TBE: Character Wizard") },
-    "TBE: Build Character": { replacement: "Create Character", command: openCreator("TBE: Build Character") },
-    "TBE: Finish Character": { replacement: "the character sheet (Buy equipment, Add Goal) and TBE: Talents", command: finish }
-  };
-})();
+/* Macros this system used to ship and has retired, with the redirect each
+ * world copy gets. Owned by the system (module/helpers/retired-macros.mjs,
+ * exposed as game.thebrokenempires.retiredMacros) because the world check
+ * card needs it too and cannot read this library. TBE: Update Macros reads it
+ * here. */
+Object.defineProperty(TBE, "RETIRED_MACROS", {
+  get: () => (typeof game !== "undefined" && game?.thebrokenempires?.retiredMacros) || {},
+  enumerable: true
+});
 
 TBE.me = function () {
   const P = _perm();

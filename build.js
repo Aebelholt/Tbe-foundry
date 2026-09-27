@@ -163,7 +163,7 @@ const MACROS = [
   /* TBE: Character Wizard, TBE: Finish Character and TBE: Build Character
      were retired in v0.53.0 (chargen rebuild stage 3): the Create Character
      window, in the system, replaced all three. World copies are pointed at
-     it by TBE: Update Macros (TBE.RETIRED_MACROS in _lib.js). */
+     it by TBE: Update Macros (module/helpers/retired-macros.mjs). */
   ["TBE: Talents", "tbe-talents.js", "icons/svg/upgrade.svg"],
   ["TBE: Advancement", "tbe-advancement.js", "icons/svg/level-up.svg"],
   ["TBE: Attack", "tbe-attack.js", "icons/svg/sword.svg"],

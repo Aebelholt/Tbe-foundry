@@ -1,3 +1,9 @@
+## Next batch, not shipped yet
+
+- World check card names un-redirected copies of retired macros (committed,
+  in CHANGELOG under Unreleased). Found from the playtest GM's 0.46.0 to
+  0.53.1 upgrade card.
+
 ## Chargen rebuild — done in v0.53.0 (stage 3), 2026-09-27
 
 Decided with Seb: option B. One window, the book's 12 steps down the left,

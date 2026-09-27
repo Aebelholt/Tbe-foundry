@@ -623,8 +623,10 @@ scope at least one pass at the player-facing output itself.
   system is fixed and the thing the player clicks is not. Section 12 covers
   the retired macros (v0.53.0): a world copy of the Character Wizard, Build
   Character or Finish Character gets its command replaced in place with a
-  pointer to what replaced it (`TBE.RETIRED_MACROS` in `_lib.js`), never
-  deleted, never re-created. Runs the real macro
+  pointer to what replaced it, never deleted, never re-created. The list is
+  the system's (`module/helpers/retired-macros.mjs`, read by the library as
+  `TBE.RETIRED_MACROS`), because the world check card after an upgrade names
+  un-redirected retired copies too (`migration_fixtures_check.mjs` J). Runs the real macro
   against a stub world that records every create/update/delete and asserts on
   what it did, including that ALL duplicates are updated rather than only the
   one a cleanup would keep. Carries a mutation swapping update for create,

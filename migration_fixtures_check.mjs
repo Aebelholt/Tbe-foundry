@@ -300,8 +300,9 @@ console.log("\nH. Mutation: a sidebar-only sweep reports a clean world while eve
   const MIGSRC0 = read(`${SYS}/module/migration/migration.mjs`);
   const sidebarOnly = MIGSRC0.replace('collection: "tokens",', 'collection: "actors",');
   check(sidebarOnly !== MIGSRC0, "the mutation actually changed the source");
-  fs.writeFileSync("/tmp/tbe_sidebar_only_migration.mjs", sidebarOnly);
-  const SIDEBAR = await import("file:///tmp/tbe_sidebar_only_migration.mjs");
+  fs.writeFileSync(`${process.cwd()}/${SYS}/module/migration/_mut_sidebar.mjs`, sidebarOnly);
+  const SIDEBAR = await import(`file://${process.cwd()}/${SYS}/module/migration/_mut_sidebar.mjs`);
+fs.rmSync(`${process.cwd()}/${SYS}/module/migration/_mut_sidebar.mjs`, { force: true });  /* imported; never leave it where a release zip would pick it up */
   const tok = mkActor("Elspeth Dunmore", {}, { initiative: "14,14,NaN" }, "creature");
   const scene = mkScene("The ambush", [mkToken(tok)]);
   const w = mkWorld({ version: "0.32.0", actors: [], scenes: [scene] });
@@ -400,7 +401,7 @@ console.log("\nI. Seb's world: 0.29.x -> current, in one jump, with a clock stil
  * =================================================================== */
 console.log("\nJ. Macros in the world are not updated by a system upgrade");
 {
-  const shipped = { "TBE: Attack": "NEW-ATTACK", "TBE: Character Wizard": "NEW-WIZARD", "TBE: Cast": "NEW-CAST" };
+  const shipped = { "TBE: Attack": "NEW-ATTACK", "TBE: Skill Roll": "NEW-ROLL", "TBE: Cast": "NEW-CAST" };
   const mkMacro = (name, command) => ({ name, command });
   const packStub = {
     getDocuments: async () => Object.entries(shipped).map(([name, command]) => mkMacro(name, command))
@@ -413,7 +414,11 @@ console.log("\nJ. Macros in the world are not updated by a system upgrade");
 
   /* Seb's shape: many copies, all stale. */
   const sebs = worldWith([
-    ...Array.from({ length: 9 }, () => mkMacro("TBE: Character Wizard", "OLD-WIZARD")),
+    ...Array.from({ length: 9 }, () => mkMacro("TBE: Skill Roll", "OLD-ROLL")),
+    /* After v0.53.1: the playtest world also carried copies of macros the system has
+       since RETIRED. They run their old code and are not in the compendium. */
+    ...Array.from({ length: 4 }, () => mkMacro("TBE: Character Wizard", "OLD-WIZARD")),
+    mkMacro("TBE: Finish Character", "OLD-FINISH"),
     ...Array.from({ length: 5 }, () => mkMacro("TBE: Attack", "OLD-ATTACK")),
     mkMacro("TBE: Cast", "NEW-CAST"),
     mkMacro("My Own Thing", "whatever")
@@ -422,8 +427,11 @@ console.log("\nJ. Macros in the world are not updated by a system upgrade");
 
   check(found.checked === true, "the compendium was readable, so the scan means something");
   check(found.scanned === 15, "counted only OUR macros, ignoring the GM's own", found.scanned);
-  const wiz = found.duplicates.find((d) => d.name === "TBE: Character Wizard");
-  check(wiz?.count === 9, "nine copies of the Character Wizard are reported as duplicates", found.duplicates);
+  const wiz = found.duplicates.find((d) => d.name === "TBE: Skill Roll");
+  check(wiz?.count === 9, "nine copies of Skill Roll are reported as duplicates", found.duplicates);
+  const ret = Object.fromEntries((found.retired || []).map((r) => [r.name, r.count]));
+  check(ret["TBE: Character Wizard"] === 4 && ret["TBE: Finish Character"] === 1 && found.retired.length === 2,
+    "copies of the retired Wizard (4) and Finish Character (1) are reported, though the compendium no longer has them", found.retired);
   const atk = found.differing.find((d) => d.name === "TBE: Attack");
   check(atk?.behind === 5 && atk?.total === 5, "all five Attack copies differ from what ships", found.differing);
   check(!found.differing.some((d) => d.name === "TBE: Cast"),
@@ -436,6 +444,17 @@ console.log("\nJ. Macros in the world are not updated by a system upgrade");
   check(/TBE Tools/.test(html), "and names the compendium to re-import from");
   check(/you edited it yourself/.test(html),
     "and admits it cannot tell a stale copy from one the GM customised");
+  check(/5 copy\(ies\) of retired macros/.test(html) && /TBE: Character Wizard &times;4 \(replaced by Create Character\)/.test(html) && /deletes none/.test(html),
+    "the card names the retired copies, what replaced them, and that Update Macros deletes none", html);
+
+  /* Copies Update Macros already redirected are not reported again. */
+  const { RETIRED_MACROS: RM } = await import("./system/the-broken-empires/module/helpers/retired-macros.mjs");
+  const redirected = worldWith([mkMacro("TBE: Character Wizard", RM["TBE: Character Wizard"].command), mkMacro("TBE: Cast", "NEW-CAST")]);
+  check(MIGMOD.staleMacrosToHtml(await withWorld(redirected, () => MIGMOD.findStaleMacros())) === null,
+    "a world whose retired copies already point at their replacement gets no notice");
+  const onlyRetired = worldWith([mkMacro("TBE: Build Character", "OLD-BUILD"), mkMacro("TBE: Cast", "NEW-CAST")]);
+  check(/retired macros/.test(MIGMOD.staleMacrosToHtml(await withWorld(onlyRetired, () => MIGMOD.findStaleMacros())) || ""),
+    "a world whose only problem is a retired copy still gets the notice");
 
   /* A clean world must say nothing at all rather than nagging. */
   const clean = worldWith([mkMacro("TBE: Cast", "NEW-CAST")]);
@@ -470,8 +489,9 @@ const mutated = MIGSRC.replace(
   "/* mutated: guard removed */"
 );
 check(mutated !== MIGSRC, "the mutation actually changed the source");
-fs.writeFileSync("/tmp/tbe_mutated_migration.mjs", mutated);
-const BROKEN = await import("file:///tmp/tbe_mutated_migration.mjs");
+fs.writeFileSync(`${process.cwd()}/${SYS}/module/migration/_mut_guard.mjs`, mutated);
+const BROKEN = await import(`file://${process.cwd()}/${SYS}/module/migration/_mut_guard.mjs`);
+fs.rmSync(`${process.cwd()}/${SYS}/module/migration/_mut_guard.mjs`, { force: true });  /* imported; never leave it where a release zip would pick it up */
 {
   const gmSetReal = mkActor("Pike", { tbe: { toughness: 1 } }, { toughness: 4 });
   const w = mkWorld({ version: "0.21.5", actors: [gmSetReal] });

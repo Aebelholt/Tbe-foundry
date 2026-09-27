@@ -1,3 +1,13 @@
+# Unreleased (next batch)
+
+- **The world check card now names copies of retired macros.** After an
+  upgrade it listed only macros this release still ships, so old copies of
+  the Character Wizard, Finish Character or Build Character in a world went
+  unmentioned while still running their old code. It now counts them, says
+  what replaced each, and that TBE: Update Macros points them at the
+  replacement without deleting any. Copies already redirected are not
+  reported again.
+
 # 0.53.1 — 2026-09-27
 
 **The TBE: Rules Audit journal is fixed.**

@@ -28,6 +28,7 @@
  * baked into the abstraction, so an Item or Journal migration has somewhere
  * to go that is not a special case.
  */
+import { RETIRED_MACROS } from "../helpers/retired-macros.mjs";
 
 const FLAG_SCOPE = "the-broken-empires";
 
@@ -335,7 +336,7 @@ export function findStrandedClocks() {
  * decision to the human -- the same call `findStrandedClocks` makes.
  */
 export async function findStaleMacros() {
-  const out = { scanned: 0, duplicates: [], differing: [], checked: false };
+  const out = { scanned: 0, duplicates: [], differing: [], retired: [], checked: false };
   try {
     const pack = game.packs?.get("the-broken-empires.tbe-macros");
     if (!pack) return out;
@@ -357,6 +358,17 @@ export async function findStaleMacros() {
       const behind = copies.filter((m) => (m.command ?? "") !== shipped.get(name)).length;
       if (behind) out.differing.push({ name, behind, total: copies.length });
     }
+    /* Copies of macros this system has RETIRED still run their old code.
+       Counted here only when they still hold it: a copy TBE: Update Macros
+       already pointed at its replacement is not reported again. */
+    const retired = new Map();
+    for (const m of game.macros ?? []) {
+      const r = RETIRED_MACROS[m.name];
+      if (!r || (m.command ?? "") === r.command) continue;
+      retired.set(m.name, (retired.get(m.name) || 0) + 1);
+    }
+    out.retired = [...retired].map(([name, count]) => ({ name, count, replacement: RETIRED_MACROS[name].replacement }))
+      .sort((a, b) => b.count - a.count);
     out.duplicates.sort((a, b) => b.count - a.count);
     out.differing.sort((a, b) => b.behind - a.behind);
   } catch (err) {
@@ -368,7 +380,7 @@ export async function findStaleMacros() {
 /** The macro notice, or null when there is nothing to say. */
 export function staleMacrosToHtml(found) {
   if (!found?.checked) return null;
-  if (!found.duplicates.length && !found.differing.length) return null;
+  if (!found.duplicates.length && !found.differing.length && !(found.retired || []).length) return null;
 
   const dupes = found.duplicates.length
     ? `<div><b>${found.duplicates.length} macro(s) exist more than once</b> in this world: ` +
@@ -383,8 +395,15 @@ export function staleMacrosToHtml(found) {
       (found.differing.length > 6 ? ", ..." : "") + "</div>"
     : "";
 
+  const gone = (found.retired || []).length
+    ? `<div style="margin-top:4px"><b>${found.retired.reduce((n, r) => n + r.count, 0)} copy(ies) of retired macros ` +
+      `still run their old code</b>: ` +
+      found.retired.map((r) => `${r.name} &times;${r.count} (replaced by ${r.replacement})`).join(", ") +
+      `. TBE: Update Macros points each one at its replacement in place; it deletes none of them.</div>`
+    : "";
+
   return `<div style="margin-top:6px;border-top:1px solid #7a6a4f;padding-top:4px">` +
-    `<b>Macros in this world are not updated by a system upgrade.</b>` + dupes + old +
+    `<b>Macros in this world are not updated by a system upgrade.</b>` + dupes + old + gone +
     `<div style="font-size:11px;opacity:.85;margin-top:4px">Copies in your world macro directory are ` +
     `frozen at whatever version you imported them, so an old copy keeps its old bugs no matter what ` +
     `the system is at. Run <b>TBE: Update Macros</b> (in the <b>TBE Tools</b> compendium) to overwrite ` +
