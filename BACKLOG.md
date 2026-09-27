@@ -1,3 +1,42 @@
+## Phase 7, first pass: the zip as a stranger gets it (2026-09-27, v0.47.1)
+
+Built `The-Broken-Empires-System.zip` from the tree, unpacked it fresh and
+audited the artifact, not the working tree. No live Foundry in this session, so
+nothing here has been installed or booted yet.
+
+Clean:
+- Layout unzips to `the-broken-empires/system.json`; no LOCK/LOG debris.
+- Every `systems/the-broken-empires/...` path in modules, templates, CSS and
+  the manifest resolves inside the zip.
+- Pack counts match the README: 42 macros, 150 Talents, 50 equipment, 56
+  creatures, 6 tables, 6 journals. All 42 built macro commands pass
+  `syntax_check.mjs`.
+
+Open, fixable in code:
+- **The Enchantment item type has no label.** `documentTypes` declares
+  `enchantment`, `lang/en.json` has no `TYPES.Item.enchantment`, so the
+  Create Item dialog shows the raw key.
+- **README claims the system "carries the numbers and procedures, not the
+  text of the game."** Not true: Talent descriptions (150), the 218 miracles
+  and the bestiary are book text. Either the claim or the content changes.
+- **LICENSE.txt is the boilerplate's** ("Copyright (c) 2020 Asacolips
+  Projects") and points to a pack-licensing section the README does not have.
+- **`authors`, `url`, `bugs`, `manifest`, `download` are all empty.** A
+  stranger cannot install from a URL, cannot update, and has nowhere to report
+  a bug.
+- **No check boots the entry module.** Eight checks import pieces of
+  `the-broken-empires.mjs`; none runs `init` then `ready` against a stubbed
+  `game`/`CONFIG` and asserts the world comes up with no error.
+
+Open, needs Seb:
+- **Publishing rights.** A public release ships rulebook text. That is the
+  publisher's call, not a code fix.
+- **Where it is hosted.** A manifest URL needs a public place (e.g. GitHub
+  Releases) for `system.json` and the zip.
+- **The one test only a person can run:** install from the zip into a clean
+  Foundry (V12 minimum, V13, V14), create a world, build a character with the
+  Wizard, run one fight, as someone who has not seen the system.
+
 ## Wizard placeholders — built in v0.47.0, 2026-09-22
 
 - Open: a cleanup for characters already built (blank "Wise: subject N" at 0,
