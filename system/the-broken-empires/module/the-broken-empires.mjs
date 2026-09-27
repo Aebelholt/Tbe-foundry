@@ -17,6 +17,8 @@ import * as combat from './rules/combat.mjs';
 import * as zones from './rules/zones.mjs';
 import * as chatPopups from './helpers/chat-popups.mjs';
 import * as diceRoles from './helpers/dice-roles.mjs';
+import * as memory from './helpers/memory.mjs';
+import * as rollControls from './helpers/roll-controls.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -28,6 +30,13 @@ Hooks.once('init', function () {
   game.thebrokenempires = {
     TheBrokenEmpiresActor,
     TheBrokenEmpiresItem,
+    /* What a user last picked, per user (helpers/memory.mjs). A prefill,
+       never a commit. */
+    memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
+    /* The Task Modifier / Favor button rows, shared by the sheet's roll
+       dialog and the macro pack (helpers/roll-controls.mjs). */
+    ui: { taskButtons: rollControls.taskButtons, favorButtons: rollControls.favorButtons,
+          readRadio: rollControls.readRadio },
     /* Shared rule logic, reachable from a macro at runtime. A Foundry macro
      * cannot `import`, but it can read a global, which is how the macro pack
      * and the system agree on a rule instead of each keeping a copy. The

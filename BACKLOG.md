@@ -1,3 +1,36 @@
+## Quicker combat and chargen — built in v0.49.0, 2026-09-27
+
+Built: the first-session notes 4, 5 and 6 below (button rows with a memory,
+Attack remembers the last attack, one-click carry state), the Wizard keeps
+its draft, Severe -30 in the Task Modifier owner, untrained Endurance and
+Dodge at 20 in TBE: Attack, Wounds' Endurance prefill 40 -> 20.
+`qol_check.mjs` (49).
+
+Found while building it, not fixed:
+- **Page citations in the Rules Audit are one page early.** In
+  `/tmp/tbe.txt` a bare page-number line FOLLOWS its page's text: the
+  contents page puts Marking a Wound on 172, The Wound Die and Shock on 173,
+  Lethality Level on 174, Skill Modifiers on 18, Favor on 26, and each of
+  those passages sits just above that number. `parse_core_rules.py`'s
+  `page_of()` takes the number BEFORE the quote, so the TBE: Rules Audit
+  journal cites The Wound Die and Shock as p.172. `zones_check.mjs` already
+  uses the next number and is right. Every other hand-typed page in the
+  macros and modules may carry the same offset (resolution.mjs cited p.25
+  for a table on p.18); needs one audit pass, with the contents page as the
+  reference.
+- **Manual skill boxes still default to 50** where a number is typed
+  instead of picked (Opposed Roll, Haggle, Chase, Extended Roll, Quick
+  Combat, and Skill Roll's blank fallback). For the character's own side
+  the picker already offers the real value; the 50 is only a placeholder,
+  but it is not the book's untrained 20 either.
+- **Button rows and memory only reach the sheet dialog and TBE: Skill
+  Roll.** Extended Roll, Opposed Roll and Chase still use a number box for
+  their modifier. Opposed rolls take no Task Modifier (p.18), so those
+  boxes are for situational modifiers and may be right as they are.
+- A creature without Dodge on its stat block is still offered no Dodge.
+  That is the book's stat block, not a bug; noted so it is not "found"
+  again.
+
 ## Phase 7, first pass: the zip as a stranger gets it (2026-09-27, found in v0.47.1, fixed in v0.48.0)
 
 Built `The-Broken-Empires-System.zip` from the tree, unpacked it fresh and
@@ -1531,6 +1564,8 @@ decision is looking.
 ### 4. "Modifiers as radial buttons. Combat heavy game, having input more
 at-hand, and with a memory, as changes are less frequent."
 
+**Built in v0.49.0.**
+
 The Task Modifier is five fixed steps (Simple +20 through Hard -20, p.25) and
 Favor is 0-3. Both are small closed sets currently rendered as a `<select>`
 and a number box, which costs a click, a read and a click for something that
@@ -1542,6 +1577,8 @@ setting, so two players do not share one memory.
 
 ### 5. "Remember the last attack, so it's not starting over as much."
 
+**Built in v0.49.0.**
+
 Same instinct, one level up: TBE: Attack should reopen with the last weapon,
 target and defence choice already selected for that actor. A combat round is
 mostly the same attack repeated. The safeguard: prefill the choice, never the
@@ -1550,6 +1587,8 @@ starts spending points nobody chose this round.
 
 ### 6. "Changing from at hand, to stored to dropped, should be more easy
 than editing the item."
+
+**Built in v0.49.0.**
 
 **This is the scoping answer the Weapon Readiness backlog item was waiting
 for, and it needs a fourth state.** `item-weapon.mjs`'s `carried` field has

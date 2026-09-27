@@ -27,9 +27,12 @@ const num = (v, d = 0) => {
 export const isDoubles = (r) => r === 100 || (r < 100 && r % 11 === 0);
 
 /**
- * p.25, the table a GM picks from when a task is harder or easier than
- * ordinary. Not a house scale: these five are the book's own steps, and
- * "Medium +0" is the default an unmodified roll already is.
+ * p.18, the Task Modifier Table a GM picks from when a task is harder or
+ * easier than ordinary. Not a house scale: these six are the book's own
+ * steps, and "Medium +0" is the default an unmodified roll already is.
+ * Severe -30 was missing here until v0.49.0, so no roll from the sheet could
+ * be made at Severe; TBE: Skill Roll's own copy had it. The macro now reads
+ * this list, and resolution_check.mjs reads the rows out of the book.
  *
  * The book is explicit that these belong on unopposed rolls only: "Task
  * modifiers should generally not be applied to opposed rolls. Opposed rolls
@@ -40,7 +43,8 @@ export const TASK_MODIFIERS = [
   { key: "easy", label: "Easy", mod: 10, example: "Use Commerce to evaluate a handful of foreign coins" },
   { key: "medium", label: "Medium", mod: 0, example: "Make an attack in combat" },
   { key: "challenging", label: "Challenging", mod: -10, example: "Ride an unbroken stallion" },
-  { key: "hard", label: "Hard", mod: -20, example: "Recall Ancient Lore about a long-forgotten kingdom" }
+  { key: "hard", label: "Hard", mod: -20, example: "Recall Ancient Lore about a long-forgotten kingdom" },
+  { key: "severe", label: "Severe", mod: -30, example: "Use Athletics to climb a smooth wall in a rainstorm" }
 ];
 
 /**

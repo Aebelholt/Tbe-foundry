@@ -470,3 +470,58 @@
 .the-broken-empires.sheet .tbe-magic h3.skill-group-label {
   border-bottom: 1px solid var(--tbe-brass-dim);
 }
+
+/* Task Modifier / Favor button rows (helpers/roll-controls.mjs). Radio
+   inputs styled as a segmented row, so they read in any dialog theme: the
+   frame follows the dialog's own text colour, the pick is brass. */
+.tbe-seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 2px 0 6px;
+}
+.tbe-seg label {
+  flex: 1 1 0;
+  min-width: 52px;
+  cursor: pointer;
+  margin: 0;
+}
+.tbe-seg input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.tbe-seg label span {
+  display: block;
+  padding: 3px 2px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  opacity: 0.7;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.25;
+}
+.tbe-seg label:hover span {
+  opacity: 1;
+}
+.tbe-seg input[type="radio"]:checked + span {
+  opacity: 1;
+  background: var(--tbe-brass, #c08a3e);
+  border-color: var(--tbe-brass-dim, #7a5a2e);
+  color: #1f1710;
+}
+.tbe-seg input[type="radio"]:focus-visible + span {
+  outline: 2px solid var(--tbe-brass-bright, #e0ac5c);
+  outline-offset: 1px;
+}
+
+/* The gear row's carry picker: one change, no item sheet mid-fight. */
+.the-broken-empires.sheet select.carry-select {
+  width: auto;
+  height: auto;
+  font-size: 11px;
+  padding: 0 2px;
+  margin-left: 2px;
+}

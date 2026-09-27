@@ -99,8 +99,49 @@ console.log("\n3. The deferral really is a deferral, not a coincidence");
 console.log("\n4. The book's own tables travel with the rule");
 {
   const labels = OWNER.TASK_MODIFIERS.map((t) => t.label + " " + (t.mod >= 0 ? "+" : "") + t.mod);
-  check(labels.join(", ") === "Simple +20, Easy +10, Medium +0, Challenging -10, Hard -20",
-    "the five task modifiers are the book's, in the book's order (p.25)", labels);
+  /* The rows come out of the book when the text is here, not out of a list
+     typed into this check. The hand-typed expectation this replaced pinned
+     FIVE rows for months while the book's table has six: Severe -30 was
+     missing from the sheet's roll dialog and this assertion approved of it. */
+  const BOOK = process.env.TBE_BOOK || "/tmp/tbe.txt";
+  let bookRows = null, bookPage = null;
+  if (fs.existsSync(BOOK)) {
+    const lines = fs.readFileSync(BOOK, "utf8").split("\n");
+    const start = lines.findIndex((l) => /^Difficulty Modifier Example/.test(l.trim()));
+    const end = lines.findIndex((l, i) => i > start && /^Task Modifier Table/.test(l.trim()));
+    bookRows = [];
+    for (let i = start; i > -1 && i < end; i++) {
+      const m = lines[i].trim().match(/^(Simple|Easy|Medium|Challenging|Hard|Severe) ([+-]\d+)\b/);
+      if (m) bookRows.push(m[1] + " " + (m[2] === "-0" ? "+0" : m[2]));
+    }
+    /* A page-number line FOLLOWS its page's text in this dump: the contents
+       page puts "Skill Modifiers" on 18, and the table sits above the "18". */
+    for (let i = end; i < lines.length; i++) if (/^\s*\d{1,3}\s*$/.test(lines[i])) { bookPage = Number(lines[i].trim()); break; }
+    check(bookRows.length >= 5, "the Task Modifier Table was found in the book text", bookRows);
+    check(JSON.stringify(labels) === JSON.stringify(bookRows),
+      "the owner's Task Modifiers are the book's rows, in the book's order", { owner: labels, book: bookRows });
+    check(bookPage === 18, "the table is on p.18, where resolution.mjs cites it", bookPage);
+  } else {
+    console.log("  SKIP  no rulebook text at " + BOOK + "; checking against the last verified rows");
+    check(labels.join(", ") === "Simple +20, Easy +10, Medium +0, Challenging -10, Hard -20, Severe -30",
+      "the task modifiers match the six rows last verified against p.18", labels);
+  }
+  check(read("system/the-broken-empires/module/rules/resolution.mjs").includes(" * p.18, the Task Modifier Table"),
+    "resolution.mjs cites the table's real page");
+  /* The macro pack's fallback is a mirror; it must equal the owner row for row. */
+  const T = new Function("canvas", "game", "foundry", "ui", "CONFIG", LIB + "\n;return TBE;")(
+    undefined, undefined, undefined, undefined, undefined);
+  check(JSON.stringify(T.TASK_MODIFIERS_FALLBACK) === JSON.stringify(OWNER.TASK_MODIFIERS),
+    "the macro pack's fallback Task Modifier list is the owner's, row for row");
+  check(!/<option value="-30">Severe/.test(read("macros/tbe-skill-roll.js")),
+    "TBE: Skill Roll no longer keeps its own copy of the table");
+  {
+    /* Mutation: drop Severe from a copy of the owner's rows and confirm the
+       book comparison refuses it. */
+    const mutated = labels.filter((l) => !/^Severe/.test(l));
+    check(bookRows === null || JSON.stringify(mutated) !== JSON.stringify(bookRows),
+      "(mutation) the five-row table this replaced fails the book comparison");
+  }
   check(OWNER.FAVOR_STEP === 10 && OWNER.FAVOR_CAP === 3,
     "Favor is +10 per point, capped at 3 on any one roll, from all sources combined");
   /* Quotes are wrapped across comment lines, so normalise whitespace and the

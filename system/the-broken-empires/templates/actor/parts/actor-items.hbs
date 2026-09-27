@@ -13,7 +13,7 @@
       <div class="item-prop">Dmg</div>
       <div class="item-prop">CL / CS / Dis / T</div>
       <div class="item-prop">Skill</div>
-      <div class="item-prop">ENC</div>
+      <div class="item-prop">ENC, carried</div>
       <div class="item-controls">
         <a class="item-control item-create" title="Create Weapon" data-type="weapon">
           <i class="fas fa-plus"></i> New Weapon
@@ -42,7 +42,7 @@
             bug v0.35.0/v0.37.0 chased through four files, in template form:
             an else branch over an open enum is a default that silently
             absorbs every value added later. --}}
-      <div class="item-prop">{{item.system.enc}} ({{item.readiness.short}})</div>
+      <div class="item-prop">{{item.system.enc}} <select class="carry-select" title="{{item.readiness.label}}: {{item.readiness.cost}}"{{#unless @root.editable}} disabled{{/unless}}>{{#each item.carryOptions as |o|}}<option value="{{o.key}}" title="{{o.title}}"{{#if o.selected}} selected{{/if}}>{{o.label}}</option>{{/each}}</select></div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>
@@ -95,7 +95,7 @@
     <li class="item flexrow items-header">
       <div class="item-name">Shield</div>
       <div class="item-prop">AP</div>
-      <div class="item-prop">ENC</div>
+      <div class="item-prop">ENC, carried</div>
       <div class="item-controls">
         <a class="item-control item-create" title="Create Shield" data-type="shield">
           <i class="fas fa-plus"></i> New Shield
@@ -110,7 +110,7 @@
       </div>
       <div class="item-prop">{{item.system.ap}}</div>
       {{!-- Same owner as the weapon rows above, same reason. --}}
-      <div class="item-prop">{{item.system.enc}} ({{item.readiness.short}})</div>
+      <div class="item-prop">{{item.system.enc}} <select class="carry-select" title="{{item.readiness.label}}: {{item.readiness.cost}}"{{#unless @root.editable}} disabled{{/unless}}>{{#each item.carryOptions as |o|}}<option value="{{o.key}}" title="{{o.title}}"{{#if o.selected}} selected{{/if}}>{{o.label}}</option>{{/each}}</select></div>
       <div class="item-controls">
         <a class="item-control item-edit" title="Edit"><i class="fas fa-edit"></i></a>
         <a class="item-control item-delete" title="Delete"><i class="fas fa-trash"></i></a>

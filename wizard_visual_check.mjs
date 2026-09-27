@@ -205,7 +205,16 @@ const HTML = `<!doctype html><html><head><meta charset="utf-8"><title>TBE Wizard
 </style></head>
 <body>
 <script>${SHIM}</script>
-<script>${macro.command}</script>
+<script>
+/* Foundry runs a macro body inside an async function (Macro#execute), so
+   top-level await and return are legal in it. A bare <script> is not that,
+   and v0.49.0's draft-resume prompt was the first top-level await in this
+   macro. An error inside is re-thrown on a timer so it still reaches
+   pageerror, which section 5 counts. */
+(async () => {
+${macro.command}
+})().catch((e) => setTimeout(() => { throw e; }));
+</script>
 </body></html>`;
 
 const htmlPath = path.join(OUT_DIR, "_harness.html");
@@ -888,6 +897,74 @@ check(/"name":"Patterned In The Weave"[\s\S]{0,400}?"key":"system\.resolve\.max"
 const panel = fs.readFileSync(path.join(__dirname, "macros/tbe-solo-panel.js"), "utf8");
 check(panel.includes('"TBE: Character Wizard"'),
   "the Solo Panel lists the Character Wizard (it previously offered only Build Character)");
+
+console.log("== 4b. A draft survives closing the window (v0.49.0, SEQUENTIAL) ==");
+{
+  /* Fill part of a character, close the window, run the macro again: it must
+     offer to resume and put the draft back on the same page. Then close and
+     choose Start over: the draft must be gone. The memory owner is the real
+     module, loaded into the page; a user whose setFlag MERGES stands in for
+     Foundry's. */
+  const memSrc = fs.readFileSync(path.join(__dirname, "system/the-broken-empires/module/helpers/memory.mjs"), "utf8")
+    .replace(/export /g, "");
+  await page.addScriptTag({ content: `
+    (function () {
+      ${memSrc}
+      const merge = (a, b) => (b && typeof b === "object" && !Array.isArray(b))
+        ? Object.keys(b).reduce((o, k) => { o[k] = merge(o[k], b[k]); return o; }, Object.assign({}, a || {})) : b;
+      const flags = {};
+      window.game.user.getFlag = (sc, k) => flags[sc] && flags[sc][k];
+      window.game.user.setFlag = async (sc, k, v) => { flags[sc] = flags[sc] || {}; flags[sc][k] = merge(flags[sc][k], v); };
+      window.game.thebrokenempires = Object.assign(window.game.thebrokenempires || {},
+        { memory: { recall, remember, forget } });
+      window.__prompts = [];
+      window.__answer = { start: "resume" };
+      window.foundry.applications = { api: { DialogV2: { prompt: async (o) => {
+        window.__prompts.push(o.window.title); return window.__answer; } } } };
+    })();` });
+  const rerun = async () => {
+    await page.addScriptTag({ content: "(async () => {\n" + macro.command + "\n})().catch((e) => setTimeout(() => { throw e; }));" });
+    await page.waitForTimeout(400);
+  };
+  const before = await page.evaluate(async () => {
+    const w = window.__wizard;
+    w.draft.concept = "Resume test: a salt smuggler";
+    w.step = 3;
+    await w.render(true);
+    const key = w.steps()[w.step].key;
+    await w.close();
+    return { key, open: !!document.querySelector(".window-app") };
+  });
+  check(!before.open, "the wizard window closed");
+  await rerun();
+  const after = await page.evaluate(() => ({
+    prompts: window.__prompts.slice(),
+    concept: window.__wizard && window.__wizard.draft.concept,
+    key: window.__wizard && window.__wizard.steps()[window.__wizard.step].key,
+    open: !!document.querySelector(".window-app")
+  }));
+  check(after.prompts.includes("TBE: Character Wizard"), "reopening asks whether to resume", after.prompts);
+  check(after.open && after.concept === "Resume test: a salt smuggler", "Resume brings the typed concept back", after.concept);
+  check(after.key === before.key, "and opens on the page that was left (" + before.key + ")", after.key);
+
+  const fresh = await page.evaluate(async () => {
+    await window.__wizard.close();
+    window.__answer = { start: "fresh" };
+    window.__prompts = [];
+    return true;
+  });
+  await rerun();
+  const afterFresh = await page.evaluate(() => ({
+    concept: window.__wizard && window.__wizard.draft.concept,
+    step: window.__wizard && window.__wizard.step,
+    prompts: window.__prompts.slice()
+  }));
+  check(fresh && afterFresh.concept === "" && afterFresh.step === 0, "Start over opens a blank draft on page one", afterFresh);
+  await page.evaluate(async () => { window.__wizard.draft.concept = ""; await window.__wizard.close(); window.__prompts = []; });
+  await rerun();
+  const noAsk = await page.evaluate(() => window.__prompts.slice());
+  check(!noAsk.includes("TBE: Character Wizard"), "a draft nobody touched is not offered back: nothing to resume, nothing to ask", noAsk);
+}
 
 console.log("== 5. Console/page errors captured during the run ==");
 if (consoleErrors.length) {

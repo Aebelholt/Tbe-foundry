@@ -49,7 +49,7 @@ if (!me) {
     (hurt.length ? '<label style="display:block">Location <span style="font-size:11px;opacity:.7">(Treat / Stabilize / Remove impairment / Purge infection / Record a wound / Clear a location)</span>: <select name="loc" style="width:100%">' + locOpts(hurt) + "</select></label>"
                  : '<label style="display:block">Location <span style="font-size:11px;opacity:.7">(Treat / Stabilize / Remove impairment / Purge infection / Record a wound / Clear a location)</span>: <select name="loc" style="width:100%">' + locOpts(locs) + "</select></label>") +
     '<label style="display:block">Healer\'s Heal skill <span style="font-size:11px;opacity:.7">(Treat / Stabilize / Remove impairment / Shock / Purge infection)</span>: <input type="number" name="healSkill" value="' + (heal?.value ?? 30) + '" style="width:100%"></label>' +
-    '<label style="display:block">Endurance (for Recovery) <span style="font-size:11px;opacity:.7">(Rest and Recovery rolls only)</span>: <input type="number" name="end" value="' + (endurance?.value ?? 40) + '" style="width:100%"></label>' +
+    '<label style="display:block">Endurance (for Recovery) <span style="font-size:11px;opacity:.7">(Rest and Recovery rolls only)</span>: <input type="number" name="end" value="' + (endurance?.value ?? TBE.BASE_SKILL) + '" style="width:100%"></label>' +
     '<label style="display:block">Cleanliness / task modifier <span style="font-size:11px;opacity:.7">(Treat / Stabilize / Remove impairment / Shock / Purge infection)</span>: <select name="mod" style="width:100%">' +
     '<option value="20">Temple or clean sickroom +20</option><option value="10">Good shelter +10</option>' +
     '<option value="0" selected>Average +0</option><option value="-10">Camp in the wild -10</option>' +

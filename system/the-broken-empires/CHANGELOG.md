@@ -1,3 +1,50 @@
+# 0.49.0 — 2026-09-27
+
+**Quicker combat and chargen, from the first session's notes, and two rules
+that were quietly wrong.**
+
+- **TBE: Attack remembers your last attack.** It reopens on the same weapon,
+  the same throw choice and the same Wound Die, and on the defence you last
+  picked against that target. It remembers choices only: modifiers are
+  worked out fresh every time, and nothing that spends Resolve is carried
+  over. The dialog says when it has opened on a remembered attack.
+- **Task Modifier and Favor are buttons.** In the sheet's roll dialog and in
+  TBE: Skill Roll, both are a row of buttons, with the book's example as
+  the tooltip. The Task Modifier opens on the one you used last time for
+  that character. Favor always opens on 0, because it costs Resolve.
+- **Carry state is one click.** Weapons and shields on the Gear tab have a
+  picker for held, at hand, stored and dropped. The book's action cost for
+  each state shows as its tooltip; it is shown, not charged.
+- **The Character Wizard keeps your draft.** It saves after every page and
+  when you close it. Reopening it for the same character offers Resume or
+  Start over. Creating the character discards the draft. A draft you never
+  touched is not saved and not offered back.
+- **Severe −30 was missing.** The book's Task Modifier Table (p.18) has six
+  steps. The sheet's roll dialog offered five, so nothing rolled from the
+  sheet could be Severe. TBE: Skill Roll had its own copy of the table,
+  which was right. There is now one table, and the check reads its rows
+  out of the book.
+- **Untrained is 20, not "no skill".** A character with no Endurance on the
+  sheet has Endurance 20 (p.104). TBE: Attack treated them as having none:
+  a first Body impairment skipped the Endurance roll and printed "roll
+  Endurance or drop in Shock" for someone to remember. It rolls now. The
+  same went for Dodge, which was not offered at all to a character without
+  it. TBE: Wounds & Recovery prefilled a missing Endurance as 40; it is 20.
+  A creature's stat block is its whole skill list, so a creature without
+  Endurance is not given one: the GM is asked for a value, or rules it.
+
+Memory lives on your user, not on the character, so two players sharing a
+hireling each keep their own.
+
+New check: `qol_check.mjs` (49), with mutations for the remembered
+modifier, the remembered weapon and the untrained Endurance roll.
+`wizard_visual_check.mjs` now closes the Wizard half way, reopens it and
+checks the draft comes back on the same page, and that Start over clears it.
+Its harness now runs the macro inside an async function, the way Foundry
+does; a bare script tag rejected the Wizard's first top-level await.
+`resolution_check.mjs` reads the Task Modifier rows and their page from the
+rulebook text instead of a list typed into the check.
+
 # 0.48.0 — 2026-09-27
 
 **Phase 7, first pass: the zip as a stranger gets it.** The release zip was

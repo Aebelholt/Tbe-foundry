@@ -26,8 +26,11 @@
  * Built as classic `Application` (v1), not ApplicationV2 -- this pack still
  * targets Foundry v11, where ApplicationV2 doesn't exist.
  *
- * The draft lives only in this window's memory, not on the actor or in a
- * flag. Cross-session persistence remains a tracked BACKLOG.md gap.
+ * The draft is saved on the USER after every page (v0.49.0), keyed by the
+ * actor being built, through TBE.remember (owner: module/helpers/memory.mjs).
+ * Closing the window, a crash or a reload no longer loses a half-built
+ * character: reopening offers to resume. Nothing touches the actor until
+ * Create Character, and a created character's draft is discarded.
  */
 
 const CHARGEN_SKILL_CAP = TBE.CHARGEN_SKILL_CAP;
@@ -623,6 +626,9 @@ if (!actor) {
         trueName: "",
         roBindAlloc: {}, roStrandAlloc: {}
       };
+      /* What an untouched draft looks like, so closing one saves nothing and
+       reopening does not ask about a character nobody started. */
+      this._pristine = JSON.stringify(this.draft);
     }
 
     static get defaultOptions() {
@@ -1613,9 +1619,45 @@ if (!actor) {
       }
     }
 
+    /* A JSON copy, so a later edit to this.draft cannot reach what was saved,
+       and anything that is not plain data is dropped rather than stored. */
+    _snapshot() {
+      return {
+        v: 1, savedAt: Date.now(), actorName: this.actor.name,
+        stepKey: (this.steps()[this.step] || {}).key || null,
+        draft: JSON.parse(JSON.stringify(this.draft))
+      };
+    }
+    async _saveDraft() {
+      if (this._committed) return;
+      const untouched = this.step === 0 && JSON.stringify(this.draft) === this._pristine;
+      await TBE.remember("wizardDraft", this.actor.id, untouched ? null : this._snapshot());
+    }
+    /* Put a saved draft back over the defaults, so a field added to the draft
+       in a later version still starts from its default. */
+    _restore(saved) {
+      if (!saved || typeof saved.draft !== "object") return false;
+      this.draft = Object.assign(this.draft, saved.draft);
+      const i = this.steps().findIndex((st) => st.key === saved.stepKey);
+      this.step = i >= 0 ? i : 0;
+      return true;
+    }
+    async close(options) {
+      /* Read the page being left, then save, so closing keeps what was typed
+         on it. Not after Create Character: that draft is spent. */
+      if (!this._committed) {
+        try { const el = this.element?.[0] ?? this.element; if (el) this._readCurrentStep(el); } catch (e) { /* page not rendered */ }
+        await this._saveDraft();
+      }
+      return super.close(options);
+    }
+
     activateListeners(html) {
       super.activateListeners(html);
       const root = (html[0] ?? html);
+      /* Every render follows a page change or an action, so the draft is
+         saved as it stands now. */
+      this._saveDraft();
 
       /* Live-update the value chips as points are typed. A full re-render on
        * every keystroke would steal focus, so only the chips are rewritten
@@ -1965,6 +2007,8 @@ if (!actor) {
             btn.disabled = true;
             try {
               await this.commit();
+              this._committed = true;
+              await TBE.remember("wizardDraft", this.actor.id, null);
               this.close();
               /* Everything chargen deliberately leaves open -- shopping, the
                * free Talent picks, naming blank slots, Goals, Shared History
@@ -2321,5 +2365,24 @@ if (!actor) {
     }
   }
 
-  new TBECharacterWizard(actor).render(true);
+  /* A draft left open last time is offered back, not forced: starting over
+     is one click, and the saved draft is kept until Create Character or an
+     explicit fresh start. */
+  const wizard = new TBECharacterWizard(actor);
+  const saved = TBE.recall("wizardDraft", actor.id);
+  let open = true;
+  if (saved && saved.draft) {
+    const when = saved.savedAt ? new Date(saved.savedAt).toLocaleString() : "earlier";
+    const stepLabel = (wizard.STEP_DEFS.find((st) => st.key === saved.stepKey) || {}).label || "the start";
+    const pick = await TBE.prompt("TBE: Character Wizard",
+      "<div>You have an unfinished character for <b>" + TBE.esc(actor.name) + "</b>, saved " + TBE.esc(when) +
+      ", on <b>" + TBE.esc(stepLabel) + "</b>.</div>" +
+      '<label style="display:block;margin-top:6px"><input type="radio" name="start" value="resume" checked> Resume it</label>' +
+      '<label style="display:block"><input type="radio" name="start" value="fresh"> Start over (the saved draft is discarded)</label>',
+      "Open");
+    if (!pick) open = false;
+    else if (pick.start === "fresh") await TBE.remember("wizardDraft", actor.id, null);
+    else wizard._restore(saved);
+  }
+  if (open) wizard.render(true);
 }

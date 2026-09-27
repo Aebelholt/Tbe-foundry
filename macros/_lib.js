@@ -532,6 +532,68 @@ TBE.skillOptions = function (fieldName = "pick", label = "Skill", filterGroup = 
  * number, since both the blank-sheet builder and the roll picker need it. */
 TBE.BASE_SKILL = 20;
 
+/* The Task Modifier Table (p.18). Owner: module/rules/resolution.mjs, read
+ * through the rules global. The list below is the fallback for the Node
+ * harness and for a world without the system; resolution_check.mjs asserts it
+ * equals the owner row for row, so it cannot drift the way this macro pack's
+ * own copy once did (it had Severe -30 while the owner did not). */
+TBE.TASK_MODIFIERS_FALLBACK = [
+  { key: "simple", label: "Simple", mod: 20, example: "Intimidate a coward" },
+  { key: "easy", label: "Easy", mod: 10, example: "Use Commerce to evaluate a handful of foreign coins" },
+  { key: "medium", label: "Medium", mod: 0, example: "Make an attack in combat" },
+  { key: "challenging", label: "Challenging", mod: -10, example: "Ride an unbroken stallion" },
+  { key: "hard", label: "Hard", mod: -20, example: "Recall Ancient Lore about a long-forgotten kingdom" },
+  { key: "severe", label: "Severe", mod: -30, example: "Use Athletics to climb a smooth wall in a rainstorm" }
+];
+TBE.taskModifiers = () =>
+  (typeof game !== "undefined" && game?.thebrokenempires?.rules?.TASK_MODIFIERS) || TBE.TASK_MODIFIERS_FALLBACK;
+
+/* What this user last picked (v0.49.0). Owner: module/helpers/memory.mjs, on
+ * the user, never the actor. Without the system (the Node harness) it is kept
+ * in TBE._memory for the length of one script, which is also what the checks
+ * inspect. A PREFILL, never a commit: callers pass choices, never a spend. */
+TBE._memory = {};
+TBE._memOwner = () => (typeof game !== "undefined" && game?.thebrokenempires?.memory) || null;
+TBE.recall = function (kind, key) {
+  const m = TBE._memOwner();
+  if (m && typeof game !== "undefined" && game.user) return m.recall(game.user, kind, key);
+  const v = TBE._memory[kind]?.[key];
+  return v === undefined ? null : v;
+};
+TBE.remember = async function (kind, key, value) {
+  const m = TBE._memOwner();
+  if (m && typeof game !== "undefined" && game.user) {
+    try { return await m.remember(game.user, kind, key, value); }
+    catch (e) { console.warn("TBE | could not remember " + kind, e); return false; }
+  }
+  TBE._memory[kind] = TBE._memory[kind] || {};
+  if (value === null || value === undefined) delete TBE._memory[kind][key];
+  else TBE._memory[kind][key] = value;
+  return true;
+};
+
+/* The Task Modifier and Favor pickers as button rows. Owner of the markup:
+ * module/helpers/roll-controls.mjs. The fallback is a plain <select>, for a
+ * world without the system; both post the same field names. */
+TBE._ui = () => (typeof game !== "undefined" && game?.thebrokenempires?.ui) || null;
+TBE.taskButtons = function (selected, name) {
+  name = name || "task";
+  const ui = TBE._ui();
+  if (ui) return ui.taskButtons(TBE.taskModifiers(), selected, name);
+  return '<select name="' + name + '" style="width:100%">' + TBE.taskModifiers().map((m) =>
+    '<option value="' + m.mod + '"' + (m.mod === TBE.num(selected, 0) ? " selected" : "") + ">" +
+    m.label + " " + (m.mod >= 0 ? "+" : "") + m.mod + "</option>").join("") + "</select>";
+};
+TBE.favorButtons = function (max, name) {
+  name = name || "favor";
+  const ui = TBE._ui();
+  if (ui) return ui.favorButtons(max, 10, name);
+  const n = Math.max(0, Math.floor(TBE.num(max, 0)));
+  return '<select name="' + name + '" style="width:100%">' +
+    Array.from({ length: n + 1 }, (_, i) => '<option value="' + i + '"' + (i === 0 ? " selected" : "") + ">" + i + (i ? " (+" + i * 10 + ")" : "") + "</option>").join("") +
+    "</select>";
+};
+
 TBE.SKILL_GROUPS = {
   Combat: ["Dodge", "Melee: Light", "Melee: Medium", "Melee: Heavy", "Might", "Missile", "Thrown"],
   Adventuring: ["Athletics", "Endurance", "Locks & Traps", "Perception", "Ride", "Sail/Boat",

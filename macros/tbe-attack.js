@@ -84,7 +84,11 @@ if (!attacker) {
 
   /* Defence: Dodge, or the defender's best fighting skill (their parry). */
   const defSkillsAll = actorSkillList(target);
-  const dodge = defSkillsAll.filter((s) => /dodge/i.test(s.name)).sort((a, b) => b.value - a.value)[0] ?? null;
+  /* A character with no Dodge written down can still Dodge, untrained at 20
+     (p.104); before v0.49.0 the option simply was not offered. A creature's
+     stat block is its whole list, so it only dodges if the block says so. */
+  const dodge = defSkillsAll.filter((s) => /dodge/i.test(s.name)).sort((a, b) => b.value - a.value)[0] ??
+    (target.type === "creature" ? null : { name: "Dodge (untrained)", value: TBE.BASE_SKILL, fighting: false, expertise: 0 });
   const parry = defSkillsAll.filter((s) => s.fighting || /melee|might|axe|sword|spear|club|bite|claw|scimitar|hammer|fang|tusk|sting|crush|tentacle|talon/i.test(s.name))
     .sort((a, b) => b.value - a.value)[0] ?? null;
   const defChoices = [];
@@ -149,8 +153,15 @@ if (!attacker) {
   if (!weapons.length) {
     ui.notifications?.warn("TBE: " + attacker.name + " has no usable weapon items. Drag one on from TBE Weapons, or use TBE: Opposed Roll.");
   } else {
+    /* The last attack this user made with this attacker (v0.49.0, first-
+       session note: "Remember the last attack, so it's not starting over as
+       much"). Weapon, throw, Wound Die and, per target, the defence. Choices
+       only: the modifiers are recomputed every time (encumbrance, zones and
+       size change between rounds) and nothing that spends is remembered. */
+    const mem = TBE.recall("attack", attacker.id) || {};
+    const wLast = Math.max(0, weapons.findIndex((w) => w.id === mem.weaponId || w.name === mem.weapon));
     const wOpts = weapons.map((w, i) =>
-      '<option value="' + i + '">' + w.name + " &mdash; " + w.skillName + " " + w.skillValue + TBE.expertiseTag(w.skillExpertise) +
+      '<option value="' + i + '"' + (i === wLast ? " selected" : "") + '>' + w.name + " &mdash; " + w.skillName + " " + w.skillValue + TBE.expertiseTag(w.skillExpertise) +
       ", Dmg " + w.dmg + (w.nl ? " NL" : "") + " [" + w.readiness.short + "]" +
       (w.matched ? "" : " [no matching skill]") + "</option>"
     ).join("");
@@ -159,7 +170,12 @@ if (!attacker) {
     const legalDef = (sizeFx && sizeFx.defenderMustDodge)
       ? defChoices.filter((s) => /dodge/i.test(s.name))
       : defChoices;
-    const dOpts = legalDef.map((s, i) => '<option value="' + i + '">' + s.name + " (" + s.value + TBE.expertiseTag(s.expertise) + ")</option>").join("") +
+    /* The defence remembered for THIS target, and only if it is still legal
+       (a size gap can take the parry away between one fight and the next).
+       "Undefended" is never remembered: surprise is a one-round fact. */
+    const dLastName = mem.def?.[target.id] ?? null;
+    const dLast = legalDef.findIndex((s) => s.name === dLastName);
+    const dOpts = legalDef.map((s, i) => '<option value="' + i + '"' + (i === dLast ? " selected" : "") + '>' + s.name + " (" + s.value + TBE.expertiseTag(s.expertise) + ")</option>").join("") +
       '<option value="none">Undefended (surprised)</option>';
 
     /* Zone Hazards (p.151): offered pre-ticked, applied only if the chosen
@@ -180,7 +196,7 @@ if (!attacker) {
       "<div><b>" + attacker.name + "</b> attacks <b>" + target.name + "</b></div>" +
       '<label style="display:block;margin-top:4px">Weapon: <select name="weapon" style="width:100%">' + wOpts + "</select></label>" +
       (weapons.some((w) => w.throwable)
-        ? '<label style="display:block"><input type="checkbox" name="thrown"> Throw it (' +
+        ? '<label style="display:block"><input type="checkbox" name="thrown"' + (mem.thrown ? " checked" : "") + '> Throw it (' +
           weapons.filter((w) => w.throwable).map((w) => w.name).join(", ") + ' can be thrown; leave unticked to strike in melee)</label>'
         : "") +
       '<label style="display:block">Attack modifier: <input type="number" name="atkMod" value="' + atkEnc.penalty + '" style="width:100%"></label>' +
@@ -202,7 +218,8 @@ if (!attacker) {
       (isCreature ? "" : ", armour worn: " + armorSummary) + "</div>" +
       (unassignedArmor.length ? '<div style="font-size:11px;color:#b04040">' + unassignedArmor.map((i) => i.name).join(", ") +
         " has no hit location checked and protects nothing -- open the item and check one (p.140).</div>" : "") +
-      '<label style="display:block"><input type="checkbox" name="d20"> Defender uses a d20 Wound Die (Solo Constitution)</label>' +
+      '<label style="display:block"><input type="checkbox" name="d20"' + (mem.d20 ? " checked" : "") + '> Defender uses a d20 Wound Die (Solo Constitution)</label>' +
+      (mem.weapon ? '<div style="font-size:11px;opacity:.7;margin-top:2px">Opened on your last attack with ' + attacker.name + ".</div>" : "") +
       "</div>";
 
     const data = await TBE.prompt("TBE Attack", content, "Strike");
@@ -215,6 +232,12 @@ if (!attacker) {
       const isRanged = w.usesAmmo || isThrow;
       const undefended = data.def === "none" || !legalDef.length;
       const defPick = undefended ? null : legalDef[TBE.num(data.def, 0)] ?? legalDef[0] ?? null;
+      await TBE.remember("attack", attacker.id, {
+        weapon: w.name, weaponId: w.id, thrown: data.thrown === "on", d20: data.d20 === "on",
+        /* Last 20 targets only; the newest is re-inserted at the end. */
+        def: Object.fromEntries(Object.entries(mem.def || {})
+          .filter(([k]) => k !== target.id).concat(defPick ? [[target.id, defPick.name]] : []).slice(-20))
+      });
       const hz = zoneFx
         ? TBE.zones().resolveHazardMods(zoneFx.mods, {
             ticked: (id) => data["hz_" + id] === "on", ranged: isRanged,
@@ -474,15 +497,34 @@ if (!attacker) {
               body += "<div><b>Second impairment in " + loc + ":</b> " + target.name + " drops in <b>SHOCK</b> for the failed Wound Die (" + wd.total + ") in minutes" +
                 (loc === "Head" ? ", and is unconscious" : "") + ".</div>";
             } else if (loc === "Body") {
-              const endSkill = actorSkillList(target).filter((s) => /endurance/i.test(s.name))[0];
+              /* p.172-173: a first Body impairment is "Succeed in an Endurance
+                 roll or drop in Shock". A character with no Endurance written
+                 on the sheet is untrained at 20 (p.104), not unable to roll:
+                 until v0.49.0 this found no skill Item, skipped the roll and
+                 printed "roll Endurance or drop in Shock" for somebody else to
+                 remember. A creature's stat block is its whole skill list, so
+                 one without Endurance has no book value: the GM is asked for
+                 one, and a player attacking it gets the reminder line. */
+              let endSkill = actorSkillList(target).filter((s) => /endurance/i.test(s.name))[0];
+              if (!endSkill && !isCreature) endSkill = { name: "Endurance", value: TBE.BASE_SKILL, untrained: true };
+              if (!endSkill && isCreature && game.user?.isGM) {
+                const ask = await TBE.prompt("Body impaired",
+                  "<div>" + target.name + "'s stat block lists no Endurance. Body impaired: it rolls Endurance or drops in Shock (p.173).</div>" +
+                  '<label style="display:block">Endurance to roll against: <input type="number" name="end" value="" style="width:100%"></label>' +
+                  '<div style="font-size:11px;opacity:.8">Leave it blank to rule it yourself.</div>', "Roll");
+                const v = ask ? Number(ask.end) : NaN;
+                if (ask && String(ask.end ?? "").trim() !== "" && Number.isFinite(v)) endSkill = { name: "Endurance", value: v, ruled: true };
+              }
               if (endSkill) {
                 const eRoll = await TBE.d100("defence");
                 rolls.push(eRoll);
                 const eRes = TBE.resolve(eRoll.total, endSkill.value);
-                body += "<div>Body impaired: Endurance " + endSkill.value + " roll <b>" + TBE.face(eRes.roll) + "</b> " + TBE.tag(eRes) + ".</div>";
+                body += "<div>Body impaired: Endurance " + endSkill.value +
+                  (endSkill.untrained ? " (untrained, p.104)" : endSkill.ruled ? " (GM's ruling)" : "") +
+                  " roll <b>" + TBE.face(eRes.roll) + "</b> " + TBE.tag(eRes) + ".</div>";
                 if (!eRes.success) { shock = true; body += "<div>" + target.name + " drops in <b>SHOCK</b>.</div>"; }
               } else {
-                body += "<div>Body impaired: roll Endurance or drop in Shock.</div>";
+                body += "<div>Body impaired: " + target.name + " has no Endurance on its stat block. The GM rules: an Endurance roll, or it drops in Shock (p.173).</div>";
               }
             } else {
               /* First-time impairment by location: the book splits the effect by whether

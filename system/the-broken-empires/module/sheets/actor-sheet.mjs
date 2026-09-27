@@ -7,6 +7,8 @@ import * as RULES from '../rules/resolution.mjs';
 import * as VISIBILITY from '../rules/visibility.mjs';
 import * as PERMISSION from '../rules/permission.mjs';
 import * as COMBAT from '../rules/combat.mjs';
+import * as MEMORY from '../helpers/memory.mjs';
+import * as CONTROLS from '../helpers/roll-controls.mjs';
 
 /**
  * The TBE actor sheet. Combat, wounds, casting, and every other action stay
@@ -121,6 +123,14 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     const threads = [];
     const enchantments = [];
 
+    /* The gear row's carry picker (v0.49.0, first-session note: "changing
+       from at hand, to stored to dropped, should be more easy than editing
+       the item"). Every state the owner (TBE.READINESS) knows, in its order,
+       each with the book's cost as the tooltip; nothing listed by hand. */
+    const carryOptions = (i) => Object.entries(TBE.READINESS).map(([key, r]) => ({
+      key, label: r.short, title: `${r.label}: ${r.cost}`,
+      selected: key === (i.system?.carried ?? 'hand')
+    }));
     for (const i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       if (i.type === 'skill') (skills[i.system.group] ??= []).push(i);
@@ -129,9 +139,9 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
          template used to test `carried` with a chain of eq helpers ending in
          an else, which meant every carry state added after the chain was
          written displayed as whatever the else said. */
-      else if (i.type === 'weapon') { i.readiness = TBE.readinessOf(i); weapons.push(i); }
+      else if (i.type === 'weapon') { i.readiness = TBE.readinessOf(i); i.carryOptions = carryOptions(i); weapons.push(i); }
       else if (i.type === 'armor') armor.push(i);
-      else if (i.type === 'shield') { i.readiness = TBE.readinessOf(i); shields.push(i); }
+      else if (i.type === 'shield') { i.readiness = TBE.readinessOf(i); i.carryOptions = carryOptions(i); shields.push(i); }
       else if (i.type === 'talent') (talents[i.system.category] ??= []).push(i);
       else if (i.type === 'strand') strands.push(i);
       else if (i.type === 'thread') threads.push(i);
@@ -424,6 +434,22 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
 
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 
+    /* One change on the gear row moves a weapon or shield between held, at
+       hand, stored and dropped. Written through the permission owner, so a
+       refusal is a sentence rather than a silent no-op. The book's action
+       cost is shown, never charged (Readiness is not enforced, p.129). */
+    html.on('change', '.carry-select', async (ev) => {
+      const li = $(ev.currentTarget).parents('.item');
+      const item = this.actor.items.get(li.data('itemId'));
+      const value = ev.currentTarget.value;
+      if (!item || !TBE.READINESS[value]) return;
+      await PERMISSION.applyItemWrite(item, { 'system.carried': value }, {
+        what: `${item.name}'s carry state`,
+        user: game.user,
+        notify: (msg) => ui.notifications?.warn(msg)
+      });
+    });
+
     html.on('click', '.item-delete', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
       const item = this.actor.items.get(li.data('itemId'));
@@ -671,24 +697,22 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
      * single roll at 3 whatever it is sourced from. */
     const maxSpend = Math.min(RULES.FAVOR_CAP, resolveLeft);
 
-    const mods = RULES.TASK_MODIFIERS.map((m) =>
-      `<option value="${m.mod}"${m.mod === 0 ? ' selected' : ''}>${m.label} ${m.mod >= 0 ? '+' : ''}${m.mod} &mdash; ${m.example}</option>`
-    ).join('');
-    const spends = Array.from({ length: maxSpend + 1 }, (_, n) =>
-      `<option value="${n}"${n === 0 ? ' selected' : ''}>${n}${n ? ` (+${n * RULES.FAVOR_STEP})` : ''}</option>`
-    ).join('');
+    /* Buttons, not selects (first-session note: "modifiers as radial
+     * buttons ... with a memory"). The Task Modifier opens on the step this
+     * user last used for this character; Favor always opens on 0, because it
+     * spends Resolve and a remembered spend is one nobody chose. */
+    const memKey = this.actor.id ?? 'none';
+    const lastTask = Number(MEMORY.recall(game.user, 'task', memKey)) || 0;
+    const mods = CONTROLS.taskButtons(RULES.TASK_MODIFIERS, lastTask, 'task');
+    const spends = CONTROLS.favorButtons(maxSpend, RULES.FAVOR_STEP, 'favor');
 
     const content = `
       <form>
         <p style="margin:.2em 0"><b>${name}</b> ${base}${expertise >= 2 ? ` <span title="Expertise">Ex${expertise}</span>` : ''}${savvy ? ' <span title="Savvy">S</span>' : ''}${untrained ? ` <span style="font-size:11px;opacity:.8">untrained, ${TBE.BASE_SKILL} (p.104)</span>` : ''}</p>
-        <div class="form-group">
-          <label>Task Modifier</label>
-          <select name="task">${mods}</select>
-        </div>
-        <div class="form-group">
-          <label>Favor / Resolve</label>
-          <select name="favor">${spends}</select>
-        </div>
+        <div style="margin:.3em 0 0">Task Modifier</div>
+        ${mods}
+        <div>Favor / Resolve</div>
+        ${spends}
         <p style="font-size:11px;opacity:.8;margin:.4em 0 0">
           Resolve left: ${resolveLeft}. Up to ${RULES.FAVOR_CAP} Favor on any one roll,
           <i>from any source</i>, so Favor or Leverage already spent here counts against the same ${RULES.FAVOR_CAP}.
@@ -705,7 +729,8 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
         buttons: {
           roll: { label: 'Roll', callback: (dlg) => {
             const f = dlg[0].querySelector('form');
-            resolve({ task: Number(f.task.value) || 0, favor: Number(f.favor.value) || 0 });
+            resolve({ task: Number(CONTROLS.readRadio(f, 'task')) || 0,
+                      favor: Number(CONTROLS.readRadio(f, 'favor')) || 0 });
           } },
           cancel: { label: 'Cancel', callback: () => resolve(null) }
         },
@@ -717,16 +742,20 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
           const f = dlg[0].querySelector('form');
           const out = f.querySelector('.tbe-roll-total');
           const update = () => {
-            const total = base + (Number(f.task.value) || 0) + (Number(f.favor.value) || 0) * RULES.FAVOR_STEP;
+            const total = base + (Number(CONTROLS.readRadio(f, 'task')) || 0) +
+              (Number(CONTROLS.readRadio(f, 'favor')) || 0) * RULES.FAVOR_STEP;
             out.innerHTML = `<b>Rolling against ${total}</b>`;
           };
-          f.task.addEventListener('change', update);
-          f.favor.addEventListener('change', update);
+          f.addEventListener('change', update);
           update();
         }
       }).render(true);
     });
     if (!spend) return;
+    /* The modifier only; never the Favor. A failed write (no user, a stub)
+       costs nothing but the memory. */
+    try { await MEMORY.remember(game.user, 'task', memKey, spend.task); }
+    catch (err) { console.warn('TBE | could not remember the Task Modifier', err); }
 
     const target = base + spend.task + spend.favor * RULES.FAVOR_STEP;
     const roll = await new Roll('1d100').roll();

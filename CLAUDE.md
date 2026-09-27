@@ -526,7 +526,9 @@ scope at least one pass at the player-facing output itself.
   Also asserts the sheet's roll button carries no rule logic of its own.
   Carries a mutation that drifts the macro's crit rule and confirms the sweep
   catches it. Read it before touching resolution, the Task Modifier table or
-  the Favor cap.
+  the Favor cap. Its Task Modifier assertion reads the six rows (and p.18)
+  out of the rulebook text: the hand-typed list it replaced pinned five rows
+  and approved of Severe -30 being missing.
 - `node probe_check.mjs` — 30 checks over `TBE-Session-Probe.js`, the
   after-action probe a GM pastes into their world once a session is over. Its
   value is entirely in the roll analysis, and that analysis is regexes run
@@ -690,6 +692,15 @@ scope at least one pass at the player-facing output itself.
   entry module at all, and the Enchantment type had shipped with no label.
   Pass an unpacked release zip as `dir` to boot the artifact, not the tree.
   Read it before adding a document type, a setting or a rules export.
+- `node qol_check.mjs` — 49 checks over the v0.49.0 batch. The memory owner
+  (`module/helpers/memory.mjs`) run as a sequence against a user whose
+  setFlag MERGES like Foundry's, which is why memory is one JSON string: a
+  nested flag object keeps a key you deleted. The BUILT TBE: Skill Roll and
+  TBE: Attack run twice each, asserting the second dialog opens on the first
+  one's choices and never on a spend. **Remember a choice, never a cost**:
+  Favor, Resolve and modifiers are not stored. Also covers untrained
+  Endurance and Dodge at 20 (p.104) in Attack, and the sheet's carry picker.
+  Read it before adding anything to what a dialog remembers.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is
@@ -699,7 +710,11 @@ scope at least one pass at the player-facing output itself.
   domain's `.py` extractor `check_tc`-style column-position verification
   before adding its numbers here, not just a presence check.
 - `node finish_check.mjs` — all six TBE: Finish Character tabs.
-- Wizard-specific: `node wizard_visual_check.mjs` drives the real,
+- Wizard-specific: `node wizard_visual_check.mjs` runs the built macro inside
+  an async function, the way `Macro#execute` does (a bare `<script>` made
+  top-level `await` a syntax error, and v0.49.0's resume prompt was the first
+  one). Section 4b is SEQUENTIAL: close half way, reopen, resume, start over.
+  It drives the real,
   fully-built `TBE: Character Wizard` macro in headless Chromium (a small
   Application-v1 shim, not a full Foundry mock — see the file's own header
   comment for exactly what it stubs and why) and screenshots all 15 steps
