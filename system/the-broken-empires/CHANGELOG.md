@@ -1,3 +1,35 @@
+# 0.55.0 — 2026-09-27
+
+**Oracle tables from your own file.**
+
+- **New: TBE: Import Oracle Tables** (GM). Choose a JSON file of oracle
+  tables you keep yourself (a transcription of a published solo oracle, for
+  example) and it becomes world RollTables in the folder "TBE Oracle
+  (imported)". The system ships the reader only: none of any oracle's
+  content is in this release.
+- **Every table is checked before it is written.** Rolls must run in order,
+  ranges must be contiguous and cover the die, and a printed range must
+  agree with its numbers. A table that fails is left out and named with the
+  reason; the rest still import. You see the whole plan before anything is
+  written.
+- **Tables with several columns become one table per column.** A row printed
+  across every column lands in each. A die with a modifier ("1d10 + PP")
+  rolls its base and asks for the modifier.
+- **Lookups and rules text go into one journal,** "TBE Oracle Reference".
+  Blank record sheets are skipped, and the report lists them. Notes your
+  file carries about itself (inferred labels, reconstructed layouts,
+  possible slips) are listed too.
+- **Importing again updates the same tables,** never duplicates them. New
+  rows are written before old ones are removed.
+- **New: TBE: Oracle Tables.** Roll any imported table. Paired tables (Action
+  1 and 2, Descriptor 1 and 2) roll together; tables meant to be read in
+  pairs roll twice. It remembers the table you picked last.
+- **Random Events can use your tables.** A new world setting, ticked on
+  import, makes Random Event, Ask the Weave and Subverted Scene roll the
+  imported event focus and the newest Meaning Actions pair. Anything it
+  cannot find falls back to the TBE tables. Off by default.
+- Both macros are on the Solo Panel.
+
 # 0.54.0 — 2026-09-27
 
 **Table defaults, token linking, and a portrait roster. The Foundry chores a

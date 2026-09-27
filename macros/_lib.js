@@ -335,6 +335,12 @@ TBE.tableRows = function (name) {
 
 /* Roll a table by name. Falls back to the data baked into this macro if the table is absent. */
 TBE.drawTable = async function (name) {
+  /* A RollTable document is drawn as it is (imported oracle tables are
+     found by flag, not by name); a name is looked up, then falls back. */
+  if (name && typeof name === "object" && typeof name.roll === "function") {
+    const out = await name.roll();
+    return { text: TBE.resultText(out.results?.[0]), total: out.roll?.total ?? null };
+  }
   const t = game.tables.getName(name);
   if (t) {
     const out = await t.roll();
@@ -394,11 +400,35 @@ TBE.ensureTables = async function () {
   return out;
 };
 
+/* Which tables a Random Event rolls. The TBE tables, unless the GM imported
+ * oracle tables and turned on "Random Events use imported oracle tables";
+ * the system decides which imported ones (helpers/oracle-import.mjs), and any
+ * slot it cannot fill falls back to the TBE table alone. */
+TBE.EVENT_TABLES = { focus: "TBE: Random Events", w1: "TBE: Event Randomizers I", w2: "TBE: Event Randomizers II" };
+TBE.eventTables = function () {
+  let got = null;
+  try { got = globalThis.game?.thebrokenempires?.oracle?.eventTables?.() ?? null; } catch (e) { got = null; }
+  return {
+    focus: got?.focus ?? TBE.EVENT_TABLES.focus,
+    w1: got?.w1 ?? TBE.EVENT_TABLES.w1,
+    w2: got?.w2 ?? TBE.EVENT_TABLES.w2
+  };
+};
+
+/* The word pair alone (Subverted Scene's "More"). */
+TBE.eventWords = async function () {
+  const t = TBE.eventTables();
+  const w1 = await TBE.drawTable(t.w1);
+  const w2 = await TBE.drawTable(t.w2);
+  return { w1: w1?.text || "?", w2: w2?.text || "?" };
+};
+
 /* Roll a full Random Event: focus + two randomizer words (+ Empires List when called for). */
 TBE.event = async function () {
-  const focus = await TBE.drawTable("TBE: Random Events");
-  const w1 = await TBE.drawTable("TBE: Event Randomizers I");
-  const w2 = await TBE.drawTable("TBE: Event Randomizers II");
+  const t = TBE.eventTables();
+  const focus = await TBE.drawTable(t.focus);
+  const w1 = await TBE.drawTable(t.w1);
+  const w2 = await TBE.drawTable(t.w2);
   const f = (focus?.text || "").toUpperCase();
   let list = null;
   if (f.indexOf("LIST ELEMENT") > -1) list = await TBE.drawTable("TBE: Empires List");

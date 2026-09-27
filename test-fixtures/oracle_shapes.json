@@ -1,0 +1,1300 @@
+{
+ "meta": {
+  "source": "Synthetic shapes fixture (invented words)",
+  "unassigned_fragments": [
+   {
+    "text": "STRAY",
+    "likely_belongs_to": "keyed_scenes_record_sheet"
+   }
+  ]
+ },
+ "meaning_tables": {
+  "summary": "Roll on each table of a pair.",
+  "variants": {
+   "v1_batch1": {
+    "descriptions": {
+     "descriptor_1": {
+      "label_source": "transcribed",
+      "entries": [
+       {
+        "roll": 1,
+        "result": "OldDescA1"
+       },
+       {
+        "roll": 2,
+        "result": "OldDescA2"
+       },
+       {
+        "roll": 3,
+        "result": "OldDescA3"
+       },
+       {
+        "roll": 4,
+        "result": "OldDescA4"
+       },
+       {
+        "roll": 5,
+        "result": "OldDescA5"
+       },
+       {
+        "roll": 6,
+        "result": "OldDescA6"
+       },
+       {
+        "roll": 7,
+        "result": "OldDescA7"
+       },
+       {
+        "roll": 8,
+        "result": "OldDescA8"
+       },
+       {
+        "roll": 9,
+        "result": "OldDescA9"
+       },
+       {
+        "roll": 10,
+        "result": "OldDescA10"
+       }
+      ]
+     },
+     "descriptor_2": {
+      "label_source": "transcribed",
+      "entries": [
+       {
+        "roll": 1,
+        "result": "OldDescB1"
+       },
+       {
+        "roll": 2,
+        "result": "OldDescB2"
+       },
+       {
+        "roll": 3,
+        "result": "OldDescB3"
+       },
+       {
+        "roll": 4,
+        "result": "OldDescB4"
+       },
+       {
+        "roll": 5,
+        "result": "OldDescB5"
+       },
+       {
+        "roll": 6,
+        "result": "OldDescB6"
+       },
+       {
+        "roll": 7,
+        "result": "OldDescB7"
+       },
+       {
+        "roll": 8,
+        "result": "OldDescB8"
+       },
+       {
+        "roll": 9,
+        "result": "OldDescB9"
+       },
+       {
+        "roll": 10,
+        "result": "OldDescB10"
+       }
+      ]
+     }
+    },
+    "actions": {
+     "action_1": {
+      "entries": [
+       {
+        "roll": 1,
+        "result": "OldActA1"
+       },
+       {
+        "roll": 2,
+        "result": "OldActA2"
+       },
+       {
+        "roll": 3,
+        "result": "OldActA3"
+       },
+       {
+        "roll": 4,
+        "result": "OldActA4"
+       },
+       {
+        "roll": 5,
+        "result": "OldActA5"
+       },
+       {
+        "roll": 6,
+        "result": "OldActA6"
+       },
+       {
+        "roll": 7,
+        "result": "OldActA7"
+       },
+       {
+        "roll": 8,
+        "result": "OldActA8"
+       },
+       {
+        "roll": 9,
+        "result": "OldActA9"
+       },
+       {
+        "roll": 10,
+        "result": "OldActA10"
+       }
+      ]
+     },
+     "action_2": {
+      "label_source": "inferred (no label)",
+      "entries": [
+       {
+        "roll": 1,
+        "result": "OldActB1"
+       },
+       {
+        "roll": 2,
+        "result": "OldActB2"
+       },
+       {
+        "roll": 3,
+        "result": "OldActB3"
+       },
+       {
+        "roll": 4,
+        "result": "OldActB4"
+       },
+       {
+        "roll": 5,
+        "result": "OldActB5"
+       },
+       {
+        "roll": 6,
+        "result": "OldActB6"
+       },
+       {
+        "roll": 7,
+        "result": "OldActB7"
+       },
+       {
+        "roll": 8,
+        "result": "OldActB8"
+       },
+       {
+        "roll": 9,
+        "result": "OldActB9"
+       },
+       {
+        "roll": 10,
+        "result": "OldActB10"
+       }
+      ]
+     }
+    }
+   },
+   "v2_alphabetical_a": {
+    "descriptions": {
+     "descriptor_1": {
+      "same_as": "v1_batch1.descriptor_1"
+     }
+    },
+    "notable": [
+     "x"
+    ]
+   },
+   "v3_batch3": {
+    "actions": {
+     "action_1": {
+      "entries": [
+       {
+        "roll": 1,
+        "result": "NewActA1"
+       },
+       {
+        "roll": 2,
+        "result": "NewActA2"
+       },
+       {
+        "roll": 3,
+        "result": "NewActA3"
+       },
+       {
+        "roll": 4,
+        "result": "NewActA4"
+       },
+       {
+        "roll": 5,
+        "result": "NewActA5"
+       },
+       {
+        "roll": 6,
+        "result": "NewActA6"
+       },
+       {
+        "roll": 7,
+        "result": "NewActA7"
+       },
+       {
+        "roll": 8,
+        "result": "NewActA8"
+       },
+       {
+        "roll": 9,
+        "result": "NewActA9"
+       },
+       {
+        "roll": 10,
+        "result": "NewActA10"
+       }
+      ]
+     },
+     "action_2": {
+      "entries": [
+       {
+        "roll": 1,
+        "result": "NewActB1"
+       },
+       {
+        "roll": 2,
+        "result": "NewActB2"
+       },
+       {
+        "roll": 3,
+        "result": "NewActB3"
+       },
+       {
+        "roll": 4,
+        "result": "NewActB4"
+       },
+       {
+        "roll": 5,
+        "result": "NewActB5"
+       },
+       {
+        "roll": 6,
+        "result": "NewActB6"
+       },
+       {
+        "roll": 7,
+        "result": "NewActB7"
+       },
+       {
+        "roll": 8,
+        "result": "NewActB8"
+       },
+       {
+        "roll": 9,
+        "result": "NewActB9"
+       },
+       {
+        "roll": 10,
+        "result": "NewActB10"
+       }
+      ]
+     }
+    }
+   }
+  },
+  "elements": {
+   "summary": "roll twice on the table",
+   "tables": {
+    "places": {
+     "title": "PLACES & HALLS",
+     "entries": [
+      {
+       "roll": 1,
+       "result": "Place1"
+      },
+      {
+       "roll": 2,
+       "result": "Place2"
+      },
+      {
+       "roll": 3,
+       "result": "Place3"
+      },
+      {
+       "roll": 4,
+       "result": "Place4"
+      },
+      {
+       "roll": 5,
+       "result": "Place5"
+      },
+      {
+       "roll": 6,
+       "result": "Place6"
+      },
+      {
+       "roll": 7,
+       "result": "Place7"
+      },
+      {
+       "roll": 8,
+       "result": "Place8"
+      },
+      {
+       "roll": 9,
+       "result": "Place9"
+      },
+      {
+       "roll": 10,
+       "result": "Place10"
+      }
+     ]
+    }
+   },
+   "possible_transcription_slips": [
+    {
+     "table": "PLACES",
+     "rolls": [
+      4,
+      5
+     ],
+     "text": "Zeta, Alpha",
+     "note": "kept as typed"
+    }
+   ]
+  },
+  "unlabeled_list_1": {
+   "entries": [
+    {
+     "roll": 1,
+     "result": "Loose1"
+    },
+    {
+     "roll": 2,
+     "result": "Loose2"
+    },
+    {
+     "roll": 3,
+     "result": "Loose3"
+    },
+    {
+     "roll": 4,
+     "result": "Loose4"
+    },
+    {
+     "roll": 5,
+     "result": "Loose5"
+    },
+    {
+     "roll": 6,
+     "result": "Loose6"
+    },
+    {
+     "roll": 7,
+     "result": "Loose7"
+    },
+    {
+     "roll": 8,
+     "result": "Loose8"
+    },
+    {
+     "roll": 9,
+     "result": "Loose9"
+    },
+    {
+     "roll": 10,
+     "result": "Loose10"
+    }
+   ]
+  }
+ },
+ "focus_table_meaningful_standard": {
+  "title": "Focus",
+  "die": "1d100",
+  "entries": [
+   {
+    "range": {
+     "min": 1,
+     "max": 40,
+     "label": "1-40"
+    },
+    "result": "FOCUS ONE"
+   },
+   {
+    "range": {
+     "min": 41,
+     "max": 70,
+     "label": "41-70"
+    },
+    "result": "FOCUS TWO"
+   },
+   {
+    "range": {
+     "min": 71,
+     "max": 100,
+     "label": "71-100"
+    },
+    "result": "FOCUS THREE"
+   }
+  ]
+ },
+ "disposition_score_modifier_table": {
+  "entries": [
+   {
+    "range": {
+     "min": null,
+     "max": 10,
+     "label": "10 or less"
+    },
+    "result": "LOW",
+    "modifier": -2
+   },
+   {
+    "range": {
+     "min": 11,
+     "max": null,
+     "label": "11 or more"
+    },
+    "result": "HIGH",
+    "modifier": 2
+   }
+  ]
+ },
+ "location_crafter_randomized": {
+  "region_descriptors_table": {
+   "die": "1d100",
+   "columns": [
+    "wild",
+    "town"
+   ],
+   "entries": [
+    {
+     "range": {
+      "min": 1,
+      "max": 50,
+      "label": "1-50"
+     },
+     "wild": "Wet",
+     "town": "Busy"
+    },
+    {
+     "range": {
+      "min": 51,
+      "max": 90,
+      "label": "51-90"
+     },
+     "wild": "Dry",
+     "town": "Quiet"
+    },
+    {
+     "range": {
+      "min": 91,
+      "max": 100,
+      "label": "91-100"
+     },
+     "all_columns": true,
+     "result": "Odd"
+    }
+   ]
+  },
+  "area_elements_table": {
+   "die": "1d10+PP",
+   "columns": [
+    "big",
+    "small"
+   ],
+   "entries": [
+    {
+     "range": {
+      "min": 1,
+      "max": 5,
+      "label": "1-5"
+     },
+     "big": "Plain",
+     "small": "Plain"
+    },
+    {
+     "range": {
+      "min": 6,
+      "max": 15,
+      "label": "6-15"
+     },
+     "big": "Notable",
+     "small": "Complete"
+    },
+    {
+     "range": {
+      "min": 16,
+      "max": null,
+      "label": "16 or more"
+     },
+     "big": "Reset",
+     "small": "Reset"
+    }
+   ]
+  },
+  "random_element_descriptors_table": {
+   "die": "1d100",
+   "summary": "Roll twice in the relevant column.",
+   "entries": [
+    {
+     "roll": 1,
+     "spots": "Spot1",
+     "things": "Thing1"
+    },
+    {
+     "roll": 2,
+     "spots": "Spot2",
+     "things": "Thing2"
+    },
+    {
+     "roll": 3,
+     "spots": "Spot3",
+     "things": "Thing3"
+    },
+    {
+     "roll": 4,
+     "spots": "Spot4",
+     "things": "Thing4"
+    },
+    {
+     "roll": 5,
+     "spots": "Spot5",
+     "things": "Thing5"
+    },
+    {
+     "roll": 6,
+     "spots": "Spot6",
+     "things": "Thing6"
+    },
+    {
+     "roll": 7,
+     "spots": "Spot7",
+     "things": "Thing7"
+    },
+    {
+     "roll": 8,
+     "spots": "Spot8",
+     "things": "Thing8"
+    },
+    {
+     "roll": 9,
+     "spots": "Spot9",
+     "things": "Thing9"
+    },
+    {
+     "roll": 10,
+     "spots": "Spot10",
+     "things": "Thing10"
+    },
+    {
+     "roll": 11,
+     "spots": "Spot11",
+     "things": "Thing11"
+    },
+    {
+     "roll": 12,
+     "spots": "Spot12",
+     "things": "Thing12"
+    },
+    {
+     "roll": 13,
+     "spots": "Spot13",
+     "things": "Thing13"
+    },
+    {
+     "roll": 14,
+     "spots": "Spot14",
+     "things": "Thing14"
+    },
+    {
+     "roll": 15,
+     "spots": "Spot15",
+     "things": "Thing15"
+    },
+    {
+     "roll": 16,
+     "spots": "Spot16",
+     "things": "Thing16"
+    },
+    {
+     "roll": 17,
+     "spots": "Spot17",
+     "things": "Thing17"
+    },
+    {
+     "roll": 18,
+     "spots": "Spot18",
+     "things": "Thing18"
+    },
+    {
+     "roll": 19,
+     "spots": "Spot19",
+     "things": "Thing19"
+    },
+    {
+     "roll": 20,
+     "spots": "Spot20",
+     "things": "Thing20"
+    },
+    {
+     "roll": 21,
+     "spots": "Spot21",
+     "things": "Thing21"
+    },
+    {
+     "roll": 22,
+     "spots": "Spot22",
+     "things": "Thing22"
+    },
+    {
+     "roll": 23,
+     "spots": "Spot23",
+     "things": "Thing23"
+    },
+    {
+     "roll": 24,
+     "spots": "Spot24",
+     "things": "Thing24"
+    },
+    {
+     "roll": 25,
+     "spots": "Spot25",
+     "things": "Thing25"
+    },
+    {
+     "roll": 26,
+     "spots": "Spot26",
+     "things": "Thing26"
+    },
+    {
+     "roll": 27,
+     "spots": "Spot27",
+     "things": "Thing27"
+    },
+    {
+     "roll": 28,
+     "spots": "Spot28",
+     "things": "Thing28"
+    },
+    {
+     "roll": 29,
+     "spots": "Spot29",
+     "things": "Thing29"
+    },
+    {
+     "roll": 30,
+     "spots": "Spot30",
+     "things": "Thing30"
+    },
+    {
+     "roll": 31,
+     "spots": "Spot31",
+     "things": "Thing31"
+    },
+    {
+     "roll": 32,
+     "spots": "Spot32",
+     "things": "Thing32"
+    },
+    {
+     "roll": 33,
+     "spots": "Spot33",
+     "things": "Thing33"
+    },
+    {
+     "roll": 34,
+     "spots": "Spot34",
+     "things": "Thing34"
+    },
+    {
+     "roll": 35,
+     "spots": "Spot35",
+     "things": "Thing35"
+    },
+    {
+     "roll": 36,
+     "spots": "Spot36",
+     "things": "Thing36"
+    },
+    {
+     "roll": 37,
+     "spots": "Spot37",
+     "things": "Thing37"
+    },
+    {
+     "roll": 38,
+     "spots": "Spot38",
+     "things": "Thing38"
+    },
+    {
+     "roll": 39,
+     "spots": "Spot39",
+     "things": "Thing39"
+    },
+    {
+     "roll": 40,
+     "spots": "Spot40",
+     "things": "Thing40"
+    },
+    {
+     "roll": 41,
+     "spots": "Spot41",
+     "things": "Thing41"
+    },
+    {
+     "roll": 42,
+     "spots": "Spot42",
+     "things": "Thing42"
+    },
+    {
+     "roll": 43,
+     "spots": "Spot43",
+     "things": "Thing43"
+    },
+    {
+     "roll": 44,
+     "spots": "Spot44",
+     "things": "Thing44"
+    },
+    {
+     "roll": 45,
+     "spots": "Spot45",
+     "things": "Thing45"
+    },
+    {
+     "roll": 46,
+     "spots": "Spot46",
+     "things": "Thing46"
+    },
+    {
+     "roll": 47,
+     "spots": "Spot47",
+     "things": "Thing47"
+    },
+    {
+     "roll": 48,
+     "spots": "Spot48",
+     "things": "Thing48"
+    },
+    {
+     "roll": 49,
+     "spots": "Spot49",
+     "things": "Thing49"
+    },
+    {
+     "roll": 50,
+     "spots": "Spot50",
+     "things": "Thing50"
+    },
+    {
+     "roll": 51,
+     "spots": "Spot51",
+     "things": "Thing51"
+    },
+    {
+     "roll": 52,
+     "spots": "Spot52",
+     "things": "Thing52"
+    },
+    {
+     "roll": 53,
+     "spots": "Spot53",
+     "things": "Thing53"
+    },
+    {
+     "roll": 54,
+     "spots": "Spot54",
+     "things": "Thing54"
+    },
+    {
+     "roll": 55,
+     "spots": "Spot55",
+     "things": "Thing55"
+    },
+    {
+     "roll": 56,
+     "spots": "Spot56",
+     "things": "Thing56"
+    },
+    {
+     "roll": 57,
+     "spots": "Spot57",
+     "things": "Thing57"
+    },
+    {
+     "roll": 58,
+     "spots": "Spot58",
+     "things": "Thing58"
+    },
+    {
+     "roll": 59,
+     "spots": "Spot59",
+     "things": "Thing59"
+    },
+    {
+     "roll": 60,
+     "spots": "Spot60",
+     "things": "Thing60"
+    },
+    {
+     "roll": 61,
+     "spots": "Spot61",
+     "things": "Thing61"
+    },
+    {
+     "roll": 62,
+     "spots": "Spot62",
+     "things": "Thing62"
+    },
+    {
+     "roll": 63,
+     "spots": "Spot63",
+     "things": "Thing63"
+    },
+    {
+     "roll": 64,
+     "spots": "Spot64",
+     "things": "Thing64"
+    },
+    {
+     "roll": 65,
+     "spots": "Spot65",
+     "things": "Thing65"
+    },
+    {
+     "roll": 66,
+     "spots": "Spot66",
+     "things": "Thing66"
+    },
+    {
+     "roll": 67,
+     "spots": "Spot67",
+     "things": "Thing67"
+    },
+    {
+     "roll": 68,
+     "spots": "Spot68",
+     "things": "Thing68"
+    },
+    {
+     "roll": 69,
+     "spots": "Spot69",
+     "things": "Thing69"
+    },
+    {
+     "roll": 70,
+     "spots": "Spot70",
+     "things": "Thing70"
+    },
+    {
+     "roll": 71,
+     "spots": "Spot71",
+     "things": "Thing71"
+    },
+    {
+     "roll": 72,
+     "spots": "Spot72",
+     "things": "Thing72"
+    },
+    {
+     "roll": 73,
+     "spots": "Spot73",
+     "things": "Thing73"
+    },
+    {
+     "roll": 74,
+     "spots": "Spot74",
+     "things": "Thing74"
+    },
+    {
+     "roll": 75,
+     "spots": "Spot75",
+     "things": "Thing75"
+    },
+    {
+     "roll": 76,
+     "spots": "Spot76",
+     "things": "Thing76"
+    },
+    {
+     "roll": 77,
+     "spots": "Spot77",
+     "things": "Thing77"
+    },
+    {
+     "roll": 78,
+     "spots": "Spot78",
+     "things": "Thing78"
+    },
+    {
+     "roll": 79,
+     "spots": "Spot79",
+     "things": "Thing79"
+    },
+    {
+     "roll": 80,
+     "spots": "Spot80",
+     "things": "Thing80"
+    },
+    {
+     "roll": 81,
+     "spots": "Spot81",
+     "things": "Thing81"
+    },
+    {
+     "roll": 82,
+     "spots": "Spot82",
+     "things": "Thing82"
+    },
+    {
+     "roll": 83,
+     "spots": "Spot83",
+     "things": "Thing83"
+    },
+    {
+     "roll": 84,
+     "spots": "Spot84",
+     "things": "Thing84"
+    },
+    {
+     "roll": 85,
+     "spots": "Spot85",
+     "things": "Thing85"
+    },
+    {
+     "roll": 86,
+     "spots": "Spot86",
+     "things": "Thing86"
+    },
+    {
+     "roll": 87,
+     "spots": "Spot87",
+     "things": "Thing87"
+    },
+    {
+     "roll": 88,
+     "spots": "Spot88",
+     "things": "Thing88"
+    },
+    {
+     "roll": 89,
+     "spots": "Spot89",
+     "things": "Thing89"
+    },
+    {
+     "roll": 90,
+     "spots": "Spot90",
+     "things": "Thing90"
+    },
+    {
+     "roll": 91,
+     "spots": "Spot91",
+     "things": "Thing91"
+    },
+    {
+     "roll": 92,
+     "spots": "Spot92",
+     "things": "Thing92"
+    },
+    {
+     "roll": 93,
+     "spots": "Spot93",
+     "things": "Thing93"
+    },
+    {
+     "roll": 94,
+     "spots": "Spot94",
+     "things": "Thing94"
+    },
+    {
+     "roll": 95,
+     "spots": "Spot95",
+     "things": "Thing95"
+    },
+    {
+     "roll": 96,
+     "spots": "Spot96",
+     "things": "Thing96"
+    },
+    {
+     "roll": 97,
+     "spots": "Spot97",
+     "things": "Thing97"
+    },
+    {
+     "roll": 98,
+     "spots": "Spot98",
+     "things": "Thing98"
+    },
+    {
+     "roll": 99,
+     "spots": "Spot99",
+     "things": "Thing99"
+    },
+    {
+     "roll": 100,
+     "spots": "Spot100",
+     "things": "Thing100"
+    }
+   ]
+  },
+  "special_elements_table": {
+   "die": "1d100",
+   "entries": [
+    {
+     "range": {
+      "min": 1,
+      "max": 60,
+      "label": "1-60"
+     },
+     "name": "GROW",
+     "text": "Make it bigger."
+    },
+    {
+     "range": {
+      "min": 61,
+      "max": 100,
+      "label": "61-100"
+     },
+     "name": "SHRINK",
+     "text": "Make it smaller."
+    }
+   ]
+  },
+  "known_elements_region_sheet": {
+   "die": "1d10",
+   "layout_inferred": true,
+   "rows": [
+    {
+     "roll": 1,
+     "a": ""
+    }
+   ]
+  }
+ },
+ "adaptable_event_focus_table": {
+  "die": "1d100",
+  "entries": [
+   {
+    "range": {
+     "min": 1,
+     "max": 70,
+     "label": "1-70"
+    },
+    "result": "Something"
+   },
+   {
+    "range": {
+     "min": 71,
+     "max": 100,
+     "label": "71-100"
+    },
+    "result": null,
+    "blank": true
+   }
+  ]
+ },
+ "creatures": {
+  "description_table": {
+   "die": "1d10",
+   "entries": [
+    {
+     "roll": 1,
+     "result": "Beastly1"
+    },
+    {
+     "roll": 2,
+     "result": "Beastly2"
+    },
+    {
+     "roll": 3,
+     "result": "Beastly3"
+    },
+    {
+     "roll": 4,
+     "result": "Beastly4"
+    },
+    {
+     "roll": 5,
+     "result": "Beastly5"
+    },
+    {
+     "roll": 6,
+     "result": "Beastly6"
+    },
+    {
+     "roll": 7,
+     "result": "Beastly7"
+    },
+    {
+     "roll": 8,
+     "result": "Beastly8"
+    },
+    {
+     "roll": 9,
+     "result": "Beastly9"
+    },
+    {
+     "roll": 10,
+     "result": "Beastly10"
+    }
+   ]
+  },
+  "statistics_table": {
+   "fate_question": "IS IT X?",
+   "results": [
+    {
+     "result": "YES",
+     "text": "As expected."
+    }
+   ]
+  }
+ },
+ "fate_check_modifiers_updated": {
+  "title": "Fate Check Modifiers Updated",
+  "odds": [
+   {
+    "odds": "EVEN",
+    "modifier": 0
+   }
+  ],
+  "chaos_factor": [
+   {
+    "cf": "CF 4",
+    "modifier_text": "0"
+   }
+  ]
+ },
+ "mythic_deck_resisted_ranks_modifier": {
+  "reconstructed": true,
+  "reconstruction_note": "arrows scrambled",
+  "entries": [
+   {
+    "rank_shift_difference": "0",
+    "steps": 0
+   }
+  ]
+ },
+ "simplified_npc_action_table": {
+  "entries": [
+   {
+    "range": {
+     "min": null,
+     "max": 4,
+     "label": "4 or less"
+    },
+    "result": "TALKS"
+   },
+   {
+    "range": {
+     "min": 5,
+     "max": null,
+     "label": "5 or more"
+    },
+    "result": "ACTS"
+   }
+  ],
+  "unassigned_lines": [
+   "An orphan line."
+  ]
+ },
+ "the_entity": {
+  "modifier_table": [
+   {
+    "supernatural_events": "None",
+    "modifier": 0
+   }
+  ],
+  "nature_table": {
+   "die": "1d10+MODIFIER",
+   "entries": [
+    {
+     "range": {
+      "min": 1,
+      "max": 4,
+      "label": "1-4"
+     },
+     "name": "PLAIN",
+     "text": "Nothing odd."
+    },
+    {
+     "range": {
+      "min": 5,
+      "max": 14,
+      "label": "5-14"
+     },
+     "name": "STRANGE",
+     "text": "Something odd."
+    }
+   ]
+  }
+ },
+ "fulfillment": {
+  "suggested_fulfillment_values": [
+   {
+    "impact_of_the_issue": "SMALL",
+    "value_range": {
+     "min": 2,
+     "max": 4,
+     "label": "2-4"
+    }
+   }
+  ]
+ },
+ "example_region_sheets": {
+  "sheets": [
+   {
+    "region": "Somewhere"
+   }
+  ]
+ },
+ "adventure_lists": {
+  "adventure_lists_sheet": {
+   "characters_list": [
+    {
+     "line": 1,
+     "entry": null
+    }
+   ]
+  },
+  "adventure_crafter_lists": {
+   "characters_list": {
+    "die": "1d100",
+    "entries": [
+     {
+      "range": {
+       "min": 1,
+       "max": 50,
+       "label": "1-50"
+      },
+      "result": "NEW"
+     },
+     {
+      "range": {
+       "min": 51,
+       "max": 100,
+       "label": "51-100"
+      },
+      "result": "CHOOSE"
+     }
+    ]
+   }
+  },
+  "2e_adventure_lists": {
+   "threads_list": {
+    "lines": [
+     {
+      "line": 1,
+      "entry": null
+     }
+    ]
+   }
+  }
+ },
+ "keyed_scenes_record_sheet": {
+  "reconstructed": true,
+  "blocks": [
+   {
+    "trigger": null
+   }
+  ]
+ }
+}

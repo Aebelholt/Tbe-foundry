@@ -1,6 +1,6 @@
 /* TBE: Solo Panel — the whole game behind one hotbar key, grouped by what you are doing. */
 const GROUPS = [
-  ["Frame the scene", ["Ask the Weave", "TBE: Subverted Scene", "TBE: Random Event", "TBE: NPC"]],
+  ["Frame the scene", ["Ask the Weave", "TBE: Subverted Scene", "TBE: Random Event", "TBE: Oracle Tables", "TBE: NPC"]],
   /* TBE: Clocks is deliberately not listed: it was retired in v0.28.0 into a
      one-shot migrator (its clocks and TBE: Extended Roll's trackers were the
      same rule in two stores). It still exists so an old world can run it once. */
@@ -14,7 +14,9 @@ const GROUPS = [
      also on the sheet's header). The Character Wizard, Finish Character and
      Build Character were retired into it. */
   ["Make a character", ["TBE: Create Character", "TBE: Talents", "TBE: Link Character Tokens"]],
-  ["Keep the record", ["TBE: Status", "TBE: Session Log", "TBE: Advancement"]]
+  ["Keep the record", ["TBE: Status", "TBE: Session Log", "TBE: Advancement"]],
+  /* GM setup: oracle tables from the GM's own file (v0.55.0). */
+  ["Set up the table", ["TBE: Import Oracle Tables"]]
 ];
 
 const opts = GROUPS.map(([label, tools]) =>

@@ -158,6 +158,8 @@ const MACROS = [
   ["TBE: Haggle", "tbe-haggle.js", "icons/svg/coins.svg"],
   ["TBE: Subverted Scene", "tbe-subverted-scene.js", "icons/svg/book.svg"],
   ["TBE: Random Event", "tbe-random-event.js", "icons/svg/hazard.svg"],
+  ["TBE: Oracle Tables", "tbe-oracle-tables.js", "icons/svg/oak.svg"],
+  ["TBE: Import Oracle Tables", "tbe-import-oracle.js", "icons/svg/book.svg"],
   ["TBE: Empires List", "tbe-empires-list.js", "icons/svg/scroll.svg"],
   ["TBE: Create Character", "tbe-create-character.js", "icons/svg/statue.svg"],
   ["TBE: Link Character Tokens", "tbe-link-tokens.js", "icons/svg/anchor.svg"],

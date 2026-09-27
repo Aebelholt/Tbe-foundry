@@ -27,6 +27,7 @@ import { RETIRED_MACROS } from './helpers/retired-macros.mjs';
 import * as tableDefaults from './helpers/table-defaults.mjs';
 import * as tokenLink from './helpers/token-link.mjs';
 import * as portraits from './helpers/portraits.mjs';
+import * as oracle from './helpers/oracle-import.mjs';
 import * as chargenRules from './chargen/rules.mjs';
 
 /* -------------------------------------------- */
@@ -46,6 +47,10 @@ Hooks.once('init', function () {
     retiredMacros: RETIRED_MACROS,
     /* Portrait roster (helpers/portraits.mjs) and character-token linking
        (helpers/token-link.mjs), v0.54.0. */
+    /* Oracle tables the GM imports from their own file (helpers/oracle-import.mjs,
+       v0.55.0). The system ships the reader, never the content. */
+    oracle: { plan: oracle.planImport, importFile: oracle.importFile, eventTables: oracle.eventTables,
+      imported: oracle.importedTables, FOLDER: oracle.FOLDER },
     portraits: { roster: portraits.roster, random: portraits.randomPortrait, collections: portraits.collections },
     tokens: { findUnlinkedCharacters: () => tokenLink.findUnlinkedCharacters(game.scenes?.contents ?? [], (id) => game.actors?.get(id)),
       linkToken: tokenLink.linkToken, deltaSummary: tokenLink.deltaSummary },
@@ -271,6 +276,7 @@ Hooks.once('init', function () {
      vision (helpers/table-defaults.mjs), and the portrait roster folders. */
   tableDefaults.register();
   portraits.registerSetting();
+  oracle.registerSetting();
 
   // The world's schema version has to exist as a setting before the ready
   // hook can compare against it.

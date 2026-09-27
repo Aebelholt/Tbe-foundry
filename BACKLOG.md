@@ -1,3 +1,24 @@
+## Oracle import — done in v0.55.0, 2026-09-27
+
+Seb asked to use his Mythic Magazine Compilation transcription (JSON).
+Mythic's redistribution terms are restrictive (see the benchmark note below),
+so the system ships a READER, never the content: TBE: Import Oracle Tables
+builds world RollTables from the GM's own file, TBE: Oracle Tables rolls them,
+and a world setting lets Random Events use them.
+`module/helpers/oracle-import.mjs`, `oracle_import_check.mjs` (70), fixture
+`test-fixtures/oracle_shapes.json` (invented words, same shapes).
+
+- **Not yet run against the real file**: it lives in the conversation, not in
+  the repo. `TBE_ORACLE_JSON=path node oracle_import_check.mjs` plans it and
+  lists what is refused. Known from reading it: GODS 40-41 and NAMES 43-44
+  possible slips, and the inferred layouts (Known Elements sheet, 2e list
+  dice, Mythic Deck arrows) surface as notes.
+- **Untested on a real table**: the file input in DialogV2, RollTable
+  create/update with results on V12 and V13, `table.roll({roll})` with a
+  modifier.
+- Not done: the Mythic Fate Chart is not in the file, so Ask the Weave keeps
+  its own odds chart. Chaos Factor is not tracked.
+
 ## Table defaults, token linking, portraits — done in v0.54.0, 2026-09-27
 
 From Seb's playtest: a full character "reverted" when combat started, a blank

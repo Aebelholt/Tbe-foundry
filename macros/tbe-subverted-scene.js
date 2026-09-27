@@ -19,11 +19,10 @@ if (data) {
   } else if (r <= 76) {
     head = "MORE";
     note = "The scene starts with more than expected. Fold these two words into your expectations.";
-    const w1 = await TBE.drawTable("TBE: Event Randomizers I");
-    const w2 = await TBE.drawTable("TBE: Event Randomizers II");
+    const w = await TBE.eventWords();
     extra =
       '<div style="margin-top:4px;padding:4px;border:1px dashed #7a6a4f;border-radius:4px;font-size:16px">' +
-      "<b>" + (w1?.text || "?") + " &middot; " + (w2?.text || "?") + "</b></div>";
+      "<b>" + w.w1 + " &middot; " + w.w2 + "</b></div>";
   } else {
     head = "UNEXPECTED";
     note = "Something interrupts the expected start. This Event replaces your expectation.";

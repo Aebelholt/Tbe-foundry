@@ -748,6 +748,16 @@ scope at least one pass at the player-facing output itself.
   delta, and a build written there looked reverted the moment the token was
   linked. Linking with the token's copy kept creates the new Items BEFORE
   deleting the old ones; section 4 carries the delete-first mutation.
+- `node oracle_import_check.mjs` — 70 checks over TBE: Import Oracle Tables
+  and TBE: Oracle Tables (`module/helpers/oracle-import.mjs`, v0.55.0). **The
+  system ships the reader, never the oracle content**: the GM's transcription
+  of a third-party oracle stays in their file and their world, and the
+  fixture (`test-fixtures/oracle_shapes.json`) is invented words in the same
+  shapes. Every range check is mutation-tested (a gap, an overlap, a label
+  that disagrees, rolls out of order, an empty cell), writing is a sequence
+  (re-import updates in place, create-before-delete), and Random Events
+  fall back to the TBE tables slot by slot. `TBE_ORACLE_JSON=path` plans a
+  real file too.
 - `node concepts_check.mjs` — 17 checks over `data/concepts.json`, the
   original (not book) step-1 concept table. Every skill suggestion must be a
   real catalogue skill in the category it is filed under, because the window

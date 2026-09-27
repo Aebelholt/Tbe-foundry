@@ -37,6 +37,10 @@
         "Name": "New scenes use token vision",
         "Hint": "New scenes start with Token Vision on."
       },
+      "OracleEvents": {
+        "Name": "Random Events use imported oracle tables",
+        "Hint": "When on, Random Event, Ask the Weave and Subverted Scene roll the event focus and word pair on the oracle tables you imported with TBE: Import Oracle Tables. Any it cannot find fall back to the TBE tables."
+      },
       "PortraitFolders": {
         "Name": "Portrait folders",
         "Hint": "Folders of images in your Data folder to roll portraits from, for Create Character, TBE: NPC and TBE: Funnel. Each subfolder is a collection you can roll within. Several folders: separate them with ;"
