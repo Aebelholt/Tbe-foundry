@@ -1,4 +1,4 @@
-## Phase 7, first pass: the zip as a stranger gets it (2026-09-27, v0.47.1)
+## Phase 7, first pass: the zip as a stranger gets it (2026-09-27, found in v0.47.1, fixed in v0.48.0)
 
 Built `The-Broken-Empires-System.zip` from the tree, unpacked it fresh and
 audited the artifact, not the working tree. No live Foundry in this session, so
@@ -13,18 +13,21 @@ Clean:
   `syntax_check.mjs`.
 
 Open, fixable in code:
-- **The Enchantment item type has no label.** `documentTypes` declares
+- ~~**The Enchantment item type has no label.**~~ Fixed in v0.48.0;
+  `boot_check.mjs` section 4 now asserts a label for every manifest type. `documentTypes` declares
   `enchantment`, `lang/en.json` has no `TYPES.Item.enchantment`, so the
   Create Item dialog shows the raw key.
-- **README claims the system "carries the numbers and procedures, not the
-  text of the game."** Not true: Talent descriptions (150), the 218 miracles
+- ~~**README claims the system "carries the numbers and procedures, not the
+  text of the game."**~~ Fixed in v0.48.0: the README says what text ships
+  and has a Licence section. Not true: Talent descriptions (150), the 218 miracles
   and the bestiary are book text. Either the claim or the content changes.
-- **LICENSE.txt is the boilerplate's** ("Copyright (c) 2020 Asacolips
+- ~~**LICENSE.txt is the boilerplate's**~~ Fixed in v0.48.0. ("Copyright (c) 2020 Asacolips
   Projects") and points to a pack-licensing section the README does not have.
-- **`authors`, `url`, `bugs`, `manifest`, `download` are all empty.** A
+- **`authors`, `url`, `bugs`, `manifest`, `download` are all empty.** v0.48.0
+  fills `authors`; the other four wait on where the system is hosted. A
   stranger cannot install from a URL, cannot update, and has nowhere to report
   a bug.
-- **No check boots the entry module.** Eight checks import pieces of
+- ~~**No check boots the entry module.**~~ `boot_check.mjs`, v0.48.0. Eight checks import pieces of
   `the-broken-empires.mjs`; none runs `init` then `ready` against a stubbed
   `game`/`CONFIG` and asserts the world comes up with no error.
 

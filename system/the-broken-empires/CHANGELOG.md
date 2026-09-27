@@ -1,3 +1,37 @@
+# 0.48.0 — 2026-09-27
+
+**Phase 7, first pass: the zip as a stranger gets it.** The release zip was
+built, unpacked fresh and read as someone who has never seen the system
+would. Files, paths, pack counts and macros all held up. Five things did not.
+
+- **The Enchantment item type had no name.** Create Item listed it as
+  "TYPES.Item.enchantment". It reads "Enchantment" now.
+- **The README said the system carries "the numbers and procedures, not the
+  text of the game."** It does carry text: every Talent's rules text, the
+  Bestiary's creature descriptions and the Divine Magic miracles are the
+  book's own words. The README now says so, and has a Licence section.
+- **LICENSE.txt was the boilerplate's.** It named only Asacolips Projects
+  (2020) and pointed at a pack-licensing section that did not exist. It now
+  names this system's author, keeps the boilerplate's notice as MIT requires,
+  and says the game content belongs to Evil Baby Entertainment LLC.
+- **The manifest had no author.** Filled in. `url`, `bugs`, `manifest` and
+  `download` stay empty until the system has a public home.
+- **Nothing had ever started the system.** New `boot_check.mjs` (45) imports
+  the real entry module against a stand-in Foundry, runs `init` on both
+  status-effect shapes (V12/V13 Array, V14 keyed object) and `ready` on a
+  fresh world as GM and as a player, and checks every document type has a
+  model, a schema, a sheet template and a label. It found the missing
+  Enchantment label before the fix. It takes a path, so it can boot an
+  unpacked release zip as well as the working tree. Three mutations: a
+  label removed, a template removed, a rules export renamed.
+
+Also in the README: Talents are in the compendium (the old line pointed at
+the legacy installer), and Strand, Thread and Enchantment are listed as item
+types.
+
+Not done, and not code: publishing rights for the book text, a public home
+for the manifest, and one install by somebody who has never seen it.
+
 # 0.47.1 — 2026-09-24
 
 **Documentation: what a stranger needs before they install.** Nothing in the

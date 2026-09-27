@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2020 Asacolips Projects / Foundry Mods
+Copyright (c) 2026 Seb (Aebelholt)
+Copyright (c) 2020 Asacolips Projects / Foundry Mods (the system boilerplate this began from)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -12,9 +13,10 @@ furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-This license does not apply to the compendium content listed in this software's
-"packs" directory. See the README for licensing information for the compendium
-packs.
+This license does not apply to the game content in this software's "packs"
+directory (Talent text, creature descriptions, miracles and quoted rules),
+which comes from The Broken Empires RPG rulebook, (c) 2026 Evil Baby
+Entertainment LLC, all rights reserved. See the README's "Licence" section.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

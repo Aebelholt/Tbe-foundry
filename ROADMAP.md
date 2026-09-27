@@ -65,8 +65,13 @@ to delay a fix until some later refactor.
   under test and require the check to fail. `phase5_check.mjs` is the newest
   and the most pointed: every assertion in it exists because a played session
   found something the other fourteen were happy with.
-- **Phase 7 — not started.** Nothing has ever tested the zip as a stranger
-  would; every check runs against the working tree.
+- **Phase 7 — first pass done 2026-09-27 (v0.48.0).** The release zip was
+  built, unpacked fresh and audited as an artifact; `boot_check.mjs` now
+  starts the system against a stand-in Foundry and can boot an unpacked zip.
+  Still open, and none of it is code: publishing rights for the book text a
+  release carries, a public home for the manifest, and one install into a
+  clean Foundry by somebody who has never seen the system. BACKLOG.md,
+  "Phase 7, first pass", has the list.
 
 **The honest read, updated 2026-09-04 (v0.28.0).** Phase 5's first pass is
 done and Phase 7 is now the only phase never started. The five defects it

@@ -35,7 +35,8 @@
       "shield": "Shield",
       "talent": "Talent",
       "strand": "Strand",
-      "thread": "Thread"
+      "thread": "Thread",
+      "enchantment": "Enchantment"
     }
   }
 }

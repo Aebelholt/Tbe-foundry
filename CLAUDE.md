@@ -669,6 +669,16 @@ scope at least one pass at the player-facing output itself.
   (TBE_SHEET_PDF); it is the publisher's and is NOT committed. The Creator
   fixture is `test-fixtures/creator_v065_character_sheet.csv`. Import never
   deletes, never guesses a skill group, and never approximates a name.
+- `node boot_check.mjs [dir]` — 45 checks that the system STARTS. Imports the
+  real entry module against stubbed Foundry globals, runs `init` on both
+  status-effect shapes and `ready` on a fresh world (GM and player), and
+  checks every manifest document type has a model, a buildable schema, a
+  sheet template and a `TYPES` label, every preloaded template exists, every
+  shown setting/sheet label is in `lang/en.json`, and nothing on
+  `game.thebrokenempires.rules` is undefined. Before v0.48.0 no check ran the
+  entry module at all, and the Enchantment type had shipped with no label.
+  Pass an unpacked release zip as `dir` to boot the artifact, not the tree.
+  Read it before adding a document type, a setting or a rules export.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

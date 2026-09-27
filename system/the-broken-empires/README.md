@@ -18,8 +18,10 @@ button does arithmetic and nothing else, then hands the result to the same
 resolution the macros use.
 
 **You need the rulebook.** This is an unofficial system for playing *The
-Broken Empires*; it carries the numbers and procedures, not the text of the
-game. Rules quotes appear only where a macro cites the page it is following.
+Broken Empires*. The macros carry the numbers and procedures, and quote the
+book where they cite a page. The compendiums carry more than that: every
+Talent's rules text, the Bestiary's creature descriptions and the Divine
+Magic miracles are the book's own words. See **Licence** below.
 
 ## Requirements, and the modules that make it nicer
 
@@ -118,8 +120,10 @@ to Melee: Light, Stealth and Athletics, and may take Armor Training only once.
   location — and an Equipped flag (worn is free; un-equipped costs 1
   Inventory ENC and protects nothing).
 - **Talent**: category, prerequisites, ranks taken, and what the rank was spent
-  on. The full Chapter 4 catalogue (150 Talents) installs via
-  `TBE-Talents-Installer.js`.
+  on. The full Chapter 4 catalogue (150 Talents) is in the TBE Talents
+  compendium.
+- **Strand** / **Thread** / **Enchantment**: Weave Magic (Ch.14): a caster's
+  Strands, the Threads woven from them, and enchanted items.
 
 ## Status effects
 
@@ -135,3 +139,18 @@ and effect labels Foundry needs for its own menus; the rest of the UI text is
 written directly into the templates, and the rulebook content it quotes exists
 only in English. That is a decision, not an oversight -- if a translation is
 ever wanted, the template text is what would need extracting first.
+
+## Licence
+
+Two licences, for two different things:
+
+- **The code** (`module/`, `templates/`, `css/`, the macro code in the TBE
+  Tools compendium) is MIT, see `LICENSE.txt`.
+- **The game content is not.** *The Broken Empires RPG* is a registered
+  trademark of Evil Baby Entertainment LLC, and the rulebook is © 2026 Evil
+  Baby Entertainment LLC, all rights reserved. The Talent text, creature
+  descriptions, miracles and every quoted rule in the compendiums come from
+  that book. The MIT licence does not cover them, and this system is not
+  affiliated with or endorsed by the publisher.
+- **pdf-lib** (`lib/`) is MIT, see `lib/pdf-lib.LICENSE.md`.
+- **anvil-impact.png** is by Lorc, CC BY 3.0, from game-icons.net.
