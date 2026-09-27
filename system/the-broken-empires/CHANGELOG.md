@@ -12,10 +12,11 @@ would. Files, paths, pack counts and macros all held up. Five things did not.
   book's own words. The README now says so, and has a Licence section.
 - **LICENSE.txt was the boilerplate's.** It named only Asacolips Projects
   (2020) and pointed at a pack-licensing section that did not exist. It now
-  names this system's author, keeps the boilerplate's notice as MIT requires,
-  and says the game content belongs to Evil Baby Entertainment LLC.
-- **The manifest had no author.** Filled in. `url`, `bugs`, `manifest` and
-  `download` stay empty until the system has a public home.
+  adds a notice for this system's contributors, keeps the boilerplate's as
+  MIT requires, and says the game content belongs to Evil Baby
+  Entertainment LLC.
+- `authors`, `url`, `bugs`, `manifest` and `download` in the manifest stay
+  empty until the system has a public home.
 - **Nothing had ever started the system.** New `boot_check.mjs` (45) imports
   the real entry module against a stand-in Foundry, runs `init` on both
   status-effect shapes (V12/V13 Array, V14 keyed object) and `ready` on a
@@ -51,7 +52,7 @@ system behaved differently before this; the README simply did not say it.
 # 0.47.0 — 2026-09-22
 
 **Two things a wizard-built character was carrying that it should not.**
-Found by exporting Seb's "Fresh face" (Dwarf, Barbarian, Loremaster) to the
+Found by exporting a playtest character, "Fresh face" (Dwarf, Barbarian, Loremaster) to the
 official sheet: four nameless -wise slots and five Bind skills at 0.
 
 - **Blank -wise slots now default to 0.** The Wizard and TBE: Build Character
@@ -224,7 +225,7 @@ text and cannot run in this session), `simtest.js` (51).
 **The exported sheet was nearly blank, and the reason was a defect this
 project already had a check for.**
 
-Seb exported a character and got a page with no skills on it. Not a rendering
+The playtest GM exported a character and got a page with no skills on it. Not a rendering
 failure: `TBE: Export Sheets` listed the actor's skill **Items**, and a TBE
 actor deliberately records only the skills that differ from the book's
 untrained 20 (p.104). A character with two skill Items printed two skills.
@@ -242,7 +243,7 @@ have used it even if whoever wrote it had thought to.
   defers to it for its two optgroups, and `TBE.actorSkills` takes the actor as
   a parameter instead of assuming `TBE.me()`.
 - The printed sheet now carries the full catalogue, with untrained entries in
-  grey so a glance still finds the trained ones — which is what Seb's own
+  grey so a glance still finds the trained ones — which is what the playtest GM's own
   spreadsheet does, and what a real TBE sheet looks like.
 - An actor with no race, culture or career now says so rather than printing an
   empty line.
@@ -269,7 +270,7 @@ wrong one for a table. This sits between them: a GM-gated macro that renders
 the world's player characters as a self-contained printable document, opened in
 a new tab to print or save as PDF.
 
-Scoped with Seb: printable, GM-only, whole world. Everything starts ticked, so
+Scoped with the playtest GM: printable, GM-only, whole world. Everything starts ticked, so
 the default IS the whole world and deselecting is the deliberate act — a played
 world accumulates retired and dead characters and nobody wants forty pages.
 
@@ -314,7 +315,7 @@ Salt-Run pregens (648), `syntax_check.mjs` across every macro.
 
 **"Still to choose" — the wizard now says what it gave you and you have not taken.**
 
-Seb shared a standalone TBE character-creation web app (The Tapestry) and asked
+The playtest GM shared a standalone TBE character-creation web app (The Tapestry) and asked
 what was worth copying. Its best idea is a single function that enumerates every
 decision the character has been granted and not yet made, rendered as a list of
 links that jump to the step that resolves each one. This is that, adapted.
@@ -434,8 +435,8 @@ indistinguishable from running once, a half-finished earlier run resolves in
 favour of the current namespace, and the fallback key list in `migration.mjs`
 is asserted identical to `CONFIG.TBE.OWNED_FLAGS`.
 
-Fixture I — the closest thing the suite has to Seb's real world — now also
-asserts that his Campaign Clocks journal moves and its legacy key is gone.
+Fixture I — the closest thing the suite has to the playtest world — now also
+asserts that their Campaign Clocks journal moves and its legacy key is gone.
 
 Full suite green, enumerated from disk: 28 check scripts, `simtest.js` (51),
 Salt-Run pregens (648).
@@ -505,14 +506,14 @@ was transplanted rather than retyped: the branch a re-derivation keeps dropping
 is "a normal failure beats a critical failure", and dropping it is exactly how
 Haggle shipped a third, subtly wrong copy.
 
-**B1, Seb's note from the first session — "if shielding make it clear during the
+**B1, the playtest GM's note from the first session — "if shielding make it clear during the
 attack macro."** The shield was always in the arithmetic and never in the
 sentence. The attack card and the defence prompt now say which shield is up, the
 AP it adds and the SL cost to circumvent it, read through `defendingShield()`,
 which asks `carryPool` the same positive question `tbe-attack.js` asks. Same
 source as the number, so the line cannot name a shield the roll did not count.
 
-**B4 — the Resolve maximum that quietly ate a point.** Seb reported Resolve
+**B4 — the Resolve maximum that quietly ate a point.** The playtest GM reported Resolve
 going 12/12 → 12/11 with the pool untouched; no spend in the codebase can do
 that, so it was a hand-edit, almost certainly someone reaching for the pool
 mid-fight and hitting the identical box beside it. Resolve max and Death
@@ -550,7 +551,7 @@ plus `simtest.js` (51) and the Salt-Run pregens (648).
 
 **A dropped shield was still defending you**, and the tooling that found it.
 
-Seb asked for a probe to run once the scheduled overnight work is done. Building
+The playtest GM asked for a probe to run once the scheduled overnight work is done. Building
 its baseline — a snapshot of the repo taken *before* unattended runs, so
 afterwards "what left" is answerable — turned up three things in this repo
 before the probe itself existed.
@@ -616,7 +617,7 @@ scheduled run that kept its own audit green would be grading its own homework.
 # 0.36.0 — 2026-09-17
 
 **TBE: Update Macros** — the importer that matches on name and overwrites,
-instead of importing another copy. Seb's fix, in his words: *"Make the importer
+instead of importing another copy. The playtest GM's fix, in their words: *"Make the importer
 match solution."*
 
 ## Closed in this release
@@ -667,15 +668,15 @@ match solution."*
 
 # 0.35.1 — 2026-09-17
 
-Seb confirmed his world has had **nothing past 0.29** installed. Two things
+The playtest GM confirmed their world has had **nothing past 0.29** installed. Two things
 follow, and only one of them the migration can fix.
 
 ## Closed in this release
 
 - **The 0.29.x → current jump is now a tested path.** Every other migration
   fixture covered a version nobody was standing on. `migration_fixtures_check.mjs`
-  fixture I runs Seb's real world shape — a 0.29.0 world, four creature token
-  actors carrying the exact corrupted Initiative strings his session probe
+  fixture I runs the playtest world's shape — a 0.29.0 world, four creature token
+  actors carrying the exact corrupted Initiative strings their session probe
   reported, and an open clock, because a world that has been played in tends to
   have one. It confirms the 0.33.0 repair is the only step due from 0.29.0, that
   all four creatures are fixed in the one pass, and, the assertion that matters,
@@ -685,9 +686,9 @@ follow, and only one of them the migration can fix.
 - **A system upgrade does not update macros already in a world, and now the
   system says so.** Upgrading updates the `tbe-macros` compendium; copies a GM
   dragged into their world directory or hotbar are frozen at the version they
-  were imported at. Seb's world carries nine copies of TBE: Character Wizard,
+  were imported at. The playtest world carries nine copies of TBE: Character Wizard,
   five of TBE: Attack and five of TBE: Finish Character, because re-importing
-  adds rather than replaces — so after upgrading he would still have been
+  adds rather than replaces — so after upgrading they would still have been
   clicking the 0.28-era builds while the system beneath them was current, with
   nothing anywhere saying so. That is the "looks built but silently isn't" bar
   one level up: the system is fixed and the thing the player clicks is not.
@@ -701,7 +702,7 @@ follow, and only one of them the migration can fix.
 ## Verification
 
 - `migration_fixtures_check.mjs` grows fixtures I and J (45 → 57 checks).
-  Fixture J covers Seb's exact duplicate counts, an up-to-date copy not being
+  Fixture J covers the playtest world's exact duplicate counts, an up-to-date copy not being
   flagged, a non-TBE macro being ignored entirely, a clean world getting no
   notice at all, a missing compendium degrading to "no claim" rather than a
   false all-clear, and — the promise of the whole feature — a spy world proving
@@ -712,7 +713,7 @@ follow, and only one of them the migration can fix.
 **TBE: Loadout** — mid-combat gear state in one panel, and the encumbrance bug
 that adding a fourth state would have shipped silently.
 
-Built off Seb's own TOR2e Loadout macro and one question about it: *"removing
+Built off the playtest GM's own TOR2e Loadout macro and one question about it: *"removing
 load, when not explicitly carried."*
 
 ## Closed in this release
@@ -740,7 +741,7 @@ load, when not explicitly carried."*
   with no error anywhere: you would have been encumbered by something you were
   not carrying. Same rule, two implementations, about to drift the instant the
   rule grew.
-- **What this deliberately does not do** (Seb's call: *state and costs shown,
+- **What this deliberately does not do** (the playtest GM's call: *state and costs shown,
   not enforced*): no turn tracking, no action counting, nothing blocked. TBE
   gives one action a round — "Failing an action still counts as having taken
   your action for the round" (p.153) — and the panel's job is to put the price
@@ -773,7 +774,7 @@ load, when not explicitly carried."*
 
 # 0.34.0 — 2026-09-17
 
-**Scope change: this is no longer a solo module.** Seb's words. A GM and
+**Scope change: this is no longer a solo module.** The playtest GM's words. A GM and
 players, separate clients, one shared chat log, is now the default assumption
 the system is designed against; solo stays supported as a mode and nothing
 solo was removed or deprecated. CLAUDE.md carries the constraint and the three
@@ -1718,7 +1719,7 @@ something persists past the moment it was rolled, and nothing carried it.
 
 **Roadmap**
 
-- `ROADMAP.md` records Seb's maturity-based phase model (Foundation → MVP → QoL
+- `ROADMAP.md` records the playtest GM's maturity-based phase model (Foundation → MVP → QoL
   → Rule consolidation → Content → Play experience → Hardening → Release), each
   with a definition of done that is a state of the system rather than a list of
   shipped items, and feedback running backwards rather than as a waterfall. It
@@ -1833,7 +1834,7 @@ turned out to be bigger than their one-line summaries.
 
 ## 0.21.0 — MVP Tier 0: the five places the module claimed something it did not do
 
-Seb's MVP bar is an honesty bar, not a completeness one: "this isn't built yet"
+The playtest GM's MVP bar is an honesty bar, not a completeness one: "this isn't built yet"
 is fine, "this looks built but silently isn't" is not. All five Tier 0 items,
 in one batch.
 

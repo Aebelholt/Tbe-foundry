@@ -5,7 +5,7 @@
  * It does not touch copies already sitting in a world's macro directory or on
  * a hotbar -- those are frozen at whatever version they were imported at. And
  * Foundry's own "Import All Content" CREATES rather than replaces, so every
- * re-import adds another copy: Seb's world was carrying nine TBE: Character
+ * re-import adds another copy: the playtest world was carrying nine TBE: Character
  * Wizard, five TBE: Attack and five TBE: Finish Character, all of them old.
  * The system was current and every single thing he clicked was not. That is
  * the "looks built but silently isn't" failure one level up.

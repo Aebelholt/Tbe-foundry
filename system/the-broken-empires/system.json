@@ -2,11 +2,7 @@
   "id": "the-broken-empires",
   "title": "The Broken Empires",
   "description": "A native FoundryVTT implementation of The Broken Empires: real Death Threshold/Resolve/wound/supply/skill fields instead of a Call of Cthulhu 7e sheet wearing TBE's numbers.",
-  "authors": [
-    {
-      "name": "Seb (Aebelholt)"
-    }
-  ],
+  "authors": [],
   "url": "",
   "license": "LICENSE.txt",
   "readme": "README.md",

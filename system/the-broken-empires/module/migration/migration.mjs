@@ -320,7 +320,7 @@ export function findStrandedClocks() {
  * macro directory or onto a hotbar -- those are frozen at whatever version
  * they were imported. So a GM can install 0.35.0, open a world, and still be
  * running the 0.28.0 build of TBE: Attack, with none of the fixes, and nothing
- * anywhere says so. Seb's own world was reported carrying nine copies of
+ * anywhere says so. The playtest world was reported carrying nine copies of
  * TBE: Character Wizard, five of TBE: Attack and five of TBE: Finish Character,
  * because re-importing the compendium ADDS rather than replaces.
  *

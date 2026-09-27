@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Seb (Aebelholt)
+Copyright (c) 2026 The Broken Empires Foundry system contributors
 Copyright (c) 2020 Asacolips Projects / Foundry Mods (the system boilerplate this began from)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

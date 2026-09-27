@@ -1,6 +1,6 @@
 /* TBE: Loadout — mid-combat gear state, in one place, without opening a sheet.
  *
- * Modelled on the TOR2e Loadout macro Seb runs at his own table, adapted to
+ * Modelled on the TOR2e Loadout macro the playtest GM runs at their own table, adapted to
  * TBE's rules and data model. What was taken from it, deliberately: a hotbar
  * panel rather than sheet rows (mid-combat state should not live somewhere you
  * have to open a character sheet to reach); one row per item with the states as
@@ -13,7 +13,7 @@
  * `carried` enum, which cannot. Grip switching (1H/2H twins) has no TBE
  * equivalent and is not reproduced.
  *
- * WHAT THIS DOES NOT DO, on purpose (Seb's call, 2026-09-17, "state + costs
+ * WHAT THIS DOES NOT DO, on purpose (the playtest GM's call, 2026-09-17, "state + costs
  * shown, not enforced"): it does not track whose turn it is, does not count
  * actions, and does not stop you doing three things in a round. TBE gives one
  * action per round ("Failing an action still counts as having taken your action

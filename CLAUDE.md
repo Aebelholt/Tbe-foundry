@@ -16,6 +16,17 @@ repo:
   user explicitly asks for the standalone-macro path again. Direct user
   steer: "I think we are going forward with the system zip model."
 
+## No personal name in anything that ships
+
+Seb's standing instruction (2026-09-27): their name stays out of the release.
+Nothing under `system/the-broken-empires/` or `macros/` (which is built into
+the `tbe-macros` pack) may name them: not `system.json` `authors`, not
+`LICENSE.txt`, not a code comment, not the CHANGELOG. Refer to "the playtest
+GM" or "the playtest world" instead. Repo-only files (this one, BACKLOG.md,
+ROADMAP.md, HANDOFF.md) are not shipped and may keep using their name. Before
+building a release: `grep -rnE "Seb|Aebelholt" system/the-broken-empires macros`
+must print nothing.
+
 ## Scope: a GM and players at a table. Solo is a mode, not the premise.
 
 **Changed 2026-09-17 by Seb, in his words: "this is no longer a solo module

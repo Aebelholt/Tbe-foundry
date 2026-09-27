@@ -10,7 +10,7 @@
  * The one implementation that was right lived in the file nobody uses.
  *
  * That was survivable while this was a solo system, because there was one
- * pair of eyes and "public" and "private" meant the same thing. Seb changed
+ * pair of eyes and "public" and "private" meant the same thing. The playtest GM changed
  * the scope on 2026-09-17 — a GM and players, separate clients, one shared
  * chat log — and it stopped being survivable. A GM could not roll anything
  * privately. TBE: Social Encounter's Tolerance option is the sharpest case:

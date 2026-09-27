@@ -19,7 +19,7 @@
  * lied. If a number is missing from this file, the fix is to expose it on the
  * actor, not to work it out again here.
  *
- * GM-only, by Seb's choice (2026-09-20): this is prep and archive tooling
+ * GM-only, by the playtest GM's choice (2026-09-20): this is prep and archive tooling
  * over the whole world. A player who runs it is told so in a sentence and
  * left exactly as they were (rule 6), rather than getting an empty page or a
  * permission error out of Foundry.
@@ -83,7 +83,7 @@ const sheetFor = (a) => {
      macro did, and precisely the defect `skill_picker_check.mjs` was written
      to stop in the roll picker. `TBE.allSkills` is the one owner of that
      merge; a real TBE sheet lists the whole catalogue with 20s in it, which
-     is also what Seb's own spreadsheet does.
+     is also what the playtest GM's own spreadsheet does.
 
      An untrained 20 is printed in grey so a glance still finds the trained
      ones, rather than making the player read every number. */

@@ -97,7 +97,7 @@ export function defendingShield(actor, carryPool, HAND = "hand") {
 
 /**
  * One line saying what the shield is doing, for the card and the defence
- * prompt. Seb, after the first real session: "If shielding make it clear
+ * prompt. The playtest GM, after the first real session: "If shielding make it clear
  * during the attack macro." The numbers were always in the arithmetic; what
  * was missing was any statement at the moment of the roll that a shield was
  * up at all.

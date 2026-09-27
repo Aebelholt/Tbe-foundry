@@ -594,7 +594,7 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
       : null;
     const base = skill ? Number(skill.system?.value) || 0 : TBE.BASE_SKILL;
 
-    /* Readiness (p.129) is shown, never charged -- Seb declined enforcement on
+    /* Readiness (p.129) is shown, never charged -- the playtest GM declined enforcement on
        2026-09-17. A weapon that is Stored or on the floor can still be rolled
        here; what it cannot do is have that fact hidden. */
     const ready = TBE.readinessOf ? TBE.readinessOf(weapon) : null;
@@ -642,7 +642,7 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
   }
 
   /**
-   * B1, in Seb's words: "If shielding make it clear during the attack macro."
+   * B1, in the playtest GM's words: "If shielding make it clear during the attack macro."
    *
    * The shield was always in the arithmetic and never in the sentence. This
    * asks the combat owner the same POSITIVE question tbe-attack.js asks --

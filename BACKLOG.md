@@ -23,8 +23,9 @@ Open, fixable in code:
   and the bestiary are book text. Either the claim or the content changes.
 - ~~**LICENSE.txt is the boilerplate's**~~ Fixed in v0.48.0. ("Copyright (c) 2020 Asacolips
   Projects") and points to a pack-licensing section the README does not have.
-- **`authors`, `url`, `bugs`, `manifest`, `download` are all empty.** v0.48.0
-  fills `authors`; the other four wait on where the system is hosted. A
+- **`authors`, `url`, `bugs`, `manifest`, `download` are all empty.** All five wait
+  on where the system is hosted. `authors` stays empty by choice: no
+  personal name in anything that ships. A
   stranger cannot install from a URL, cannot update, and has nowhere to report
   a bug.
 - ~~**No check boots the entry module.**~~ `boot_check.mjs`, v0.48.0. Eight checks import pieces of
