@@ -10,14 +10,10 @@ const GROUPS = [
   ["Talk it out", ["TBE: Social Encounter", "TBE: Extended Roll"]],
   ["Fight", ["TBE: Attack", "TBE: Quick Combat", "TBE: Loadout", "TBE: Wounds & Recovery", "TBE: Status Effects"]],
   ["The world", ["TBE: Journey Leg", "TBE: Supply", "TBE: Empires List", "TBE: Haggle"]],
-  /* TBE: Build Character is deliberately NOT listed. It sat here as an equal
-     third choice beside the Wizard while covering only part of Ch.7 -- no
-     Ability Scores, Cultural Background, Life Events, Rounding Out, equipment,
-     Personality Traits, Goals or Status -- so picking it off this menu was a
-     character-breaking mistake a player had no way to see coming. The macro
-     still exists in the compendium for anyone who wants the quick path, and it
-     now says what it skips before it builds anything. */
-  ["Make a character", ["TBE: Character Wizard", "TBE: Finish Character", "TBE: Talents"]],
+  /* Character creation is one window since v0.53.0 (TBE: Create Character,
+     also on the sheet's header). The Character Wizard, Finish Character and
+     Build Character were retired into it. */
+  ["Make a character", ["TBE: Create Character", "TBE: Talents"]],
   ["Keep the record", ["TBE: Status", "TBE: Session Log", "TBE: Advancement"]]
 ];
 

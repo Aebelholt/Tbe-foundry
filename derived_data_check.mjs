@@ -96,7 +96,8 @@ const mkActor = (armorBulkTotal) => ({
   }
 });
 
-const runPrepareDerived = (body, actor) => new Function(body).call(actor);
+const ARMOR = await import("./system/the-broken-empires/module/rules/armor.mjs");
+const runPrepareDerived = (body, actor) => new Function("wornBulk", "initPenalty", body).call(actor, ARMOR.wornBulk, ARMOR.initPenalty);
 
 const body = extractMethod(ACTORMJS, "prepareDerivedData() {");
 check(body.length > 100, "prepareDerivedData() body extracted");

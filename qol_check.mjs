@@ -23,7 +23,8 @@
  *      or Endurance written down dodges and rolls Endurance at 20.
  *   5. The sheet: the carry picker lists the owner's states, and the roll
  *      dialog remembers the modifier and never the Favor.
- *   6. The BUILT Character Wizard's resume path, by reading how it stores and
+ *   6. Character creation's resume path (the Create Character window since
+ *      v0.53.0), by reading how it stores and
  *      restores (the window itself is driven by wizard_visual_check.mjs).
  */
 import fs from "node:fs";
@@ -254,17 +255,20 @@ console.log("\n5. The sheet: carry picker and roll dialog");
     "both pickers are the shared button rows, fed by the rule owner");
 }
 
-console.log("\n6. The Character Wizard keeps its draft");
+console.log("\n6. Character creation keeps its draft");
 {
-  const w = cmd("TBE: Character Wizard");
-  check(/TBE\.remember\("wizardDraft", this\.actor\.id, untouched \? null : this\._snapshot\(\)\)/.test(w),
-    "the draft is saved on the user, keyed by the actor (and an untouched one is not)");
-  check(/activateListeners\(html\) \{[\s\S]{0,400}this\._saveDraft\(\)/.test(w), "after every page change");
-  check(/async close\(options\) \{[\s\S]{0,400}this\._readCurrentStep\(el\)[\s\S]{0,120}this\._saveDraft\(\)/.test(w),
-    "and on close, after reading the page being left");
-  check(/this\._committed = true;\s*await TBE\.remember\("wizardDraft", this\.actor\.id, null\)/.test(w), "Create Character discards it");
-  check(/value="resume" checked/.test(w) && /value="fresh"/.test(w), "reopening offers Resume (default) or Start over");
-  check(/Object\.assign\(this\.draft, saved\.draft\)/.test(w), "a restored draft goes over the defaults, so newer fields keep theirs");
+  /* The Wizard that carried this retired in v0.53.0; the Create Character
+     window keeps it the same way. creator_check.mjs section 7 runs the
+     sequence (close half way, reopen, resume) in a browser; this pins the
+     shape of it. */
+  const w = fs.readFileSync("system/the-broken-empires/module/chargen/creator.mjs", "utf8");
+  check(/memory\.remember\(game\.user, DRAFT_KIND, this\.actor\.id, pristine \? null : \{ draft: this\.d/.test(w),
+    "the draft is saved on the user through the memory owner, keyed by the actor (and an untouched one is not)");
+  check(/_onInput\(ev\)[\s\S]{0,400}this\._save\(\)/.test(w) && /_onChange\(ev\)[\s\S]{0,400}this\._save\(\)/.test(w), "after every change");
+  check(/async close\(options\) \{[\s\S]{0,500}memory\.remember/.test(w), "and on close");
+  check(/this\._created = true;[\s\S]{0,80}memory\.remember\(game\.user, DRAFT_KIND, this\.actor\.id, null\)/.test(w), "Create discards it");
+  check(/"Resume it"/.test(w) && /"Start over"/.test(w), "reopening offers Resume or Start over");
+  check(/Object\.assign\(defaultDraft\(T\), JSON\.parse\(JSON\.stringify\(saved/.test(w), "a restored draft goes over the defaults, so newer fields keep theirs");
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

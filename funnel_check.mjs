@@ -79,9 +79,11 @@ const carriers = macroFiles.filter((f) =>
   fs.readFileSync(path.join(macroDir, f), "utf8").includes('Combat: ["Dodge", "Melee: Light"'));
 check(carriers.length === 1 && carriers[0] === "_lib.js",
   "the skill map literal appears only in _lib.js", carriers);
-for (const f of ["tbe-build-character.js", "tbe-character-wizard.js", "tbe-finish-character.js"]) {
-  const src = fs.readFileSync(path.join(macroDir, f), "utf8");
-  check(src.includes("SKILLS = TBE.SKILL_GROUPS"), f + " reads the shared catalogue");
+/* The three chargen macros that read it retired in v0.53.0. The system's own
+   copy (module/chargen/rules.mjs) is held equal to _lib.js by creator_check.mjs. */
+{
+  const sys = fs.readFileSync(path.join(__dirname, "system/the-broken-empires/module/chargen/rules.mjs"), "utf8");
+  check(sys.includes('Combat: ["Dodge", "Melee: Light"'), "the system's chargen/rules.mjs carries the one other copy, held equal by creator_check.mjs");
 }
 const npcSrc = fs.readFileSync(path.join(macroDir, "tbe-npc.js"), "utf8");
 check(!npcSrc.includes('group: "Adventuring"'), "TBE: NPC no longer stamps every skill Adventuring");

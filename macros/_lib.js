@@ -635,7 +635,18 @@ TBE.creatureSkillGroup = function (name, isAttack) {
 
 /* Expertise ladder: no skill has Ex0 or Ex1 (p.53), so the first step lands on
  * Ex2 and each later one adds 1 to a maximum of Ex4. */
-TBE.raiseExpertise = (cur) => (TBE.num(cur, 0) === 0 ? 2 : Math.min(4, TBE.num(cur, 0) + 1));
+/* The creation rules below have one owner, the system's module/chargen/
+ * rules.mjs (exposed as game.thebrokenempires.chargen.rules, v0.53.0). Each
+ * copy here defers to it at runtime and keeps its own body only as the
+ * fallback for a harness with no system loaded; creator_check.mjs holds the
+ * two equal over their whole input space. */
+TBE._chargenRules = () => (typeof game !== "undefined" && game?.thebrokenempires?.chargen?.rules) || null;
+
+TBE.raiseExpertise = (cur) => {
+  const own = TBE._chargenRules();
+  if (own) return own.raiseExpertise(cur);
+  return TBE.num(cur, 0) === 0 ? 2 : Math.min(4, TBE.num(cur, 0) + 1);
+};
 
 /* p.80: "During character creation, no skill can be increased beyond 70 for
  * any reason." */
@@ -654,6 +665,8 @@ TBE.rollAbilityPair = async function (scores) {
   if (!list.length) return { picks: [null, null], rolls: [] };
   const r1 = await new Roll("1d6").evaluate();
   const r2 = await new Roll("1d6").evaluate();
+  const own = TBE._chargenRules();
+  if (own) { const p = own.abilityPairFromRolls(list, r1.total, r2.total); return { picks: p, rolls: [r1, r2] }; }
   const idx = (n) => Math.max(0, Math.min(list.length - 1, n - 1));
   const first = list[idx(r1.total)] || null;
   const second = r2.total === r1.total
@@ -667,6 +680,8 @@ TBE.rollAbilityPair = async function (scores) {
  * Wizard's review step and the NPC/funnel cards print, or null if the score
  * could not be applied. */
 TBE.applyAbilityScore = function (values, score, exSkill, cap) {
+  const own = TBE._chargenRules();
+  if (own) return own.applyAbilityScore(values, score, exSkill, cap);
   if (!score || !values) return null;
   const ceiling = TBE.num(cap, 0) || TBE.CHARGEN_SKILL_CAP;
   for (const sk of score.skills || []) {
@@ -831,6 +846,8 @@ TBE.buildTownsfolk = async function (opts) {
  * data/talents.json has "Quick And Quiet" and "Press The Point", so an exact
  * match silently drops two real Talents. */
 TBE.talentNamed = function (catalogue, name) {
+  const own = TBE._chargenRules();
+  if (own) return own.talentNamed(catalogue, name);
   const key = String(name || "").trim().toLowerCase();
   if (!key) return null;
   const exact = (catalogue || []).find((t) => String(t.name).toLowerCase() === key);
@@ -847,6 +864,8 @@ TBE.talentNamed = function (catalogue, name) {
 };
 
 TBE.talentItem = function (row, spec) {
+  const own = TBE._chargenRules();
+  if (own) return own.talentItem(row, spec);
   const t = row || {};
   const perX = t.rank === "per-skill";
   return {
@@ -1630,7 +1649,7 @@ TBE.encMod = (actor) => TBE.encStatus(actor).penalty;
  * armorInitPenalty / initiativeEffective), which is also what the combat
  * tracker's initiative formula rolls against. This reads that; it recomputes
  * only for an actor prepared before those fields existed, so the sheet, the
- * tracker, TBE: Cast and TBE: Finish Character cannot drift apart. */
+ * tracker and TBE: Cast cannot drift apart. */
 TBE.armorInit = function (actor) {
   const sys = actor?.system || {};
   if (Number.isFinite(Number(sys.armorInitPenalty))) {
@@ -1640,9 +1659,13 @@ TBE.armorInit = function (actor) {
       effective: TBE.num(sys.initiativeEffective, TBE.num(sys.initiative, 0))
     };
   }
-  const bulk = (actor?.items ?? []).filter((i) => i.type === "armor" && i.system?.equipped !== false)
+  /* The rule's owner is the system's rules/armor.mjs; this copy is only the
+     fallback for a harness with no system loaded. */
+  const own = (typeof game !== "undefined" && game?.thebrokenempires?.rules?.armor) || null;
+  const items = Array.from(actor?.items ?? []);
+  const bulk = own ? own.wornBulk(items) : items.filter((i) => i.type === "armor" && i.system?.equipped !== false)
     .reduce((n, i) => n + TBE.num(i.system?.bulk, 0), 0);
-  const penalty = Math.ceil(bulk / 3);
+  const penalty = own ? own.initPenalty(bulk) : Math.ceil(bulk / 3);
   return { bulk, penalty, effective: TBE.num(sys.initiative, 0) - penalty };
 };
 
@@ -1800,6 +1823,31 @@ TBE.canWrite = function (actor) {
  * the only way to say which of forty creatures they mean -- but it now has to
  * be a selection they can actually write to. See permission.mjs for the full
  * reasoning; the rule lives there so a check can execute it. */
+/* Macros this system used to ship and has retired (v0.53.0, chargen rebuild
+ * stage 3). A world that imported them still has copies, frozen at the old
+ * version; TBE: Update Macros rewrites each such copy's command to the short
+ * redirect below, in place, so a hotbar slot keeps working and points at the
+ * replacement instead of running retired code. It never deletes them. */
+TBE.RETIRED_MACROS = (() => {
+  const openCreator = (name) =>
+    "/* " + name + " was retired in v0.53.0. TBE: Update Macros pointed this copy at its replacement,\n" +
+    " * the Create Character window (also on every character sheet's header). */\n" +
+    "const a = canvas.tokens?.controlled?.map((t) => t.actor).find((x) => x?.isOwner) ?? game.user?.character ?? null;\n" +
+    "const cg = game.thebrokenempires?.chargen;\n" +
+    "if (!cg?.open) ui.notifications?.warn(\"TBE: " + name + " was retired. Update The Broken Empires system to v0.53.0 or later for Create Character.\");\n" +
+    "else if (!a) ui.notifications?.warn(\"TBE: select your token, or assign a character to your user, then run this again.\");\n" +
+    "else cg.open(a);\n";
+  const finish =
+    "/* TBE: Finish Character was retired in v0.53.0. TBE: Update Macros replaced this copy with a pointer. */\n" +
+    "ui.notifications?.info(\"TBE: Finish Character was retired. New characters: Create on the character sheet's header. " +
+    "Gear and free armour: Buy equipment on the Gear tab. Goals: Add Goal on the sheet. Talents: TBE: Talents.\", { permanent: true });\n";
+  return {
+    "TBE: Character Wizard": { replacement: "Create Character", command: openCreator("TBE: Character Wizard") },
+    "TBE: Build Character": { replacement: "Create Character", command: openCreator("TBE: Build Character") },
+    "TBE: Finish Character": { replacement: "the character sheet (Buy equipment, Add Goal) and TBE: Talents", command: finish }
+  };
+})();
+
 TBE.me = function () {
   const P = _perm();
   const controlled = (typeof canvas !== "undefined" && canvas?.tokens?.controlled) || [];

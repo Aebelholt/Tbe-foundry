@@ -1,3 +1,5 @@
+import { wornBulk, initPenalty } from '../rules/armor.mjs';
+
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -44,7 +46,7 @@ export class TheBrokenEmpiresActor extends Actor {
      *
      * Derived here, on the actor, rather than in the sheet, because three
      * places needed the same number and each had its own copy: the sheet's
-     * _prepareArmorPenalty(), TBE: Cast, and TBE: Finish Character. The
+     * _prepareArmorPenalty(), TBE: Cast, and the old Finish Character. The
      * initiative formula registered in the init hook needs it too, and a roll
      * formula cannot call a sheet method. One owner, readable from anywhere
      * that can see the actor. */
@@ -61,10 +63,9 @@ export class TheBrokenEmpiresActor extends Actor {
      * derived field belongs here under the same rule, not as a schema
      * field with a default that quietly goes stale. */
     const num = (v, d = 0) => (Number.isFinite(Number(v)) ? Number(v) : d);
-    const bulk = this.items
-      .filter((i) => i.type === "armor" && i.system?.equipped !== false)
-      .reduce((sum, i) => sum + num(i.system?.bulk, 0), 0);
-    const penalty = Math.ceil(bulk / 3);
+    /* The rule itself: rules/armor.mjs. */
+    const bulk = wornBulk(this.items);
+    const penalty = initPenalty(bulk);
     this.system.armorBulk = bulk;
     this.system.armorInitPenalty = penalty;
     /* p.161: "If a roll takes a character's initiative below 0, the character

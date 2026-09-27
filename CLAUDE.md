@@ -240,7 +240,7 @@ between them. Instead:
   `BACKLOG.md`, then build and deliver.
 - Before that delivery: `node syntax_check.mjs <files>` on every edited macro, run the regression
   suites, and do the player-perspective walk-through this file already
-  calls for, especially for anything touching `tbe-character-wizard.js` or
+  calls for, especially for anything touching `module/chargen/` or
   the Attack/Wounds flow.
 - The delivered zip's accompanying message should name which batch just
   shipped and list the fixes in one line each, not restate the full audit
@@ -485,7 +485,7 @@ scope at least one pass at the player-facing output itself.
   Reaction tiers, the Ch.18 NPC shortcut's four branches, the magic Talents
   and the Fraying Roll.
 - `node enforcement_check.mjs` — Talent/Advancement/racial rule enforcement.
-- `node phase5_check.mjs` — 76 checks over the five defects the first played
+- `node phase5_check.mjs` — 73 checks over the five defects the first played
   session found (v0.28.0). Read it before adding a gate, a chargen grant or a
   tracker: every assertion in it exists because the other fourteen scripts
   were green while a player was being punished for doing a reasonable thing.
@@ -600,29 +600,27 @@ scope at least one pass at the player-facing output itself.
   **ABSENT is not FALSE**. A plain object with no `isOwner` is a harness stub,
   not a Document refusing; treating it as a refusal turned seven check scripts
   red at once.
-- `node pending_check.mjs` — 46 checks over the wizard's "Still to choose"
-  panel, which names every grant the character has been given and has not yet
-  claimed. Read it before adding a grant to chargen, because a grant with no
-  entry here is one the player can silently lose. Idea borrowed from the
-  standalone Tapestry tool's `computePendingChoices()`. Two things it encodes:
-  the panel DEFERS to the detector that already owns each grant
-  (`raceChoices()`, `isCaster()`, `usesHumanCulture()`) rather than deciding
-  from a race name, and it addresses steps by KEY rather than index, because
-  the Magic step exists only for a caster and an index would point at the wrong
-  page for everyone else. Most of the check is about **silence**: rule 6 cuts
-  both ways, and a panel that nags about a decision already made, or one the
-  book never granted, trains the player to ignore it. The sharpest case it
-  covers is the Ability Score step's Expertise/Talent/Descriptor selects, which
-  carry no blank option — they LOOK filled the moment a score is picked and
-  stay null until the step is actually visited, so an unvisited step reads on
-  screen as a complete one.
-- `node macro_sync_check.mjs` — 33 checks over `TBE: Update Macros`, which
+- `pending_check.mjs` was retired with TBE: Character Wizard in v0.53.0. Its
+  assertions moved to `creator_check.mjs` section 6b, aimed at the window's
+  `stepStatus()` in `module/chargen/draft.mjs`, and what it encoded still
+  holds: the "still to choose" list DEFERS to the detector that owns each
+  grant (`raceChoices()`, `patternOf()`) rather than deciding from a race
+  name, it addresses steps by KEY, and most of it is about **silence** (rule 6
+  cuts both ways: a list that nags about a decision already made, or one the
+  book never granted, trains the player to ignore it). Read section 6b before
+  adding a grant to chargen, because a grant with no entry there is one the
+  player can silently lose.
+- `node macro_sync_check.mjs` — 42 checks over `TBE: Update Macros`, which
   brings a world's macro copies up to the installed system by matching on NAME
   and updating in place. Read it before touching how macros reach a world. The
   problem it solves: a system upgrade updates the compendium and nothing else,
   and Foundry's own import creates rather than replaces, so a played world
   accumulates stale duplicates while the system beneath them is current — the
-  system is fixed and the thing the player clicks is not. Runs the real macro
+  system is fixed and the thing the player clicks is not. Section 12 covers
+  the retired macros (v0.53.0): a world copy of the Character Wizard, Build
+  Character or Finish Character gets its command replaced in place with a
+  pointer to what replaced it (`TBE.RETIRED_MACROS` in `_lib.js`), never
+  deleted, never re-created. Runs the real macro
   against a stub world that records every create/update/delete and asserts on
   what it did, including that ALL duplicates are updated rather than only the
   one a cleanup would keep. Carries a mutation swapping update for create,
@@ -720,22 +718,25 @@ scope at least one pass at the player-facing output itself.
   built Skill Roll and Attack against fatigued characters, and greps every
   macro that subtracts from `system.resolve.value` for a call to
   `TBE.availableResolve`. Read it before adding anything that spends Resolve.
-- `node chargen_parity_check.mjs` — 33 checks over `module/chargen/derive.mjs`,
-  the one calculation of a character from its chargen choices (stage 1 of
-  the chargen rebuild). The oracle is the BUILT Wizard's real `commit()`,
-  run in Node with a stub Application against a recording actor, over 360
-  drafts; they must agree in every field. Section 8 is the book's own worked
-  example, Hadrion, whose totals the book prints after every step: the one
-  part that can catch derive and the Wizard being wrong TOGETHER (it found
-  the Old Vestrian triple Low Vestrian that way). **Book step order is the
-  rule**: race before career, the 70 cap at each increase (p.78, p.80).
-  Read it before touching chargen maths in either place.
-- `node concepts_check.mjs` — 16 checks over `data/concepts.json`, the
+- `node chargen_parity_check.mjs` — 36 checks over `module/chargen/derive.mjs`,
+  the one calculation of a character from its chargen choices. Its oracle was
+  the BUILT Wizard's real `commit()`; before the Wizard retired (v0.53.0) that
+  was run over the same 360 drafts and frozen into
+  `test-fixtures/chargen_golden.json.gz`, which derive must still match in
+  every field. **Never regenerate that fixture**: there is no Wizard left to
+  regenerate it from, and a fixture rewritten to match new output checks
+  nothing. A change that should move a number is argued from the book, and
+  the fixture's draft is then excluded by name with the reason. Section 8 is
+  the book's own worked example, Hadrion, whose totals the book prints after
+  every step, now including the choices only the window can make (Ex3 Bind:
+  Control, Ritual-wise 25, Divinity 25, the free Talents). **Book step order
+  is the rule**: race before career, the 70 cap at each increase (p.78, p.80).
+- `node concepts_check.mjs` — 17 checks over `data/concepts.json`, the
   original (not book) step-1 concept table. Every skill suggestion must be a
-  real catalogue skill in the category it is filed under, because the Wizard
+  real catalogue skill in the category it is filed under, because the window
   drops an unknown one without a word; rows unique and numbered 1..N; the
-  pieces read as "{role} {streak}, {trouble}"; the Wizard rolls the column's
-  real size. Read it before adding rows.
+  pieces read as "{role} {streak}, {trouble}"; the window rolls the column's
+  real size, with a world's own rows appended. Read it before adding rows.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is
@@ -744,7 +745,7 @@ scope at least one pass at the player-facing output itself.
   duplicate it, when adding a new mechanic worth citing; give the underlying
   domain's `.py` extractor `check_tc`-style column-position verification
   before adding its numbers here, not just a presence check.
-- `node creator_check.mjs` — 83 checks over the Create Character window
+- `node creator_check.mjs` — 108 checks over the Create Character window
   (`module/chargen/`, v0.52.0). Section 1 holds the system's rule copies in
   `chargen/rules.mjs` equal to `_lib.js`'s over their whole input space.
   Section 3 is rule 2 enforced: every `data-bind` names a draft field and
@@ -755,27 +756,15 @@ scope at least one pass at the player-facing output itself.
   steps, Create, and close-and-resume; screenshots to
   `test-screenshots/creator/`. Read it before touching anything in
   `module/chargen/`: a page renders from `derive()`, never computes.
-- `node finish_check.mjs` — all six TBE: Finish Character tabs.
-- Wizard-specific: `node wizard_visual_check.mjs` runs the built macro inside
-  an async function, the way `Macro#execute` does (a bare `<script>` made
-  top-level `await` a syntax error, and v0.49.0's resume prompt was the first
-  one). Section 4b is SEQUENTIAL: close half way, reopen, resume, start over.
-  It drives the real,
-  fully-built `TBE: Character Wizard` macro in headless Chromium (a small
-  Application-v1 shim, not a full Foundry mock — see the file's own header
-  comment for exactly what it stubs and why) and screenshots all 15 steps
-  to `test-screenshots/wizard/`. This is the layer `simtest.js` and any
-  logic-only smoke test *can't* reach: real DOM state, real click/input
-  sequences. It exists because the Skill Points prefill bug (fields
-  showing a nonzero even split instead of 0) only got caught by a user
-  screenshot — this test asserts that exact regression can't ship again.
-  Run it after any change to `macros/tbe-character-wizard.js`.
-- Logic-only smoke coverage for the wizard's data functions (roll-table
-  range parsing, skill-value computation across race×career×culture×age,
-  talent resolution) lives in an ad hoc `/tmp/smoke_wizard.js`, not
-  checked in — rebuild it from the wizard's helper functions if a fresh
-  session needs it; the pattern is a line-sliced re-require of the pure
-  functions plus hand-computed expected values.
+- `node shop_check.mjs` — 21 checks over buying equipment after creation
+  (`module/chargen/shop.mjs`, the Gear tab's "Buy equipment"): the price off
+  the silver, armour's AP/Bulk and its one location, quantity, refusal
+  without writing, free starting pieces (p.109) and their training gate, and
+  the unowned actor. Drives the real dialog in headless Chromium. It took
+  these over from `finish_check.mjs`, retired with Finish Character in
+  v0.53.0; `wizard_visual_check.mjs` retired with the Wizard, its regressions
+  (points start at 0, a typed value survives Next and Back, spreading keeps a
+  typed value, resume) now in `creator_check.mjs`.
 - Bump the version in `system/the-broken-empires/system.json` and add a
   dated entry to `system/the-broken-empires/CHANGELOG.md` for anything
   that ships. `BACKLOG.md` tracks what's confirmed missing/broken but not
@@ -785,13 +774,13 @@ scope at least one pass at the player-facing output itself.
 ## Platform constraints
 
 - `system.json` currently declares `"compatibility": {"minimum": 12,
-  "verified": "14.365"}`. Several in-repo comments (the wizard macro's own
-  header, README.md) still say "targets Foundry v11, where ApplicationV2
-  doesn't exist" — that's stale; v12+ does have ApplicationV2. The sheets
-  and the Character Wizard use classic `Application` (v1) regardless, but
-  confirm with the user before assuming *why* if it matters for new work;
-  the original v11-only rationale no longer holds at the current minimum
-  version.
+  "verified": "14.365"}`. Some in-repo comments still say "targets Foundry
+  v11, where ApplicationV2 doesn't exist"; that's stale, v12+ has it. The
+  sheets and most macro windows use classic `Application` (v1); the Create
+  Character window (v0.52.0) is ApplicationV2, through the smallest surface
+  stable since V12 (`DEFAULT_OPTIONS`, `_renderHTML` returning a string,
+  `_replaceHTML`, `_onRender`). It has been exercised behind a stand-in, not
+  yet on a real V12 and V13+ table; see BACKLOG.
 - Macros are flat, self-contained scripts (see the build pipeline above)
   — no ES-module imports inside a macro file. `NEEDS_TABLES` and
   `NEEDS_CHARGEN` in `build.js` gate which data block each macro gets
@@ -801,5 +790,5 @@ scope at least one pass at the player-facing output itself.
   top value as a literal "0" (`"9-0"` for d10, `"99-00"` for d100) rather
   than the real number — any new roll-table lookup needs to special-case
   a trailing 0 as the die's max face, not take it literally
-  (`parseD100Range`/`forRoll` in `tbe-character-wizard.js` is the
-  reference implementation).
+  (`parseRange`/`rowForRoll` in `system/the-broken-empires/module/chargen/
+  rules.mjs` is the reference implementation since the Wizard retired).

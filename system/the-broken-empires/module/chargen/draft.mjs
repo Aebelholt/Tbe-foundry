@@ -199,6 +199,7 @@ export function stepStatus(T, d, ch) {
     for (const cp of ch.careerPoints || []) {
       if (cp.allocated < cp.pool) add("career", cp.cat + ": " + (cp.pool - cp.allocated) + " points to spend");
       if (cp.allocated > cp.pool) add("career", cp.cat + ": over by " + (cp.allocated - cp.pool));
+      if (cp.lost) add("career", cp.cat + ": " + cp.lost + " point(s) go past the 70 cap and are lost; put them elsewhere");
     }
     if (pattern === "spellweaver") {
       if ((d.swBinds || []).filter(Boolean).length < (SW.binds || 2)) add("career", "Choose your " + (SW.binds || 2) + " Binds");
@@ -225,6 +226,7 @@ export function stepStatus(T, d, ch) {
     if (anySpent > num(age.anyPoints)) add("rounding", "Bonus points over by " + (anySpent - num(age.anyPoints)));
     if (num(age.lorePoints) && sum(d.roLoreAlloc) < num(age.lorePoints)) add("rounding", (num(age.lorePoints) - sum(d.roLoreAlloc)) + " Lore points to spend");
     if (age.expertise && blank(d.roOldExpertiseSkill)) add("rounding", "Choose the skill for Old's Expertise");
+    if (ch.roundingLost) add("rounding", ch.roundingLost + " bonus point(s) go past the 70 cap and are lost; put them elsewhere");
   }
   const savvyLeft = (d.roSavvy || []).filter(blank).length;
   if (savvyLeft) add("rounding", savvyLeft + " bonus Savvy skill" + (savvyLeft > 1 ? "s" : "") + " to choose");

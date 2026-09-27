@@ -159,10 +159,11 @@ const MACROS = [
   ["TBE: Subverted Scene", "tbe-subverted-scene.js", "icons/svg/book.svg"],
   ["TBE: Random Event", "tbe-random-event.js", "icons/svg/hazard.svg"],
   ["TBE: Empires List", "tbe-empires-list.js", "icons/svg/scroll.svg"],
-  ["TBE: Build Character", "tbe-build-character.js", "icons/svg/statue.svg"],
   ["TBE: Create Character", "tbe-create-character.js", "icons/svg/statue.svg"],
-  ["TBE: Character Wizard", "tbe-character-wizard.js", "icons/svg/statue.svg"],
-  ["TBE: Finish Character", "tbe-finish-character.js", "icons/svg/anchor.svg"],
+  /* TBE: Character Wizard, TBE: Finish Character and TBE: Build Character
+     were retired in v0.53.0 (chargen rebuild stage 3): the Create Character
+     window, in the system, replaced all three. World copies are pointed at
+     it by TBE: Update Macros (TBE.RETIRED_MACROS in _lib.js). */
   ["TBE: Talents", "tbe-talents.js", "icons/svg/upgrade.svg"],
   ["TBE: Advancement", "tbe-advancement.js", "icons/svg/level-up.svg"],
   ["TBE: Attack", "tbe-attack.js", "icons/svg/sword.svg"],
@@ -214,25 +215,23 @@ const EMPTY_DATA = "const TBE_DATA = { tables: [] };\n";
 /* Only chargen needs the race/career/talent tables. */
 /* NPC and funnel generation need the Ability Score table (p.85-86) and the
  * Talent catalogue those scores grant from. */
-const NEEDS_CHARGEN = new Set(["TBE: Build Character", "TBE: Character Wizard", "TBE: Talents",
-  "TBE: Finish Character", "TBE: NPC", "TBE: Funnel"]);
+const NEEDS_CHARGEN = new Set(["TBE: Talents", "TBE: NPC", "TBE: Funnel"]);
 
 /* Trades, Bonds and Scars. */
 const NEEDS_FUNNEL = new Set(["TBE: NPC", "TBE: Funnel", "TBE: Funnel Roster"]);
 
-/* Only the Wizard has a step-1 concept roller. */
-const NEEDS_CONCEPTS = new Set(["TBE: Character Wizard"]);
-
-/* The post-creation screen needs chargen tables, the Talent catalogue and
- * the priced equipment list. */
-const NEEDS_EQUIP = new Set(["TBE: Finish Character"]);
+/* The concept roller and the priced equipment list were for the retired
+ * Wizard and Finish Character. The Create Character window reads them from
+ * module/chargen/tables.mjs (written below), so no macro carries them now. */
+const NEEDS_CONCEPTS = new Set([]);
+const NEEDS_EQUIP = new Set([]);
 
 /* Weave Magic data: chargen builds Spellweavers, Advancement raises Strands
  * and rolls Fraying, Cast prices the spell. Finish Character does not need it:
  * every magic decision it used to leave open is made in the Wizard's own
  * Magic step now. */
 const NEEDS_MAGIC = new Set([
-  "TBE: Character Wizard", "TBE: Advancement", "TBE: Cast",
+  "TBE: Advancement", "TBE: Cast",
   /* Both read the Ch.14 procedures parse_magic.py verified: the Ritual
    * Casting Results table, the Blood Magic marks, the Magic Circle and
    * Summoning numbers, the True Name rules, and the Weave Reaction table

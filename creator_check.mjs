@@ -77,19 +77,28 @@ console.log("\n1. The system's rule copies equal the macro library's");
   check(names.every((n) => (R.talentNamed(T.talents, n)?.name ?? null) === (TBE.talentNamed(T.talents, n)?.name ?? null)), "Talent lookup, every catalogue name and the rank-suffix forms");
   check(T.talents.every((t) => JSON.stringify(R.talentItem(t, "spec")) === JSON.stringify(TBE.talentItem(t, "spec"))), "Talent Item shape, effects included, for all " + T.talents.length);
 
-  /* The Wizard's range reading, sliced out of the macro. */
-  const w = fs.readFileSync(path.join(__dirname, "macros/tbe-character-wizard.js"), "utf8");
-  const src = w.slice(w.indexOf("function parseD100Range"), w.indexOf("function raceForRoll"));
-  const W = new Function(src + "; return { parseD100Range, forRoll };")();
+  /* The table range reading. Its other copy was the Wizard's parseD100Range,
+     retired in v0.53.0, so it is held to the book's convention directly: a
+     range's top written "0" or "00" is the die's max face, every face of every
+     table lands on exactly ONE row, and no row is unreachable. */
   const tables = [[T.chargen.races, "d100", 100], [T.chargen.humanCultures, "range", 100], [T.chargen.culturalBackgrounds, "range", 10],
     ...["origin", "youth", "recent"].map((k) => [T.lifeEvents[k], "range", 100])];
-  let diff = [], covered = true;
-  for (const [tab, key, max] of tables) for (let r = 1; r <= max; r++) {
-    const a = R.rowForRoll(tab, r, key, max), b = W.forRoll(tab, r, key, max);
-    if (a !== b) diff.push(key + " " + r);
-    if (!a) covered = false;
+  check(JSON.stringify(R.parseRange("99-00", 100)) === "[99,100]" && JSON.stringify(R.parseRange("9-0", 10)) === "[9,10]" &&
+    JSON.stringify(R.parseRange("00", 100)) === "[100,100]" && JSON.stringify(R.parseRange("01-70", 100)) === "[1,70]",
+    "a trailing 0 is the die's max face: 99-00, 9-0, 00; and 01-70 is 1..70");
+  const diff = [];
+  let covered = true;
+  for (const [tab, key, max] of tables) {
+    const hits = new Map();
+    for (let r = 1; r <= max; r++) {
+      const rows = tab.filter((row) => { const [lo, hi] = R.parseRange(row[key], max); return r >= lo && r <= hi; });
+      if (rows.length !== 1) diff.push(key + " " + r + ": " + rows.length + " rows");
+      const a = R.rowForRoll(tab, r, key, max);
+      if (!a) covered = false; else hits.set(a, true);
+    }
+    if (hits.size !== tab.length) diff.push(key + ": " + (tab.length - hits.size) + " unreachable rows");
   }
-  check(!diff.length, "table ranges read the same as the Wizard's, every face of every table", diff.slice(0, 5));
+  check(!diff.length, "every face of every table lands on exactly one row, and every row can be rolled", diff.slice(0, 5));
   check(covered, "every face of every table lands on a row (the trailing-0 rule)");
 
   const scores = T.chargen.abilityScores;
@@ -391,6 +400,102 @@ console.log("\n6. Create writes what the sheet shows, and nothing without permis
 }
 
 /* ------------------------------------------------------------------------ */
+console.log("\n6b. Ported from the retired Wizard's checks (pending_check, wizard_visual_check)");
+{
+  const st = (d) => DR.stepStatus(T, d, C.deriveWith(T, d));
+  const open = (d, k) => st(d)[k].open;
+  const base = () => DR.defaultDraft(T);
+
+  /* Racial grants: named where claimed, and one claim removes exactly one. */
+  const bf = Object.assign(base(), { raceName: "Bolg Fiir", careerName: "Spellweaver" });
+  const bfOpen = open(bf, "race");
+  check(bfOpen.some((x) => /Savvy/.test(x)) && bfOpen.some((x) => /Bind/.test(x)) && !bfOpen.some((x) => /Expertise/.test(x)),
+    "a Bolg Fiir Spellweaver is asked for its Savvy and its Bind +10, and not for a Human's Expertise", bfOpen);
+  bf.raceSavvyPick = "Missile";
+  check(!open(bf, "race").some((x) => /Savvy/.test(x)) && open(bf, "race").some((x) => /Bind/.test(x)), "claiming the Savvy removes that one and leaves the Bind");
+  const bfw = Object.assign(base(), { raceName: "Bolg Fiir", careerName: "Warrior", raceSavvyPick: "Missile" });
+  check(!open(bfw, "race").some((x) => /Bind/.test(x)), "a Bolg Fiir who is not Patterned is not asked for the Bind (the other half applies)");
+  const sp = Object.assign(base(), { raceName: "Human", raceSavvyPick: "   " });
+  check(open(sp, "race").some((x) => /Savvy/.test(x)), "a field holding only spaces still counts as unchosen");
+
+  /* Ability Scores. */
+  const none = base();
+  check(open(none, "ability").filter((x) => /Pick Ability Score/.test(x)).length === 2 && !open(none, "ability").some((x) => /Talent for/.test(x)),
+    "no scores: two 'pick' items and no sub-pick nags");
+  const half = Object.assign(base(), { abilityPicks: ["Strength", "Wisdom"], abilityExpertise: [null, null], abilityTalent: [null, null], abilityDescriptor: [null, null] });
+  check(open(half, "ability").length === 6, "two picked scores with no sub-picks: exactly six items", open(half, "ability"));
+
+  /* Magic. */
+  const war = Object.assign(base(), { raceName: "Human", careerName: "Warrior" });
+  check(!open(war, "career").some((x) => /True Name|Thread|Bind for your Expertise/.test(x)), "a Warrior is never asked for magic");
+  const sw = Object.assign(base(), { raceName: "Human", careerName: "Spellweaver" });
+  const swo = open(sw, "career");
+  check(swo.some((x) => /True Name/.test(x)) && swo.some((x) => /Thread Die/.test(x)) && swo.some((x) => /Bind for your Expertise/.test(x)),
+    "a Spellweaver is asked for a True Name, the d8 Thread Die and the Bind Expertise", swo);
+  const fade = Object.assign(base(), { raceName: "Human", careerName: "Rogue", takeFade: true });
+  check(open(fade, "career").some((x) => /True Name/.test(x)) && !open(fade, "career").some((x) => /Thread Die/.test(x)), "a Fade: a True Name, no Thread");
+  const ogreFade = Object.assign(base(), { raceName: "Ogre", careerName: "Spellweaver", takeFade: true });
+  check(!open(ogreFade, "career").some((x) => /True Name|Thread|Strand/.test(x)), "an Ogre is never asked for magic, whatever the career (Ch.5)");
+
+  /* Rounding Out Savvy count. */
+  const sv = (arr) => open(Object.assign(base(), { roSavvy: arr }), "rounding").find((x) => /Savvy/.test(x)) || "";
+  check(/^3 bonus Savvy skills/.test(sv([null, null, null])) && /^2 /.test(sv(["Wit", null, ""])) && /^1 bonus Savvy skill to/.test(sv(["Wit", "Heal", null])) && sv(["Wit", "Heal", "Dodge"]) === "",
+    "Savvy: 3, 2, 1 left, then silence");
+
+  /* Every open item is on a step the rail has; the status defers to the detectors. */
+  const keys = DR.STEPS.map((x) => x.key);
+  check(Object.keys(st(base())).every((k) => keys.includes(k)), "every status is keyed by a step that exists");
+  const dsrc = fs.readFileSync(path.join(CG, "draft.mjs"), "utf8");
+  const body = dsrc.slice(dsrc.indexOf("export function stepStatus"));
+  check(/raceChoices\(T, d\.raceName\)/.test(body) && /patternOf\(T, d\)/.test(body) && !/raceName\s*===\s*["']/.test(body),
+    "stepStatus asks raceChoices() and patternOf(), never a race name");
+
+  /* Points start at 0, not a prefilled split (the Skill Points prefill bug). */
+  const wr = Object.assign(base(), { careerName: "Warrior" });
+  const pts = S.renderStep("career", mkEnv(wr, { careerSub: "points" }));
+  const vals = [...pts.matchAll(/data-bind="alloc"[^>]*value="(\d+)"/g)].map((m) => m[1]);
+  check(vals.length === 37 && vals.every((v) => v === "0"), "all " + vals.length + " career point boxes start at 0", vals.slice(0, 6));
+  check(/0 \/ 80/.test(pts), "and the Combat pool reads 0 / 80");
+
+  /* Culture picks start empty (walking through must not stack every pick on one skill). */
+  const cu = Object.assign(base(), { cultureBgName: "Civilized, Urban" });
+  const ch = S.renderStep("culture", mkEnv(cu));
+  const sels = [...ch.matchAll(/<select data-bind="cultureBgPicks\.\d+"[^>]*>([\s\S]*?)<\/select>/g)];
+  check(sels.length > 5 && sels.every((m) => !/ selected/.test(m[1])), "every Cultural Background pick starts unchosen");
+
+  /* Race values reach the page: an Ogre shows DT 22 in the table and on the sheet. */
+  const og = Object.assign(base(), { raceName: "Ogre" });
+  check(C.deriveWith(T, og).attributes.deathThreshold.value === 22 && /<td>22<\/td>/.test(S.renderStep("race", mkEnv(og))), "an Ogre: Death Threshold 22 (p.83), in the race table and in derive()");
+
+  /* Magic page: all five Binds and ten Strands offered; a Convocation fills the picks. */
+  const m = Object.assign(base(), { raceName: "Human", careerName: "Spellweaver" });
+  const mp = S.renderStep("career", mkEnv(m, { careerSub: "magic" }));
+  check((mp.match(/data-bind="swBinds"/g) || []).length === 5 && (mp.match(/data-bind="swStrands"/g) || []).length === 10, "all five Binds and ten Strands are offered");
+  await A.act("convocation-pick", { value: "Druid" }, mkEnv(m));
+  check(JSON.stringify(m.swBinds) === '["Change","Control"]' && JSON.stringify(m.swStrands) === '["Beast","Earth","Plant","Water"]' && JSON.stringify(m.swThin) === '["Spheres","Spirit"]',
+    "picking the Druid Convocation fills Binds, Strands and Thin Strands (p.106)");
+  m.magicAlloc = { Change: 30 };
+  const bindAt = (n) => C.deriveWith(T, m).extraSkills.find((x) => x.name === "Bind: " + n).value;
+  check(bindAt("Change") === 40 && bindAt("Witness") === 0, "Change 10 (chosen) + 30 points = 40; Witness untouched at 0");
+  m.magicAlloc = { Change: 90 };
+  check(bindAt("Change") === 70, "and nothing passes 70 at creation (p.104)");
+}
+
+/* The macro library's creation rules defer to the system's (v0.53.0). */
+{
+  let asked = null;
+  globalThis.game = { thebrokenempires: { chargen: { rules: {
+    talentNamed: (c, n) => { asked = n; return { name: "SENTINEL" }; }, raiseExpertise: () => 99, applyAbilityScore: () => "S",
+    talentItem: () => ({ name: "SENTINEL" }), abilityPairFromRolls: () => ["A", "B"] } } } };
+  const got = [TBE.talentNamed([], "Tough")?.name, TBE.raiseExpertise(0), TBE.applyAbilityScore({}, {}, null, 70), TBE.talentItem({}, "").name];
+  scripted = [1, 1];
+  const pair = await TBE.rollAbilityPair([{ name: "x" }]);
+  delete globalThis.game;
+  check(JSON.stringify(got) === '["SENTINEL",99,"S","SENTINEL"]' && asked === "Tough" && pair.picks.join() === "A,B",
+    "with the system loaded, the library's talentNamed, raiseExpertise, applyAbilityScore, talentItem and the ability pair all defer (sentinel)", got);
+  check(TBE.talentNamed(T.talents, "Tough")?.name === "Tough", "and without it, the fallback still answers");
+}
+
 console.log("\n7. The real window, in headless Chromium");
 let chromium = null;
 try { ({ chromium } = await import("playwright")); } catch (e) { chromium = null; }
@@ -508,6 +613,8 @@ if (!chromium) {
   check(/over by/.test(await page.textContent('[data-live="pool:Combat"]')), "and the Combat pool updates live to 'over by'");
   await box.fill("12"); await page.waitForTimeout(40);
   check(/all spent/.test(await page.textContent('[data-live="pool:Combat"]')), "back to 12: all spent again");
+  await next(); await click('[data-action="back"]');
+  check(await page.inputValue('input[data-bind="alloc"][data-key="Combat_0"]') === "12", "a typed value survives Next and Back (the Wizard's old round-trip check)");
   await snap("career-points");
   await click('[data-action="ui-set"][data-value="slots"]');
   await page.fill('input[data-bind="wiseNames"]', "Horse-wise");

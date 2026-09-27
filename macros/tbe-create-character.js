@@ -6,8 +6,8 @@
  * only finds the actor and opens it. The same window opens from the
  * character sheet's header ("Create").
  *
- * TBE: Character Wizard and TBE: Finish Character still work; they are
- * retired once this window has been played with at a table (stage 3).
+ * It replaced TBE: Character Wizard, Finish Character and Build Character,
+ * which were retired in v0.53.0.
  */
 const target = TBE.me();
 const chargen = game.thebrokenempires?.chargen;

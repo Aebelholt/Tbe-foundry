@@ -17,7 +17,7 @@
  *      Threads are used only after a successful roll -- so those choices are
  *      offered then, with the real ones die and Strand already counted.
  *
- * Built as classic `Application` (v1) to match the Character Wizard.
+ * Built as classic `Application` (v1), like the sheets.
  */
 
 const MAGIC = (typeof TBE_MAGIC !== "undefined" && TBE_MAGIC) ? TBE_MAGIC : null;

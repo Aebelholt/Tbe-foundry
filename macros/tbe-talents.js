@@ -4,9 +4,9 @@
  * because they keep mattering after character creation: Enhanced Defense,
  * Armor Training and Solo Constitution change rolls every session.
  *
- * For the FREE picks a new character gets at chargen (race/career/Rounding
- * Out), use TBE: Finish Character's own Talents tab instead -- it shows how
- * many free picks are left and defaults to no XP charge. This macro still
+ * The FREE picks a new character gets at chargen (race/career/Rounding
+ * Out) are made in the Create Character window (v0.52.0), which shows each
+ * one and what it allows. This macro still
  * has an XP-off toggle underneath (a GM handing out a Talent as a quest
  * reward, say), but chargen is not its main job any more; keeping the two
  * apart is what the "keep chargen and advancement distinct" ask means in
@@ -34,7 +34,7 @@ if (!me) {
   const available = TBE.num(xp.available, 0);
 
   /* Race exclusivity, named prerequisites, creation-only, already-taken --
-     shared with TBE: Finish Character's Talents tab so both enforce the
+     shared with the old Finish Character's Talents tab so both enforced the
      same rules from one place (_lib.js). */
   const { blockedReason, missingPrereq, catalogueNames, stripNegation, rankState } =
     TBE.talentEligibility(TBE_TALENTS, ownedNames, race, TBE_CHARGEN.races || [], { ownedItems: owned });
@@ -96,7 +96,7 @@ if (!me) {
     '<label style="display:block">Applies to (for a Talent that asks you to pick a weapon, skill or location): ' +
     '<input type="text" name="spec" placeholder="shortsword, Melee: Medium, Head..." style="width:100%"></label>' +
     '<label style="display:block;margin-top:4px"><input type="checkbox" name="charge" checked> ' +
-    "Spend XP for these (untick only for a free GM-granted Talent — for your free character-creation picks, use TBE: Finish Character instead)</label>" +
+    "Spend XP for these (untick only for a free GM-granted Talent; free character-creation picks are made in Create Character)</label>" +
     '<div style="font-size:11px;opacity:.75;margin-top:4px">Greyed-out rows cannot be taken: already held and not repeatable, ' +
     "exclusive to another race, character-creation only, or a prerequisite you do not have yet.</div>" +
     "</div>";

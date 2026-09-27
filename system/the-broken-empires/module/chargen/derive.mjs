@@ -94,7 +94,12 @@ export function derive(draft, ctx) {
       if (b.savvy && !a.savvy) sources[n].push({ label, savvy: true });
     }
   };
-  const raise = (sk, amount) => { values[sk].value = Math.min(CAP, values[sk].value + amount); };
+  /* Returns the points the cap swallowed, so an allocation can say so. */
+  const raise = (sk, amount) => {
+    const before = values[sk].value;
+    values[sk].value = Math.min(CAP, before + amount);
+    return Math.max(0, before + amount - values[sk].value);
+  };
 
   /* 1. Starting skills: one per category raised to 30 (p.79). */
   for (const [cat, sk] of Object.entries(d.boost || {})) {
@@ -165,18 +170,22 @@ export function derive(draft, ctx) {
   for (const [cat, pool] of Object.entries(career.pools || {})) {
     if (!pool || cat === "Magic") continue;
     const names = SKILLS[cat] || [];
-    let allocated = 0;
+    let allocated = 0, lost = 0;
     names.forEach((n, idx) => {
       const add = Math.max(0, num((d.alloc || {})[cat + "_" + idx], 0));
       if (!add) return;
       allocated += add;
-      step("Career: " + career.name + " (" + cat + " points)", () => raise(n, add));
+      step("Career: " + career.name + " (" + cat + " points)", () => { lost += raise(n, add); });
     });
-    spent.push({ cat, allocated, pool });
+    /* p.80: nothing passes 70 at creation, so points typed past it are
+       gone. Said, not swallowed (phase5_check.mjs, v0.28.0). */
+    spent.push({ cat, allocated, pool, lost });
+    if (lost) notes.push(cat + ": " + lost + " career point(s) went past the 70 creation cap and are lost.");
     if (allocated !== pool) notes.push(cat + ": " + allocated + " of " + pool + " career points allocated.");
   }
 
   /* 8. Rounding Out: age, the Old Expertise, the bonus pools, the Savvy picks. */
+  let roundingLost = 0;
   if (age) {
     if (age.endurance && values.Endurance) {
       step("Rounding Out: " + age.key, () => {
@@ -190,12 +199,13 @@ export function derive(draft, ctx) {
     }
     for (const [sk, pts] of Object.entries(d.roAlloc || {})) {
       const add = Math.max(0, num(pts, 0));
-      if (add && values[sk]) step("Rounding Out: bonus points", () => raise(sk, add));
+      if (add && values[sk]) step("Rounding Out: bonus points", () => { roundingLost += raise(sk, add); });
     }
     for (const [sk, pts] of Object.entries(d.roLoreAlloc || {})) {
       const add = Math.max(0, num(pts, 0));
-      if (add && values[sk] && (SKILLS.Lore || []).includes(sk)) step("Rounding Out: Old Lore points", () => raise(sk, add));
+      if (add && values[sk] && (SKILLS.Lore || []).includes(sk)) step("Rounding Out: Old Lore points", () => { roundingLost += raise(sk, add); });
     }
+    if (roundingLost) notes.push("Rounding Out: " + roundingLost + " bonus point(s) went past the 70 creation cap and are lost.");
   }
   for (const sk of d.roSavvy || []) if (sk && values[sk]) step("Rounding Out: Savvy", () => { values[sk].savvy = true; });
 
@@ -419,6 +429,7 @@ export function derive(draft, ctx) {
     relationshipNpcs: (d.relationshipNpcs || []).slice(),
     personality,
     careerPoints: spent,
+    roundingLost,
     notes: notes.concat(magic ? magic.notes : [])
   };
 }

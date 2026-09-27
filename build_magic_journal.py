@@ -108,7 +108,7 @@ parts.append('<table border="1" cellpadding="4"><tr><th>Bind</th><th>What it doe
 
 parts.append("<h3>Convocations</h3>")
 parts.append("<p>Optional templates for building a Spellweaver at character creation (Ch.7 p.106). The "
-             "<b>TBE: Character Wizard</b> rolls or applies any of these and fills the picks in for you.</p>")
+             "<b>Create Character</b> window (on every character sheet's header) rolls or applies any of these and fills the picks in for you.</p>")
 parts.append('<table border="1" cellpadding="4"><tr><th>Convocation</th><th>Binds</th><th>Strands</th><th>Thin Strands</th></tr>' +
              "".join("<tr><td><b>%s</b></td><td>%s</td><td>%s</td><td>%s</td></tr>" %
                      (e(c["name"]), e(", ".join(c["binds"])), e(", ".join(c["strands"])), e(", ".join(c["thinStrands"])))

@@ -148,7 +148,7 @@ if (!all.length) {
       await TBE.write(src, { [TBE.flagPath("funnel")]: f, "flags.tbe.-=funnel": null }, "the roster change");
       notes.push("<b>" + pc.name + "</b> is a character now, in <b>TBE Survivors</b>" +
         (data.grew ? ", " + data.grew + " +10" : "") + (data.goal ? ', with the goal "' + data.goal + '"' : "") + ".");
-      notes.push('<span style="font-size:11px;opacity:.8">Run TBE: Finish Character on them to spend what a real character still owes: career, Cultural Background, Life Events, the rest of their Goals.</span>');
+      notes.push('<span style="font-size:11px;opacity:.8">What a real character still owes them (career, Cultural Background, Life Events, the rest of their Goals) is added on their sheet. Create Character builds from scratch, so it would replace what the funnel gave them.</span>');
     }
 
     await TBE.say(TBE.card("The roster", notes.length ? notes.map((n) => "<div>" + n + "</div>").join("") : "<div>Nothing changed.</div>"));

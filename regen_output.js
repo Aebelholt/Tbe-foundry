@@ -23,10 +23,10 @@ const HEADER = (name) => `/* ${name} -- compiled standalone macro for The Broken
  * full TBE-Solo-Installer.js bundle for this macro. */
 `;
 
-const TARGETS = [
-  { name: "TBE: Character Wizard", file: "tbe-character-wizard.js", out: "TBE-Character-Wizard.js" },
-  { name: "TBE: Build Character", file: "tbe-build-character.js", out: "TBE-Build-Character.js" }
-];
+/* Both targets were retired in v0.53.0 (the Create Character window, in the
+ * system, replaced them), so there is nothing left to export. The files
+ * already in output/ are the last legacy copies and are not delivered. */
+const TARGETS = [];
 
 for (const t of TARGETS) {
   const src = fs.readFileSync(path.join(__dirname, "macros", t.file), "utf8");

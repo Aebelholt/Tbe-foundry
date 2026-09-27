@@ -251,5 +251,37 @@ console.log("\n11. Mutation: create instead of update, which is the original bug
     { created: env.log.created.map((c) => c.name), updated: env.log.updated.length });
 }
 
+console.log("\n12. Retired macros (v0.53.0): pointed at their replacement, never deleted");
+{
+  const probe = build({ world: [], shipped: SHIPPED, answer: {} });
+  const R = probe.TBE.RETIRED_MACROS || {};
+  check(["TBE: Character Wizard", "TBE: Build Character", "TBE: Finish Character"].every((n) => R[n] && R[n].command),
+    "the Character Wizard, Build Character and Finish Character each have a redirect", Object.keys(R));
+  const AF = Object.getPrototypeOf(async function () {}).constructor;
+  const bad = Object.entries(R).filter(([, r]) => { try { new AF("speaker", "actor", "token", "character", "scope", "event", "{" + r.command + "\n}"); return false; } catch (e) { return true; } });
+  check(!bad.length, "every redirect compiles as a Foundry script macro", bad.map(([n]) => n));
+
+  const world = [["TBE: Character Wizard", "OLD-WIZARD"], ["TBE: Character Wizard", "OLD-WIZARD"], ["TBE: Finish Character", "OLD-FINISH"],
+    ["My Wizard", "OLD-WIZARD"], ["TBE: Attack", "NEW-ATTACK"], ["TBE: Cast", "NEW-CAST"], ["TBE: Loadout", "NEW-LOADOUT"]];
+  const log = await run({ shipped: SHIPPED, world, answer: { prune: "on" } });
+  const wiz = log.updated.filter((u) => u.name === "TBE: Character Wizard");
+  check(wiz.length === 2 && wiz.every((u) => u.command === R["TBE: Character Wizard"].command), "both Wizard copies now hold the redirect", wiz);
+  check(log.updated.some((u) => u.name === "TBE: Finish Character" && u.command === R["TBE: Finish Character"].command), "and Finish Character its pointer");
+  check(!log.updated.some((u) => u.name === "My Wizard"), "a renamed copy is not touched");
+  check(!log.deleted.length && !log.created.some((c) => /Wizard|Finish|Build/.test(c.name)), "nothing is deleted (even with prune ticked) and nothing retired is re-created", log);
+  const again = await run({ shipped: SHIPPED, world: world.map(([n, c]) => [n, R[n] ? R[n].command : c]), answer: {} });
+  check(!again.updated.length && again.said.some(([k, m]) => k === "info" && /already matches/.test(m)), "a second run finds nothing to do", again.updated);
+
+  /* The redirect does what it says: opens the window for an owned token. */
+  let opened = null;
+  const cmd = new AF("canvas", "game", "ui", "{" + R["TBE: Character Wizard"].command + "\n}");
+  await cmd({ tokens: { controlled: [{ actor: { name: "Edda", isOwner: true } }] } },
+    { thebrokenempires: { chargen: { open: (a) => { opened = a; } } }, user: {} }, { notifications: { warn() {}, info() {} } });
+  check(opened && opened.name === "Edda", "running a redirected Wizard opens Create Character for the selected character");
+  const said = [];
+  await cmd({ tokens: { controlled: [] } }, { user: {} }, { notifications: { warn: (m) => said.push(m) } });
+  check(/v0\.53\.0 or later/.test(said[0] || ""), "on an older system it says so instead of failing", said);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);

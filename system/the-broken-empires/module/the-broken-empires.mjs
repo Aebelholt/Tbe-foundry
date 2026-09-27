@@ -16,11 +16,14 @@ import * as permission from './rules/permission.mjs';
 import * as combat from './rules/combat.mjs';
 import * as zones from './rules/zones.mjs';
 import * as resolveTrack from './rules/resolve-track.mjs';
+import * as armor from './rules/armor.mjs';
 import * as chatPopups from './helpers/chat-popups.mjs';
 import * as diceRoles from './helpers/dice-roles.mjs';
 import * as memory from './helpers/memory.mjs';
 import * as rollControls from './helpers/roll-controls.mjs';
 import { openCreator } from './chargen/creator.mjs';
+import { openShop } from './chargen/shop.mjs';
+import * as chargenRules from './chargen/rules.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -37,7 +40,10 @@ Hooks.once('init', function () {
     memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
     /* The character creation window (chargen/creator.mjs, v0.52.0): the
        book's twelve steps, a live sheet, one Create. */
-    chargen: { open: openCreator },
+    chargen: { open: openCreator, shop: openShop,
+      /* The creation rules the macro library's copies defer to (NPC, Funnel,
+         Talents): chargen/rules.mjs. */
+      rules: chargenRules },
     /* The Task Modifier / Favor button rows, shared by the sheet's roll
        dialog and the macro pack (helpers/roll-controls.mjs). */
     ui: { taskButtons: rollControls.taskButtons, favorButtons: rollControls.favorButtons,
@@ -58,6 +64,8 @@ Hooks.once('init', function () {
       },
       /* The Resolve track (p.26): what can be spent is unspent minus
          Fatigue. Every Resolve spend asks this; see rules/resolve-track.mjs. */
+      /* Armour Bulk and its Initiative penalty (p.142); see rules/armor.mjs. */
+      armor: { wornBulk: armor.wornBulk, initPenalty: armor.initPenalty },
       resolveTrack: { track: resolveTrack.track, availableResolve: resolveTrack.availableResolve,
                       trackHtml: resolveTrack.trackHtml },
       resolve: resolution.resolve,
@@ -203,7 +211,7 @@ Hooks.once('init', function () {
     default: {}
   });
 
-  /* Extra rows for the Character Wizard's step-1 concept roller. That table
+  /* Extra rows for the Create Character window's step-1 concept roller. That table
    * is ORIGINAL content, not book-derived, and the project owner asked to be
    * able to expand it -- so the additions live in the world, not in the
    * shipped data file, and the wizard merges them into the d10 columns it

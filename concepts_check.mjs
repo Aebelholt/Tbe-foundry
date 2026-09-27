@@ -5,12 +5,12 @@
  * concept and gives no table), and v0.51.0 grew it from 10 rows a column to
  * 60 roles, 40 streaks and 40 troubles. Nothing in it is mechanical, but its
  * skill suggestions feed the four category-30 pickers on step 1, and the
- * Wizard DROPS a suggestion whose name or category it does not recognise
+ * Create Character window DROPS a suggestion whose name or category it does not recognise
  * (conceptSkillHints) without a word. A typo would ship as a suggestion that
  * silently never appears. This makes it fail the build instead.
  *
  * It also keeps the table honest about what it is: labelled original,
- * rolled at its real size, and readable as the sentence the Wizard builds.
+ * rolled at its real size, and readable as the sentence the window builds.
  */
 import fs from "node:fs";
 
@@ -39,7 +39,7 @@ console.log("\n2. Every suggestion is a real skill, in the category it is filed 
   check(none.length === 0, "every row suggests at least one skill", none);
 }
 
-console.log("\n3. The table reads as the sentence the Wizard builds");
+console.log("\n3. The table reads as the sentence the window builds");
 {
   for (const k of cols) {
     const texts = C[k].map((r) => r.text.toLowerCase());
@@ -54,12 +54,17 @@ console.log("\n3. The table reads as the sentence the Wizard builds");
   check(C.roles.every((r) => r.text[0] === r.text[0].toUpperCase()), "every role starts the sentence");
 }
 
-console.log("\n4. The Wizard rolls the table at its real size");
+console.log("\n4. The Create Character window rolls the table at its real size");
 {
-  const w = fs.readFileSync("macros/tbe-character-wizard.js", "utf8");
-  check(/new Roll\("1d" \+ col\.list\.length\)/.test(w), "the roll is 1d(rows in the column), not a hardcoded d10");
-  const built = JSON.parse(fs.readFileSync("data/solo_docs.json", "utf8")).macros.find((m) => m.name === "TBE: Character Wizard").command;
-  check(built.includes('"text":"Nameless wandering blade"'), "the built Wizard carries the new rows (run node build.js after editing)");
+  /* The Wizard that used to roll it retired in v0.53.0. */
+  const act = fs.readFileSync("system/the-broken-empires/module/chargen/actions.mjs", "utf8");
+  check(/env\.roll\("1d" \+ list\.length\)/.test(act), "the roll is 1d(rows in the column), not a hardcoded d10");
+  const tabs = fs.readFileSync("system/the-broken-empires/module/chargen/tables.mjs", "utf8");
+  check(tabs.includes('"text":"Nameless wandering blade"'), "the window's tables carry the current rows (run node build.js after editing)");
+  const { conceptColumns } = await import("./system/the-broken-empires/module/chargen/creator.mjs");
+  const cols = conceptColumns({ concepts: C }, { roles: [{ text: "Fallen inquisitor", skills: { Social: ["Insight"] } }] });
+  check(cols.role.length === C.roles.length + 1 && cols.role[cols.role.length - 1].d10 === cols.role.length,
+    "a world's own rows are appended and numbered on, so the roll stays a clean 1..N");
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

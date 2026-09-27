@@ -5,6 +5,7 @@
     {{#if enc.penalty}}
     <span style="color:#b04040"><b>{{enc.penalty}}</b> to physical-activity rolls (Athletics, Combat skills){{#if enc.overCap}}, over the 9-point cap: not a legal load{{/if}}</span>
     {{/if}}
+    {{#if @root.editable}}<a class="tbe-shop-open item-control" title="Buy with this character's silver, or claim free starting armour (p.109)"><i class="fas fa-coins"></i> Buy equipment</a>{{/if}}
     <span style="margin-left:auto">Inventory bonus (Strong Back etc.): <input type="text" name="system.enc.invBonus" value="{{system.enc.invBonus}}" data-dtype="Number" style="width:36px"/></span>
   </div>
   <ol class="items-list">

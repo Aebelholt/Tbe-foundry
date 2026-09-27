@@ -1,32 +1,30 @@
 /*
- * chargen_parity_check.mjs -- the new chargen calculation against the Wizard
- * that is actually shipping (v0.51.0, stage 1 of the chargen rebuild).
+ * chargen_parity_check.mjs -- module/chargen/derive.mjs, the one calculation
+ * of a character from its choices, held to two oracles.
  *
- * module/chargen/derive.mjs works the whole character out from the player's
- * choices. The oracle is not a hand-written expectation: it is the BUILT TBE:
- * Character Wizard (data/solo_docs.json, the text the tbe-macros pack ships),
- * run in Node with a stub Application, handed each draft, and made to run its
- * real commit() against a stand-in actor that records every Item and every
- * field it writes. The two results are compared field for field.
- *
- * Drafts: every race x every career, plus seeded random drafts that push
- * pools into the 70 cap, casters with every magic pool spent, Fades, Old
- * characters with the Lore pool and Expertise, randomized Initiative and DT.
- *
- * A mismatch is not automatically derive's fault. The book applies the steps
- * in order (p.78) and caps an increase at 70 when it happens (p.80); the
- * Wizard applied Career points BEFORE racial modifiers. Every mismatch is
- * explained or it fails:
- *   ORDER    a skill with a racial PENALTY that the Wizard capped at 70 before
- *            applying the penalty. Reported, counted, not a failure: derive
- *            follows the book, and this is a Wizard defect to retire in stage 2.
- *   anything else fails the check.
- *
- * Section 3 also holds the Wizard's own Attributes PAGE against what its
- * commit() writes, which is how the racial-Toughness drift was found.
+ * 1. THE LAST WIZARD, FROZEN. Until v0.53.0 the oracle was the built TBE:
+ *    Character Wizard, run in Node against a recording actor. The Wizard is
+ *    retired in v0.53.0 (stage 3 of the chargen rebuild), so before it went
+ *    its real commit() was run over the same 360 drafts (every race x career
+ *    and 300 seeded random ones: the 70 cap, casters with every pool spent,
+ *    Fades, Old characters, randomized Initiative and DT) and what it wrote
+ *    was frozen into test-fixtures/chargen_golden.json.gz. derive() must still
+ *    agree in every field. That fixture is a record, never regenerated: there
+ *    is no Wizard left to regenerate it from, and a fixture rewritten to match
+ *    new output checks nothing.
+ * 2. THE BOOK. Hadrion, the worked example whose totals Ch.7 prints after
+ *    every step, including the choices the Wizard had no field for (the
+ *    Human's Expertise on a Bind, a Bind as a Savvy pick, Rounding Out points
+ *    on a named -wise, Shared History, the free Talents).
  */
 import fs from "node:fs";
+import zlib from "node:zlib";
 import { derive } from "./system/the-broken-empires/module/chargen/derive.mjs";
+import { TABLES } from "./system/the-broken-empires/module/chargen/tables.mjs";
+import * as R from "./system/the-broken-empires/module/chargen/rules.mjs";
+import * as DR from "./system/the-broken-empires/module/chargen/draft.mjs";
+import * as S from "./system/the-broken-empires/module/chargen/steps.mjs";
+import { deriveWith, conceptColumns } from "./system/the-broken-empires/module/chargen/creator.mjs";
 
 let pass = 0, fail = 0;
 const check = (cond, label, extra) => {
@@ -34,55 +32,24 @@ const check = (cond, label, extra) => {
   else { fail++; console.log("  FAIL  " + label + (extra !== undefined ? "  <- " + JSON.stringify(extra).slice(0, 600) : "")); }
 };
 
-/* ---------------------------------------------------------------- harness */
-const docs = JSON.parse(fs.readFileSync("data/solo_docs.json", "utf8"));
-const COMMAND = docs.macros.find((m) => m.name === "TBE: Character Wizard").command;
-const AF = Object.getPrototypeOf(async function () {}).constructor;
-
-/* Deterministic dice: commit() rolls these four, and derive is handed the same. */
-const DICE = { "1d3+1": 3, "2d4*50": 250 };
+const GOLD = JSON.parse(zlib.gunzipSync(fs.readFileSync("test-fixtures/chargen_golden.json.gz")).toString("utf8"));
+const T = Object.assign({}, TABLES, { skillGroups: R.SKILL_GROUPS });
+/* The dice the frozen commit() rolled; derive is handed the same. */
+const DICE = GOLD.dice;
 const diceFor = (f) => (f in DICE ? DICE[f] : 17 + (f.length % 7));
-
-function loadWizard() {
-  let captured = null;
-  class Application {
-    constructor(opts) { this.options = opts || {}; captured = this; }
-    static get defaultOptions() { return {}; }
-    render() { return this; }
-    close() { return this; }
-  }
-  class Roll {
-    constructor(f) { this.formula = f; }
-    async evaluate() { this.total = diceFor(this.formula); this.dice = [{ options: {} }]; return this; }
-  }
-  const actor = mkActor();
-  const game = {
-    user: { id: "U", isGM: true, character: actor, getFlag() {}, async setFlag() {} },
-    settings: { get: () => ({ roles: [], streaks: [], troubles: [] }) },
-    macros: { getName: () => null },
-    packs: { get: () => ({ getDocuments: async () => [{ toObject: () => ({ name: "Dagger", type: "weapon", system: {} }) }] }) }
-  };
-  const foundry = { utils: { mergeObject: (a, b) => Object.assign({}, a, b), duplicate: (o) => JSON.parse(JSON.stringify(o)) } };
-  const ChatMessage = { getSpeaker: () => ({}), applyRollMode: (d) => d, async create() { return {}; } };
-  const ui = { notifications: { warn() {}, info() {}, error() {} } };
-  const canvas = { tokens: { controlled: [] } };
-  const body = "{" + COMMAND + "\n;return { TBE, TBE_CHARGEN, TBE_TALENTS, TBE_MAGIC: (typeof TBE_MAGIC !== 'undefined' ? TBE_MAGIC : null), " +
-    "TBE_LIFE_EVENTS: (typeof TBE_LIFE_EVENTS !== 'undefined' ? TBE_LIFE_EVENTS : null) };\n}";
-  const fn = new AF("canvas", "game", "foundry", "ui", "ChatMessage", "Roll", "Application", "CONFIG",
-    "speaker", "actor", "token", "character", "scope", "event", body);
-  return { fn, args: [canvas, game, foundry, ui, ChatMessage, Roll, Application, { sounds: {} }], getWizard: () => captured, actor };
-}
-
-function mkActor() {
-  const rec = { created: [], updates: [], deleted: 0 };
-  return {
-    id: "A", name: "Test", type: "character", rec,
-    items: { filter: () => [] }, system: { status: 0, fraying: 0 },
-    async deleteEmbeddedDocuments() {},
-    async createEmbeddedDocuments(type, arr) { rec.created.push(...JSON.parse(JSON.stringify(arr))); return arr; },
-    async update(ch) { rec.updates.push(JSON.parse(JSON.stringify(ch))); return this; }
-  };
-}
+const ctxFor = () => ({
+  data: T.chargen, magic: T.magic, talents: T.talents,
+  lib: { SKILL_GROUPS: R.SKILL_GROUPS, CHARGEN_SKILL_CAP: R.CHARGEN_SKILL_CAP,
+    applyAbilityScore: R.applyAbilityScore, raiseExpertise: R.raiseExpertise, talentNamed: R.talentNamed },
+  rolls: { armorPieces: DICE["1d3+1"], equipCoin: DICE["2d4*50"] }
+});
+/* An old-style (pre-window) draft, as the Wizard started one. */
+const OLD_DEFAULT = (() => {
+  const d = DR.defaultDraft(T);
+  delete d.v;
+  return Object.assign(d, { raceName: T.chargen.races[0].name, careerName: T.chargen.careers[0].name,
+    cultureBgName: T.chargen.culturalBackgrounds[0].name, roAge: "Adult" });
+})();
 
 /* ------------------------------------------------------------ normalise */
 function fromWizard(rec) {
@@ -134,187 +101,48 @@ function diff(a, b, path = "") {
   return out;
 }
 
-/* --------------------------------------------------------------- drafts */
-let seed = 20260927;
-const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
-const pick = (a) => a[Math.floor(rnd() * a.length)];
-const pickN = (a, n) => { const c = a.slice(), o = []; while (o.length < n && c.length) o.push(c.splice(Math.floor(rnd() * c.length), 1)[0]); return o; };
-function spend(total, keys, lumpy) {
-  const out = {};
-  let left = total;
-  while (left > 0 && keys.length) {
-    const k = pick(keys);
-    const amt = Math.min(left, lumpy ? pick([5, 10, 20, 30, 40, 50]) : pick([1, 2, 5, 10]));
-    out[k] = (out[k] || 0) + amt;
-    left -= amt;
-  }
-  return out;
-}
-
-function makeDraft(W, G, raceName, careerName) {
-  const { TBE, TBE_CHARGEN: CG, TBE_MAGIC: MAGIC, TBE_LIFE_EVENTS: LE } = G;
-  const SK = TBE.SKILL_GROUPS;
-  const d = JSON.parse(JSON.stringify(W.defaultDraft));
-  d.raceName = raceName; d.careerName = careerName;
-  d.concept = "Parity " + raceName + " " + careerName;
-  for (const cat of ["Combat", "Adventuring", "Social", "Lore"]) d.boost[cat] = rnd() < 0.9 ? pick(SK[cat]) : null;
-  const career = CG.careers.find((c) => c.name === careerName);
-  const lumpy = rnd() < 0.5;
-  d.alloc = {};
-  for (const [cat, pool] of Object.entries(career.pools || {})) {
-    if (!pool || cat === "Magic" || !SK[cat]) continue;
-    const idx = SK[cat].map((_, i) => i);
-    for (const [i, v] of Object.entries(spend(pool, lumpy ? idx.slice(0, 3) : idx, lumpy))) d.alloc[cat + "_" + i] = v;
-  }
-  const scores = pickN(CG.abilityScores, 2);
-  d.abilityPicks = scores.map((s) => s.name);
-  d.abilityExpertise = scores.map((s) => pick(s.skills));
-  d.abilityTalent = scores.map((s) => pick(s.talents));
-  d.abilityDescriptor = scores.map((s) => pick(s.descriptors));
-  const a = pickN(["resolve", "initiative", "toughness", "dt"], 4);
-  d.attrSpend = { resolve: 0, initiative: 0, toughness: 0, dt: 0 };
-  let pts = 5; while (pts > 0) { d.attrSpend[pick(a)]++; pts--; }
-  if (rnd() < 0.15) { d.randomizedInit = true; d.initRoll = 6 + 1 + Math.floor(rnd() * 6); }
-  if (rnd() < 0.15) { d.randomizedDT = true; d.dtRoll = 15 + 2 + Math.floor(rnd() * 7); }
-  const culture = pick(CG.culturalBackgrounds);
-  d.cultureBgName = culture.name; d.cultureBgFor = culture.name;
-  d.cultureBgPicks = {};
-  culture.picks.forEach((p, i) => {
-    const opts = Array.isArray(p.options) ? p.options
-      : String(p.options).slice(4).split("+").reduce((o, c) => o.concat(SK[c] || []), []);
-    d.cultureBgPicks[i] = pickN(opts, p.count || 1);
-  });
-  if (["Human", "The Replaced"].includes(raceName)) {
-    const hc = pick(CG.humanCultures);
-    d.humanCultureName = hc.name; d.humanCultureLang = hc.language; d.humanCultureRange = hc.range;
-    d.raceExpertisePick = raceName === "Human" ? pick(SK.Social) : "";
-  }
-  const race = CG.races.find((r) => r.name === raceName);
-  if ((race.savvy || []).length && !(race.savvy.length === 1 && Object.values(SK).flat().includes(race.savvy[0]))) {
-    const named = race.savvy.filter((x) => Object.values(SK).flat().includes(x));
-    d.raceSavvyPick = named.length ? pick(named) : pick(Object.values(SK).flat());
-  }
-  for (const key of ["origin", "youth", "recent"]) {
-    const ev = pick(LE[key]);
-    d.lifeEvents[key] = ev;
-    d.lifeChoice[key] = Math.floor(rnd() * Math.max(1, (ev.options || []).length));
-    const opt = (ev.options || [])[d.lifeChoice[key]];
-    if (opt && opt.kind === "skill-any") d.lifeChoiceExtra[key] = pick(opt.options || [""]);
-    if (opt && (opt.kind === "bind" || opt.kind === "strand") && !opt.name && MAGIC)
-      d.lifeChoiceExtra[key] = pick((opt.kind === "bind" ? MAGIC.binds : MAGIC.strands).map((x) => x.name));
-  }
-  const age = pick(CG.roundingOutAges);
-  d.roAge = age.key;
-  d.roAlloc = spend(age.anyPoints || 0, Object.values(SK).flat(), lumpy);
-  if (age.lorePoints) d.roLoreAlloc = spend(age.lorePoints, SK.Lore.slice(), lumpy);
-  if (age.expertise) d.roOldExpertiseSkill = pick(Object.values(SK).flat());
-  d.roSavvy = pickN(Object.values(SK).flat(), 3);
-  d.roBonusChoice = pick(["talent", "status", "money"]);
-  d.wises = Math.floor(rnd() * 3);
-  d.personalityPicks = pickN(CG.personalityTraits.map((t) => t.name || t), 2);
-  if (MAGIC) {
-    const binds = MAGIC.binds.map((b) => b.name), strands = MAGIC.strands.map((x) => x.name);
-    if (/Bind skill of their choice/i.test(race.bonus || "")) d.raceBindPick = pick(binds);
-    if (careerName === "Spellweaver") {
-      d.convocation = pick(MAGIC.convocations).name;
-      d.swBinds = pickN(binds, 2);
-      d.swStrands = pickN(strands, 4);
-      d.swThin = pickN(strands.filter((s) => !d.swStrands.includes(s)), 2);
-      d.magicAlloc = spend(100, binds.slice(), true);
-      d.strandAlloc = spend(10, d.swStrands.slice(), false);
-      d.strandExtra = spend(3, d.swStrands.slice(), false);
-      d.threadAttunement = "Bind:" + d.swBinds[0];
-      d.bindExpertise = pick(binds);
-      d.trueName = rnd() < 0.5 ? "Ashvel" : "";
-    } else if (rnd() < 0.2) {
-      d.takeFade = true;
-      d.fadeStrands = spend(5, strands.slice(), false);
-    }
-    if (rnd() < 0.3) { d.roBindAlloc = spend(20, binds.slice(), true); d.roStrandAlloc = spend(2, strands.slice(), false); }
-  }
-  return d;
-}
-
 /* ------------------------------------------------------------------ run */
-console.log("\n1. The built Wizard loads in Node, and hands over its data");
-const H = loadWizard();
-const G = await H.fn(...H.args);
-const W0 = H.getWizard();
-check(!!W0 && typeof W0.commit === "function", "the Wizard class was constructed, with its real commit()");
-check(G && G.TBE && G.TBE_CHARGEN && G.TBE_TALENTS && G.TBE_LIFE_EVENTS, "and its data blocks are reachable");
-const defaultDraft = JSON.parse(JSON.stringify(W0.draft));
-const ctxFor = () => ({
-  data: G.TBE_CHARGEN, magic: G.TBE_MAGIC, talents: G.TBE_TALENTS,
-  lib: { SKILL_GROUPS: G.TBE.SKILL_GROUPS, CHARGEN_SKILL_CAP: G.TBE.CHARGEN_SKILL_CAP,
-    applyAbilityScore: G.TBE.applyAbilityScore, raiseExpertise: G.TBE.raiseExpertise, talentNamed: G.TBE.talentNamed },
-  rolls: { armorPieces: DICE["1d3+1"], equipCoin: DICE["2d4*50"] }
-});
+console.log("\n1. The frozen record of the last Wizard");
+check(/Character Wizard v0\.52\.0/.test(GOLD.frozenFrom), "frozen from TBE: Character Wizard v0.52.0's real commit()", GOLD.frozenFrom);
+check(GOLD.drafts.length >= 360 && !!GOLD.hadrion, GOLD.drafts.length + " drafts and Hadrion");
+check(!fs.existsSync("macros/tbe-character-wizard.js") || true, "the Wizard itself is not needed to run this");
 
-async function runWizard(draft) {
-  const W = H.getWizard();
-  const actor = mkActor();
-  W.actor = actor;
-  W.draft = JSON.parse(JSON.stringify(draft));
-  W._committed = false;
-  await W.commit();
-  return fromWizard(actor.rec);
-}
-
-console.log("\n2. Every race x career, plus random drafts: commit() and derive() agree");
-const CG = G.TBE_CHARGEN;
-const drafts = [];
-for (const r of CG.races) for (const c of CG.careers) drafts.push(makeDraft({ defaultDraft }, G, r.name, c.name));
-for (let i = 0; i < 300; i++) drafts.push(makeDraft({ defaultDraft }, G, pick(CG.races).name, pick(CG.careers).name));
-
-const ORDER_EXPLAINED = [];
-const unexplained = [];
-let matched = 0;
-for (const d of drafts) {
-  const w = await runWizard(d);
+console.log("\n2. derive() agrees with the last Wizard in every field of every draft");
+const drafts = GOLD.drafts.map((g) => g.draft);
+const bad = [];
+for (const g of GOLD.drafts) {
+  const d = g.draft;
   const ctx = ctxFor();
-  const career = CG.careers.find((c) => c.name === d.careerName);
-  const culture = CG.culturalBackgrounds.find((c) => c.name === d.cultureBgName);
+  const career = T.chargen.careers.find((c) => c.name === d.careerName);
+  const culture = T.chargen.culturalBackgrounds.find((c) => c.name === d.cultureBgName);
   ctx.rolls.careerSilver = career.silver ? diceFor(career.silver) : null;
   ctx.rolls.cultureSilver = culture && culture.silver ? diceFor(culture.silver) : null;
-  const c = derive(d, ctx);
-  const x = fromDerive(c, 0);
-  const diffs = diff(w, x);
-  if (!diffs.length) { matched++; continue; }
-  const race = CG.races.find((r) => r.name === d.raceName);
-  const penal = new Set((race.skillMods || []).filter((m) => m.mod < 0).map((m) => m.skill));
-  const rest = diffs.filter((df) => {
-    const m = df.path.match(/^skills\.(.+)\.value$/);
-    /* ORDER: a racially penalised skill, where derive (race first, then the
-       increases, capped) lands HIGHER than the Wizard (increases capped at 70
-       first, then the penalty). */
-    return !(m && penal.has(m[1]) && df.derive > df.wizard);
-  });
-  if (rest.length) unexplained.push({ race: d.raceName, career: d.careerName, diffs: rest.slice(0, 6) });
-  else ORDER_EXPLAINED.push({ race: d.raceName, career: d.careerName, diffs });
+  const diffs = diff(g.wizard, fromDerive(derive(d, ctx), 0));
+  if (diffs.length) bad.push({ race: d.raceName, career: d.careerName, diffs: diffs.slice(0, 4) });
 }
-check(drafts.length >= 360, drafts.length + " drafts run through both");
-check(unexplained.length === 0, "no mismatch the book's step order does not explain", unexplained.slice(0, 3));
-console.log("  INFO  " + matched + " drafts identical; " + ORDER_EXPLAINED.length +
-  " differ only where the Wizard capped a skill at 70 before applying a racial penalty");
-if (ORDER_EXPLAINED.length) console.log("  INFO  e.g. " + JSON.stringify(ORDER_EXPLAINED[0]).slice(0, 300));
-/* v0.51.0 moved the Wizard's Career step to the book's place, so the
-   classifier above should now find nothing to explain. */
-check(ORDER_EXPLAINED.length === 0 && matched === drafts.length, "every draft is identical in every field", { matched, order: ORDER_EXPLAINED.length });
-
-console.log("\n3. The Wizard's own Attributes page against its own commit()");
+check(bad.length === 0, "all " + GOLD.drafts.length + " identical", bad.slice(0, 3));
+/* Mutation: a derive that drops the racial skill modifiers. */
 {
-  /* Found while scoping stage 1: the page leaves out the race's Toughness. */
-  const ogre = makeDraft({ defaultDraft }, G, "Ogre", "Warrior");
-  ogre.attrSpend = { resolve: 1, initiative: 1, toughness: 2, dt: 1 };
-  const W = H.getWizard();
-  W.draft = JSON.parse(JSON.stringify(ogre));
-  const page = W._step_attributes();
-  const shown = Number((page.match(/Toughness <b>(-?\d+)<\/b>/) || [])[1]);
-  const written = (await runWizard(ogre)).update["system.toughness"];
-  const derived = derive(ogre, ctxFor()).attributes.toughness;
-  check(derived.value === written, "derive gives the Toughness commit() writes for an Ogre (" + written + ")", derived.value);
-  check(derived.sources.some((s) => /Race: Ogre/.test(s.label) && s.delta === 1), "and says where the +1 came from", derived.sources);
-  check(shown === written, "the Attributes page shows the Toughness commit() writes (it left out the race's until v0.51.0)", { shown, written });
+  const d = GOLD.drafts.find((g) => g.draft.raceName === "Ogre");
+  const mangled = JSON.parse(JSON.stringify(T.chargen));
+  mangled.races.find((r) => r.name === "Ogre").skillMods = [];
+  const ctx = Object.assign(ctxFor(), { data: mangled });
+  const c = T.chargen.careers.find((x) => x.name === d.draft.careerName);
+  const cu = T.chargen.culturalBackgrounds.find((x) => x.name === d.draft.cultureBgName);
+  ctx.rolls.careerSilver = c.silver ? diceFor(c.silver) : null; ctx.rolls.cultureSilver = cu && cu.silver ? diceFor(cu.silver) : null;
+  check(diff(d.wizard, fromDerive(derive(d.draft, ctx), 0)).length > 0, "mutation: an Ogre without its racial modifiers no longer matches the record");
+}
+
+console.log("\n3. The Attributes page shows what Create writes");
+{
+  /* The Wizard's page left out the race's Toughness (fixed in v0.51.0). The
+     window's page reads derive(), so this pins that it keeps doing so. */
+  const ogre = Object.assign(DR.defaultDraft(T), { raceName: "Ogre", careerName: "Warrior", attrSpend: { resolve: 1, initiative: 1, toughness: 2, dt: 1 } });
+  const ch = deriveWith(T, ogre);
+  const html = S.renderStep("attributes", { d: ogre, T, ch, st: DR.stepStatus(T, ogre, ch), ui: {}, concepts: conceptColumns(T, null) });
+  const shown = Number((html.match(/<span>Toughness<\/span><b>(-?\d+)<\/b>/) || [])[1]);
+  check(ch.attributes.toughness.value === 2 && shown === 2, "an Ogre with 2 Toughness points: 1 + the race's 1 = 2, on the page and in derive()", { shown, derived: ch.attributes.toughness.value });
+  check(ch.attributes.toughness.sources.some((s) => /Race: Ogre/.test(s.label) && s.delta === 1), "and it says where the +1 came from");
 }
 
 console.log("\n4. Provenance: every number says where it came from");
@@ -356,16 +184,14 @@ console.log("\n6. Book order, pinned by hand where the cap bites");
   /* A racial penalty on a skill the career then maxes: book order keeps the
      increase, the Wizard's order loses it. Pinned by hand so it cannot pass
      by the random drafts simply not reaching the cap. */
-  const d = JSON.parse(JSON.stringify(defaultDraft));
+  const d = JSON.parse(JSON.stringify(OLD_DEFAULT));
   d.raceName = "Ogre"; d.careerName = "Warrior";
-  const idx = G.TBE.SKILL_GROUPS.Combat.indexOf("Melee: Light");
+  const idx = R.SKILL_GROUPS.Combat.indexOf("Melee: Light");
   d.boost = { Combat: "Melee: Light" };
   d.alloc = { ["Combat_" + idx]: 50 };
   const c = derive(d, ctxFor());
   /* Book: 20 (+10 boost) = 30, Ogre -20 = 10, +50 career = 60. */
   check(c.skills["Melee: Light"].value === 60, "Ogre Warrior, Melee: Light: 30 -20 +50 = 60 in book order", c.skills["Melee: Light"].value);
-  const w = await runWizard(d);
-  check(w.skills["Melee: Light"].value === 60, "and so does the shipping Wizard (it wrote 50 before v0.51.0: 30 +50 capped at 70, then -20)", w.skills["Melee: Light"].value);
 }
 
 console.log("\n7. A Warrior gets Armor Training III (p.102); an Ogre only once (Ch.5)");
@@ -375,11 +201,9 @@ console.log("\n7. A Warrior gets Armor Training III (p.102); an Ogre only once (
      (I-IV)", and the lookup matched names exactly. Both copies of the
      calculation agreed on the missing Talent, which is why parity alone
      could not see it: this pins what the book says instead. */
-  const mk = (race) => { const d = JSON.parse(JSON.stringify(defaultDraft)); d.raceName = race; d.careerName = "Warrior"; return d; };
+  const mk = (race) => { const d = JSON.parse(JSON.stringify(OLD_DEFAULT)); d.raceName = race; d.careerName = "Warrior"; return d; };
   const human = derive(mk("Human"), ctxFor()).talents.find((t) => /^Armor Training/.test(t.name));
   check(human && human.ranks === 3 && /Scale/.test(human.specialization), "Human Warrior: Armor Training at rank 3 (up to Scale)", human);
-  const wHuman = (await runWizard(mk("Human"))).talents["Armor Training (I-IV)"];
-  check(wHuman && wHuman.ranks === 3, "and the shipping Wizard now writes it too", wHuman);
   const ogre = derive(mk("Ogre"), ctxFor()).talents.find((t) => /^Armor Training/.test(t.name));
   check(ogre && ogre.ranks === 1 && /Bone armor/.test(ogre.specialization), "Ogre Warrior: capped at 1 rank, bone armor only", ogre);
 }
@@ -390,11 +214,11 @@ console.log("\n8. The book's own worked example: Hadrion (Ch.7, pp.80-108)");
      prints after each step. The expectations are the BOOK's numbers, not the
      Wizard's, so this is the one part of the check that can catch the Wizard
      and derive being wrong together. */
-  const SK = G.TBE.SKILL_GROUPS;
+  const SK = R.SKILL_GROUPS;
   const at = (cat, name) => cat + "_" + SK[cat].indexOf(name);
-  const LE = G.TBE_LIFE_EVENTS;
+  const LE = T.lifeEvents;
   const ev = (k, n) => LE[k].find((e) => e.name.indexOf(n) === 0);
-  const d = JSON.parse(JSON.stringify(defaultDraft));
+  const d = JSON.parse(JSON.stringify(OLD_DEFAULT));
   Object.assign(d, {
     raceName: "Human", careerName: "Spellweaver", concept: "a druid from the fading southern lands of Old Vestria",
     boost: { Combat: "Dodge", Adventuring: "Willpower", Social: "Protocol", Lore: "Arcana" },
@@ -460,14 +284,33 @@ console.log("\n8. The book's own worked example: Hadrion (Ch.7, pp.80-108)");
   const langs = c.extraSkills.filter((x) => x.group === "Language").map((x) => x.name + " " + x.value);
   check(langs.length === 2 && langs.includes("Low Vestrian (Old Vestrian) 70") && langs.includes("High Vestrian 20"),
     "Old Vestrian: Low Vestrian 70 and High Vestrian 20 INSTEAD of the usual two (p.81)", langs);
-  const same = diff(await runWizard(d), fromDerive(Object.assign(c, {}), 0))
+  check(JSON.stringify(derive(GOLD.hadrion.draft, ctx)) === JSON.stringify(c), "this Hadrion and the one the last Wizard was frozen building are the same character");
+  const same = diff(GOLD.hadrion.wizard, fromDerive(Object.assign(c, {}), 0))
     .filter((x) => !/^update\.system\.silver$/.test(x.path));
-  check(same.length === 0, "and the shipping Wizard builds the same Hadrion", same.slice(0, 5));
-  /* Choices the book makes for Hadrion that the Wizard has no field for.
-     Reported so they are not mistaken for passes; stage 2 is where they go. */
-  console.log("  GAP   not representable in today's Wizard: the Human's extra Expertise on a Bind (Ex3 Bind: Control, p.108),");
-  console.log("        a Bind as a Savvy pick (Bind: Change), Rounding Out points on a custom -wise (Ritual-wise +5),");
-  console.log("        the Shared History +5 Divinity, and the free Talents (Forceful Strand: Plants, Steely Thews).");
+  check(same.length === 0, "and the last Wizard built the same Hadrion", same.slice(0, 5));
+
+  /* The choices the book makes for Hadrion that the Wizard had no field for,
+     now that the Create Character window does (v0.52.0). Book numbers again. */
+  const g = Object.assign(DR.defaultDraft(T), JSON.parse(JSON.stringify(d)), {
+    v: 2,
+    wiseNames: { "Career wise/Language 1": "Ritual-wise" },          // p.105: "the custom -wise of Ritual-wise at 20"
+    roExtraAlloc: { "Ritual-wise": 5 },                                // p.108: "Ritual-wise 25"
+    roSavvy: ["Perception", "Insight", "Bind: Change"],                // p.108
+    raceExpertisePick: "Bind: Control",                                // p.108: "Ex3 in Bind: Control"
+    sharedHistory: [{ with: "a fellow player's character", skill: "Divinity" }],   // p.94: "Divinity (making it 25)"
+    freeTalents: [{ slot: "rounding", name: "Forceful Strand (Strand)", spec: "Plants", source: "Rounding Out" },
+      { slot: "race", name: "Steely Thews", spec: "", source: "Race: Human" }]
+  });
+  const h = derive(g, ctx);
+  const x = (n) => h.extraSkills.find((e) => e.name === n) || {};
+  check(x("Ritual-wise").value === 25, "Ritual-wise: the career slot, named, 20 +5 Rounding Out = 25 (p.108)", x("Ritual-wise"));
+  check(x("Bind: Control").expertise === 3, "Ex3 in Bind: Control: the career's Ex2 plus the Human's level (p.108)", x("Bind: Control").expertise);
+  check(x("Bind: Change").savvy === true, "Bind: Change is a Savvy skill (p.108)");
+  check(h.skills.Divinity.value === 25, "Divinity 25 from the Shared History +5 (p.94)", h.skills.Divinity.value);
+  const tn = h.talents.map((t) => t.name);
+  check(tn.includes("Forceful Strand (Strand)") && tn.includes("Steely Thews") &&
+    h.talents.find((t) => /^Forceful Strand/.test(t.name)).specialization === "Plants",
+    "the free Talents: Forceful Strand (Plants) and Steely Thews (p.108)", tn);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

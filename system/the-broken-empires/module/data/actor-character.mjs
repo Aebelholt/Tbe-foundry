@@ -52,7 +52,7 @@ export default class TheBrokenEmpiresCharacter extends TheBrokenEmpiresActorBase
     /* Ch.6 Goals. Real records rather than a paragraph of prose, because XP
      * is awarded per goal pursued and per goal completed (p.160), and a
      * shared goal pays every member who shared it. Built by
-     * TBE: Finish Character from the book's four-step method. */
+     * the sheet's Add Goal or the Create Character window, from the book's method. */
     /* Ch.14 Fraying. Accumulates and never reduces; once the total passes
      * Max Resolve, every further point demands a Fraying Roll
      * (1d100 <= (Fraying - Max Resolve) x 2 removes the caster from reality).

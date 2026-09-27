@@ -1,4 +1,4 @@
-## Chargen rebuild — stage 2 built in v0.52.0, 2026-09-27
+## Chargen rebuild — done in v0.53.0 (stage 3), 2026-09-27
 
 Decided with Seb: option B. One window, the book's 12 steps down the left,
 a live sheet on the right (Warp & Weft's "Foundation" tool is the UX
@@ -18,22 +18,41 @@ retire once the new window covers what they do.
   rendered from `derive()`, with each number's sources on hover; compare-
   then-pick tables; Equip (9), Goals (11) and Status (12) as steps; Create
   writes what `derive()` returns and nothing else.
-- **Stage 3:** retire TBE: Character Wizard, Finish Character (its
+- **Stage 3 (done, v0.53.0):** TBE: Character Wizard, Finish Character and
+  Build Character retired. Their checks were ported first: the Wizard's
+  commit() frozen into `test-fixtures/chargen_golden.json.gz` for
+  `chargen_parity_check.mjs`; `pending_check` and `wizard_visual_check` into
+  `creator_check.mjs` 6b/7; `finish_check`'s Equip tab into `shop_check.mjs`;
+  `phase5_check`, `simtest`, `tier0_check`, `qol_check`, `concepts_check` and
+  `funnel_check` pointed at the window. Finish Character's jobs went to the
+  sheet (Buy equipment, Add Goal) and TBE: Talents; world copies of all three
+  are redirected by TBE: Update Macros.
+- ~~**Stage 3:**~~ retire TBE: Character Wizard, Finish Character (its
   post-creation jobs move to the sheet and TBE: Advancement) and Build
   Character, porting their checks first.
   Also for stage 3:
-  - The macro library's copies of the creation rules (`SKILL_GROUPS`,
-    `applyAbilityScore`, `raiseExpertise`, `talentNamed`, `talentItem`, the
-    Ability Score double) should defer at runtime to the system's
-    `module/chargen/rules.mjs`, keeping their copy only as the fallback.
-    Today the two are held equal by `creator_check.mjs` section 1.
-  - Armour Initiative penalty (Bulk / 3, p.141) on the Equipment step. It is
-    computed in `documents/actor.mjs` and again as a fallback in
-    `actor-sheet.mjs`; the window should call one owner rather than make a
-    third copy, so it shows Bulk only for now.
-  - Play-test the window at a table (V12 and V13+) before the old tools go.
-    The browser check runs it behind a small ApplicationV2 stand-in, not
-    real Foundry.
+  - ~~The macro library's creation rules should defer to the system's~~
+    Done in v0.53.0.
+  - ~~Armour Initiative penalty on the Equipment step~~ Done in v0.53.0:
+    one owner, `rules/armor.mjs` (the rule is on p.142, not p.141 as older
+    comments say).
+  - **Still open: play-test the window at a table (V12 and V13+).** The old
+    tools went in v0.53.0 on the user's word; the browser checks run the
+    window and the shop behind a small ApplicationV2/DialogV2 stand-in, not
+    real Foundry. The sheet's Add Goal dialog (DialogV2.prompt) has no
+    browser check at all.
+  - **The Rules Audit journal still names TBE: Character Wizard** in three
+    rows (score, Death Threshold, Lethality Level). The source,
+    `parse_core_rules.py`, is updated, but the script fails its own
+    line-window verification against the current `/tmp/tbe.txt` (a dump
+    whose line numbers differ from the one it was written against; true
+    before v0.53.0 too), so `data/core_rules.json` could not be regenerated
+    and was not hand-edited. Fix the windows (or make them search), then
+    regenerate; the page-offset item below wants the same pass.
+  - Points typed past the 70 cap are now reported as lost (on the pool, in
+    the step's open list, in Notes), porting phase5's defect #2 to the
+    window. "Spread what is left" can still put points into a capped skill;
+    it could skip skills with no room.
 
 Roll aids for stage 2 (Seb, 2026-09-27: easing decisions by roll suits the
 table better than strict RAW): keep every "roll it" button the Wizard has

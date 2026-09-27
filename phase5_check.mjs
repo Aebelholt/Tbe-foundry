@@ -31,6 +31,30 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const read = (f) => fs.readFileSync(path.join(__dirname, f), "utf8");
+
+/* The Create Character window's calculation, its page and its Create
+   payload: the one chargen path since v0.53.0. */
+const CG = await (async () => {
+  const sys = "./system/the-broken-empires/module/chargen/";
+  const { TABLES } = await import(sys + "tables.mjs");
+  const R = await import(sys + "rules.mjs");
+  const DR = await import(sys + "draft.mjs");
+  const S = await import(sys + "steps.mjs");
+  const C = await import(sys + "creator.mjs");
+  const CM = await import(sys + "commit.mjs");
+  const T = Object.assign({}, TABLES, { skillGroups: R.SKILL_GROUPS });
+  const draft = (o) => Object.assign(DR.defaultDraft(T), o);
+  const derive = (d) => C.deriveWith(T, d);
+  const payloadFor = (o) => CM.buildPayload(derive(draft(o)), draft(o), T, { actor: { name: "P", type: "character", system: { status: 0 } } });
+  return {
+    T, draft, derive, payloadFor,
+    ctx: { data: T.chargen, magic: T.magic, talents: T.talents, lib: C.LIB },
+    status: (d) => DR.stepStatus(T, d, derive(d)),
+    page: (key, d, ui) => { const ch = derive(d); return S.renderStep(key, { d, T, ch, st: DR.stepStatus(T, d, ch), ui: ui || {}, concepts: C.conceptColumns(T, null) }); },
+    skill: (p, n) => p.items.find((i) => i.type === "skill" && i.name === n) || null,
+    actorOf: (p) => ({ items: p.items.map((i, k) => Object.assign({ id: "i" + k }, i)), system: {} })
+  };
+})();
 const J = (f) => JSON.parse(read(f));
 
 let pass = 0, fail = 0;
@@ -189,33 +213,21 @@ section("   ...and TBE: Miracle refuses on both, with different words");
   check(/prays to Vaela/.test(out3), "a real Godbound still gets the full procedure", out3);
 }
 
-section("   ...and neither chargen path mints the placeholder");
+section("   ...and character creation does not mint the placeholder");
 {
-  const warrior = makeActor();
-  await run("tbe-build-character.js", buildAnswers({ career: "Warrior" }), { actor: warrior, blocks: ["chargen"] });
-  check(!skillNamed(warrior, "Piety"), "TBE: Build Character gives a Warrior no Piety skill");
-  check(TBE.godbound(warrior).isGodbound === false, "...so a built Warrior is not a Godbound");
-
-  const gb = makeActor();
-  await run("tbe-build-character.js", buildAnswers({ career: "Godbound" }), { actor: gb, blocks: ["chargen"] });
-  const p = skillNamed(gb, "Piety");
-  check(!!p && p.system.value === 50,
-    "TBE: Build Character gives the Godbound career Piety 50 (career 20 + Talent 30, p.104/Ch.4)",
-    p && p.system.value);
-  check(TBE.godbound(gb).isGodbound === true, "...and that character IS a Godbound");
-
-  /* The Wizard is an Application and cannot be driven here, so its half of the
-     rule is asserted against its source: exactly one Piety grant, gated. */
-  const wiz = read("macros/tbe-character-wizard.js");
-  const grants = wiz.match(/mk\("Lore", "Piety"[^)]*\)/g) || [];
-  check(grants.length === 1, "TBE: Character Wizard has exactly one Piety grant", grants);
-  check(/if \(career\.name === "Godbound"\) payload\.push\(mk\("Lore", "Piety", 50\)\);/.test(wiz),
-    "...and it is gated on the Godbound career, not written for everyone");
-  check(!/mk\("Lore", "Piety", career\.name === "Godbound" \? 50 : 0\)/.test(wiz),
-    "...the ternary that gave everyone a Piety-0 placeholder is gone");
-  const bld = read("macros/tbe-build-character.js");
-  check(!/mk\("Lore", "Piety", career\.name === "Godbound" \? 50 : 0\)/.test(bld),
-    "...and gone from TBE: Build Character too");
+  /* Build Character and the Wizard retired in v0.53.0; the Create Character
+     window is the one chargen path, so it is driven here: derive() and the
+     payload Create writes, run for real. */
+  const warrior = CG.payloadFor({ raceName: "Human", careerName: "Warrior" });
+  check(!CG.skill(warrior, "Piety"), "Create Character gives a Warrior no Piety skill");
+  check(TBE.godbound(CG.actorOf(warrior)).isGodbound === false, "...so a created Warrior is not a Godbound");
+  const gb = CG.payloadFor({ raceName: "Human", careerName: "Godbound" });
+  const p = CG.skill(gb, "Piety");
+  check(!!p && p.system.value === 50, "the Godbound career gets Piety 50 (career 20 + Talent 30, p.104/Ch.4)", p && p.system.value);
+  check(TBE.godbound(CG.actorOf(gb)).isGodbound === true, "...and that character IS a Godbound");
+  const src = read("system/the-broken-empires/module/chargen/derive.mjs");
+  check((src.match(/"Piety"/g) || []).length === 1 && /if \(career\.name === "Godbound"\) addExtra\("Lore", "Piety", 50/.test(src),
+    "...derive() has exactly one Piety grant, gated on the Godbound career");
 }
 
 /* ================================================================== 1b */
@@ -261,46 +273,34 @@ section("   ...and TBE: Cast refuses the placeholder without rolling");
 
 section("   ...and chargen stops minting blank -wise slots");
 {
-  const a = makeActor();
-  await run("tbe-build-character.js", buildAnswers({ career: "Warrior" }), { actor: a, blocks: ["chargen"] });
+  const a = CG.payloadFor({ raceName: "Human", careerName: "Warrior" });
   const blanks = a.items.filter((i) => /^Wise: subject \d+$/.test(i.name));
-  check(blanks.length === 0, "TBE: Build Character creates no nameless -wise slots by default", blanks.map((b) => b.name));
+  check(blanks.length === 0, "Create Character makes no nameless -wise slots by default", blanks.map((b) => b.name));
   const granted = a.items.filter((i) => /^Career wise\/Language/.test(i.name));
   check(granted.length === 1 && granted[0].system.value === 20, "...but the Warrior's one Custom -wise at 20 (p.103) is still created", granted);
-  const wiz = read("macros/tbe-character-wizard.js");
-  check(/wises: 0,/.test(wiz) && /TBE\.num\(d\.wises, 0\)/.test(wiz), "TBE: Character Wizard defaults the same way");
 }
 
 /* ====================================================================== 2 */
 section("2. Career points lost to the 70 creation cap are reported, not swallowed");
 {
-  /* Dodge starts at 20 (base), so 80 points into it can only buy 50. */
-  const a = makeActor();
-  const out = await run("tbe-build-character.js",
-    buildAnswers(null, { pt_Combat_0: 80, pt_Adventuring_0: 50, pt_Social_0: 40, pt_Lore_0: 30 }),
-    { actor: a, blocks: ["chargen"] });
-  check(skillNamed(a, "Dodge").system.value === 70, "the cap still holds: Dodge is 70, not 100",
-    skillNamed(a, "Dodge").system.value);
-  check(/Combat 80\/80 \(30 lost to the cap\)/.test(out),
-    "the card says 30 Combat points were lost, instead of reporting them as spent", out);
-  check(/Adventuring 50\/50 \(10 lost to the cap\)/.test(out),
-    "Athletics started at 30 (the category boost), so 10 of its 50 are lost and named", out);
-  check(/Social 40\/40(?! \()/.test(out), "a category that fits under the cap reports no loss", out);
-  check(/typed above the 70 creation cap and are gone/.test(out) || /Notes tab/.test(out),
-    "...and the Notes tab carries the detail", out);
-
-  /* The allocation dialog must show the state the decision needs. */
-  let alloc = "";
-  await run("tbe-build-character.js", (t, c) => {
-    if (/Spend/.test(t)) { alloc = c; return {}; }
-    return buildAnswers()(t, c);
-  }, { actor: makeActor(), blocks: ["chargen"] });
-  check(/Dodge <span[^>]*>\(at 20, room 50\)/.test(alloc),
-    "each field shows the value the skill sits at and the room left under the cap", alloc.slice(0, 200));
-  check(/Melee: Light <span[^>]*>\(at 30, room 40\)/.test(alloc),
-    "...including the skill the player boosted to 30 a dialog earlier");
-  check(/points that would push a skill past the cap are lost/.test(alloc),
-    "...and the dialog says what happens to overflow before it happens");
+  /* Dodge starts at 20 (base), so 80 points into it can only buy 50. The
+     Create Character window, the one chargen path since v0.53.0. */
+  const d = CG.draft({ raceName: "Human", careerName: "Warrior", boost: { Combat: null, Adventuring: "Athletics", Social: null, Lore: null },
+    alloc: { Combat_0: 80, Adventuring_0: 50, Social_0: 40, Lore_0: 30 } });
+  const ch = CG.derive(d);
+  check(ch.skills.Dodge.value === 70, "the cap still holds: Dodge is 70, not 100", ch.skills.Dodge.value);
+  const cp = Object.fromEntries(ch.careerPoints.map((c) => [c.cat, c]));
+  check(cp.Combat.lost === 30 && cp.Combat.allocated === 80, "30 Combat points are counted as lost, not as spent", cp.Combat);
+  check(cp.Adventuring.lost === 10, "Athletics started at 30 (the category boost), so 10 of its 50 are lost", cp.Adventuring);
+  check(!cp.Social.lost, "a category that fits under the cap reports no loss", cp.Social);
+  const st = CG.status(d).career.open;
+  check(st.some((x) => /Combat: 30 point\(s\) go past the 70 cap and are lost/.test(x)), "the window says so where the points are spent, before Create", st);
+  check(ch.notes.some((n) => /Combat: 30 career point\(s\) went past the 70 creation cap/.test(n)), "...and the Notes tab carries it after", ch.notes);
+  const page = CG.page("career", d, { careerSub: "points" });
+  check(/30 lost to the cap/.test(page), "the Combat pool on the page reads '30 lost to the cap'");
+  check(/points that would push a skill past it are lost/.test(page), "...and the page says what happens to overflow before it happens");
+  check(/data-live="sk:Dodge">70[^<]*cap/.test(page) && /data-live="sk:Melee: Light">20</.test(page),
+    "each box shows the value its skill sits at, the capped one marked");
 }
 
 /* ====================================================================== 3 */
@@ -449,25 +449,23 @@ section("Mutation guards (each breaks a fix and requires the check to fail)");
   check(/Cast Out/.test(out),
     "...and with it, an ordinary character praying once IS Cast Out -- which is the defect", out);
 
-  /* 2. Stop counting the capped-away points and the card must go back to
-        claiming they were spent. */
-  const bld = read("macros/tbe-build-character.js");
-  const mutBld = bld.replace('spent.push(cat + " " + allocated + "/" + pool + (wasted ? " (" + wasted + " lost to the cap)" : ""));',
-    'spent.push(cat + " " + allocated + "/" + pool);');
-  check(mutBld !== bld, "mutation 2 applied (loss reporting removed)");
-  fs.writeFileSync(path.join(__dirname, "macros/.mut-build.js"), mutBld);
-  try {
-    const a = makeActor();
-    const said = harness({}, a, {});
-    global.__ANSWER = async (t, c) => buildAnswers(null, { pt_Combat_0: 80 })(t, c);
-    const code = BLOCK.data + BLOCK.chargen + LIB.replace(/TBE\.prompt = async function[\s\S]*?\n};/,
-      "TBE.prompt = async function (t, c, o) { return await globalThis.__ANSWER(t, c, o); };")
-      + "\n" + mutBld;
-    await new Function("return (async()=>{" + code + "})()")().catch(() => {});
-    const text = said.map((s) => String(s).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")).join(" ");
-    check(/Combat 80\/80(?! \()/.test(text),
-      "...and the card silently reports 80/80 with 30 points gone -- which is the defect", text.slice(0, 160));
-  } finally { fs.unlinkSync(path.join(__dirname, "macros/.mut-build.js")); }
+  /* 2. Stop counting the capped-away points and the window must go back to
+        calling them spent. */
+  {
+    const src = read("system/the-broken-empires/module/chargen/derive.mjs");
+    const mut = src.replace("const raise = (sk, amount) => {\n    const before = values[sk].value;\n    values[sk].value = Math.min(CAP, before + amount);\n    return Math.max(0, before + amount - values[sk].value);",
+      "const raise = (sk, amount) => {\n    const before = values[sk].value;\n    values[sk].value = Math.min(CAP, before + amount);\n    return 0;");
+    check(mut !== src, "mutation 2 applied (loss reporting removed)");
+    const f = path.join(__dirname, "system/the-broken-empires/module/chargen/.mut-derive.mjs");
+    fs.writeFileSync(f, mut);
+    try {
+      const M = await import(f + "?m=" + Date.now());
+      const d = CG.draft({ raceName: "Human", careerName: "Warrior", alloc: { Combat_0: 80 } });
+      const ch = M.derive(d, CG.ctx);
+      const c = ch.careerPoints.find((x) => x.cat === "Combat");
+      check(!c.lost && ch.skills.Dodge.value === 70, "...and 80 points read as spent with 30 of them gone -- which is the defect", c);
+    } finally { fs.unlinkSync(f); }
+  }
 
   /* 3. Point TBE: Status back at the journal and three open trackers must
         disappear from it. */

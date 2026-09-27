@@ -41,7 +41,9 @@ check(/_sortCombatants/.test(mainSrc) && /pcB - pcA/.test(mainSrc),
 const actorSrc = read("system/the-broken-empires/module/documents/actor.mjs");
 const derivedBody = actorSrc.slice(actorSrc.indexOf("prepareDerivedData() {"));
 const body = derivedBody.slice(derivedBody.indexOf("{") + 1, derivedBody.indexOf("\n  }"));
-const runDerive = new Function("return function(){" + body + "}")();
+const ARMOR = await import("./system/the-broken-empires/module/rules/armor.mjs");
+const mkDerive = (A) => new Function("wornBulk", "initPenalty", "return function(){" + body + "}")(A.wornBulk, A.initPenalty);
+const runDerive = mkDerive(ARMOR);
 const mkActor = (initiative, armor) => ({
   flags: {}, items: armor.map((a) => ({ type: "armor", system: a })),
   system: { initiative }
@@ -71,15 +73,22 @@ check(/getRollData\(\)/.test(read("system/the-broken-empires/module/data/base-ac
   "@initiativeEffective is exposed to roll formulas");
 
 section("Ownership: the armor Initiative penalty is computed once");
-const computeCopies = ["macros/tbe-cast.js", "macros/tbe-finish-character.js",
-  "system/the-broken-empires/module/sheets/actor-sheet.mjs", "macros/_lib.js"]
-  .filter((f) => /Math\.ceil\(bulk \/ 3\)/.test(read(f)));
-check(computeCopies.length <= 2 && !computeCopies.includes("macros/tbe-cast.js") &&
-  !computeCopies.includes("macros/tbe-finish-character.js"),
-  "TBE: Cast and TBE: Finish Character no longer carry their own copy", computeCopies);
-check(/TBE\.armorInit\(/.test(read("macros/tbe-cast.js")) &&
-  /TBE\.armorInit\(/.test(read("macros/tbe-finish-character.js")),
-  "both read the value the actor derived");
+/* v0.53.0: one owner, rules/armor.mjs. The actor, the sheet's fallback and
+   the Create Character window call it; the macro library's fallback defers
+   to it at runtime and keeps its own line only for a harness. */
+const computeCopies = ["macros/tbe-cast.js", "system/the-broken-empires/module/documents/actor.mjs",
+  "system/the-broken-empires/module/sheets/actor-sheet.mjs", "system/the-broken-empires/module/chargen/steps.mjs"]
+  .filter((f) => /Math\.ceil\([^)]*bulk[^)]*\/ 3\)/.test(read(f)));
+check(computeCopies.length === 0, "no system file or TBE: Cast carries its own copy of the rule", computeCopies);
+check(/Math\.ceil\(num\(bulk, 0\) \/ 3\)/.test(read("system/the-broken-empires/module/rules/armor.mjs")), "rules/armor.mjs owns it");
+check(/TBE\.armorInit\(/.test(read("macros/tbe-cast.js")), "TBE: Cast reads the value the actor derived");
+{
+  let seen = null;
+  globalThis.game = { thebrokenempires: { rules: { armor: { wornBulk: (items) => (seen = items.length, 99), initPenalty: () => 42 } } } };
+  const got = TBE.armorInit({ system: { initiative: 10 }, items: [{ type: "armor", system: { bulk: 1 } }] });
+  delete globalThis.game;
+  check(got.penalty === 42 && got.bulk === 99 && seen === 1, "the library's fallback defers to the owner when the system is loaded (sentinel)", got);
+}
 {
   const withDerived = { system: { initiative: 10, armorBulk: 7, armorInitPenalty: 3, initiativeEffective: 7 } };
   const got = TBE.armorInit(withDerived);
@@ -196,23 +205,23 @@ const dialogs = ["tbe-skill-roll", "tbe-opposed-roll", "tbe-extended-roll", "tbe
 const missing = dialogs.filter((f) => !/TBE\.riderNote\(/.test(read("macros/" + f + ".js")));
 check(missing.length === 0, "every roll dialog that shows encumbrance also shows riders", missing);
 
-/* ---------------------------------------------------------------- 5. Build Character */
-section("Build Character stops looking like the whole chapter");
-const panelSrc = read("macros/tbe-solo-panel.js");
-check(!/"TBE: Build Character"/.test(panelSrc.replace(/\/\*[\s\S]*?\*\//g, "")),
-  "it is no longer offered in the Solo Panel beside the Wizard");
-check(/"TBE: Character Wizard"/.test(panelSrc), "the Wizard still is");
-const bcSrc = read("macros/tbe-build-character.js");
-check(/This is the quick path, not the whole chapter/.test(bcSrc) && /warning \+ content/.test(bcSrc),
-  "and it says what it skips before it builds anything, not in the notes afterwards");
+/* ---------------------------------------------------------------- 5. Character creation */
+section("Character creation is one tool (v0.53.0)");
+const panelSrc = read("macros/tbe-solo-panel.js").replace(/\/\*[\s\S]*?\*\//g, "");
+check(!/"TBE: (Build Character|Character Wizard|Finish Character)"/.test(panelSrc),
+  "the Solo Panel offers none of the three retired tools (Build Character, the Wizard, Finish Character)");
+check(/"TBE: Create Character"/.test(panelSrc), "it offers Create Character");
 
 /* ---------------------------------------------------------------- mutation guard */
 section("Mutation guard (each of these must be caught)");
 {
   const a = mkActor(10, [{ bulk: 7, equipped: true }]);
   runDerive.call(a);
-  const wrong = a.system.armorInitPenalty === 2; /* would be floor(7/3), not ceil */
-  check(!wrong, "rounding the armor penalty down instead of up would be caught", a.system.armorInitPenalty);
+  check(a.system.armorInitPenalty === 3, "Bulk 7: Initiative -3 (7/3 rounded up)", a.system.armorInitPenalty);
+  /* Mutation: an owner that rounds down. */
+  const b = mkActor(10, [{ bulk: 7, equipped: true }]);
+  mkDerive({ wornBulk: ARMOR.wornBulk, initPenalty: (x) => Math.floor(x / 3) }).call(b);
+  check(b.system.armorInitPenalty === 2, "mutation: an owner that rounds down gives -2, so the -3 above is live", b.system.armorInitPenalty);
 }
 {
   const t = mkTalent(4, "three", 1);

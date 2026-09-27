@@ -21,7 +21,7 @@ const esc = (v) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").
 export const LOC_LABEL = { head: "Head", body: "Body", rArm: "R Arm", lArm: "L Arm", rLeg: "R Leg", lLeg: "L Leg" };
 export const WIPE_TYPES = ["skill", "talent", "weapon", "armor", "shield", "strand", "thread"];
 
-/** An equipment row from the slim table as an Item, the way TBE: Finish Character builds it. */
+/** An equipment row from the slim table as an Item. Also used by the sheet's shop (shop.mjs). */
 export function gearItem(row, loc) {
   const system = { description: row.desc || "" };
   if (row.kind === "weapon") {
@@ -91,8 +91,8 @@ export function buildPayload(ch, d, T, o = {}) {
   const A = ch.attributes;
   const pieces = ch.equipment.freeArmorPieces;
   const piecesLeft = pieces === null ? 0 : Math.max(0, pieces - ch.equipment.freeArmor.length);
-  if (pieces === null) notes.push("Starting armour: not rolled. Roll 1d3+1 and claim the pieces in TBE: Finish Character.");
-  else if (piecesLeft) notes.push("Starting armour: " + piecesLeft + " free piece(s) still to claim in TBE: Finish Character.");
+  if (pieces === null) notes.push("Starting armour: not rolled. Roll 1d3+1 and claim the pieces with Buy equipment on the sheet's Gear tab.");
+  else if (piecesLeft) notes.push("Starting armour: " + piecesLeft + " free piece(s) still to claim with Buy equipment on the sheet's Gear tab.");
   if (ch.silver.total === null) notes.push("Starting silver: " + ch.silver.parts.filter((p) => p.value === null).map((p) => p.label + " " + p.dice).join(", ") + " not rolled.");
   const race = (T.chargen.races || []).find((r) => r.name === ch.identity.race) || {};
   if (race.toughnessCap !== null && race.toughnessCap !== undefined) notes.push(race.name + " can never exceed Toughness " + race.toughnessCap + ".");
@@ -131,7 +131,9 @@ export function buildPayload(ch, d, T, o = {}) {
       "<h3>Personality</h3><p>" + ch.personality.map(esc).join(", ") + "</p>";
   }
   if (isChar) {
-    /* TBE: Finish Character's Summary tab reads this back. */
+    /* A record of how the character was built, on the actor. Finish
+       Character's Summary tab read it; since that retired (v0.53.0) it is
+       kept as the record, and the Notes tab carries the same for people. */
     const bySource = (prefix) => Object.entries(ch.skills).flatMap(([n, v]) => (v.sources || []).filter((s) => s.label.startsWith(prefix))
       .map((s) => n + (s.delta ? " " + (s.delta > 0 ? "+" : "") + s.delta : "") + (s.expertise ? " Ex" + s.expertise : "") + (s.savvy ? " S" : "")));
     update["flags.the-broken-empires.chargenLedger"] = {

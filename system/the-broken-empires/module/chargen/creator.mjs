@@ -31,7 +31,7 @@ export const DRAFT_KIND = "creatorDraft";
 const SCOPE = "the-broken-empires";
 
 let TABLES = null;
-async function tables() {
+export async function tables() {
   if (!TABLES) {
     const mod = await import("./tables.mjs");
     TABLES = Object.assign({}, mod.TABLES, { skillGroups: R.SKILL_GROUPS });
@@ -314,7 +314,7 @@ function buildClass() {
 const escHtml = (v) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 /** Chat, through the visibility owner like every other card. */
-async function say(title, body, rolls) {
+export async function say(title, body, rolls) {
   const content = '<div class="tbe-card" style="border:1px solid #7a6a4f;border-radius:6px;padding:6px 8px;background:rgba(120,100,60,0.08)">' +
     '<div style="font-weight:bold;letter-spacing:.5px;border-bottom:1px solid #7a6a4f;margin-bottom:4px">' + title + "</div>" + body + "</div>";
   const data = { speaker: ChatMessage.getSpeaker(), content, rolls: rolls || [], sound: (rolls || []).length ? CONFIG.sounds?.dice : null };

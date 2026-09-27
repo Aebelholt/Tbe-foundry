@@ -15,6 +15,8 @@ import * as W from "./widgets.mjs";
 import * as R from "./rules.mjs";
 import { STEPS, raceChoices, raceBarsMagic, patternOf, freeTalentSlots, roAnySpent } from "./draft.mjs";
 import { lethalityLevel } from "../rules/lethality.mjs";
+import { wornBulk, initPenalty } from "../rules/armor.mjs";
+import { talentEffects } from "./sheet.mjs";
 
 const { esc, num, signed } = W;
 const CAP = R.CHARGEN_SKILL_CAP;
@@ -441,10 +443,11 @@ function careerPoints(env, career) {
   const cats = (ch.careerPoints || []);
   if (!cats.length) return W.hint(esc(career.name) + " has no skill point pools to spend.");
   let h = W.hint("Every box starts at 0. The number after each is the skill's value right now, everything so far included; nothing passes " + CAP +
-    " at creation. Points cannot move between categories (p.102).");
+    " at creation, and points that would push a skill past it are lost. Points cannot move between categories (p.102).");
   for (const cp of cats) {
     const names = T.skillGroups[cp.cat] || [];
-    h += '<div class="tbe-cc-box"><div class="tbe-cc-row"><b>' + cp.cat + "</b> " + W.pool("pool:" + cp.cat, cp.allocated, cp.pool) + " " +
+    h += '<div class="tbe-cc-box"><div class="tbe-cc-row"><b>' + cp.cat + "</b> " + W.pool("pool:" + cp.cat, cp.allocated, cp.pool) +
+      '<span class="tbe-cc-warn" data-live="lost:' + cp.cat + '">' + (cp.lost ? " " + cp.lost + " lost to the cap" : "") + "</span> " +
       W.button("spread", "Spread what is left", { cat: cp.cat }, { cls: "tbe-cc-small" }) + '</div><div class="tbe-cc-grid2">';
     names.forEach((n, idx) => {
       h += '<label class="tbe-cc-alloc"><span>' + esc(n) + "</span>" + W.stepper("alloc", (d.alloc || {})[cp.cat + "_" + idx], { key: cp.cat + "_" + idx, by: 5, max: cp.pool }) + vchip(env, n) + "</label>";
@@ -662,6 +665,16 @@ function stepEquip(env) {
       W.button("remove", "&times;", { list: "purchases", idx: i }, { cls: "tbe-cc-link" }) + "</td></tr>").join("") + "</table>";
   }
   if (ch.silver.left !== null && ch.silver.left < 0) h += W.warn("Over budget by " + -ch.silver.left + " sp.");
+  /* p.109 step 5: "Calculate your Initiative penalty". The rule is rules/armor.mjs. */
+  const worn = ch.equipment.freeArmor.map((a) => ({ name: a.name, n: 1 })).concat(ch.equipment.bought.filter((p) => p.kind === "armor").map((p) => ({ name: p.name, n: 1 })))
+    .map((a) => ({ type: "armor", system: { bulk: (E.armor.find((x) => x.name === a.name) || {}).bulk || 0 } }));
+  if (worn.length) {
+    const bulk = wornBulk(worn), pen = initPenalty(bulk);
+    /* Start from the number the live sheet shows (Talent effects included). */
+    const init = ch.attributes.initiative.value + ((talentEffects(ch, T)["system.initiative"] || {}).total || 0);
+    h += '<div class="tbe-cc-row"><b>Armour</b> Bulk ' + bulk + " &rarr; Initiative " + (pen ? "&minus;" + pen : "0") +
+      " (the sheet's " + signed(init) + " becomes " + signed(init - pen) + " with it on) " + W.page(142) + "</div>";
+  }
   h += W.hint("Every character starts with a d12 in each Supply die (Gear, Ammo, Rations, Medical). Set on Create.") + "</div>";
   return h + openList(env, "equip");
 }

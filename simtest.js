@@ -589,72 +589,55 @@ async function runShared(name, answers, store, quiet) {
   }
 
   /* ---------------------------------------------------------------------
-   * Chargen: an Ogre Warrior must come out of the macro with the book's real
-   * numbers, not a note telling the player to apply them.
+   * Chargen: an Ogre Warrior must come out of character creation with the
+   * book's real numbers, not a note telling the player to apply them.
    *
-   * TBE: Build Character now runs a SECOND TBE.prompt() for career skill
-   * points (p.102: "Skill points cannot be transferred between categories,"
-   * a player choice, no longer auto-split silently) -- so every test below
-   * needs a matching second answers-array entry with real pt_<cat>_<idx>
-   * fields, or that second prompt reuses dialog 1's answers and every
-   * category silently gets 0 points, leaving the new allocation code path
-   * completely unexercised. poolAllocAnswers() below builds a realistic
-   * "player accepted the suggested even split" answer set, driven by the
-   * same TBE_CHARGEN pools and SKILLS category lists the macro itself uses,
-   * so it can't drift out of sync with either.
+   * TBE: Build Character, which these three tests used to drive, was retired
+   * in v0.53.0. The one chargen path is now the Create Character window, so
+   * the same characters are built through its calculation (derive) and the
+   * payload its Create writes (buildPayload), with the career points spread
+   * evenly the way a player accepting the suggestion would.
    * ------------------------------------------------------------------- */
-  const buildCharSrc = get("TBE: Build Character");
-  const CHARGEN = JSON.parse(buildCharSrc.match(/const TBE_CHARGEN = (\{[\s\S]*?\});\n/)[1]);
-  /* The catalogue moved to _lib.js (TBE.SKILL_GROUPS) so the Wizard, Build
-   * Character, Finish Character and NPC/funnel generation share one copy;
-   * read it from there rather than from a macro-local const that no longer
-   * exists. */
-  const SKILLS_BY_CAT = new Function("return " + buildCharSrc.match(/TBE\.SKILL_GROUPS = (\{[\s\S]*?\});\n/)[1])();
-  function poolAllocAnswers(careerName) {
-    const career = CHARGEN.careers.find((c) => c.name === careerName);
+  const CGM = "./system/the-broken-empires/module/chargen/";
+  const { TABLES: CGT } = await import(CGM + "tables.mjs");
+  const CGR = await import(CGM + "rules.mjs");
+  const CGD = await import(CGM + "draft.mjs");
+  const CGC = await import(CGM + "creator.mjs");
+  const CGP = await import(CGM + "commit.mjs");
+  const { lethalityLevel } = await import("./system/the-broken-empires/module/rules/lethality.mjs");
+  const CGTab = Object.assign({}, CGT, { skillGroups: CGR.SKILL_GROUPS });
+  function evenAlloc(careerName) {
+    const career = CGTab.chargen.careers.find((c) => c.name === careerName);
     const out = {};
     for (const [cat, pool] of Object.entries(career.pools)) {
       if (!pool || cat === "Magic") continue;
-      const names = SKILLS_BY_CAT[cat] || [];
-      if (!names.length) continue;
+      const names = CGR.SKILL_GROUPS[cat] || [];
       const each = Math.floor(pool / names.length);
       let rest = pool - each * names.length;
-      names.forEach((n, idx) => {
-        const v = each + (rest > 0 ? 1 : 0);
-        if (rest > 0) rest--;
-        out["pt_" + cat + "_" + idx] = String(v);
-      });
+      names.forEach((n, idx) => { out[cat + "_" + idx] = each + (rest > 0 ? 1 : 0); if (rest > 0) rest--; });
     }
     return out;
   }
+  function create(raceName, careerName) {
+    const d = Object.assign(CGD.defaultDraft(CGTab), { raceName, careerName, alloc: evenAlloc(careerName),
+      rolls: { careerSilver: 15, cultureSilver: 0, equipCoin: 250, armorPieces: 2 } });
+    const ch = CGC.deriveWith(CGTab, d);
+    const p = CGP.buildPayload(ch, d, CGTab, { actor: { name: "Sim", type: "character", system: { status: 0 } } });
+    return { ch, p, u: p.update, items: p.items };
+  }
 
   {
-    const w = world();
-    const answers = [{ race: "Ogre", career: "Warrior", culture: "Drangia", lang: "Tusker",
-                       base: "20", wises: "2", binds: "0", wipe: "on", notes: "on" },
-                      poolAllocAnswers("Warrior")];
-    let i = 0;
-    const stub = async () => answers[Math.min(i++, answers.length - 1)];
-    const created = [];
-    w.actor.createEmbeddedDocuments = async (t, docs) => { created.push(...docs); return docs.map((x, n) => ({ id: "n" + n, ...x })); };
-    const code = get("TBE: Build Character").replace("const TBE = {};", "const TBE = {}; TBE._stub = STUB;")
-      .replace(/TBE\.prompt = async function[\s\S]*?\n};/, "TBE.prompt = async function (t, c, o) { return TBE._stub(t); };");
-    await new Function("STUB", "return (async()=>{" + code + "})()")(stub).catch((e) => { w.said.push("[throw] " + e.message); });
-    const out = w.said.map((s) => String(s).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()).join(" || ");
-    console.log("\n### TBE: Build Character (Ogre Warrior)\n" + out.slice(0, 620));
-
-    const sys = w.actor.system;
-    const light = created.find((d) => d.name === "Melee: Light");
-    const might = created.find((d) => d.name === "Might");
-    const talents = created.filter((d) => d.type === "talent");
+    const { u, items } = create("Ogre", "Warrior");
+    console.log("\n### Create Character (Ogre Warrior)");
+    const light = items.find((d) => d.name === "Melee: Light");
+    const might = items.find((d) => d.name === "Might");
+    const talents = items.filter((d) => d.type === "talent");
     const checks = [
-      ["size is Large", sys.size === "Large"],
-      ["Toughness 1", sys.toughness === 1],
-      ["Death Threshold 22", sys.deathThreshold.max === 22],
-      ["race recorded", sys.race === "Ogre"],
-      ["career recorded", sys.career === "Warrior"],
-      // Warrior spreads 80 Combat points over 7 skills (11 each, 3 get +1), so
-      // Melee: Light lands near 31-32 before the Ogre's -20.
+      ["size is Large", u["system.size"] === "Large"],
+      ["Toughness 1", u["system.toughness"] === 1],
+      ["Death Threshold 22", u["system.deathThreshold.max"] === 22],
+      ["race recorded", u["system.race"] === "Ogre"],
+      ["career recorded", u["system.career"] === "Warrior"],
       ["Melee: Light took the -20", !!light && light.system.value < (might ? might.system.value : 99)],
       ["Might took the +10", !!might && might.system.value > 20],
       ["Devouring Maw granted", talents.some((t) => /devouring maw/i.test(t.name))],
@@ -663,53 +646,32 @@ async function runShared(name, answers, store, quiet) {
       // must win over the career.
       ["Ogre caps Armor Training at 1 rank, Bone armor",
         talents.some((t) => /armor training/i.test(t.name) && t.system.ranks === 1 && /bone/i.test(t.system.specialization))],
-      ["silver rolled", sys.silver > 0]
+      ["silver rolled", u["system.silver"] > 0]
     ];
     for (const [label, ok] of checks) console.log((ok ? "PASS: " : "FAIL: ") + label);
     console.log("   Melee: Light =", light && light.system.value, " Might =", might && might.system.value,
                 " talents:", talents.map((t) => t.name + (t.system.ranks > 1 ? " x" + t.system.ranks : "")).join(", "));
   }
 
-
   /* Control for the cap above: a Human Warrior must still get all three ranks. */
   {
-    const w = world();
-    const answers = [{ race: "Human", career: "Warrior", culture: "", lang: "Westronne",
-                       base: "20", wises: "0", binds: "0", wipe: "on", notes: "" },
-                      poolAllocAnswers("Warrior")];
-    let i = 0;
-    const stub = async () => answers[Math.min(i++, answers.length - 1)];
-    const created = [];
-    w.actor.createEmbeddedDocuments = async (t, docs) => { created.push(...docs); return docs.map((x, n) => ({ id: "n" + n, ...x })); };
-    const code = get("TBE: Build Character").replace("const TBE = {};", "const TBE = {}; TBE._stub = STUB;")
-      .replace(/TBE\.prompt = async function[\s\S]*?\n};/, "TBE.prompt = async function (t, c, o) { return TBE._stub(t); };");
-    await new Function("STUB", "return (async()=>{" + code + "})()")(stub).catch((e) => { w.said.push("[throw] " + e.message); });
-    const at = created.filter((d) => d.type === "talent").find((t) => /armor training/i.test(t.name));
-    console.log("\n### TBE: Build Character (Human Warrior, cap control)");
+    const { u, items } = create("Human", "Warrior");
+    const at = items.filter((d) => d.type === "talent").find((t) => /armor training/i.test(t.name));
+    console.log("\n### Create Character (Human Warrior, cap control)");
     console.log((at && at.system.ranks === 3 ? "PASS" : "FAIL") +
       ": Human Warrior keeps Armor Training III (ranks = " + (at ? at.system.ranks : "none") + ")");
-    console.log((w.actor.system.size === "Medium" ? "PASS" : "FAIL") + ": Human is Size Medium");
+    console.log((u["system.size"] === "Medium" ? "PASS" : "FAIL") + ": Human is Size Medium");
   }
 
-  /* Dwarf gets +1 Lethality Level, which is a real derived stat now. */
+  /* Dwarf gets +1 Lethality Level, which is a real derived stat. */
   {
-    const w = world();
-    const answers = [{ race: "Dwarf", career: "Loremaster", culture: "", lang: "Kharzhad",
-                       base: "20", wises: "0", binds: "0", wipe: "on", notes: "" },
-                      poolAllocAnswers("Loremaster")];
-    let i = 0;
-    const stub = async () => answers[Math.min(i++, answers.length - 1)];
-    const created = [];
-    w.actor.createEmbeddedDocuments = async (t, docs) => { created.push(...docs); return docs.map((x, n) => ({ id: "n" + n, ...x })); };
-    const code = get("TBE: Build Character").replace("const TBE = {};", "const TBE = {}; TBE._stub = STUB;")
-      .replace(/TBE\.prompt = async function[\s\S]*?\n};/, "TBE.prompt = async function (t, c, o) { return TBE._stub(t); };");
-    await new Function("STUB", "return (async()=>{" + code + "})()")(stub).catch((e) => { w.said.push("[throw] " + e.message); });
-    const end = created.find((d) => d.name === "Endurance");
-    const insp = created.find((d) => d.name === "Inspire");
-    console.log("\n### TBE: Build Character (Dwarf Loremaster)");
-    console.log((w.actor.system.lethalityBonus === 1 ? "PASS" : "FAIL") + ": Dwarf lethalityBonus = " + w.actor.system.lethalityBonus);
-    console.log((w.actor.system.lethalityLevel === 8 ? "PASS" : "FAIL") +
-      ": derived Lethality Level = " + w.actor.system.lethalityLevel + " (ceil(20/3)=7, +1 racial)");
+    const { u, items } = create("Dwarf", "Loremaster");
+    const ll = lethalityLevel(u["system.deathThreshold.max"], u["system.lethalityBonus"], 0);
+    const end = items.find((d) => d.name === "Endurance");
+    const insp = items.find((d) => d.name === "Inspire");
+    console.log("\n### Create Character (Dwarf Loremaster)");
+    console.log((u["system.lethalityBonus"] === 1 ? "PASS" : "FAIL") + ": Dwarf lethalityBonus = " + u["system.lethalityBonus"]);
+    console.log((ll === 8 ? "PASS" : "FAIL") + ": derived Lethality Level = " + ll + " (ceil(20/3)=7, +1 racial)");
     console.log("   Endurance =", end && end.system.value, "(should carry +10), Inspire =", insp && insp.system.value, "(should carry -10)");
   }
 

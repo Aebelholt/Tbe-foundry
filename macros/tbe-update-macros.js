@@ -24,6 +24,12 @@
  * -- so rather than guess, this offers a rule the GM can act on. It is the
  * same reason `findStaleMacros()` reports and never writes.
  *
+ * RETIRED MACROS (v0.53.0). A world copy of a macro this system used to ship
+ * and has retired (TBE.RETIRED_MACROS: the Character Wizard, Build Character,
+ * Finish Character) is not left running old code: its command is replaced,
+ * in place, with a short pointer to what replaced it. Same contract as
+ * above, matched on name, never deleted, a renamed copy never touched.
+ *
  * DELETION is opt-in, off by default, and never removes the last copy of
  * anything. When asked, it keeps one of each -- preferring a copy that is on
  * someone's hotbar, so clearing duplicates cannot leave a dead slot behind --
@@ -74,7 +80,11 @@ if (!game.user.isGM) {
         if (copies.length > 1) surplus += copies.length - 1;
       }
 
-      const nothingToDo = !toCreate && !toUpdate && !surplus;
+      /* World copies of retired macros that still hold old code. */
+      const RETIRED = TBE.RETIRED_MACROS || {};
+      const retiredCopies = [...game.macros].filter((m) => RETIRED[m.name] && (m.command ?? "") !== RETIRED[m.name].command);
+
+      const nothingToDo = !toCreate && !toUpdate && !surplus && !retiredCopies.length;
 
       const content =
         '<div style="font-size:13px">' +
@@ -84,7 +94,10 @@ if (!game.user.isGM) {
         '<ul style="margin:0 0 8px 16px;padding:0">' +
         "<li><b>" + toUpdate + "</b> copy(ies) are out of date and will be overwritten in place</li>" +
         "<li><b>" + toCreate + "</b> macro(s) are missing and will be created</li>" +
-        "<li><b>" + surplus + "</b> surplus duplicate(s) exist</li></ul>" +
+        "<li><b>" + surplus + "</b> surplus duplicate(s) exist</li>" +
+        (retiredCopies.length ? "<li><b>" + retiredCopies.length + "</b> copy(ies) of retired macros (" +
+          [...new Set(retiredCopies.map((m) => m.name))].join(", ") + ") will be pointed at what replaced them, not deleted</li>" : "") +
+        "</ul>" +
         '<label style="display:block;margin:6px 0"><input type="checkbox" name="prune"' +
         (surplus ? "" : " disabled") + "> Also delete the " + surplus +
         " surplus duplicate(s), keeping one of each</label>" +
@@ -103,7 +116,17 @@ if (!game.user.isGM) {
         const data = await TBE.prompt("Update this world's TBE macros", content, "Update");
         if (data) {
           const prune = data.prune === "on" || data.prune === true;
-          const created = [], updated = [], deleted = [], failed = [];
+          const created = [], updated = [], deleted = [], failed = [], redirected = [];
+
+          for (const m of retiredCopies) {
+            try {
+              await m.update({ command: RETIRED[m.name].command });
+              redirected.push(m.name);
+            } catch (err) {
+              console.warn("TBE | could not redirect " + m.name, err);
+              failed.push(m.name + " (redirect)");
+            }
+          }
 
           for (const doc of shipped) {
             const copies = mine.get(doc.name) ?? [];
@@ -159,8 +182,9 @@ if (!game.user.isGM) {
             line("updated in place", updated) +
             line("created", created) +
             line("surplus duplicate(s) removed", deleted) +
+            line("retired macro(s) now point at their replacement", redirected) +
             (failed.length ? '<div style="color:#8b1a1a">' + line("could not be changed (see the console, F12)", failed) + "</div>" : "") +
-            (!updated.length && !created.length && !deleted.length && !failed.length
+            (!updated.length && !created.length && !deleted.length && !failed.length && !redirected.length
               ? "<div>Nothing needed changing.</div>" : "") +
             (!prune && surplus
               ? '<div style="font-size:11px;opacity:.8;margin-top:4px">' + surplus +
@@ -175,6 +199,7 @@ if (!game.user.isGM) {
              through the one visibility owner like everything else. */
           await TBE.say(TBE.card("TBE Update Macros", body), [], { mode: TBE.MODES.PRIVATE });
           ui.notifications?.info("TBE: " + updated.length + " updated, " + created.length + " created" +
+            (redirected.length ? ", " + redirected.length + " retired copies redirected" : "") +
             (deleted.length ? ", " + deleted.length + " duplicates removed" : "") +
             (failed.length ? ", " + failed.length + " failed" : "") + ".");
         }

@@ -305,7 +305,7 @@ export const RACES = [
 
 /** The ten Previous Careers (Ch.7). A career is a one-time chargen budget:
  *  once its points are spent nothing reads it again, so it is applied by the
- *  Build Character macro rather than tracked as a live stat. */
+ *  Create Character window rather than tracked as a live stat. */
 export const CAREERS = [
   {
     "name": "Warrior",

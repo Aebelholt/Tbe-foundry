@@ -16,7 +16,7 @@
  * above 10 all apply here, and every Fraying point gained triggers the
  * book's Fraying Roll rather than being left to the player to remember.
  * Piety, by contrast,
- * IS tracked (TBE: Character Wizard creates a real "Piety" Lore skill Item
+ * IS tracked (character creation makes a real "Piety" Lore skill Item
  * for Godbound characters) -- but p.125 "Piety and XP" is explicit that
  * "the Piety skill cannot be increased by spending XP. Only through acts of
  * service to the deity can a Godbound's Piety increase," and p.54 excludes
@@ -94,8 +94,8 @@ if (!me || me.type !== "character") {
   const goals = (me.system?.goals || []).map((g, i) => Object.assign({ idx: i }, g));
   function goalBlock() {
     if (!goals.length) {
-      return '<div style="font-size:11px;opacity:.75">No Goals on this sheet. Build them with <b>TBE: Finish Character</b>, ' +
-        "which walks the book's four-step method; XP is paid per goal completed (p.160).</div>";
+      return '<div style="font-size:11px;opacity:.75">No Goals on this sheet. Add them with <b>Add Goal</b> on the character sheet, ' +
+        "which walks the book's method; XP is paid per goal completed (p.160).</div>";
     }
     return '<div style="font-size:11px;opacity:.8;margin-top:2px">Goals completed this session (+1 individual, +2 shared):</div>' +
       goals.map((g) => '<label style="display:block;font-size:12px;opacity:' + (g.awarded ? ".5" : "1") + '">' +

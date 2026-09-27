@@ -1,3 +1,39 @@
+# 0.53.0 — 2026-09-27
+
+**Character creation, stage 3: one tool. The Character Wizard, Finish
+Character and Build Character are retired.**
+
+The Create Character window (0.52.0) now does everything the three did.
+
+- **Retired macros are redirected, not deleted.** Run **TBE: Update Macros**
+  and any world copy of the three is rewritten in place to point at what
+  replaced it. A Wizard or Build Character on your hotbar opens Create
+  Character for your token; Finish Character says where its jobs went.
+  Nothing is deleted, and a copy you renamed is left alone.
+- **Finish Character's jobs moved:**
+  - **Buy equipment** on the character sheet's Gear tab buys with the
+    character's silver and claims free starting armour left over from
+    creation (p.109), still refusing a piece that needs training you lack.
+  - **Add Goal** on the sheet now builds the goal the book's way: what you
+    want, what stands in the way, what you will do about it.
+  - Free Talent picks are made in Create Character; **TBE: Talents** keeps
+    its no-XP option for a GM's gift.
+- **Points past the 70 cap are no longer lost silently.** The window counts
+  career and Rounding Out points that push a skill past 70, says "lost to the
+  cap" on the pool, lists them as still to fix, and notes them after Create.
+- **Armour's Initiative penalty on the Equipment step,** so the player sees
+  what the armour they pick will cost (p.142). The rule now has one owner.
+- The Solo Panel's "Make a character" group lists Create Character and TBE:
+  Talents. The Weave Magic journal points at the window.
+
+For tool authors: the macro library's creation rules (Talent lookup, the
+Ability Score rule, the Expertise ladder, the Talent item, the Ability Score
+roll) now defer to the system's own copy when the system is loaded, and so
+does the armour penalty.
+
+Known: the TBE: Rules Audit journal still names the Character Wizard in three
+rows until its generator is fixed (listed in the backlog).
+
 # 0.52.0 — 2026-09-27
 
 **Character creation, stage 2: the new Create Character window.**

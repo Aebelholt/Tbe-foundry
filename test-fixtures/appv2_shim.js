@@ -40,10 +40,21 @@
       instances: new Map(),
       api: {
         ApplicationV2,
-        DialogV2: {
+        DialogV2: Object.assign(class DialogV2 {
+          constructor(o) { this.o = o; }
+          async render() {
+            const el = document.createElement("div");
+            el.className = "application dialog";
+            el.innerHTML = "<header>" + (this.o.window?.title || "") + '</header><section class="window-content">' + this.o.content + "</section>";
+            document.body.append(el);
+            this.element = el;
+            return this;
+          }
+          async close() { this.element?.remove(); }
+        }, {
           confirm: async () => { window.LOG.push(["dialog", "confirm"]); return true; },
           wait: async ({ buttons }) => { window.LOG.push(["dialog", "wait"]); return buttons[0].action; }
-        }
+        })
       }
     }
   };

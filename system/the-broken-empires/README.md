@@ -62,7 +62,7 @@ Six compendium packs, grouped under one folder in the Compendium tab:
 
 | Pack | Holds |
 |---|---|
-| TBE Tools | the 43 play macros (Attack, Wounds & Recovery, Cast, Extended Roll, Social Encounter, Advancement, Status, Character Wizard, Finish Character, Haggle, Solo Panel...) |
+| TBE Tools | the 40 play macros (Attack, Wounds & Recovery, Cast, Extended Roll, Social Encounter, Advancement, Status, Create Character, Haggle, Solo Panel...) |
 | TBE Talents | all 150 Chapter 4 Talents |
 | TBE Weapons, Armor & Shields | the 50 equipment entries |
 | TBE Bestiary | 56 creatures, each with its skills and attacks already attached |
@@ -99,7 +99,7 @@ chat card rather than silently adjusting numbers.
 ## Race
 
 The six playable races carry the numbers the book gives them, applied by
-TBE: Build Character rather than left as prose. An Ogre, for example, starts at
+character creation (Create Character, on every character sheet's header) rather than left as prose. An Ogre, for example, starts at
 Toughness 1 with a Death Threshold of 22 at Size Large, takes +10 Might and -20
 to Melee: Light, Stealth and Athletics, and may take Armor Training only once.
 

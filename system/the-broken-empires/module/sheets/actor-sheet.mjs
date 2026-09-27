@@ -10,6 +10,8 @@ import * as COMBAT from '../rules/combat.mjs';
 import * as MEMORY from '../helpers/memory.mjs';
 import * as CONTROLS from '../helpers/roll-controls.mjs';
 import * as RTRACK from '../rules/resolve-track.mjs';
+import * as ARMOR from '../rules/armor.mjs';
+import { goalSentence } from '../chargen/steps.mjs';
 
 /**
  * The TBE actor sheet. Combat, wounds, casting, and every other action stay
@@ -356,9 +358,8 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
         effective: num(system.initiativeEffective, num(system.initiative, 0))
       };
     }
-    const bulk = armor.filter((i) => i.system?.equipped !== false)
-      .reduce((s, i) => s + num(i.system?.bulk, 0), 0);
-    const penalty = Math.ceil(bulk / 3);
+    const bulk = ARMOR.wornBulk(armor.map((i) => Object.assign({ type: "armor" }, i)));
+    const penalty = ARMOR.initPenalty(bulk);
     const base = num(system?.initiative, 0);
     return { bulk, penalty, effective: base - penalty };
   }
@@ -519,14 +520,24 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     });
 
     // Ch.6 Goals. Real records, because XP is awarded per goal pursued and
-    // per goal completed (p.160). Built properly by TBE: Finish Character,
-    // which walks the book's four-step method; edited freely here.
+    // per goal completed (p.160). Add Goal walks the book's method; edited
+    // freely here.
     const goalsOf = () => foundry.utils.duplicate(this.actor.system.goals || []);
+    /* Add Goal builds the goal the book's way (Ch.6): "I will [action] to
+       overcome [obstacle] so that I can [desire]". The sentence is
+       chargen/steps.mjs's goalSentence(), the one the Create Character window
+       uses. Cancel adds nothing; an empty builder adds a blank row to type in. */
     html.on('click', '.goal-add', async (ev) => {
       ev.preventDefault();
+      const got = await goalBuilder();
+      if (!got) return;
       const goals = goalsOf();
-      goals.push({ text: '', kind: 'individual', done: false });
+      goals.push({ text: got.text, kind: got.kind, done: false });
       await this.actor.update({ 'system.goals': goals });
+    });
+    html.on('click', '.tbe-shop-open', (ev) => {
+      ev.preventDefault();
+      game.thebrokenempires?.chargen?.shop?.(this.actor);
     });
     html.on('click', '.goal-remove', async (ev) => {
       ev.preventDefault();
@@ -849,5 +860,28 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     const itemData = { name, type, system: data };
     delete itemData.system['type'];
     return await Item.create(itemData, { parent: this.actor });
+  }
+}
+
+/** The book's goal method as a small dialog. Resolves to {text, kind}, or null. */
+async function goalBuilder() {
+  const DV2 = foundry.applications?.api?.DialogV2;
+  if (!DV2?.prompt) return { text: '', kind: 'individual' };
+  const content = '<label style="display:block">What do you want? <input type="text" name="want" placeholder="chart the safest route through the Draithwood" style="width:100%"></label>' +
+    '<label style="display:block">What stands in the way? <input type="text" name="obstacle" placeholder="the forest is unmapped, haunted, and full of dangers" style="width:100%"></label>' +
+    '<label style="display:block">What will you do about it? <input type="text" name="action" placeholder="use Track to find paths" style="width:100%"></label>' +
+    '<label style="display:block">Kind <select name="kind"><option value="individual">Individual</option><option value="shared">Shared with the party (2 XP to each who shared it)</option></select></label>' +
+    '<p style="font-size:11px;opacity:.75">A goal earns XP only if it makes you roll against something in your way. Leave all three blank for an empty row.</p>';
+  try {
+    return await DV2.prompt({
+      window: { title: 'Add a Goal' }, content, rejectClose: false,
+      ok: { label: 'Add', callback: (event, button) => {
+        const f = button.form.elements;
+        const g = { want: f.want.value.trim(), obstacle: f.obstacle.value.trim(), action: f.action.value.trim() };
+        return { text: g.want || g.obstacle || g.action ? goalSentence(g) : '', kind: f.kind.value };
+      } }
+    });
+  } catch (err) {
+    return null;
   }
 }
