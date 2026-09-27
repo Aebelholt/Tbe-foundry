@@ -5,6 +5,13 @@ show the track before and after?" It did remove it, but every spend ignored
 Fatigue (p.26). Fixed across all seven sites, with the track drawn in the
 roll dialog and on every card that spends Resolve. `resolve_check.mjs` (42).
 
+Found while scoping the chargen question, not fixed:
+- **The Wizard's Attributes page shows Toughness without the race's.**
+  `_step_attributes()` computes `floor(points / 2)`; `commit()` adds
+  `race.toughness` (an Ogre's +1). The page says 0, the actor gets 1. Same
+  shape as rule 4 in CLAUDE.md: the Wizard works out the stats twice, once to
+  show and once to write.
+
 Open:
 - The sheet's own Resolve field is still two numbers (value / max) and a
   separate Fatigue number. Drawing the track on the sheet header too would
