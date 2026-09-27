@@ -9,6 +9,7 @@ import * as PERMISSION from '../rules/permission.mjs';
 import * as COMBAT from '../rules/combat.mjs';
 import * as MEMORY from '../helpers/memory.mjs';
 import * as CONTROLS from '../helpers/roll-controls.mjs';
+import * as RTRACK from '../rules/resolve-track.mjs';
 
 /**
  * The TBE actor sheet. Combat, wounds, casting, and every other action stay
@@ -302,7 +303,7 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
       convocationRec: convo,
       trueName: system?.trueName || '',
       binds, otherBinds, bindCap,
-      canAttempt: pattern !== 'none' && (Number(system?.resolve?.value) || 0) >= 1,
+      canAttempt: pattern !== 'none' && C.availableResolve(system) >= 1,
       strands, unknownStrands: unknown, threads,
       strandCap: cap.cap, strandCapWhy: cap.why,
       totalStrandLevels: strands.reduce((n, s) => n + s.level, 0),
@@ -315,8 +316,9 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
       usableBinds,
       usableStrands: strands.filter((x) => x.level > 0).length,
       /* Ch.14 p.280: "To do so, the caster must have at least 1 available
-       * Resolve. Otherwise, a spell cannot be attempted." */
-      resolveLeft: Number(system?.resolve?.value) || 0,
+       * Resolve. Otherwise, a spell cannot be attempted." Available means
+       * not spent and not crossed out by Fatigue (p.26). */
+      resolveLeft: C.availableResolve(system),
       convocations: C.CONVOCATIONS || []
     };
   }
@@ -692,9 +694,11 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
    */
   async _rollSkill({ name, base, expertise = 0, savvy = false, untrained = false,
                      extraHtml = '', cardExtra = null, note = '' } = {}) {
-    const resolveLeft = Number(this.actor.system?.resolve?.value) || 0;
-    /* You cannot spend Resolve you do not have, and the book caps Favor on a
-     * single roll at 3 whatever it is sourced from. */
+    /* You cannot spend Resolve you do not have, and Fatigue crosses boxes
+     * out of the same track (p.26), so what is spendable is unspent minus
+     * Fatigue (rules/resolve-track.mjs). The book caps Favor on a single roll
+     * at 3 whatever it is sourced from. */
+    const resolveLeft = RTRACK.availableResolve(this.actor.system);
     const maxSpend = Math.min(RULES.FAVOR_CAP, resolveLeft);
 
     /* Buttons, not selects (first-session note: "modifiers as radial
@@ -713,8 +717,9 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
         ${mods}
         <div>Favor / Resolve</div>
         ${spends}
+        <div class="tbe-roll-track">${RTRACK.trackHtml(this.actor.system, 0)}</div>
         <p style="font-size:11px;opacity:.8;margin:.4em 0 0">
-          Resolve left: ${resolveLeft}. Up to ${RULES.FAVOR_CAP} Favor on any one roll,
+          Up to ${RULES.FAVOR_CAP} Favor on any one roll,
           <i>from any source</i>, so Favor or Leverage already spent here counts against the same ${RULES.FAVOR_CAP}.
           ${note || 'Task Modifiers do not apply to opposed rolls, which set their own difficulty.'}
         </p>
@@ -741,10 +746,13 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
            * against before committing Resolve they cannot get back. */
           const f = dlg[0].querySelector('form');
           const out = f.querySelector('.tbe-roll-total');
+          const trackEl = f.querySelector('.tbe-roll-track');
           const update = () => {
-            const total = base + (Number(CONTROLS.readRadio(f, 'task')) || 0) +
-              (Number(CONTROLS.readRadio(f, 'favor')) || 0) * RULES.FAVOR_STEP;
+            const favor = Number(CONTROLS.readRadio(f, 'favor')) || 0;
+            const total = base + (Number(CONTROLS.readRadio(f, 'task')) || 0) + favor * RULES.FAVOR_STEP;
             out.innerHTML = `<b>Rolling against ${total}</b>`;
+            /* The boxes this Favor would slash, before anything is spent. */
+            if (trackEl) trackEl.innerHTML = RTRACK.trackHtml(this.actor.system, favor);
           };
           f.addEventListener('change', update);
           update();
@@ -764,6 +772,12 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     /* Spend the Resolve only after the roll exists, and only if this user can
      * actually write to the actor. Warning beats a silent no-op. */
     let spent = 0;
+    /* The track as it stood when the roll was made, for the card's before and
+       after. A plain copy: the actor's own data changes under the write. */
+    const trackBefore = {
+      resolve: { value: this.actor.system?.resolve?.value, max: this.actor.system?.resolve?.max },
+      fatigue: this.actor.system?.fatigue
+    };
     if (spend.favor > 0) {
       const cur = Number(this.actor.system?.resolve?.value) || 0;
       /* OWNERSHIP: module/rules/permission.mjs. This method carried the only
@@ -800,7 +814,11 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
         (res.notes.length ? `<br><span style="font-size:11px;opacity:.85">${res.notes.join('; ')}</span>` : '') +
         /* B1: say at the moment of the roll that a shield is up and what it
            contributes. Same source as the number, so they cannot disagree. */
-        (cardExtra ? `<br><span style="font-size:11px;opacity:.85">${cardExtra}</span>` : '')
+        (cardExtra ? `<br><span style="font-size:11px;opacity:.85">${cardExtra}</span>` : '') +
+        /* A Favor spend shows the track: the boxes it slashed, and what is
+           left against the Fatigue already crossed out. Only when Resolve
+           actually moved; an ordinary roll does not need a track under it. */
+        (spent ? `<br>${RTRACK.trackHtml(trackBefore, spent)}` : '')
     };
     VISIBILITY.prepare(messageData, {
       settingsGet: (ns, key) => game.settings.get(ns, key),

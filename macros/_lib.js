@@ -986,10 +986,39 @@ TBE.FATIGUE_WOUND = {
   Weave: { loc: null, why: "Fraying (Ch.14) — a random location" }
 };
 
-TBE.fatigueRoom = function (actor) {
+/* The Resolve track (p.26). Owner: module/rules/resolve-track.mjs, read
+ * through the rules global. What can be SPENT is unspent Resolve minus
+ * Fatigue: spent boxes are slashed from the left, Fatigue crossed from the
+ * right, and only the boxes between are free. Before v0.50.0 every spend read
+ * resolve.value alone. The body below is the Node-harness fallback;
+ * resolve_check.mjs asserts it agrees with the owner over a matrix. */
+TBE._trackOwner = () => (typeof game !== "undefined" && game?.thebrokenempires?.rules?.resolveTrack) || null;
+TBE.resolveTrack = function (actor, pending) {
+  const o = TBE._trackOwner();
+  if (o) return o.track(actor?.system, pending || 0);
   const sys = actor?.system || {};
-  const unspent = TBE.num(sys.resolve?.value, 0);
-  return Math.max(0, unspent - TBE.num(sys.fatigue, 0));
+  const max = Math.max(0, Math.floor(TBE.num(sys.resolve?.max, 0)));
+  const unspent = Math.max(0, Math.min(max, Math.floor(TBE.num(sys.resolve?.value, 0))));
+  const fatigue = Math.max(0, Math.min(unspent, Math.floor(TBE.num(sys.fatigue, 0))));
+  const available = unspent - fatigue;
+  const spend = Math.max(0, Math.min(available, Math.floor(TBE.num(pending, 0))));
+  return { max, unspent, spent: max - unspent, fatigue, available, spend, after: available - spend };
+};
+TBE.availableResolve = (actor) => TBE.resolveTrack(actor, 0).available;
+/* The track drawn as boxes; `pending` marks what this roll spends. Without
+ * the system, a plain line with the same numbers. */
+TBE.resolveTrackHtml = function (actor, pending, label) {
+  const o = TBE._trackOwner();
+  if (o) return o.trackHtml(actor?.system, pending || 0, { label: label || "Resolve" });
+  const t = TBE.resolveTrack(actor, pending);
+  return (label || "Resolve") + ": " + t.available + (t.spend ? " &rarr; " + t.after : "") + " available" +
+    (t.fatigue ? ", " + t.fatigue + " Fatigue" : "");
+};
+
+/* Room left on the track for new Fatigue: the same free boxes Resolve is
+ * spent from, so it asks the same owner. */
+TBE.fatigueRoom = function (actor) {
+  return TBE.availableResolve(actor);
 };
 
 /* Marks `amount` Fatigue, turning whatever will not fit into a fatigue-based

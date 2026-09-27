@@ -285,8 +285,9 @@ if (!MAGIC) {
     blockers() {
       const s = this.state, out = [];
       const b = this.effectiveBind(), st = this.effectiveStrand();
-      if (TBE.num(this.actor.system?.resolve?.value, 0) < 1) {
-        out.push("No Resolve left. A caster must have at least 1 available Resolve, or a spell cannot be attempted (p.280).");
+      /* "Available" is the free part of the track: unspent less Fatigue (p.26). */
+      if (TBE.availableResolve(this.actor) < 1) {
+        out.push("No Resolve available. A caster must have at least 1 available Resolve, or a spell cannot be attempted (p.280). Spent Resolve and Fatigue both fill the track (p.26).");
       }
       if (!b) out.push("No Bind skill on this sheet.");
       else if (b.effective <= 0) out.push("Bind: " + b.name + " is at " + b.effective +
@@ -529,7 +530,9 @@ if (!MAGIC) {
       const requested = Math.max(0, Math.min(rawWrm, TBE.num(s.mitigate, 0)));
       const enduringFree = Math.min(tal.enduringCaster, requested);
       const charged = Math.max(0, requested - enduringFree);
-      const cur = TBE.num(this.actor.system?.resolve?.value, 0);
+      /* Only free boxes can pay: Fatigue has crossed the rest (p.26). The
+         Favor already spent this casting is off the track by now. */
+      const cur = TBE.availableResolve(this.actor);
       const paid = Math.min(charged, cur);
       return { requested, enduringFree, charged, paid, reduce: enduringFree + paid, short: paid < charged };
     }
@@ -815,7 +818,10 @@ if (!MAGIC) {
       }
       /* Favor cannot exceed what is actually on the sheet: spending Resolve
        * the character does not have is not a house rule, it is an error. */
-      const available = TBE.num(this.actor.system?.resolve?.value, 0);
+      const available = TBE.availableResolve(this.actor);
+      /* The track before anything this casting spends, for the card. */
+      s.trackBefore = { system: { resolve: Object.assign({}, this.actor.system?.resolve), fatigue: this.actor.system?.fatigue } };
+      s.resolveSpent = 0;
       const asked = Math.max(0, Math.min(3, TBE.num(s.favorResolve, 0)));
       const favor = Math.min(asked, Math.max(0, available - 1));
       if (favor < asked) {
@@ -843,6 +849,7 @@ if (!MAGIC) {
            player is told rather than quietly getting it for free. */
         s.favorWrite = await TBE.write(this.actor,
           { "system.resolve.value": Math.max(0, cur - favor) }, "the " + favor + " Resolve");
+        if (s.favorWrite.ok) s.resolveSpent += favor;
       }
       this.phase = "after";
       await this.render(true);
@@ -1011,6 +1018,7 @@ if (!MAGIC) {
       if (!res || !res.success) {
         const cur = TBE.num(this.actor.system?.resolve?.value, 0);
         const w = await TBE.write(this.actor, { "system.resolve.value": Math.max(0, cur - 1) }, "the 1 Resolve");
+        if (w.ok) s.resolveSpent = (s.resolveSpent || 0) + 1;
         body += w.ok
           ? "<div>The spell is not cast. 1 Resolve spent.</div>"
           : "<div>The spell is not cast. <b>1 Resolve is owed.</b> " + esc(w.notice) + "</div>";
@@ -1038,6 +1046,7 @@ if (!MAGIC) {
           const wm = await TBE.write(this.actor,
             { "system.resolve.value": Math.max(0, TBE.num(this.actor.system?.resolve?.value, 0) - mit.paid) },
             "the " + mit.paid + " Resolve for Mitigation");
+          if (wm.ok) s.resolveSpent = (s.resolveSpent || 0) + mit.paid;
           body += "<div>Mitigation: the modifier drops by <b>" + reduce + "</b> for " + mit.paid + " Resolve" +
             (mit.enduringFree ? " (Enduring Caster covers " + mit.enduringFree + ")" : "") + "." +
             (wm.ok ? "" : " <b>Not deducted.</b> " + esc(wm.notice)) + "</div>";
@@ -1051,6 +1060,11 @@ if (!MAGIC) {
           : '<div style="color:#2e7d32">The cost is covered. The spell holds, with no Weave Reaction.</div>';
         if (res.crit) body += "<div>Critical success: +3 SL already included.</div>";
       }
+
+      /* Everything this casting took off the Resolve track, drawn against the
+         track as it stood before the casting: Favor, the failed casting's 1,
+         Mitigation. Fatigue stays crossed from the right (p.26). */
+      if (s.trackBefore && s.resolveSpent) body += "<div>" + TBE.resolveTrackHtml(s.trackBefore, s.resolveSpent) + "</div>";
 
       /* Fraying the shaping itself accrues, before any Reaction -- but only
        * if the spell was actually cast. p.283: "Failure: The spell is not

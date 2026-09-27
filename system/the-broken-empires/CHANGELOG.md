@@ -1,3 +1,40 @@
+# 0.50.0 — 2026-09-27
+
+**Fatigue now takes Resolve off the track, and you can see the track.**
+
+The book (p.26) slashes spent Resolve from the left of the Resolve track and
+crosses Fatigue from the right. Once they meet, nothing is left to spend.
+Every Resolve spend in the system ignored the Fatigue half: a character with
+5 unspent Resolve and 4 Fatigue could still spend 3 Favor, or 3 Resolve to
+refuse Shock. Now only the free boxes can be spent, everywhere:
+
+- Favor from the sheet's roll dialog and from TBE: Skill Roll. The Favor
+  buttons offer only what is free, and the player is told why when it is
+  fewer than they asked for.
+- The 3-Resolve Shock save in TBE: Attack is offered only with 3 free boxes.
+- TBE: Cast: the "at least 1 available Resolve" gate (p.280), Favor, and
+  Mitigation. The Magic tab's "can attempt a spell" line agrees.
+- TBE: Counterspell's cost and TBE: Ritual's "at least one available
+  Resolve".
+
+**The Resolve track is drawn** the way the paper sheet has it: spent boxes
+slashed from the left, Fatigue crossed from the right, free boxes between.
+
+- In the roll dialog, the boxes a Favor pick would spend light up before
+  you roll.
+- On the chat card after any Resolve spend: the boxes it took, and
+  "5 → 3 available, 2 Fatigue".
+- The same on the Shock save, on a Counterspell, and at the end of a
+  casting (everything the casting took: Favor, a failure's 1, Mitigation).
+
+One rule owns this now, `module/rules/resolve-track.mjs`. Adding Fatigue
+already worked out the free boxes the right way; it asks the same rule.
+
+New check: `resolve_check.mjs` (42). It verifies the p.26 sentences against
+the rulebook text, runs the rule over every track up to 12 boxes, runs the
+built Skill Roll and Attack against fatigued characters, and restores the
+old cap as a mutation to confirm it is caught.
+
 # 0.49.0 — 2026-09-27
 
 **Quicker combat and chargen, from the first session's notes, and two rules

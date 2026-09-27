@@ -560,10 +560,16 @@ if (!attacker) {
 
           if (shock) {
             /* A PC may spend 3 Resolve to refuse Shock. */
+            /* Only free boxes count: spent Resolve and Fatigue both fill the
+               track (p.26), so a character with 5 unspent and 3 Fatigue has 2
+               to spend and cannot pay for this. */
             const resolve = target.system?.resolve;
-            if (resolve && typeof resolve.value === "number" && resolve.value >= 3 && target.hasPlayerOwner !== false && target.type === "character") {
+            const free = TBE.availableResolve(target);
+            if (resolve && typeof resolve.value === "number" && free >= 3 && target.hasPlayerOwner !== false && target.type === "character") {
               const before = resolve.value;
-              const keep = await TBE.prompt("Shock!", "<div>" + target.name + " is dropping in Shock. Spend <b>3 Resolve</b> (" + before + " in the pool) to stay up?</div>" +
+              const trackBefore = { system: { resolve: Object.assign({}, resolve), fatigue: target.system?.fatigue } };
+              const keep = await TBE.prompt("Shock!", "<div>" + target.name + " is dropping in Shock. Spend <b>3 Resolve</b> to stay up?</div>" +
+                "<div>" + TBE.resolveTrackHtml(trackBefore, 3) + "</div>" +
                 '<label><input type="checkbox" name="spend" checked> Spend 3 Resolve</label>', "Decide");
               if (keep && keep.spend === "on") {
                 /* The defender is very often not this user's actor -- a player
@@ -574,7 +580,8 @@ if (!attacker) {
                 const w = await TBE.write(target, { "system.resolve.value": before - 3 }, "the 3 Resolve");
                 if (w.ok) {
                   shock = false;
-                  body += "<div><b>3 Resolve spent</b> (" + (before - 3) + " left): " + target.name + " refuses the Shock and stays standing.</div>";
+                  body += "<div><b>3 Resolve spent</b>: " + target.name + " refuses the Shock and stays standing.</div>" +
+                    "<div>" + TBE.resolveTrackHtml(trackBefore, 3) + "</div>";
                 } else {
                   /* The choice stands, the bookkeeping does not. Leave Shock
                      applied rather than clearing a state nobody paid for. */

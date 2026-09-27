@@ -2,8 +2,14 @@ import { SIZES, MEDIUM_SIZE, SIZE_STEP_EFFECTS, SIZE_COMBAT_RULES, RACES, CAREER
   from "./chargen-data.mjs";
 import { BINDS, BIND_INFO, STRANDS, STRAND_INFO, CONVOCATIONS,
   MAGIC_RULES, FRAYING_SYMPTOMS } from "./magic-data.mjs";
+import { availableResolve } from "../rules/resolve-track.mjs";
 
 export const TBE = {};
+
+/* Spendable Resolve (p.26: unspent minus Fatigue). Owner: rules/resolve-track.mjs;
+ * carried here so code that only has CONFIG.TBE (the sheet's _prepareMagic,
+ * as magic_check.mjs runs it) asks the same rule. */
+TBE.availableResolve = availableResolve;
 
 TBE.SIZES = SIZES;
 TBE.MEDIUM_SIZE = MEDIUM_SIZE;

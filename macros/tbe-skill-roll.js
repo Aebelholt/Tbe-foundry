@@ -31,9 +31,11 @@ const content =
   '<label style="display:block;margin:2px 0">Extra modifier: <input type="number" name="extra" value="' + TBE.encMod(actor) + '" style="width:100%"></label>' +
   '<label style="display:block;margin:2px 0">Label: <input type="text" name="label" placeholder="Stealth, Melee: Medium..." style="width:100%"></label>' +
   /* Favor always opens on 0: it spends Resolve, so it is never remembered. */
-  '<div style="margin:2px 0">Resolve as Favor (+10 each, max 3' +
-  (actor ? ", you have " + TBE.num(actor.system?.resolve?.value, 0) : "") + "):</div>" +
-  TBE.favorButtons(actor ? Math.min(3, TBE.num(actor.system?.resolve?.value, 0)) : 3, "favor") +
+  /* Only Resolve that is neither spent nor crossed out by Fatigue can be
+   * spent (p.26); the track shows which is which. */
+  '<div style="margin:2px 0">Resolve as Favor (+10 each, max 3):</div>' +
+  (actor ? '<div>' + TBE.resolveTrackHtml(actor, 0) + "</div>" : "") +
+  TBE.favorButtons(actor ? Math.min(3, TBE.availableResolve(actor)) : 3, "favor") +
   (ogreArmor.penalty
     ? '<div style="font-size:11px;color:#8b1a1a">Wearing ' + ogreArmor.pieces.join(", ") +
       " untrained: <b>-20</b> is applied automatically to any Willpower roll (p.83).</div>"
@@ -48,14 +50,16 @@ if (data) {
   /* Favor cannot outrun the sheet: spending Resolve the character does not
    * have is an error, not a house rule. Capped at 3 from any source (p.26). */
   const asked = Math.max(0, Math.min(3, TBE.num(data.favor, 0)));
-  const favor = actor ? Math.min(asked, TBE.num(actor.system?.resolve?.value, 0)) : asked;
+  const favor = actor ? Math.min(asked, TBE.availableResolve(actor)) : asked;
+  /* The track before the spend, for the card's before and after. */
+  const trackBefore = actor ? { system: { resolve: Object.assign({}, actor.system?.resolve), fatigue: actor.system?.fatigue } } : null;
   /* The Ogre's untrained-armor penalty is a Willpower penalty specifically,
    * so it only lands when the roll actually is one. */
   const ogrePen = /willpower/i.test(label) ? ogreArmor.penalty : 0;
   const mod = TBE.num(data.mod, 0) + TBE.num(data.extra, 0) + favor * 10 + ogrePen;
   const skill = base + mod;
 
-  if (favor < asked) ui.notifications?.info("TBE: only " + favor + " Resolve was available, so that is what was spent as Favor.");
+  if (favor < asked) ui.notifications?.info("TBE: only " + favor + " Resolve was free on the track (spent and Fatigue boxes cannot be spent, p.26), so that is what was spent as Favor.");
   let favorWrite = { ok: true, notice: null };
   if (favor && actor) {
     const cur = TBE.num(actor.system?.resolve?.value, 0);
@@ -78,7 +82,8 @@ if (data) {
     (res.success ? " &mdash; " + res.sl + " SL" : "") + "</div>" +
     (res.notes.length ? '<div style="font-size:11px;opacity:.8">' + res.notes.join(" &middot; ") + "</div>" : "") +
     (favor ? '<div style="font-size:11px;opacity:.85">' + favor + " Resolve spent as Favor (+" + favor * 10 + ")." +
-      (favorWrite.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(favorWrite.notice) + "</span>") + "</div>" : "") +
+      (favorWrite.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(favorWrite.notice) + "</span>") + "</div>" +
+      (favorWrite.ok && trackBefore ? "<div>" + TBE.resolveTrackHtml(trackBefore, favor) + "</div>" : "") : "") +
     (ogrePen ? '<div style="font-size:11px;color:#8b1a1a">-20 for untrained armor (' + ogreArmor.pieces.join(", ") + ").</div>" : "") +
     breaking;
 

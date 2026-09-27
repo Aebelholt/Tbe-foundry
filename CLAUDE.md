@@ -701,6 +701,15 @@ scope at least one pass at the player-facing output itself.
   Favor, Resolve and modifiers are not stored. Also covers untrained
   Endurance and Dodge at 20 (p.104) in Attack, and the sheet's carry picker.
   Read it before adding anything to what a dialog remembers.
+- `node resolve_check.mjs` — 42 checks over what can be spent from the
+  Resolve track. **Spendable Resolve is unspent minus Fatigue** (p.26: spent
+  slashed from the left, Fatigue crossed from the right); before v0.50.0 all
+  seven spend sites read `resolve.value` alone. Owner:
+  `module/rules/resolve-track.mjs`. Verifies the p.26 sentences against the
+  book, sweeps the rule, holds `_lib.js`'s fallback equal to it, runs the
+  built Skill Roll and Attack against fatigued characters, and greps every
+  macro that subtracts from `system.resolve.value` for a call to
+  `TBE.availableResolve`. Read it before adding anything that spends Resolve.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

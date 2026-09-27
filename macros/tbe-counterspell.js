@@ -25,7 +25,11 @@ if (!me) {
   if (!binds.length) {
     ui.notifications?.warn("TBE: " + me.name + " has no Binds, so cannot counterspell (p.311).");
   } else {
-    const resolveNow = TBE.num(me.system?.resolve?.value, 0);
+    /* What can be paid is the free part of the track: unspent Resolve less
+       Fatigue (p.26). The write still takes it off the unspent total. */
+    const unspentNow = TBE.num(me.system?.resolve?.value, 0);
+    const resolveNow = TBE.availableResolve(me);
+    const trackBefore = { system: { resolve: Object.assign({}, me.system?.resolve), fatigue: me.system?.fatigue } };
     const bindOpts = binds.map((b) =>
       '<option value="' + b.id + '">' + b.name + " " + (b.scar ? b.effective + " (Weave Scar &minus;" + b.scar + ")" : b.value) +
       TBE.expertiseTag(b.expertise) + "</option>").join("");
@@ -37,7 +41,7 @@ if (!me) {
 
     const content =
       '<div style="font-size:13px">' +
-      "<div><b>" + me.name + "</b> is Holding to Interrupt &middot; Resolve <b>" + resolveNow + "</b></div>" +
+      "<div><b>" + me.name + "</b> is Holding to Interrupt</div><div>" + TBE.resolveTrackHtml(me, 0) + "</div>" +
       '<div style="font-size:11px;opacity:.8;margin-bottom:4px">You must be aware of the incoming spell and it must be in your line of sight. A free Arcana roll can identify its Bind and Strand.</div>' +
       '<hr><div style="font-weight:bold">The incoming spell</div>' +
       '<label style="display:block">Caster: <input type="text" name="them" value="the caster" style="width:100%"></label>' +
@@ -97,7 +101,7 @@ if (!me) {
       let spent = Math.min(cost, resolveNow);
       let brokeOnCost = false;
       if (won && !affordable) { won = false; brokeOnCost = true; why = "the counter landed but only " + resolveNow + " of the " + cost + " Resolve it cost was there"; }
-      const wSpend = await TBE.write(me, { "system.resolve.value": resolveNow - spent }, "the " + spent + " Resolve");
+      const wSpend = await TBE.write(me, { "system.resolve.value": unspentNow - spent }, "the " + spent + " Resolve");
 
       let body =
         "<div><b>" + me.name + "</b> Holds to Interrupt " + them + "'s spell" +
@@ -108,6 +112,7 @@ if (!me) {
         "<div>Resolve cost: " + theirSL + " SL &minus; " + strandVal + " Strand = <b>" + cost + "</b>" +
           (spent < cost ? ", but only <b>" + spent + "</b> was available" : "") +
           " &rarr; " + (resolveNow - spent) + " left. Spent either way (p.311)." +
+          (spent && wSpend.ok ? "<div>" + TBE.resolveTrackHtml(trackBefore, spent) + "</div>" : "") +
           (wSpend.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(wSpend.notice) + "</span>") + "</div>";
 
       body += won

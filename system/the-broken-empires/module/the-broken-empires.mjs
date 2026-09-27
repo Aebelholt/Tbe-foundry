@@ -15,6 +15,7 @@ import * as visibility from './rules/visibility.mjs';
 import * as permission from './rules/permission.mjs';
 import * as combat from './rules/combat.mjs';
 import * as zones from './rules/zones.mjs';
+import * as resolveTrack from './rules/resolve-track.mjs';
 import * as chatPopups from './helpers/chat-popups.mjs';
 import * as diceRoles from './helpers/dice-roles.mjs';
 import * as memory from './helpers/memory.mjs';
@@ -51,6 +52,10 @@ Hooks.once('init', function () {
         hazardsOf: zones.hazardsOf, attackHazards: zones.attackHazards,
         resolveHazardMods: zones.resolveHazardMods, insideRegion: zones.insideRegion
       },
+      /* The Resolve track (p.26): what can be spent is unspent minus
+         Fatigue. Every Resolve spend asks this; see rules/resolve-track.mjs. */
+      resolveTrack: { track: resolveTrack.track, availableResolve: resolveTrack.availableResolve,
+                      trackHtml: resolveTrack.trackHtml },
       resolve: resolution.resolve,
       isDoubles: resolution.isDoubles,
       face: resolution.face,

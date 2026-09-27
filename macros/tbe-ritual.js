@@ -64,7 +64,8 @@ const grimoires = (me?.items ?? []).filter((i) => i.type === "thread" && i.syste
 const grimoireOpts = grimoires.map((g) => '<option value="' + g.id + '">' + esc(g.name) + " (" + g.die + ": " +
   esc(g.skills.join(", ") || "unattuned") + ")</option>").join("");
 
-const resolveNow = TBE.num(me?.system?.resolve?.value, 0);
+/* "At least one available Resolve": free boxes, not crossed by Fatigue (p.26). */
+const resolveNow = me ? TBE.availableResolve(me) : 0;
 
 const content =
   '<div style="font-size:13px">' + statusBlock + "<hr>" +

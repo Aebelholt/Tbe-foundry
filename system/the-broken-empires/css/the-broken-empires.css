@@ -525,3 +525,40 @@
   padding: 0 2px;
   margin-left: 2px;
 }
+
+/* The Resolve track (rules/resolve-track.mjs): spent slashed from the left,
+   Fatigue crossed from the right, as on the paper sheet (p.26). Neutral
+   frame so it reads in a dialog, a chat card and the dark sheet alike. */
+.tbe-rtrack {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  line-height: 1;
+  margin: 2px 0;
+}
+.tbe-rtrack-label {
+  margin-right: 3px;
+  font-weight: bold;
+}
+.tbe-rbox {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 12px;
+  font-weight: bold;
+  opacity: 0.85;
+}
+.tbe-rbox.spent { opacity: 0.45; }
+.tbe-rbox.pending {
+  background: var(--tbe-brass, #c08a3e);
+  border-color: var(--tbe-brass-dim, #7a5a2e);
+  color: #1f1710;
+  opacity: 1;
+}
+.tbe-rbox.fatigue { color: var(--tbe-blood, #8c2f2f); border-color: currentColor; }
+.tbe-rtrack-sum { margin-left: 4px; }

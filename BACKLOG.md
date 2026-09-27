@@ -1,3 +1,17 @@
+## Resolve track and Fatigue — built in v0.50.0, 2026-09-27
+
+Asked at the table: "does Favor remove Resolve from the actor, and can it
+show the track before and after?" It did remove it, but every spend ignored
+Fatigue (p.26). Fixed across all seven sites, with the track drawn in the
+roll dialog and on every card that spends Resolve. `resolve_check.mjs` (42).
+
+Open:
+- The sheet's own Resolve field is still two numbers (value / max) and a
+  separate Fatigue number. Drawing the track on the sheet header too would
+  match the paper sheet; left out of this batch to keep it to the spends.
+- Initiative: p.26 also lets Resolve raise a rolled Initiative 1 for 1.
+  Nothing in the system offers that spend yet.
+
 ## Quicker combat and chargen — built in v0.49.0, 2026-09-27
 
 Built: the first-session notes 4, 5 and 6 below (button rows with a memory,
