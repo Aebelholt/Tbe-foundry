@@ -1,3 +1,46 @@
+# 0.51.0 — 2026-09-27
+
+**Character creation, stage 1: one calculation, checked against the book.
+Four Wizard bugs it found are fixed.**
+
+This is the groundwork for the new character creation window. The Wizard
+used to work a character out twice: once to show on each page, and again
+when you pressed Create. Now there is one calculation,
+`module/chargen/derive.mjs`, that takes the player's choices and returns
+the whole character, with a note on every number saying which choice
+produced it ("Race: Ogre −20", "Career: Warrior +15"). It is not wired into
+a window yet; stage 2 builds the window on it.
+
+It was checked two ways. It was compared with the shipping Wizard's real
+Create step over 360 characters (every race and career, plus random ones
+that hit the 70 cap, casters and Fades). And it was checked against the
+book's own worked example, Hadrion, whose totals the book prints after
+every step. Doing that found four bugs in the Wizard, all fixed:
+
+- **No Wizard-built Warrior got Armor Training.** The career grants
+  "Armor Training III" (p.102), the catalogue lists the Talent as "Armor
+  Training (I-IV)", and the lookup needed an exact name. The grant became a
+  "not in the catalogue" note. Warriors now get it at rank 3, and an Ogre is
+  held to one rank (bone armour only) as Ch.5 says. The same fix reaches
+  TBE: NPC and TBE: Funnel, which use the same lookup.
+- **Career points were applied before racial modifiers.** The book builds
+  a character in order, race before career, and caps an increase at 70 when
+  it happens (p.78, p.80). Applied the other way round, a penalised skill
+  came out lower: an Ogre Warrior's Melee: Light was 50, and the book's
+  order gives 60.
+- **An Old Vestrian got Low Vestrian three times** (70, 20 and 70). p.81
+  says Old Vestrians take Low Vestrian 70 and High Vestrian 20 *instead of*
+  the usual two languages.
+- **The Attributes page left out racial Toughness.** An Ogre saw 0 while
+  the character was created with 1.
+
+Some of Hadrion's choices have nowhere to go in today's Wizard: the Human's
+extra Expertise on a Bind, a Bind as a Savvy skill, Rounding Out points on
+a custom -wise, and the free Talents. The check lists them; stage 2 is where
+they get a place.
+
+New check: `chargen_parity_check.mjs` (33).
+
 # 0.50.0 — 2026-09-27
 
 **Fatigue now takes Resolve off the track, and you can see the track.**

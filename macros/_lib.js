@@ -833,7 +833,17 @@ TBE.buildTownsfolk = async function (opts) {
 TBE.talentNamed = function (catalogue, name) {
   const key = String(name || "").trim().toLowerCase();
   if (!key) return null;
-  return (catalogue || []).find((t) => String(t.name).toLowerCase() === key) || null;
+  const exact = (catalogue || []).find((t) => String(t.name).toLowerCase() === key);
+  if (exact) return exact;
+  /* A rank written after the name. The Warrior career grants "Armor Training
+   * III" (p.102) and the catalogue files the Talent once, as "Armor Training
+   * (I-IV)" (p.40). Exact matching alone missed it, so until v0.51.0 no
+   * Warrior built by the Wizard got Armor Training at all: the grant became a
+   * "not in the catalogue" note. The caller sets the rank; this only finds
+   * the Talent. */
+  const m = key.match(/^(.*?)\s+(i{1,3}|iv)$/);
+  if (!m) return null;
+  return (catalogue || []).find((t) => String(t.name).toLowerCase().startsWith(m[1] + " (")) || null;
 };
 
 TBE.talentItem = function (row, spec) {

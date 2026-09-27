@@ -1,3 +1,31 @@
+## Chargen rebuild — stage 1 built in v0.51.0, 2026-09-27
+
+Decided with Seb: option B. One window, the book's 12 steps down the left,
+a live sheet on the right (Warp & Weft's "Foundation" tool is the UX
+reference), built on one calculation. Finish Character and Build Character
+retire once the new window covers what they do.
+
+- **Stage 1 (done):** `module/chargen/derive.mjs`, the pure calculation, and
+  `chargen_parity_check.mjs`: 360 drafts identical to the shipping Wizard,
+  and the book's Hadrion reproduced step by step. Four Wizard bugs fixed on
+  the way (see CHANGELOG 0.51.0).
+- **Stage 2 (next):** the ApplicationV2 window. Left rail of the book's 12
+  steps, each done when its choices are made; right column a live sheet
+  rendered from `derive()`, with each number's sources on hover; compare-
+  then-pick tables; Equip (9), Goals (11) and Status (12) as steps; Create
+  writes what `derive()` returns and nothing else.
+- **Stage 3:** retire TBE: Character Wizard, Finish Character (its
+  post-creation jobs move to the sheet and TBE: Advancement) and Build
+  Character, porting their checks first.
+
+Gaps the Hadrion example exposed, for stage 2 to give a place: the Human's
+extra Expertise on any skill including a Bind (p.108 gives Hadrion Ex3 Bind:
+Control); a Bind as a Savvy pick; Rounding Out points on a custom -wise;
+the Shared History +5; the free Talents (Human bonus, Rounding Out bonus,
+career picks). Also: `derive()` takes `applyAbilityScore`, `raiseExpertise`
+and `talentNamed` from the macro library as parameters; stage 2 should give
+them a system-side owner the library defers to.
+
 ## Resolve track and Fatigue — built in v0.50.0, 2026-09-27
 
 Asked at the table: "does Favor remove Resolve from the actor, and can it
@@ -6,7 +34,7 @@ Fatigue (p.26). Fixed across all seven sites, with the track drawn in the
 roll dialog and on every card that spends Resolve. `resolve_check.mjs` (42).
 
 Found while scoping the chargen question, not fixed:
-- **The Wizard's Attributes page shows Toughness without the race's.**
+- ~~**The Wizard's Attributes page shows Toughness without the race's.**~~ Fixed in v0.51.0.
   `_step_attributes()` computes `floor(points / 2)`; `commit()` adds
   `race.toughness` (an Ogre's +1). The page says 0, the actor gets 1. Same
   shape as rule 4 in CLAUDE.md: the Wizard works out the stats twice, once to

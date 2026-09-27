@@ -710,6 +710,16 @@ scope at least one pass at the player-facing output itself.
   built Skill Roll and Attack against fatigued characters, and greps every
   macro that subtracts from `system.resolve.value` for a call to
   `TBE.availableResolve`. Read it before adding anything that spends Resolve.
+- `node chargen_parity_check.mjs` — 33 checks over `module/chargen/derive.mjs`,
+  the one calculation of a character from its chargen choices (stage 1 of
+  the chargen rebuild). The oracle is the BUILT Wizard's real `commit()`,
+  run in Node with a stub Application against a recording actor, over 360
+  drafts; they must agree in every field. Section 8 is the book's own worked
+  example, Hadrion, whose totals the book prints after every step: the one
+  part that can catch derive and the Wizard being wrong TOGETHER (it found
+  the Old Vestrian triple Low Vestrian that way). **Book step order is the
+  rule**: race before career, the 70 cap at each increase (p.78, p.80).
+  Read it before touching chargen maths in either place.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

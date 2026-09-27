@@ -232,27 +232,6 @@ if (!actor) {
       if (skill && values[skill]) values[skill].value = Math.min(CHARGEN_SKILL_CAP, values[skill].value + 10);
     }
 
-    // Step 7/skill points: career pools, spent by the player.
-    const career = CAREERS.find((c) => c.name === draft.careerName) || CAREERS[0];
-    const spent = [];
-    for (const [cat, pool] of Object.entries(career.pools || {})) {
-      if (!pool) continue;
-      if (cat === "Magic") { notesOut.push("Magic pool of " + pool + " points: assign by hand to your Bind skills (no Bind may exceed 70)."); continue; }
-      const names = SKILLS[cat] || [];
-      if (!names.length) continue;
-      let allocated = 0;
-      names.forEach((n, idx) => {
-        const add = Math.max(0, TBE.num((draft.alloc || {})[cat + "_" + idx], 0));
-        allocated += add;
-        values[n].value = Math.min(CHARGEN_SKILL_CAP, values[n].value + add);
-      });
-      spent.push(cat + " " + allocated + "/" + pool);
-      if (allocated !== pool) {
-        notesOut.push(cat + ": you allocated " + allocated + " of " + pool + " points" +
-          (allocated < pool ? " (" + (pool - allocated) + " unspent, add them later via TBE: Advancement or the Skills tab)" : " (over the pool by " + (allocated - pool) + " -- trim it on the Skills tab)") + ".");
-      }
-    }
-
     // Step 2: racial modifiers.
     const race = RACES.find((r) => r.name === draft.raceName) || RACES[0];
     const raceApplied = [];
@@ -309,6 +288,33 @@ if (!actor) {
         lifeApplied.push(key + ": +" + amount + " " + target);
       } else if (target) {
         notesOut.push("Life Event (" + key + "): +" + amount + " to " + target + " -- no such skill on the list, apply by hand.");
+      }
+    }
+
+    /* Step 7 comes here, after Life Events, in the book's order (p.78). It
+       used to run before the racial modifiers, and because an increase is
+       capped at 70 when it happens (p.80), a racially penalised skill came
+       out lower: an Ogre Warrior's Melee: Light was 30 +50 capped at 70,
+       then -20 = 50, where the book gives 30 -20 +50 = 60. The career
+       variable is still needed up here for the pools. */
+    // Step 7/skill points: career pools, spent by the player.
+    const career = CAREERS.find((c) => c.name === draft.careerName) || CAREERS[0];
+    const spent = [];
+    for (const [cat, pool] of Object.entries(career.pools || {})) {
+      if (!pool) continue;
+      if (cat === "Magic") { notesOut.push("Magic pool of " + pool + " points: assign by hand to your Bind skills (no Bind may exceed 70)."); continue; }
+      const names = SKILLS[cat] || [];
+      if (!names.length) continue;
+      let allocated = 0;
+      names.forEach((n, idx) => {
+        const add = Math.max(0, TBE.num((draft.alloc || {})[cat + "_" + idx], 0));
+        allocated += add;
+        values[n].value = Math.min(CHARGEN_SKILL_CAP, values[n].value + add);
+      });
+      spent.push(cat + " " + allocated + "/" + pool);
+      if (allocated !== pool) {
+        notesOut.push(cat + ": you allocated " + allocated + " of " + pool + " points" +
+          (allocated < pool ? " (" + (pool - allocated) + " unspent, add them later via TBE: Advancement or the Skills tab)" : " (over the pool by " + (allocated - pool) + " -- trim it on the Skills tab)") + ".");
       }
     }
 
@@ -1032,7 +1038,10 @@ if (!actor) {
       const resolve = 10 + 2 * TBE.num(s.resolve, 0);
       const initBase = d.randomizedInit ? TBE.num(d.initRoll, 6) : 10;
       const initiative = initBase + TBE.num(s.initiative, 0);
-      const toughness = Math.floor(TBE.num(s.toughness, 0) / 2);
+      /* The race's starting Toughness (an Ogre's 1, p.64) was left off this
+         page while commit() added it, so the page showed 0 and the actor got
+         1. chargen_parity_check.mjs holds the two together now. */
+      const toughness = Math.floor(TBE.num(s.toughness, 0) / 2) + TBE.num(this.race()?.toughness, 0);
       const dtBase = d.randomizedDT ? TBE.num(d.dtRoll, 15) : TBE.num(this.race()?.dt, 20);  /* p.83: an Ogre starts at 22, not the default 20. */
       const dt = d.randomizedDT ? dtBase : dtBase + 2 * TBE.num(s.dt, 0);
       const ll = Math.ceil(dt / 3);
@@ -2052,7 +2061,10 @@ if (!actor) {
 
       const mk = (group, name, value, fighting, extra) => ({ name, type: "skill", system: Object.assign({ group, value: Math.max(0, TBE.num(value, 0)), fighting: !!fighting }, extra || {}) });
       const payload = Object.entries(values).map(([name, v]) => mk(v.group, name, v.value, v.fighting, { expertise: v.expertise || 0, savvy: !!v.savvy }));
-      for (const l of race.languages || []) {
+      /* p.81: Old Vestrians take Low Vestrian 70 and High Vestrian 20
+         INSTEAD of the race's two language lines, not as well. */
+      const oldVestrian = this.usesHumanCulture() && d.humanCultureRange === "59-64";
+      if (!oldVestrian) for (const l of race.languages || []) {
         const nm = /cultural|their cultural/i.test(l.name) ? native : l.name;
         payload.push(mk("Language", nm, l.value));
       }
