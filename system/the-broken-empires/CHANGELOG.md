@@ -1,3 +1,21 @@
+# 0.53.1 — 2026-09-27
+
+**The TBE: Rules Audit journal is fixed.**
+
+- **Every page it cited was one page early.** The book's page numbers come
+  after each page's text in the source it is checked against, and the audit
+  read the number before. It now cites The Wound Die and Shock on p.173,
+  Marking a Wound on p.172, Success Levels on p.19, as the book's contents
+  page does.
+- **Each page is now checked against the contents page.** Every row shows the
+  section it sits under, and the page must fall inside that section's pages.
+- **It no longer names retired macros.** Three rows still said TBE: Character
+  Wizard; the Score row no longer claims character creation uses it.
+- **Its generator runs again.** It had stopped working when the rulebook text
+  it checks against was re-extracted, so the journal went stale without
+  anyone noticing. It now finds each quote by searching the book, and a new
+  check fails the build if the journal and its source ever drift apart.
+
 # 0.53.0 — 2026-09-27
 
 **Character creation, stage 3: one tool. The Character Wizard, Finish

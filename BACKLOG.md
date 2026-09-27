@@ -41,7 +41,9 @@ retire once the new window covers what they do.
     window and the shop behind a small ApplicationV2/DialogV2 stand-in, not
     real Foundry. The sheet's Add Goal dialog (DialogV2.prompt) has no
     browser check at all.
-  - **The Rules Audit journal still names TBE: Character Wizard** in three
+  - ~~**The Rules Audit journal still names TBE: Character Wizard**~~ Fixed
+    in v0.53.1: the generator finds quotes by search now, so it runs again.
+    Original note: in three
     rows (score, Death Threshold, Lethality Level). The source,
     `parse_core_rules.py`, is updated, but the script fails its own
     line-window verification against the current `/tmp/tbe.txt` (a dump
@@ -99,7 +101,10 @@ Dodge at 20 in TBE: Attack, Wounds' Endurance prefill 40 -> 20.
 `qol_check.mjs` (49).
 
 Found while building it, not fixed:
-- **Page citations in the Rules Audit are one page early.** In
+- ~~**Page citations in the Rules Audit are one page early.**~~ Fixed in
+  v0.53.1 for the Rules Audit: `page_of()` takes the marker after the quote,
+  checked against the contents page (`rules_audit_check.mjs`). STILL OPEN:
+  the other hand-typed pages below. Original note: In
   `/tmp/tbe.txt` a bare page-number line FOLLOWS its page's text: the
   contents page puts Marking a Wound on 172, The Wound Die and Shock on 173,
   Lethality Level on 174, Skill Modifiers on 18, Favor on 26, and each of

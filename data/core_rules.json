@@ -3,162 +3,182 @@
   {
    "key": "rollUnder",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "2 - Core Mechanics",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack (shared roll code in _lib.js)",
    "what": "A skill roll is percentile dice (tens die + ones die) read as a number 1-100, compared to the skill value. Equal-to-or-under succeeds.",
    "q": "If the roll is over the skill value, it fails. If the number rolled is equal to or less than the skill value, it succeeds.",
-   "page": 15
+   "page": 17
   },
   {
    "key": "score",
    "section": "Chapter 2: Core Mechanics",
-   "macro": "TBE: Skill Roll (skills over 100), TBE: Character Wizard",
+   "heading": "2 - Core Mechanics",
+   "macro": "TBE: Skill Roll (skills over 100)",
    "what": "A skill's Score is the tens digit of its value, used only where a rule says so, and never changed by modifiers.",
    "q": "A skill also has a Score (the tens digit of a skill value). The Score is used only in specific cases, indicated when relevant, and is never altered by modifiers.",
-   "page": 16
+   "page": 17
   },
   {
    "key": "successLevels",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Success Levels",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack",
    "what": "On a success, the tens die shown is the number of Success Levels (SL). A 0 on the tens die counts as 1 SL, not 10 -- this is a different rule from Weave Mastery's 0-counts-as-10.",
    "q": "When you roll your skill value or under, you succeed, and the number showing on the tens die is the number of Success Levels (SLs). The Success Level represents the quality of success and, when relevant to the outcome, can have various effects based on the particular skill. On any successful skill roll, a 0 on the tens die counts as 1 SL.",
-   "page": 18
+   "page": 19
   },
   {
    "key": "criticalSuccess",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Critical Results",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack",
    "what": "Doubles under your skill, or rolling the skill value exactly, is a critical success: +3 SL.",
    "q": "A critical success is an extraordinary skill roll result, and is achieved when you roll doubles under your skill, or when you roll your skill value exactly. A critical success adds +3 Success Levels to your roll.",
-   "page": 18
+   "page": 19
   },
   {
    "key": "criticalFailure",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Critical Results",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack",
    "what": "Doubles over your skill value is a critical failure.",
    "q": "A critical failure, on the other hand, can carry extra consequences. Rolling doubles over your skill value is a critical failure.",
-   "page": 18
+   "page": 19
   },
   {
    "key": "alwaysSucceedFail",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Critical Results",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack",
    "what": "01-05 always succeeds (even at skill 0 or below, which still succeeds on 01-04 and crits on 05); 99-00 always fails.",
    "q": "A roll of 01-05 is always a success, regardless of skill value. Consequently, if your skill value is ever modified to zero or below, it still succeeds on a roll of 01-04, and critically succeeds on a 05. A roll of 99-00 is always a failure (and if over your skill, a critical failure), regardless of skill value.",
-   "page": 18
+   "page": 19
   },
   {
    "key": "hundredExactNotCrit",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Critical Results",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack",
    "what": "At skill 99 or 100, rolling the exact value is a failure, not a critical success.",
    "q": "In the rare case you have a skill value of 99 or 100, rolling your skill value exactly is still a failure, not a critical success.",
-   "page": 18
+   "page": 19
   },
   {
    "key": "skillOver100",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Critical Results",
    "macro": "TBE: Skill Roll, TBE: Opposed Roll, TBE: Attack",
    "what": "A modified skill of 100+ can never critically fail; on a success it adds bonus SL equal to the tens digit of (skill - 100), minimum 1.",
    "q": "These skills still fail on a roll of 99-00, but can no longer critically fail. If a skill ever has (or is modified to) a value over 100, roll it normally, but a success will benefit from extra SLs. To determine how many, subtract 100 from the skill value. The skill's resulting tens die value (the Score) acts as extra SLs (with a minimum of 1) on a successful skill roll.",
-   "page": 18
+   "page": 19
   },
   {
    "key": "standardRoll",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Standard and Opposed Rolls",
    "macro": "TBE: Skill Roll",
    "what": "A standard (unopposed) roll needs only 1 SL to succeed; extra SLs only matter when the specific skill or situation says so.",
    "q": "A standard roll requires only 1 SL to succeed. However, additional Success Levels can sometimes produce a better outcome.",
-   "page": 19
+   "page": 20
   },
   {
    "key": "opposedRoll",
    "section": "Chapter 2: Core Mechanics",
+   "heading": "Standard and Opposed Rolls",
    "macro": "TBE: Opposed Roll",
    "what": "Opposed rolls: whoever earns more SL wins (0 SL can still win). Tie-breaks in order: higher die roll, then higher modified skill, then critical beats non-critical; a normal failure beats a critical failure.",
    "q": "Both sides roll their skills and whoever earns more SLs is the winner. It's possible to win an opposed roll with 0 SLs",
-   "page": 19
+   "page": 20
   },
   {
    "key": "deathThreshold",
    "section": "Chapter 7: Character Creation",
-   "macro": "TBE: Character Wizard, the character sheet",
+   "heading": "Determine Attributes",
+   "macro": "TBE: Create Character, the character sheet",
    "what": "Death Threshold starts at 20 and rises 2 per Attribute point spent on it -- the ceiling on total lethal Wound Points before death.",
    "q": "Death Threshold (DT) is the maximum number of total lethal Wound Points you can suffer in all combined hit locations before you are killed. A Starting Death Threshold is 20. A Increase the Death Threshold by 2 per Attribute point spent.",
-   "page": 86
+   "page": 87
   },
   {
    "key": "lethalityLevel",
    "section": "Chapter 7: Character Creation",
-   "macro": "TBE: Character Wizard, TBE: Attack (Dying check)",
+   "heading": "Determine Attributes",
+   "macro": "TBE: Create Character, TBE: Attack (Dying check)",
    "what": "Lethality Level = 1/3 of Death Threshold, rounded up. In Shock with total lethal WP over LL means Dying.",
    "q": "Lethality Level (LL) determines the point at which you start dying when you've fallen in Shock. A A character's Lethality Level is equal to 1/3 of their Death Threshold, rounded up. A If they drop in Shock and their total lethal Wound Points exceed their Lethality Level, they are now Dying.",
-   "page": 87
+   "page": 88
   },
   {
    "key": "markWound",
    "section": "Chapter 11: Wounds, Healing & Perils",
+   "heading": "Marking a Wound",
    "macro": "TBE: Attack",
    "what": "Wound = attacker's DoS + weapon base damage, minus the struck location's Armor Points (plus any Shield AP), floored appropriately by the macro.",
    "q": "A successful attack adds the attacker's DoS to the weapon's base damage. Unless the attacker performed the Choose Location maneuver, the attacker's ones die determines the General Hit Location of the strike",
-   "page": 171
+   "page": 172
   },
   {
    "key": "subtractAP",
    "section": "Chapter 11: Wounds, Healing & Perils",
+   "heading": "Marking a Wound",
    "macro": "TBE: Attack",
    "what": "Subtract the location's Armor + any Shield AP from incoming damage; the remainder is the wound's WP.",
    "q": "Subtract the location's Armor + any Shield AP from the incoming damage. The remaining amount is the WP of the wound.",
-   "page": 171
+   "page": 172
   },
   {
    "key": "woundDie",
    "section": "Chapter 11: Wounds, Healing & Perils",
+   "heading": "The Wound Die",
    "macro": "TBE: Attack",
    "what": "Every new wound rolls Wound Die (d10, red) + Toughness against the location's new total WP. Equal-or-under = Impaired. A natural 10 (\"0\") always avoids impairment regardless of total.",
    "q": "When suffering a wound, immediately roll the Wound Die (a red d10) and add the character's Toughness. If the result is equal to or less than the new total Wound Points in the wounded location (from all wounds there), mark the location as Impaired. If the roll is a natural 10 (\"0\") on the Wound Die, the location automatically avoids impairment, regardless of the location's Wound Point total.",
-   "page": 172
+   "page": 173
   },
   {
    "key": "shock",
    "section": "Chapter 11: Wounds, Healing & Perils",
+   "heading": "Shock",
    "macro": "TBE: Attack",
    "what": "A second Impairment on any location drops you in Shock (minutes = the failed Wound Die face); a second Body Impairment drops you in Shock immediately, no Endurance roll. 3 Resolve avoids dropping in Shock.",
    "q": "If any of a character's hit locations are Impaired a second time, they immediately drop in Shock (and also unconscious if from a Head impairment) for a number of minutes equal to the number showing on the failed Wound Die. A second Body impairment causes the character to immediately drop in Shock; there is no Endurance roll to avoid it. Once no longer in Shock, the character can act normally. A PC can spend 3 Resolve to avoid dropping in Shock.",
-   "page": 172
+   "page": 173
   },
   {
    "key": "firstImpairment",
    "section": "Chapter 11: Wounds, Healing & Perils",
+   "heading": "Impaired",
    "macro": "TBE: Attack",
    "what": "First-time Impairment per location: Body needs an Endurance roll or Shock; Arm/Leg/Head effects split on whether the failed Wound Die came up odd or even.",
    "q": "The first time a location is Impaired, the character suffers the following effects",
-   "page": 172
+   "page": 173
   },
   {
    "key": "piercingTrait",
    "section": "Chapter 9: Equipment",
+   "heading": "Weapons",
    "macro": "TBE: Attack",
    "what": "A weapon's Piercing value bypasses that many Armor Points from worn armor. It does not reduce a shield's AP.",
    "q": "Piercing.............Weapon bypasses this number of Armor Points from worn Armor. It does not reduce a shield's AP",
-   "page": 132
+   "page": 133
   },
   {
    "key": "nonLethalTrait",
    "section": "Chapter 9: Equipment",
+   "heading": "Weapons",
    "macro": "TBE: Attack, TBE: Wounds & Recovery",
    "what": "Wound points marked NL (non-lethal) do not count against Death Threshold or Lethality Level.",
    "q": "NL.....................Non-lethal. Wound points marked NL do not count against the Death Threshold or Lethality Level",
-   "page": 132
+   "page": 133
   },
   {
    "key": "pierceArmorManeuver",
    "section": "Chapter 11: Wounds, Healing & Perils",
+   "heading": "Combat Maneuvers",
    "macro": "TBE: Attack",
    "what": "Pierce Armor maneuver (4 SLs, target in Reinforced Leather or better): the attack gains Piercing 3 on the struck location, with no effect if that location has 3 AP or less.",
    "q": "Pierce Armor (PA) Requirements: 4 SLs, opponent in Reinforced Leather armor or better Exploit a flaw or weak point in your opponent's rigid armor. The attack gains Piercing 3 on the struck location. This has no effect if that location has 3 AP or less (Leather, Quilt, or Padding).",
-   "page": 163
+   "page": 164
   }
  ]
 }

@@ -281,9 +281,13 @@ output, so skipping a stage ships stale data silently:
      mechanic, Death Threshold/Lethality Level, Combat & Wounds — see
      "Player-facing transparency" below. Self-verifying like `parse_magic.py`,
      with one addition: the page number cited for each rule is *derived*
-     from the quote's own line position in `/tmp/tbe.txt`, not hand-typed —
-     the source dump happens to carry the book's real printed page numbers
-     as standalone digit lines at each page break)
+     from the quote's own position in `/tmp/tbe.txt`, not hand-typed — the
+     source dump carries the book's printed page numbers as standalone digit
+     lines, and **a page's number FOLLOWS its text**, so the page is the next
+     marker after the quote. Since v0.53.1 there are no line numbers in it at
+     all: quotes are found by searching the whole book, each page must fall in
+     its heading's range on the book's own contents page, and the heading must
+     be the nearest one above the quote. `rules_audit_check.mjs` runs it)
 2. `_docs.json` builders, each turns one domain's raw data into the
    pack-ready shape (Items/Actors/journal HTML) plus (as a byproduct, not
    delivered by default, see above) a standalone legacy installer script:
@@ -745,6 +749,14 @@ scope at least one pass at the player-facing output itself.
   duplicate it, when adding a new mechanic worth citing; give the underlying
   domain's `.py` extractor `check_tc`-style column-position verification
   before adding its numbers here, not just a presence check.
+- `node rules_audit_check.mjs` — 8 checks that the TBE: Rules Audit journal
+  is current: it RUNS `parse_core_rules.py` and `build_rules_audit.py` and
+  fails if their output differs from what is committed, or the built journal
+  pack differs from it. It exists because nothing ran the generator: when the
+  rulebook dump was regenerated its hand-typed line windows went stale, the
+  script could not run, and the journal shipped for months with every page
+  one early (and, after v0.53.0, naming a retired macro) while every check was
+  green. Needs `/tmp/tbe.txt`. Read it before touching the audit's rules.
 - `node creator_check.mjs` — 108 checks over the Create Character window
   (`module/chargen/`, v0.52.0). Section 1 holds the system's rule copies in
   `chargen/rules.mjs` equal to `_lib.js`'s over their whole input space.
