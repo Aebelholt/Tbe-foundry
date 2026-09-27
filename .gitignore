@@ -3,3 +3,4 @@ node_modules/
 test-screenshots/
 __pycache__/
 data/release_baseline.json
+_e.html
