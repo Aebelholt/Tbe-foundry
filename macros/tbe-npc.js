@@ -37,6 +37,7 @@ const restSkill = (avg) => Math.max(ENEMY_FLOOR, avg - 30);
 const TIER_WEAPON_SKILL = "Melee: Medium";
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
+const portraitField = await TBE.portraitField("Portrait (for the actor)");
 const content =
   '<div style="font-size:13px">' +
   '<label style="display:block">Culture: <select name="culture" style="width:100%">' +
@@ -62,6 +63,7 @@ const content =
   "</select></label>" +
   '<label style="display:block">Role or note (optional): <input type="text" name="role" placeholder="gate guard, ferryman, the reeve’s cousin" style="width:100%"></label>' +
   '<label style="display:block;margin-top:4px"><input type="checkbox" name="actor"> Also create an actor for them</label>' +
+  portraitField +
   '<label style="display:block"><input type="checkbox" name="list" checked> Add to the Empires List (first empty slot)</label>' +
   "</div>";
 
@@ -171,8 +173,10 @@ if (data) {
         o[loc] = { natural: tier ? tier.ap : 0, worn: 0 };
         return o;
       }, {});
+      const img = await TBE.rollPortrait(data.portrait);
       const actor = await Actor.create({
         name, type: "creature", folder: folder.id,
+        ...(img ? { img, prototypeToken: { texture: { src: img } } } : {}),
         system: {
           deathThreshold: { value: dt, max: dt },
           resolve: { value: 10, max: 10 },

@@ -1,8 +1,21 @@
-## Next batch, not shipped yet
+## Table defaults, token linking, portraits — done in v0.54.0, 2026-09-27
 
-- World check card names un-redirected copies of retired macros (committed,
-  in CHANGELOG under Unreleased). Found from the playtest GM's 0.46.0 to
-  0.53.1 upgrade card.
+From Seb's playtest: a full character "reverted" when combat started, a blank
+Initiative on the tracker, and the per-actor/per-scene Foundry chores.
+
+- Probe: Create Character (and the old Wizard) built into the selected
+  token's synthetic actor. An unlinked Character token holds a private delta,
+  so the build landed there; linking showed the untouched sidebar actor.
+  Blank creature Initiative (a StringField) read as 0.
+- Fixed: `helpers/table-defaults.mjs`, `helpers/token-link.mjs`,
+  `helpers/portraits.mjs`, creator targeting + token sync, the combatant
+  formula, TBE: Link Character Tokens. `table_defaults_check.mjs` (48).
+- **Untested on a real table** (run behind stubs only): the preCreate hooks,
+  DialogV2.prompt for the new actor's name, FilePicker.browse for the
+  roster (V12 global vs V13 implementation), token.delta.toObject() on V12
+  and V13+. Check these in the playtest world first.
+- Not done: the rescue cannot tell whether a delta is newer than the sidebar
+  actor; it asks. Placed tokens are not auto-linked by the one-time pass.
 
 ## Chargen rebuild — done in v0.53.0 (stage 3), 2026-09-27
 

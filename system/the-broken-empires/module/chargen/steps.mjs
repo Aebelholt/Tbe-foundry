@@ -125,6 +125,18 @@ function stepConcept(env) {
     '<div class="tbe-cc-row tbe-cc-aidrow">' + W.rollButton("roll-name", "Roll a name") + " from " +
     W.select("nameList", lists, nameList, { blank: "(any list)" }) + " " + W.aid("The name lists are a roll aid. Your homeland (step 2) picks the list for you.") + "</div>";
 
+  /* The portrait roster (helpers/portraits.mjs): the GM's own image folders. */
+  const roster = env.portraits || [];
+  const pcols = [...new Set(roster.map((p) => p.collection).filter(Boolean))].sort();
+  h += '<div class="tbe-cc-row tbe-cc-portrait">' +
+    (d.portrait ? '<img src="' + esc(d.portrait) + '" alt="portrait">' : '<div class="tbe-cc-noimg">no portrait</div>') +
+    (roster.length ? W.rollButton("roll-portrait", "Roll a portrait") +
+      (pcols.length ? '<select data-ui="portraitCollection"><option value="">(any collection)</option>' +
+        pcols.map((c) => '<option value="' + esc(c) + '"' + (env.ui.portraitCollection === c ? " selected" : "") + ">" + esc(c) + "</option>").join("") + "</select>" : "") +
+      " " + W.aid("A roll from the portrait folders your GM set up (" + roster.length + " images). Pick by hand instead whenever you like.") : "") +
+    W.button("pick-portrait", "Choose&hellip;") + (d.portrait ? W.button("clear-portrait", "&times;", {}, { cls: "tbe-cc-link", title: "No portrait" }) : "") + "</div>" +
+    (roster.length ? "" : W.hint("To roll portraits, a GM points <b>Portrait folders</b> (Configure Settings) at folders of images. Each subfolder becomes a collection."));
+
   h += '<div class="tbe-cc-box">' +
     '<div class="tbe-cc-row">' + W.rollButton("roll-concept", "Roll a concept") + " " +
     ["role", "streak", "trouble"].map((k) => W.button("roll-concept", "reroll " + k, { col: k }, { cls: "tbe-cc-small" })).join(" ") + " " +

@@ -13,7 +13,7 @@ const GROUPS = [
   /* Character creation is one window since v0.53.0 (TBE: Create Character,
      also on the sheet's header). The Character Wizard, Finish Character and
      Build Character were retired into it. */
-  ["Make a character", ["TBE: Create Character", "TBE: Talents"]],
+  ["Make a character", ["TBE: Create Character", "TBE: Talents", "TBE: Link Character Tokens"]],
   ["Keep the record", ["TBE: Status", "TBE: Session Log", "TBE: Advancement"]]
 ];
 

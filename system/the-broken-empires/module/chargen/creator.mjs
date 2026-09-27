@@ -26,6 +26,9 @@ import { buildPayload, writeCharacter } from "./commit.mjs";
 import * as memory from "../helpers/memory.mjs";
 import * as permission from "../rules/permission.mjs";
 import * as visibility from "../rules/visibility.mjs";
+import { deltaSummary, linkToken } from "../helpers/token-link.mjs";
+import { settingsOf } from "../helpers/table-defaults.mjs";
+import * as portraits from "../helpers/portraits.mjs";
 
 export const DRAFT_KIND = "creatorDraft";
 const SCOPE = "the-broken-empires";
@@ -94,7 +97,7 @@ function buildClass() {
       try { custom = game.settings.get(SCOPE, "customConcepts"); } catch (e) { custom = null; }
       return {
         d, T, ch, st, ui: this.ui, isGM: !!game.user?.isGM, actorName: this.actor.name,
-        concepts: conceptColumns(T, custom), customConcepts: custom
+        concepts: conceptColumns(T, custom), customConcepts: custom, portraits: this.portraits || []
       };
     }
 
@@ -202,6 +205,7 @@ function buildClass() {
       if (a === "goto") { this.ui.step = el.dataset.step; this._stepChanged = true; this._save(); return this.render(); }
       if (a === "restart") return this._restart();
       if (a === "create") return this._create(el);
+      if (a === "pick-portrait") return this._pickPortrait();
       const env = Object.assign(this.env(), {
         roll: async (f) => { const r = await new Roll(f).evaluate(); return { total: r.total, roll: r }; },
         say: (title, body, rolls) => say(title, body, rolls),
@@ -261,6 +265,12 @@ function buildClass() {
       this.render();
     }
 
+    _pickPortrait() {
+      const FP = foundry.applications?.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
+      if (!FP) return;
+      new FP({ type: "image", current: this.d.portrait || "", callback: (path) => { this.d.portrait = path; this._save(); this.render(); } }).render(true);
+    }
+
     async _create(btn) {
       const env = this.env();
       const open = STEPS.filter((s) => s.key !== "review").flatMap((s) => env.st[s.key].open.map((x) => s.label + ": " + x));
@@ -280,7 +290,8 @@ function buildClass() {
         const doc = pack ? (await pack.getDocuments({ name: "Dagger" }))[0] : null;
         if (doc) dagger = doc.toObject();
       } catch (err) { console.warn("TBE | dagger lookup failed", err); }
-      const payload = buildPayload(env.ch, this.d, this.T, { actor: this.actor, open, dagger });
+      const S = settingsOf((ns, k) => game.settings.get(ns, k));
+      const payload = buildPayload(env.ch, this.d, this.T, { actor: this.actor, open, dagger, link: S.linkCharacters, vision: S.characterVision });
       let res;
       try {
         res = await writeCharacter(this.actor, payload, { canWrite: (a) => permission.canWrite(a, game.user), wipe: !!this.d.wipe });
@@ -295,6 +306,8 @@ function buildClass() {
       clearTimeout(this._saveT);
       await memory.remember(game.user, DRAFT_KIND, this.actor.id, null);
       await say("Character Created", payload.summary, []);
+      const synced = await syncTokens(this.actor, payload, S);
+      if (synced.failed.length) ui.notifications?.warn("TBE: the character was created, but " + synced.failed.length + " token(s) could not be updated (" + synced.failed.join("; ") + "). Ask your GM to run TBE: Link Character Tokens.");
       await this.close();
       this.actor.sheet?.render(true);
     }
@@ -312,6 +325,37 @@ function buildClass() {
 }
 
 const escHtml = (v) => String(v ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/**
+ * Placed tokens of the actor just created: linked (per setting), renamed, and
+ * given the portrait. A token that holds its own build is left alone and
+ * reported, since linking it would hide that build.
+ */
+export function tokenPlan(actorId, scenes, payload, s) {
+  const plan = [], skipped = [];
+  const name = payload.update.name, img = payload.update["prototypeToken.texture.src"];
+  for (const scene of scenes || []) {
+    for (const t of scene.tokens || []) {
+      if (t.actorId !== actorId) continue;
+      if (!t.actorLink && deltaSummary(t).hasBuild) { skipped.push({ scene, token: t }); continue; }
+      const u = { _id: t.id };
+      if (s.linkCharacters && !t.actorLink) u.actorLink = true;
+      if (name) u.name = name;
+      if (img) u["texture.src"] = img;
+      if (Object.keys(u).length > 1) plan.push({ scene, update: u });
+    }
+  }
+  return { plan, skipped };
+}
+async function syncTokens(actor, payload, s) {
+  const { plan, skipped } = tokenPlan(actor.id, game.scenes?.contents ?? [], payload, s);
+  const failed = skipped.map((x) => x.token.name + " on " + x.scene.name + " holds its own copy");
+  for (const { scene, update } of plan) {
+    try { await scene.updateEmbeddedDocuments("Token", [update]); }
+    catch (err) { failed.push(scene.name + ": " + (err?.message || err)); }
+  }
+  return { failed };
+}
 
 /** Chat, through the visibility owner like every other card. */
 export async function say(title, body, rolls) {
@@ -342,8 +386,81 @@ async function chooseDialog(title, content, buttons) {
  * Open the window for an actor. A saved draft is offered back; a draft left
  * in TBE: Character Wizard can be carried over.
  */
+/**
+ * Which actor Create Character works on. Always the actor in the SIDEBAR:
+ * opened from an unlinked token, Foundry hands over the token's private copy,
+ * and a character built into that copy looks reverted the moment the token is
+ * linked (the playtest GM's v0.53.1 report). Pure, so a check can run it.
+ */
+export function resolveTarget(actor, baseOf) {
+  if (!actor) return { target: null, token: null, stranded: null };
+  if (actor.isToken) {
+    const token = actor.token ?? null;
+    const base = baseOf(actor.id) ?? null;
+    const linked = !!token?.actorLink;
+    const summary = token && !linked ? deltaSummary(token) : null;
+    return { target: base, token, stranded: summary && summary.hasBuild ? summary : null };
+  }
+  return { target: actor, token: null, stranded: null };
+}
+
+/** Create a Character actor for this user, when they may. */
+async function newCharacterActor() {
+  if (!game.user?.can?.("ACTOR_CREATE")) {
+    ui.notifications?.warn("TBE: select your token or assign a character to your user first. Your GM can create a Character actor for you, or allow players to create actors.");
+    return null;
+  }
+  const DV2 = foundry.applications?.api?.DialogV2;
+  let name = null;
+  if (DV2?.prompt) {
+    name = await DV2.prompt({ window: { title: "Create Character" }, rejectClose: false,
+      content: '<p>No character is selected. Make a new one?</p><label>Name <input type="text" name="name" value="New Character" autofocus></label>',
+      ok: { label: "Create the actor", callback: (ev, button) => button.form.elements.name.value.trim() || "New Character" } });
+  }
+  if (!name) return null;
+  const data = { name, type: "character" };
+  if (!game.user.isGM) data.ownership = { default: 0, [game.user.id]: 3 };
+  const actor = await Actor.create(data);
+  if (actor && !game.user.isGM && !game.user.character) {
+    try { await game.user.update({ character: actor.id }); } catch (err) { console.warn("TBE | could not assign the new character", err); }
+  }
+  return actor;
+}
+
 export async function openCreator(actor) {
-  if (!actor) { ui.notifications?.warn("TBE: open Create Character from a character, or select your token first."); return null; }
+  if (!actor) actor = await newCharacterActor();
+  if (!actor) return null;
+  const R0 = resolveTarget(actor, (id) => game.actors?.get(id));
+  if (R0.stranded) {
+    const pick = await chooseDialog("Create Character",
+      "<p>This token is not linked to <b>" + escHtml(R0.target?.name || actor.name) + "</b> in the sidebar, and it carries its own copy of the character (" +
+      R0.stranded.items + " item(s)). That usually means a character was built with this token selected.</p>" +
+      "<p><b>Keep the token's build</b> makes that copy the sidebar actor and links the token, so nothing is lost. " +
+      "<b>Build on the sidebar actor</b> starts a new character there instead.</p>",
+      [{ value: "rescue", label: "Keep the token's build" }, { value: "build", label: "Build on the sidebar actor" }]);
+    if (!pick) return null;
+    if (pick === "rescue") {
+      if (!game.user.isGM && !permission.canWrite(R0.target, game.user)) {
+        ui.notifications?.warn("TBE: you do not own " + (R0.target?.name || "that actor") + " in the sidebar. Ask your GM to run TBE: Link Character Tokens.");
+        return null;
+      }
+      try {
+        await linkToken({ token: R0.token, actor: R0.target }, "token");
+        ui.notifications?.info("TBE: " + R0.target.name + " is linked and keeps the build that was on the token.");
+        R0.target.sheet?.render(true);
+      } catch (err) {
+        console.error("TBE | rescue failed", err);
+        ui.notifications?.error("TBE: linking failed (" + (err?.message || err) + "). Nothing was deleted; the token still holds its copy.");
+      }
+      return null;
+    }
+  }
+  actor = R0.target;
+  if (!actor) { ui.notifications?.warn("TBE: this token's actor is not in the sidebar any more, so there is nothing to build onto."); return null; }
+  if (actor.type !== "character") {
+    ui.notifications?.warn("TBE: " + actor.name + " is a " + actor.type + ". Create Character builds player characters: create a Character actor (or pick one) and open it from there.");
+    return null;
+  }
   if (!permission.canWrite(actor, game.user)) {
     ui.notifications?.warn("TBE: you do not have permission to change " + actor.name + ". Ask your GM for ownership, or to create the character with you.");
     return null;
@@ -370,6 +487,7 @@ export async function openCreator(actor) {
     if (pick === "carry") draft = upgradeDraft(T, old.draft);
   }
   const app = new Klass(actor, T, draft, ui0);
+  try { app.portraits = await portraits.roster(); } catch (err) { console.warn("TBE | portrait roster unavailable", err); app.portraits = []; }
   app.render(true);
   return app;
 }

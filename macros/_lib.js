@@ -1833,6 +1833,29 @@ Object.defineProperty(TBE, "RETIRED_MACROS", {
   enumerable: true
 });
 
+/* The portrait roster (v0.54.0): the GM's own image folders, rolled from.
+ * Owned by the system (module/helpers/portraits.mjs); these two only read it.
+ * portraitField() is the select a dialog shows ("" when no folders are set,
+ * so a dialog without a roster looks exactly as it did); rollPortrait() turns
+ * that select's answer into an image path, or null. */
+TBE.portraitField = async function (label) {
+  const P = (typeof game !== "undefined" && game?.thebrokenempires?.portraits) || null;
+  if (!P) return "";
+  let list = [];
+  try { list = await P.roster(); } catch (e) { list = []; }
+  if (!list.length) return "";
+  const cols = P.collections(list);
+  return '<label style="display:block">' + (label || "Portrait") + ': <select name="portrait" style="width:100%">' +
+    '<option value="*">Roll from any collection (' + list.length + " images)</option>" +
+    cols.map((c) => '<option value="' + TBE.esc(c) + '">Roll from ' + TBE.esc(c) + "</option>").join("") +
+    '<option value="">None</option></select></label>';
+};
+TBE.rollPortrait = async function (answer) {
+  const P = (typeof game !== "undefined" && game?.thebrokenempires?.portraits) || null;
+  if (!P || answer === undefined || answer === null || answer === "") return null;
+  try { return await P.random(answer === "*" ? "" : answer); } catch (e) { return null; }
+};
+
 TBE.me = function () {
   const P = _perm();
   const controlled = (typeof canvas !== "undefined" && canvas?.tokens?.controlled) || [];

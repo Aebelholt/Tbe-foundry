@@ -15,6 +15,7 @@
  */
 import * as R from "./rules.mjs";
 import { face } from "../rules/resolution.mjs";
+import { pick as pickPortrait } from "../helpers/portraits.mjs";
 import { raceChoices, raceBarsMagic, patternOf, freeTalentSlots } from "./draft.mjs";
 import { goalSentence, conceptSentence, RELATIONSHIP_TYPES, LOCATIONS, defaultNameList } from "./steps.mjs";
 
@@ -330,6 +331,14 @@ export async function act(name, data, env) {
       if (!d.nameList) d.nameList = key;
       break;
     }
+    case "roll-portrait": {
+      const list = env.portraits || [];
+      if (!list.length) { env.notify?.("No portrait folders are set up. A GM sets them in Configure Settings."); break; }
+      const got = pickPortrait(list, ui.portraitCollection || "", env.random);
+      if (got) d.portrait = got; else env.notify?.("That collection has no images.");
+      break;
+    }
+    case "clear-portrait": d.portrait = ""; break;
     case "roll-personality": {
       const all = T.chargen.personalityTraits || [];
       const out = [];

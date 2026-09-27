@@ -408,7 +408,8 @@ export function derive(draft, ctx) {
       concept: String(d.concept || "").trim(),
       pattern: magic ? magic.pattern : "none",
       convocation: magic && magic.pattern === "spellweaver" ? (d.convocation || "") : "",
-      trueName: String(d.trueName || "").trim()
+      trueName: String(d.trueName || "").trim(),
+      portrait: String(d.portrait || "").trim()
     },
     skills: Object.fromEntries(Object.entries(values).map(([n, v]) => [n, Object.assign({}, v, { sources: sources[n] })])),
     extraSkills: extra,

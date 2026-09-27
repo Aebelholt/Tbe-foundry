@@ -65,7 +65,7 @@ export function defaultDraft(T) {
     bindExpertise: "", threadAttunement: "", threadName: "", trueName: "",
     roBindAlloc: {}, roStrandAlloc: {},
     /* New in the window: places for choices the old Wizard sent elsewhere. */
-    name: "", sex: "",
+    name: "", sex: "", portrait: "",
     rolls: {},                 // dice the player has rolled: careerSilver, cultureSilver, equipCoin, armorPieces
     freeTalents: [],           // [{slot, name, spec}] the free Talent picks (career, Human, Rounding Out)
     wiseNames: {},             // slot label -> the name the player gave it

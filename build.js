@@ -160,6 +160,7 @@ const MACROS = [
   ["TBE: Random Event", "tbe-random-event.js", "icons/svg/hazard.svg"],
   ["TBE: Empires List", "tbe-empires-list.js", "icons/svg/scroll.svg"],
   ["TBE: Create Character", "tbe-create-character.js", "icons/svg/statue.svg"],
+  ["TBE: Link Character Tokens", "tbe-link-tokens.js", "icons/svg/anchor.svg"],
   /* TBE: Character Wizard, TBE: Finish Character and TBE: Build Character
      were retired in v0.53.0 (chargen rebuild stage 3): the Create Character
      window, in the system, replaced all three. World copies are pointed at

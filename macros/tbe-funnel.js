@@ -14,6 +14,7 @@ const CULTURES = Object.keys(TBE_NAMES);
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const STANDINGS = Object.keys(TBE.TRADE_STANDING);
 
+const portraitField = await TBE.portraitField("Portraits (for the actors)");
 const content =
   '<div style="font-size:13px">' +
   '<label style="display:block">Settlement: <input type="text" name="town" value="Vaunhollow" style="width:100%"></label>' +
@@ -29,6 +30,7 @@ const content =
   "</select></label>" +
   '<label style="display:block;margin-top:4px"><input type="checkbox" name="actors" checked> Create actors (folder: TBE Funnel — settlement)</label>' +
   '<label style="display:block"><input type="checkbox" name="crossbond" checked> Point Bonds across players, not within one roster</label>' +
+  portraitField +
   '<div style="font-size:11px;opacity:.75;margin-top:4px">Trades, Bonds and Scars are table-generated flavour (data/funnel.json), not rulebook content. The skill values and Ability Scores are the book\'s.</div>' +
   "</div>";
 
@@ -97,8 +99,10 @@ if (data) {
   for (const f of folk) {
     if (!wantActors) continue;
     try {
+      const img = await TBE.rollPortrait(data.portrait);
       const actor = await Actor.create({
         name: f.name, type: "creature", folder: folder.id,
+        ...(img ? { img, prototypeToken: { texture: { src: img } } } : {}),
         system: {
           deathThreshold: { value: 20, max: 20 },
           resolve: { value: 10, max: 10 },

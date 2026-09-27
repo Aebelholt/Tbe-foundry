@@ -24,6 +24,9 @@ import * as rollControls from './helpers/roll-controls.mjs';
 import { openCreator } from './chargen/creator.mjs';
 import { openShop } from './chargen/shop.mjs';
 import { RETIRED_MACROS } from './helpers/retired-macros.mjs';
+import * as tableDefaults from './helpers/table-defaults.mjs';
+import * as tokenLink from './helpers/token-link.mjs';
+import * as portraits from './helpers/portraits.mjs';
 import * as chargenRules from './chargen/rules.mjs';
 
 /* -------------------------------------------- */
@@ -41,6 +44,11 @@ Hooks.once('init', function () {
     memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
     /* Retired macros and their redirects (helpers/retired-macros.mjs). */
     retiredMacros: RETIRED_MACROS,
+    /* Portrait roster (helpers/portraits.mjs) and character-token linking
+       (helpers/token-link.mjs), v0.54.0. */
+    portraits: { roster: portraits.roster, random: portraits.randomPortrait, collections: portraits.collections },
+    tokens: { findUnlinkedCharacters: () => tokenLink.findUnlinkedCharacters(game.scenes?.contents ?? [], (id) => game.actors?.get(id)),
+      linkToken: tokenLink.linkToken, deltaSummary: tokenLink.deltaSummary },
     /* The character creation window (chargen/creator.mjs, v0.52.0): the
        book's twelve steps, a live sheet, one Create. */
     chargen: { open: openCreator, shop: openShop,
@@ -146,7 +154,13 @@ Hooks.once('init', function () {
     /* p.161: "Enemies typically do not roll; they have a static Initiative
      * value, which determines their place in the turn order each round." */
     _getInitiativeFormula() {
-      return this.actor?.type === "creature" ? "@initiativeEffective" : "1d10 + @initiativeEffective";
+      /* A creature with no Initiative value at all (a townsperson from TBE:
+         NPC or TBE: Funnel, a creature typed in by hand) has no static value
+         to use. It used to read as a silent 0 and act last; it rolls like a
+         character instead (1d10 + 0), which is what an unrated combatant is. */
+      const init = this.actor?.system?.initiative;
+      const blank = init === null || init === undefined || String(init).trim() === "";
+      return this.actor?.type === "creature" && !blank ? "@initiativeEffective" : "1d10 + @initiativeEffective";
     }
   };
 
@@ -253,6 +267,11 @@ Hooks.once('init', function () {
     default: ''
   });
 
+  /* Table defaults: linked, sighted Character tokens, locked rotation, scene
+     vision (helpers/table-defaults.mjs), and the portrait roster folders. */
+  tableDefaults.register();
+  portraits.registerSetting();
+
   // The world's schema version has to exist as a setting before the ready
   // hook can compare against it.
   migration.registerSettings();
@@ -287,6 +306,17 @@ Hooks.once('ready', function () {
 
 Hooks.once('ready', async function () {
   if (!game.user?.isGM) return;
+  /* Once per world: existing actors and tokens get the table defaults. */
+  try {
+    const applied = await tableDefaults.applyToExistingWorld();
+    if (applied && (applied.count || applied.failed.length)) {
+      ChatMessage.create({ whisper: ChatMessage.getWhisperRecipients('GM'), content:
+        `<div><b>The Broken Empires: table defaults</b></div><div>${applied.count} actor(s) and token(s) set to locked rotation, ` +
+        `and every Character's token linked with vision on for the next time it is placed.` +
+        (applied.failed.length ? ` <b>Could not change:</b> ${applied.failed.join('; ')}. It will try again next load.` : '') +
+        ` Change these in Configure Settings.</div>` });
+    }
+  } catch (err) { console.warn('TBE | table defaults failed', err); }
   const from = migration.worldVersion();
   const target = migration.currentVersion(game.system);
   if (!foundry.utils.isNewerVersion(target, from)) return;
@@ -321,7 +351,14 @@ Hooks.once('ready', async function () {
     console.warn('TBE | stale-macro scan failed', err);
   }
 
-  const body = [html, macroHtml].filter(Boolean).join('');
+  let tokenHtml = null;
+  try {
+    tokenHtml = tokenLink.unlinkedToHtml(tokenLink.findUnlinkedCharacters(game.scenes?.contents ?? [], (id) => game.actors?.get(id)));
+  } catch (err) {
+    console.warn('TBE | unlinked-token scan failed', err);
+  }
+
+  const body = [html, macroHtml, tokenHtml].filter(Boolean).join('');
   if (body) ChatMessage.create({ content: body, whisper: ChatMessage.getWhisperRecipients('GM') });
 });
 

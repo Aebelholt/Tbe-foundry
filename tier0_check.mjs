@@ -32,8 +32,8 @@ section("Initiative (p.161) is wired to the tracker");
 const mainSrc = read("system/the-broken-empires/module/the-broken-empires.mjs");
 check(/CONFIG\.Combat\.initiative\s*=\s*\{\s*formula:\s*"1d10 \+ @initiativeEffective"/.test(mainSrc),
   "the tracker rolls 1d10 + the actor's Initiative");
-check(/type === "creature" \? "@initiativeEffective"/.test(mainSrc),
-  "enemies do not roll: a creature uses its static Initiative value");
+check(/type === "creature"(?: && !blank)? \? "@initiativeEffective"/.test(mainSrc),
+  "enemies do not roll: a creature uses its static Initiative value (a blank one rolls, table_defaults_check section 6)");
 check(/_sortCombatants/.test(mainSrc) && /pcB - pcA/.test(mainSrc),
   "ties go to the PC");
 

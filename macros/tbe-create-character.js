@@ -13,8 +13,9 @@ const target = TBE.me();
 const chargen = game.thebrokenempires?.chargen;
 if (!chargen?.open) {
   ui.notifications?.warn("TBE: the character creation window needs The Broken Empires system v0.52.0 or later.");
-} else if (!target) {
-  ui.notifications?.warn("TBE: select your token, or assign a character to your user, then run this again.");
 } else {
+  /* Nothing selected: the window offers to create a new Character actor
+     (for a GM, or a player allowed to create actors). A token that is not
+     linked to its actor is resolved to the actor in the sidebar, v0.54.0. */
   await chargen.open(target);
 }

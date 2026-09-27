@@ -113,7 +113,13 @@ export function buildPayload(ch, d, T, o = {}) {
     "system.enc.invBonus": A.invBonus.value,
     "flags.the-broken-empires.freeArmor": piecesLeft
   };
-  if (ch.identity.name) update.name = ch.identity.name;
+  if (ch.identity.name) { update.name = ch.identity.name; update["prototypeToken.name"] = ch.identity.name; }
+  /* The portrait (a roll aid, or picked by hand) is the actor's image and its
+     token's. The token set-up follows the table defaults (table-defaults.mjs):
+     a Character's token linked to its actor and able to see. */
+  if (ch.identity.portrait) { update.img = ch.identity.portrait; update["prototypeToken.texture.src"] = ch.identity.portrait; }
+  if (isChar && o.link) update["prototypeToken.actorLink"] = true;
+  if (isChar && o.vision) update["prototypeToken.sight.enabled"] = true;
   if (isChar) {
     update["system.pattern"] = ch.identity.pattern;
     update["system.convocation"] = ch.identity.convocation;

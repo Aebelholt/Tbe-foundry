@@ -62,7 +62,7 @@ export function renderSheet(ch, env) {
   const ll = lethalityLevel(dt, A.lethalityBonus.value + plus("system.lethalityBonus"), 0);
   const withFx = (v, key) => v + plus(key) + (plus(key) ? '<sup title="includes Talents">*</sup>' : "");
 
-  let h = '<div class="tbe-cc-sheet-head"><div class="tbe-cc-name">' + esc(id.name || env.actorName || "Unnamed") + "</div>" +
+  let h = (id.portrait ? '<img class="tbe-cc-sheet-img" src="' + esc(id.portrait) + '" alt="">' : "") + '<div class="tbe-cc-sheet-head"><div class="tbe-cc-name">' + esc(id.name || env.actorName || "Unnamed") + "</div>" +
     '<div class="tbe-cc-small">' + [id.race, id.culture, id.career, age ? age.key : "", id.pattern !== "none" ? (id.pattern === "fade" ? "Fade" : "Spellweaver" + (id.convocation ? " (" + id.convocation + ")" : "")) : ""]
       .filter(Boolean).map(esc).join(" &middot; ") + "</div>" +
     (id.concept ? '<div class="tbe-cc-conceptline">' + esc(id.concept) + "</div>" : "") + "</div>";

@@ -197,7 +197,7 @@ function boundTops(steps) {
   const dsrc = fs.readFileSync(path.join(CG, "derive.mjs"), "utf8");
   const reads = new Set([...dsrc.matchAll(/\bd\.(\w+)/g)].map((m) => m[1]));
   /* Set by a button rather than a box: rolls and the lists you add to. */
-  const byAction = new Set(["rolls", "lifeEvents", "initRoll", "dtRoll", "conceptPicks", "purchases", "freeArmor", "goals", "freeTalents", "relationshipNpcs", "sharedHistory", "personalityPicks", "swBinds", "swStrands", "swThin", "abilityPicks"]);
+  const byAction = new Set(["portrait", "rolls", "lifeEvents", "initRoll", "dtRoll", "conceptPicks", "purchases", "freeArmor", "goals", "freeTalents", "relationshipNpcs", "sharedHistory", "personalityPicks", "swBinds", "swStrands", "swThin", "abilityPicks"]);
   /* v: the draft's own version. binds: the count of blank Bind slots, read
      only when the magic tables are missing, which they never are in the
      system (tables.mjs always carries them). */

@@ -1,12 +1,42 @@
-# Unreleased (next batch)
+# 0.54.0 — 2026-09-27
 
-- **The world check card now names copies of retired macros.** After an
-  upgrade it listed only macros this release still ships, so old copies of
-  the Character Wizard, Finish Character or Build Character in a world went
-  unmentioned while still running their old code. It now counts them, says
-  what replaced each, and that TBE: Update Macros points them at the
-  replacement without deleting any. Copies already redirected are not
-  reported again.
+**Table defaults, token linking, and a portrait roster. The Foundry chores a
+GM repeats for every actor, token and scene are now done for you.**
+
+- **A character built with its token selected no longer looks reverted.**
+  Create Character used to build into the token when the token was not linked
+  to its actor, and linking it later showed the untouched sidebar actor. It
+  now always builds the sidebar actor. If the token already holds a build,
+  it asks whether to keep the token's build or the sidebar actor's.
+- **Create updates the sidebar token too.** Name and portrait go to the actor
+  and its prototype token, which is linked and has vision on. The actor's
+  clean tokens on the map are linked, renamed and given the portrait. A token
+  holding its own build is left alone and reported.
+- **With nothing selected, Create Character makes the actor.** It asks for a
+  name, creates a Character you own, and opens on it.
+- **New: TBE: Link Character Tokens** (GM). Lists every Character token not
+  linked to its actor, and for each lets you keep the token's copy, keep the
+  sidebar actor, or leave it. The world check card after an upgrade names
+  these tokens too.
+- **New world settings, all on by default:** Character tokens are linked,
+  Character tokens have vision, every token has rotation locked, new scenes
+  have token vision. Creatures are never linked: each wolf on the map is its
+  own wolf. On first load the GM's world is brought in line once: rotation
+  locked everywhere, and Character prototype tokens linked and sighted.
+  Placed Character tokens are not linked by this, because one may hold a
+  build; Link Character Tokens handles those.
+- **A creature with a blank Initiative rolls instead of acting on 0.** A
+  townsperson from TBE: NPC or TBE: Funnel had no Initiative and sat at the
+  bottom of the tracker. It now rolls 1d10 + 0. A creature with a value keeps
+  it (p.161).
+- **Portrait roster.** Point the new Portrait folders setting at your own
+  image folders (several, separated by ;). Each subfolder is a collection.
+  Create Character, TBE: NPC and TBE: Funnel can roll a portrait from any
+  collection or a chosen one, and you can always pick by hand instead. With
+  no folders set, nothing changes.
+- **The world check card now names copies of retired macros** (the Character
+  Wizard, Finish Character, Build Character), what replaced each, and that
+  TBE: Update Macros redirects them without deleting anything.
 
 # 0.53.1 — 2026-09-27
 

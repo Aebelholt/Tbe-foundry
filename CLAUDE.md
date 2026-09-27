@@ -737,6 +737,17 @@ scope at least one pass at the player-facing output itself.
   every step, now including the choices only the window can make (Ex3 Bind:
   Control, Ritual-wise 25, Divinity 25, the free Talents). **Book step order
   is the rule**: race before career, the 70 cap at each increase (p.78, p.80).
+- `node table_defaults_check.mjs` — 48 checks over the v0.54.0 batch: the
+  table defaults (`module/helpers/table-defaults.mjs`, all world settings, on
+  by default), finding and linking unlinked Character tokens
+  (`module/helpers/token-link.mjs`), Create Character's target, the combatant
+  formula for a blank creature Initiative, and the portrait roster
+  (`module/helpers/portraits.mjs`). Read it before touching anything that
+  targets an actor from a token. **Create Character builds the SIDEBAR
+  actor, never a token's synthetic copy**: an unlinked token holds a private
+  delta, and a build written there looked reverted the moment the token was
+  linked. Linking with the token's copy kept creates the new Items BEFORE
+  deleting the old ones; section 4 carries the delete-first mutation.
 - `node concepts_check.mjs` — 17 checks over `data/concepts.json`, the
   original (not book) step-1 concept table. Every skill suggestion must be a
   real catalogue skill in the category it is filed under, because the window
