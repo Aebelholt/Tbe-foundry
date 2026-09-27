@@ -61,8 +61,17 @@ export function derive(draft, ctx) {
   const notes = [];
 
   const races = data.races || [], careers = data.careers || [];
-  const race = races.find((r) => r.name === d.raceName) || races[0];
-  const career = careers.find((c) => c.name === d.careerName) || careers[0];
+  /* A draft from the character creation window (v >= 2) may not have chosen
+     yet, and a blank must stay blank: the live sheet must never show a
+     Human's languages or a Warrior's Talent nobody picked. The old Wizard
+     fell back to the first race and career; its drafts (no v) still do, so
+     chargen_parity_check.mjs is untouched. */
+  const fresh = num(d.v, 1) >= 2;
+  const NONE_RACE = { name: "", size: "Medium", toughness: 0, dt: 20, lethalityBonus: 0, skillMods: [], savvy: [], languages: [],
+    exclusiveTalents: [], restrictions: [], startingSkills: [], talentLimits: [], invBonus: 0 };
+  const NONE_CAREER = { name: "", pools: {}, customs: [], talents: "", talentPicks: { auto: [], picks: [] } };
+  const race = races.find((r) => r.name === d.raceName) || (fresh ? NONE_RACE : races[0]);
+  const career = careers.find((c) => c.name === d.careerName) || (fresh ? NONE_CAREER : careers[0]);
   const culture = (data.culturalBackgrounds || []).find((c) => c.name === d.cultureBgName) || null;
   const age = (data.roundingOutAges || []).find((a) => a.key === d.roAge) || null;
 
@@ -130,7 +139,9 @@ export function derive(draft, ctx) {
   const lifeOpt = (key) => {
     const ev = (d.lifeEvents || {})[key];
     if (!ev || !(ev.options || []).length) return null;
-    return ev.options[Math.max(0, Math.min(ev.options.length - 1, num((d.lifeChoice || {})[key], 0)))] || null;
+    const pick = (d.lifeChoice || {})[key];
+    if (fresh && (pick === null || pick === undefined || pick === "")) return null;
+    return ev.options[Math.max(0, Math.min(ev.options.length - 1, num(pick, 0)))] || null;
   };
   for (const key of LIFE_KEYS) {
     const opt = lifeOpt(key);
@@ -140,6 +151,13 @@ export function derive(draft, ctx) {
     else if (opt.kind === "skill-any") target = (d.lifeChoiceExtra || {})[key] || (opt.options || [])[0];
     if (target && values[target]) step("Life Event (" + key + "): " + d.lifeEvents[key].name, () => raise(target, num(opt.amount, 10)));
     else if (target) notes.push("Life Event (" + key + "): +" + num(opt.amount, 10) + " to " + target + ", not a catalogue skill.");
+  }
+
+  /* 6, continued. Shared History (p.94): "both of you add +5 to a skill
+     that came out of it". A catalogue skill here; a -wise or Language that
+     does not exist yet is created at 20 below and takes the +5 there. */
+  for (const sh of d.sharedHistory || []) {
+    if (sh && sh.skill && values[sh.skill]) step("Shared History" + (sh.with ? " with " + sh.with : ""), () => raise(sh.skill, 5));
   }
 
   /* 7. Career: the skill point pools, spent by the player. */
@@ -219,6 +237,42 @@ export function derive(draft, ctx) {
     for (let i = 0; i < count; i++) addExtra("Wise", "Career wise/Language " + (i + 1), value, "Career: " + career.name);
   }
 
+  /* Choices on skills outside the catalogue, which the old Wizard had no
+     place for (the book's own Hadrion example needs every one of them):
+     naming a -wise or Language slot, Rounding Out points on one, a Shared
+     History +5 on one, a Bind as a Savvy pick, and the Human's extra
+     Expertise on a Bind (p.108 gives Hadrion Ex3 Bind: Control). */
+  const extraCap = (x) => (x.group === "Bind" ? num(((MAGIC || {}).rules || {}).spellweaverChargen?.bindCapAtChargen, 70) : CAP);
+  const bumpExtra = (x, amount, label) => {
+    const before = x.value;
+    x.value = Math.min(extraCap(x), x.value + amount);
+    if (x.value !== before) x.sources.push({ label, delta: x.value - before });
+  };
+  for (const x of extra) {
+    const named = String((d.wiseNames || {})[x.name] || "").trim();
+    if (named) { x.sources.push({ label: "Named: " + x.name }); x.slot = x.name; x.name = named; }
+  }
+  const findExtra = (key) => extra.find((x) => x.name === key || x.slot === key) || null;
+  for (const [key, pts] of Object.entries(d.roExtraAlloc || {})) {
+    const x = findExtra(key), add = Math.max(0, num(pts, 0));
+    if (x && add) bumpExtra(x, add, "Rounding Out: bonus points");
+  }
+  for (const sh of d.sharedHistory || []) {
+    if (!sh || !sh.skill || values[sh.skill]) continue;
+    let x = findExtra(sh.skill);
+    if (!x) { addExtra(/language/i.test(sh.group || "") ? "Language" : "Wise", sh.skill, 20, "Shared History (created at 20, p.94)"); x = extra[extra.length - 1]; }
+    bumpExtra(x, 5, "Shared History" + (sh.with ? " with " + sh.with : ""));
+  }
+  for (const sk of d.roSavvy || []) {
+    const x = sk && !values[sk] ? findExtra(sk) : null;
+    if (x && !x.savvy) { x.savvy = true; x.sources.push({ label: "Rounding Out: Savvy", savvy: true }); }
+  }
+  {
+    const exPick = String(d.raceExpertisePick || "").trim();
+    const x = exPick && !values[exPick] ? findExtra(exPick) : null;
+    if (x) { x.expertise = lib.raiseExpertise(x.expertise); x.sources.push({ label: "Race: " + race.name, expertise: x.expertise }); }
+  }
+
   /* Life Event outcomes that are not a catalogue skill. */
   let lifeStatus = 0;
   for (const key of LIFE_KEYS) {
@@ -233,7 +287,14 @@ export function derive(draft, ctx) {
   /* ---- Talents ------------------------------------------------------------ */
   const wanted = [];
   for (const t of race.exclusiveTalents || []) wanted.push({ name: t, why: "Race: " + race.name });
-  for (const t of (career.talentPicks || {}).auto || []) wanted.push({ name: t, why: "Career: " + career.name });
+  /* p.102: "You may swap out one of your Previous Career Talents for +2
+     Status." The swap names either a Talent the career grants outright
+     ("auto:Literate") or one of its free-pick slots ("slot:career0_0"). */
+  const swap = String(d.careerTalentSwap || "");
+  for (const t of (career.talentPicks || {}).auto || []) {
+    if (swap === "auto:" + t) continue;
+    wanted.push({ name: t, why: "Career: " + career.name });
+  }
   (d.abilityTalent || []).forEach((t) => { if (t) wanted.push({ name: t, why: "Ability Score" }); });
   const talents = [];
   const seen = new Set();
@@ -257,6 +318,23 @@ export function derive(draft, ctx) {
       notes.push(race.name + " caps " + lim.talent + " at " + lim.maxRanks + " rank (" + lim.note + ").");
       hit.ranks = lim.maxRanks;
       hit.specialization = lim.note;
+    }
+  }
+  /* The free picks: the career's "one Combat Talent" slots, the Human's
+     extra Talent, the Rounding Out bonus Talent. Chosen in the window; the
+     old Wizard sent them to Finish Character. */
+  for (const f of d.freeTalents || []) {
+    if (!f || !f.name) continue;
+    if (swap && swap === "slot:" + f.slot) continue;
+    const rec = lib.talentNamed(ctx.talents || [], f.name);
+    if (!rec) { notes.push("Talent '" + f.name + "' is not in the catalogue."); continue; }
+    if (talents.some((t) => t.name.toLowerCase() === rec.name.toLowerCase() && rec.rank === "once")) continue;
+    talents.push({ name: rec.name, ranks: 1, specialization: String(f.spec || ""), why: f.source || "Free pick" });
+    /* The Savvy Talent: "Pick one skill and mark an S next to it." */
+    const target = String(f.spec || "").trim();
+    if (/^savvy$/i.test(rec.name) && values[target] && !values[target].savvy) {
+      values[target].savvy = true;
+      sources[target].push({ label: "Talent: Savvy", savvy: true });
     }
   }
   if (magic && magic.pattern === "fade") {
@@ -287,12 +365,17 @@ export function derive(draft, ctx) {
     { label: age ? "Rounding Out: " + age.key : "Age", delta: num(age && age.dt, 0) }]);
   put("lethalityBonus", num(race.lethalityBonus, 0), [{ label: "Race: " + race.name, delta: num(race.lethalityBonus, 0) }]);
   put("invBonus", num(race.invBonus, 0), [{ label: "Race: " + race.name, delta: num(race.invBonus, 0) }]);
-  put("status", (d.roBonusChoice === "status" ? 1 : 0) + lifeStatus, [
+  const swapStatus = swap && career.name ? 2 : 0;
+  put("status", (d.roBonusChoice === "status" ? 1 : 0) + lifeStatus + swapStatus + num(d.statusAdjust, 0), [
     { label: "Rounding Out bonus: Status", delta: d.roBonusChoice === "status" ? 1 : 0 },
-    { label: "Life Events", delta: lifeStatus }]);
+    { label: "Swapped a Career Talent (p.102)", delta: swapStatus },
+    { label: "Life Events", delta: lifeStatus },
+    { label: "Set on the Status step", delta: num(d.statusAdjust, 0) }]);
 
   /* ---- Silver and starting gear (p.109) ---------------------------------- */
-  const r = ctx.rolls || {};
+  /* Dice the player rolled in the window live on the draft; a caller (the
+     parity check) may pass its own. */
+  const r = Object.assign({}, d.rolls || {}, ctx.rolls || {});
   const silverParts = [];
   const known = (v) => v !== null && v !== undefined && Number.isFinite(Number(v));
   if (career.silver) silverParts.push({ label: "Career: " + career.name, dice: career.silver, value: known(r.careerSilver) ? num(r.careerSilver) : null });
@@ -300,6 +383,8 @@ export function derive(draft, ctx) {
   silverParts.push({ label: "Equip Your Character", dice: "2d4*50", value: known(r.equipCoin) ? num(r.equipCoin) : null });
   if (d.roBonusChoice === "money") silverParts.push({ label: "Rounding Out bonus: silver", dice: null, value: 100 });
   const silverTotal = silverParts.every((p) => p.value !== null) ? silverParts.reduce((n, p) => n + p.value, 0) : null;
+  const bought = (d.purchases || []).filter((p) => p && p.name).map((p) => ({ name: p.name, kind: p.kind, sp: num(p.sp), qty: Math.max(1, num(p.qty, 1)), loc: p.loc || null }));
+  const silverSpent = bought.reduce((n, p) => n + p.sp * p.qty, 0);
 
   const personality = (d.personalityPicks || [])
     .concat(String(d.personalityCustom || "").split(",").map((x) => x.trim()).filter(Boolean))
@@ -308,6 +393,7 @@ export function derive(draft, ctx) {
 
   return {
     identity: {
+      name: String(d.name || "").trim(), sex: String(d.sex || "").trim(),
       race: race.name, career: career.name, culture: String(d.cultureBgName || "").trim(), size: race.size,
       concept: String(d.concept || "").trim(),
       pattern: magic ? magic.pattern : "none",
@@ -326,8 +412,11 @@ export function derive(draft, ctx) {
     })() : null,
     talents,
     attributes: attrs,
-    silver: { parts: silverParts, total: silverTotal },
-    equipment: { free: ["Dagger"], freeArmorPieces: known(r.armorPieces) ? num(r.armorPieces) : null },
+    silver: { parts: silverParts, total: silverTotal, spent: silverSpent, left: silverTotal === null ? null : silverTotal - silverSpent },
+    equipment: { free: ["Dagger"], freeArmorPieces: known(r.armorPieces) ? num(r.armorPieces) : null,
+      freeArmor: (d.freeArmor || []).filter((a) => a && a.name).map((a) => ({ name: a.name, loc: a.loc || null })), bought },
+    goals: (d.goals || []).filter((g) => g && String(g.text || "").trim()).map((g) => ({ text: String(g.text).trim(), kind: g.kind || "individual" })),
+    relationshipNpcs: (d.relationshipNpcs || []).slice(),
     personality,
     careerPoints: spent,
     notes: notes.concat(magic ? magic.notes : [])

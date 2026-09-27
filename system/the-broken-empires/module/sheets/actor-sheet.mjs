@@ -35,6 +35,17 @@ export class TheBrokenEmpiresActorSheet extends ActorSheet {
     });
   }
 
+  /** A "Create" button in a character sheet's header, for its owner: opens
+   *  the character creation window (chargen/creator.mjs, v0.52.0). */
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+    if (this.actor.type === "character" && this.actor.isOwner && game.thebrokenempires?.chargen?.open) {
+      buttons.unshift({ label: "Create", class: "tbe-create-character", icon: "fas fa-user-plus",
+        onclick: () => game.thebrokenempires.chargen.open(this.actor) });
+    }
+    return buttons;
+  }
+
   /** @override */
   get template() {
     return `systems/the-broken-empires/templates/actor/actor-${this.actor.type}-sheet.hbs`;

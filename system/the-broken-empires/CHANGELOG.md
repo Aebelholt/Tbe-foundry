@@ -1,3 +1,57 @@
+# 0.52.0 — 2026-09-27
+
+**Character creation, stage 2: the new Create Character window.**
+
+One window for the whole character. The book's twelve steps run down the
+left, the step you are on sits in the middle, and the character as it
+stands is on the right, updating as you choose. Open it from **Create** in a
+character sheet's header, or with the new **TBE: Create Character** macro.
+
+- **One calculation behind everything.** The page, the live sheet and
+  Create all read the same `derive()` from stage 1, so what the sheet shows
+  is what the actor gets. Hover a number to see where it came from; click a
+  skill to keep its breakdown open.
+- **Compare, then pick.** Races, homelands, Ability Scores, Cultural
+  Backgrounds, careers, ages and Convocations are tables you read side by
+  side and click to choose. Every book table keeps its roll button, and the
+  roll lands on the same row the table shows.
+- **All twelve steps, in one place.** Equipment (free armour, shopping with
+  the silver you rolled), Personality, Goals (the book's want / obstacle /
+  action builder) and Status are steps now, not a second tool afterwards.
+- **Choices the Wizard had no place for:** the free Talents (career picks,
+  the Human's extra Talent, the Rounding Out bonus) with the ones you do not
+  qualify for greyed and the reason given; naming the career -wise and
+  Language slots; Rounding Out points on a -wise or Language; the Human's
+  extra Expertise on a Bind; a Bind as a Savvy pick; Shared History (+5, a
+  new -wise or Language starting at 20); swapping a career Talent for
+  +2 Status (p.102); a name and sex.
+- **Roll aids** (labelled, and always yours to change): roll a concept, a
+  name from your homeland's list, your age, two Personality Traits, a
+  descriptor.
+- **"Still to choose"** on every step and a count on the rail. It stays
+  silent about anything the book leaves optional (Goals, Status), and it
+  now speaks up when a Life Event's Spellweaver option is held by someone
+  who is not Patterned, which gives them nothing.
+- **Talent effects on the live sheet.** Tough, Patterned in the Weave and
+  the rest add their bonus on the actor; the sheet counts them, so its
+  Toughness matches what you will see after Create.
+- **Nothing is lost.** The draft saves as you go. Close the window, reload,
+  or come back tomorrow, and it offers to resume on the step you left. A
+  draft left in the old Character Wizard can be carried over.
+- **Multiplayer.** A player who does not own the actor is told so and no
+  window opens; Create asks the permission owner first and writes nothing
+  if the answer is no. Roll cards go through the chat visibility owner like
+  every other card.
+
+Lethality Level now has one owner, `module/rules/lethality.mjs`, which the
+actor and the window both call.
+
+TBE: Character Wizard, Finish Character and Build Character still work and
+are unchanged. They retire in stage 3, once this window has seen a table.
+
+New check: `creator_check.mjs` (83), including a headless-browser run of the
+real window through all twelve steps, Create, and a close-and-resume.
+
 # 0.51.0 — 2026-09-27
 
 **Character creation, stage 1: one calculation, checked against the book.

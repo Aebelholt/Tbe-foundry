@@ -744,6 +744,17 @@ scope at least one pass at the player-facing output itself.
   duplicate it, when adding a new mechanic worth citing; give the underlying
   domain's `.py` extractor `check_tc`-style column-position verification
   before adding its numbers here, not just a presence check.
+- `node creator_check.mjs` — 83 checks over the Create Character window
+  (`module/chargen/`, v0.52.0). Section 1 holds the system's rule copies in
+  `chargen/rules.mjs` equal to `_lib.js`'s over their whole input space.
+  Section 3 is rule 2 enforced: every `data-bind` names a draft field and
+  every draft field `derive()` reads has a box or a button, with a mutation
+  that deletes the True Name box. Section 6 runs Create with and without
+  permission. Section 7 drives the real window in headless Chromium behind
+  `test-fixtures/appv2_shim.js` (a stand-in, not Foundry) through all twelve
+  steps, Create, and close-and-resume; screenshots to
+  `test-screenshots/creator/`. Read it before touching anything in
+  `module/chargen/`: a page renders from `derive()`, never computes.
 - `node finish_check.mjs` — all six TBE: Finish Character tabs.
 - Wizard-specific: `node wizard_visual_check.mjs` runs the built macro inside
   an async function, the way `Macro#execute` does (a bare `<script>` made

@@ -1,4 +1,4 @@
-## Chargen rebuild — stage 1 built in v0.51.0, 2026-09-27
+## Chargen rebuild — stage 2 built in v0.52.0, 2026-09-27
 
 Decided with Seb: option B. One window, the book's 12 steps down the left,
 a live sheet on the right (Warp & Weft's "Foundation" tool is the UX
@@ -9,7 +9,11 @@ retire once the new window covers what they do.
   `chargen_parity_check.mjs`: 360 drafts identical to the shipping Wizard,
   and the book's Hadrion reproduced step by step. Four Wizard bugs fixed on
   the way (see CHANGELOG 0.51.0).
-- **Stage 2 (next):** the ApplicationV2 window. Left rail of the book's 12
+- **Stage 2 (done, v0.52.0):** the ApplicationV2 window, `module/chargen/`
+  (creator, steps, sheet, actions, commit, widgets, rules, draft, tables).
+  Every roll aid and every Hadrion gap below has a place. `creator_check.mjs`
+  (83) drives the real window in headless Chromium.
+- ~~**Stage 2:**~~ the ApplicationV2 window. Left rail of the book's 12
   steps, each done when its choices are made; right column a live sheet
   rendered from `derive()`, with each number's sources on hover; compare-
   then-pick tables; Equip (9), Goals (11) and Status (12) as steps; Create
@@ -17,6 +21,19 @@ retire once the new window covers what they do.
 - **Stage 3:** retire TBE: Character Wizard, Finish Character (its
   post-creation jobs move to the sheet and TBE: Advancement) and Build
   Character, porting their checks first.
+  Also for stage 3:
+  - The macro library's copies of the creation rules (`SKILL_GROUPS`,
+    `applyAbilityScore`, `raiseExpertise`, `talentNamed`, `talentItem`, the
+    Ability Score double) should defer at runtime to the system's
+    `module/chargen/rules.mjs`, keeping their copy only as the fallback.
+    Today the two are held equal by `creator_check.mjs` section 1.
+  - Armour Initiative penalty (Bulk / 3, p.141) on the Equipment step. It is
+    computed in `documents/actor.mjs` and again as a fallback in
+    `actor-sheet.mjs`; the window should call one owner rather than make a
+    third copy, so it shows Bulk only for now.
+  - Play-test the window at a table (V12 and V13+) before the old tools go.
+    The browser check runs it behind a small ApplicationV2 stand-in, not
+    real Foundry.
 
 Roll aids for stage 2 (Seb, 2026-09-27: easing decisions by roll suits the
 table better than strict RAW): keep every "roll it" button the Wizard has

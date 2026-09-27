@@ -1,4 +1,5 @@
 import TheBrokenEmpiresDataModel from "./base-model.mjs";
+import { lethalityLevel } from "../rules/lethality.mjs";
 
 const LOCATIONS = ["body", "rArm", "lArm", "rLeg", "lLeg", "head"];
 
@@ -87,8 +88,7 @@ export default class TheBrokenEmpiresActorBase extends TheBrokenEmpiresDataModel
 
   /** Lethality Level: ceil(Death Threshold / 3), plus any racial bonus, minus any permanent penalty from sepsis. */
   get lethalityLevel() {
-    const dt = this.deathThreshold.max;
-    return dt ? Math.max(0, Math.ceil(dt / 3) + this.lethalityBonus - this.lethalityPenalty) : 0;
+    return lethalityLevel(this.deathThreshold.max, this.lethalityBonus, this.lethalityPenalty);
   }
 
   /** Position on the Size ladder. Medium (the human baseline) is 5. */

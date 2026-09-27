@@ -20,6 +20,7 @@ import * as chatPopups from './helpers/chat-popups.mjs';
 import * as diceRoles from './helpers/dice-roles.mjs';
 import * as memory from './helpers/memory.mjs';
 import * as rollControls from './helpers/roll-controls.mjs';
+import { openCreator } from './chargen/creator.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -34,6 +35,9 @@ Hooks.once('init', function () {
     /* What a user last picked, per user (helpers/memory.mjs). A prefill,
        never a commit. */
     memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
+    /* The character creation window (chargen/creator.mjs, v0.52.0): the
+       book's twelve steps, a live sheet, one Create. */
+    chargen: { open: openCreator },
     /* The Task Modifier / Favor button rows, shared by the sheet's roll
        dialog and the macro pack (helpers/roll-controls.mjs). */
     ui: { taskButtons: rollControls.taskButtons, favorButtons: rollControls.favorButtons,
