@@ -882,7 +882,8 @@ if (!actor) {
         const opts = '<option value="">(none)</option>' + SKILLS[cat].map((n) => '<option value="' + n + '"' + (d.boost[cat] === n ? " selected" : "") + '>' + n + "</option>").join("");
         boosts += '<label style="display:inline-block;width:49%">' + cat + " to 30: <select data-boost-cat=\"" + cat + '" style="width:100%">' + opts + "</select></label>";
       }
-      /* The concept roller. Three independent d10 columns so odd pairings
+      /* The concept roller. Three independent columns, each rolled at its own
+       * size (60 roles, 40 streaks, 40 troubles since v0.51.0), so odd pairings
        * happen on purpose ("Godbound with a casanova streak"). Each column
        * rerolls on its own. The merged skill hints are shown against the
        * four category-30 pickers below, because this is the first step and

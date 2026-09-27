@@ -151,6 +151,16 @@ nothing mechanical, its skill names are suggestions the player confirms.
 Keep that boundary: if new original content is ever needed, give it its own
 file and the same treatment rather than mixing it into a verified one.
 
+**Roll aids are wanted, beyond what the book strictly offers.** Seb's steer
+(2026-09-27): the amended concept table, the roll for age "and other means of
+easing the decisions process via roll fit my purpose better than strictly as
+the rules say", and the concept table should offer many more options (it was
+grown to 60/40/40 in v0.51.0). So a roll that helps a player decide is a
+feature, not a rules deviation, PROVIDED it is labelled as a suggestion or
+original table, the player can always pick by hand instead, and it writes
+nothing mechanical the book does not already allow. `concepts_check.mjs`
+holds the concept table to that.
+
 ## Ownership discipline for shared rules
 
 This project has shipped five separate duplicate-logic bugs across its
@@ -720,6 +730,12 @@ scope at least one pass at the player-facing output itself.
   the Old Vestrian triple Low Vestrian that way). **Book step order is the
   rule**: race before career, the 70 cap at each increase (p.78, p.80).
   Read it before touching chargen maths in either place.
+- `node concepts_check.mjs` — 16 checks over `data/concepts.json`, the
+  original (not book) step-1 concept table. Every skill suggestion must be a
+  real catalogue skill in the category it is filed under, because the Wizard
+  drops an unknown one without a word; rows unique and numbered 1..N; the
+  pieces read as "{role} {streak}, {trouble}"; the Wizard rolls the column's
+  real size. Read it before adding rows.
 - Player-facing transparency: `TBE: Rules Audit` (built from
   `parse_core_rules.py`/`build_rules_audit.py`, see BACKLOG.md's "Player-
   facing transparency" section for what it does and does not cover yet) is

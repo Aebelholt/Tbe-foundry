@@ -39,7 +39,16 @@ extra Expertise on a Bind, a Bind as a Savvy skill, Rounding Out points on
 a custom -wise, and the free Talents. The check lists them; stage 2 is where
 they get a place.
 
-New check: `chargen_parity_check.mjs` (33).
+**The concept roller has far more to roll.** The step-1 table grew from 10
+rows a column to 60 roles, 40 streaks and 40 troubles: 96,000 combinations,
+built from archetypes familiar from fantasy fiction and film ("Disgraced
+knight", "Monster hunter", "Assassin who wants out", "with a smile that
+hides the knife", "carrying a cursed heirloom"). They are written generically,
+with no names taken from any particular work, and every row still suggests
+real skills for the step-1 picks. Like before, the table is original
+content, not the book's, and it sets nothing on its own.
+
+New checks: `chargen_parity_check.mjs` (33), `concepts_check.mjs` (16).
 
 # 0.50.0 — 2026-09-27
 

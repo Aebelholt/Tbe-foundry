@@ -1,48 +1,1190 @@
 {
-  "_provenance": "ORIGINAL CONTENT, NOT FROM THE RULEBOOK. Every other data file in this repo is transcribed and verified verbatim against /tmp/tbe.txt. This one is not: the book asks for a rough concept at step 1 (p.79, 'a single sentence or short phrase... This isn't binding') and gives three examples, but provides no table to generate one. These tables are written to fit the setting and to point at real TBE skill names. They are flavour only. Nothing here writes to a mechanical field; the skill names are shown as SUGGESTIONS for the four category-30 picks on step 1, which the player still chooses. Safe to rewrite wholesale without touching any book-derived rule.",
-  "_format": "Three independent d10 columns, rolled separately so odd pairings happen on purpose. Assembled as: '{role} {streak}, {trouble}'. Each entry may suggest one skill per category; suggestions are merged across the three rolls.",
-  "_bookExamples": [
-    "wandering sellsword haunted by his last command",
-    "young scholar chasing forbidden truths",
-    "runaway noble turned smuggler"
-  ],
-
-  "roles": [
-    { "d10": 1, "text": "Swashbuckler", "skills": { "Combat": "Melee: Light", "Adventuring": "Athletics", "Social": "Wit" } },
-    { "d10": 2, "text": "Sellsword", "skills": { "Combat": "Melee: Medium", "Adventuring": "Endurance", "Lore": "Common Lore" } },
-    { "d10": 3, "text": "Godbound", "skills": { "Social": "Inspire", "Lore": "Divinity", "Adventuring": "Willpower" } },
-    { "d10": 4, "text": "Hedge-scholar", "skills": { "Lore": "Ancient Lore", "Social": "Protocol", "Adventuring": "Perception" } },
-    { "d10": 5, "text": "Cutpurse", "skills": { "Adventuring": "Sleight of Hand", "Lore": "Streetwise", "Combat": "Melee: Light" } },
-    { "d10": 6, "text": "Poacher", "skills": { "Adventuring": "Stealth", "Combat": "Missile", "Lore": "Naturewise" } },
-    { "d10": 7, "text": "Caravan factor", "skills": { "Lore": "Commerce", "Social": "Persuade", "Adventuring": "Ride" } },
-    { "d10": 8, "text": "Ship's rat", "skills": { "Adventuring": "Sail/Boat", "Combat": "Thrown", "Social": "Deceive" } },
-    { "d10": 9, "text": "Bonesetter", "skills": { "Lore": "Heal", "Adventuring": "Perception", "Social": "Insight" } },
-    { "d10": 10, "text": "Hearth-singer", "skills": { "Social": "Perform", "Lore": "Craft: Artistic", "Adventuring": "Willpower" } }
-  ],
-
-  "streaks": [
-    { "d10": 1, "text": "with a casanova streak", "skills": { "Social": "Seduce" } },
-    { "d10": 2, "text": "with a gambler's nerve", "skills": { "Social": "Wit", "Adventuring": "Sleight of Hand" } },
-    { "d10": 3, "text": "who cannot leave a lock alone", "skills": { "Adventuring": "Locks & Traps" } },
-    { "d10": 4, "text": "with an unnerving stare", "skills": { "Social": "Intimidate" } },
-    { "d10": 5, "text": "who talks to things that do not answer", "skills": { "Lore": "Arcana", "Adventuring": "Willpower" } },
-    { "d10": 6, "text": "with a scavenger's eye", "skills": { "Adventuring": "Perception", "Lore": "Craft: Practical" } },
-    { "d10": 7, "text": "who lies more easily than not", "skills": { "Social": "Deceive" } },
-    { "d10": 8, "text": "with a brawler's habits", "skills": { "Combat": "Might" } },
-    { "d10": 9, "text": "who reads people before rooms", "skills": { "Social": "Insight" } },
-    { "d10": 10, "text": "with a horseman's impatience", "skills": { "Adventuring": "Ride", "Combat": "Melee: Heavy" } }
-  ],
-
-  "troubles": [
-    { "d10": 1, "text": "fleeing prosecution", "skills": { "Adventuring": "Stealth", "Lore": "Streetwise" } },
-    { "d10": 2, "text": "haunted by a last command", "skills": { "Adventuring": "Willpower", "Combat": "Melee: Medium" } },
-    { "d10": 3, "text": "chasing a forbidden truth", "skills": { "Lore": "Ancient Lore", "Adventuring": "Perception" } },
-    { "d10": 4, "text": "in debt to the wrong house", "skills": { "Lore": "Commerce", "Social": "Persuade" } },
-    { "d10": 5, "text": "carrying someone else's name", "skills": { "Social": ["Deceive", "Protocol"] } },
-    { "d10": 6, "text": "hunted across three borders", "skills": { "Adventuring": ["Survival", "Track"] } },
-    { "d10": 7, "text": "sworn to a grave", "skills": { "Adventuring": "Willpower", "Lore": "Divinity" } },
-    { "d10": 8, "text": "exiled and not sorry", "skills": { "Social": "Intimidate", "Adventuring": "Endurance" } },
-    { "d10": 9, "text": "looking for the one who lived", "skills": { "Adventuring": "Track", "Social": "Insight" } },
-    { "d10": 10, "text": "one job from getting out", "skills": { "Lore": "Streetwise", "Adventuring": "Sleight of Hand" } }
-  ]
+ "_provenance": "ORIGINAL CONTENT, NOT FROM THE RULEBOOK. Every other data file in this repo is transcribed and verified verbatim against /tmp/tbe.txt. This one is not: the book asks for a rough concept at step 1 (p.79, 'a single sentence or short phrase... This isn't binding') and gives three examples, but provides no table to generate one. These tables are written to fit the setting and to point at real TBE skill names. They are flavour only. Nothing here writes to a mechanical field; the skill names are shown as SUGGESTIONS for the four category-30 picks on step 1, which the player still chooses. Safe to rewrite wholesale without touching any book-derived rule.",
+ "_format": "Three independent columns, each rolled with a die the size of the column (d60, d40, d40), so odd pairings happen on purpose. Assembled as: '{role} {streak}, {trouble}'. Each entry may suggest one skill per category; suggestions are merged across the three rolls. The 'd10' key is the row number, kept under its old name so older saved drafts still read.",
+ "_bookExamples": [
+  "wandering sellsword haunted by his last command",
+  "young scholar chasing forbidden truths",
+  "runaway noble turned smuggler"
+ ],
+ "roles": [
+  {
+   "d10": 1,
+   "text": "Swashbuckler",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Adventuring": "Athletics",
+    "Social": "Wit"
+   }
+  },
+  {
+   "d10": 2,
+   "text": "Sellsword",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Adventuring": "Endurance",
+    "Lore": "Common Lore"
+   }
+  },
+  {
+   "d10": 3,
+   "text": "Godbound",
+   "skills": {
+    "Social": "Inspire",
+    "Lore": "Divinity",
+    "Adventuring": "Willpower"
+   }
+  },
+  {
+   "d10": 4,
+   "text": "Hedge-scholar",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Social": "Protocol",
+    "Adventuring": "Perception"
+   }
+  },
+  {
+   "d10": 5,
+   "text": "Cutpurse",
+   "skills": {
+    "Adventuring": "Sleight of Hand",
+    "Lore": "Streetwise",
+    "Combat": "Melee: Light"
+   }
+  },
+  {
+   "d10": 6,
+   "text": "Poacher",
+   "skills": {
+    "Adventuring": "Stealth",
+    "Combat": "Missile",
+    "Lore": "Naturewise"
+   }
+  },
+  {
+   "d10": 7,
+   "text": "Caravan factor",
+   "skills": {
+    "Lore": "Commerce",
+    "Social": "Persuade",
+    "Adventuring": "Ride"
+   }
+  },
+  {
+   "d10": 8,
+   "text": "Ship's rat",
+   "skills": {
+    "Adventuring": "Sail/Boat",
+    "Combat": "Thrown",
+    "Social": "Deceive"
+   }
+  },
+  {
+   "d10": 9,
+   "text": "Bonesetter",
+   "skills": {
+    "Lore": "Heal",
+    "Adventuring": "Perception",
+    "Social": "Insight"
+   }
+  },
+  {
+   "d10": 10,
+   "text": "Hearth-singer",
+   "skills": {
+    "Social": "Perform",
+    "Lore": "Craft: Artistic",
+    "Adventuring": "Willpower"
+   }
+  },
+  {
+   "text": "Disgraced knight",
+   "skills": {
+    "Combat": "Melee: Heavy",
+    "Social": "Protocol",
+    "Adventuring": "Ride"
+   },
+   "d10": 11
+  },
+  {
+   "text": "Reluctant heir",
+   "skills": {
+    "Social": "Protocol",
+    "Lore": "Common Lore",
+    "Adventuring": "Willpower"
+   },
+   "d10": 12
+  },
+  {
+   "text": "Last of a fallen order",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Lore": "Ancient Lore",
+    "Adventuring": "Willpower"
+   },
+   "d10": 13
+  },
+  {
+   "text": "Gentleman thief",
+   "skills": {
+    "Adventuring": "Locks & Traps",
+    "Social": "Seduce",
+    "Lore": "Streetwise"
+   },
+   "d10": 14
+  },
+  {
+   "text": "Monster hunter",
+   "skills": {
+    "Combat": "Missile",
+    "Adventuring": "Track",
+    "Lore": "Naturewise"
+   },
+   "d10": 15
+  },
+  {
+   "text": "Nameless wandering blade",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Adventuring": "Survival",
+    "Social": "Intimidate"
+   },
+   "d10": 16
+  },
+  {
+   "text": "Tomb robber",
+   "skills": {
+    "Adventuring": "Locks & Traps",
+    "Lore": "Ancient Lore",
+    "Combat": "Dodge"
+   },
+   "d10": 17
+  },
+  {
+   "text": "Pit fighter",
+   "skills": {
+    "Combat": "Might",
+    "Adventuring": "Endurance",
+    "Social": "Intimidate"
+   },
+   "d10": 18
+  },
+  {
+   "text": "Plague doctor",
+   "skills": {
+    "Lore": "Heal",
+    "Adventuring": "Endurance",
+    "Social": "Insight"
+   },
+   "d10": 19
+  },
+  {
+   "text": "Hedge witch",
+   "skills": {
+    "Lore": "Naturewise",
+    "Social": "Insight",
+    "Adventuring": "Survival"
+   },
+   "d10": 20
+  },
+  {
+   "text": "Court spy",
+   "skills": {
+    "Social": "Deceive",
+    "Adventuring": "Stealth",
+    "Lore": "Streetwise"
+   },
+   "d10": 21
+  },
+  {
+   "text": "Runaway noble",
+   "skills": {
+    "Social": "Protocol",
+    "Adventuring": "Ride",
+    "Lore": "Common Lore"
+   },
+   "d10": 22
+  },
+  {
+   "text": "Old legionary",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Adventuring": "Endurance",
+    "Social": "Inspire"
+   },
+   "d10": 23
+  },
+  {
+   "text": "Smuggler captain",
+   "skills": {
+    "Adventuring": "Sail/Boat",
+    "Lore": "Commerce",
+    "Social": "Deceive"
+   },
+   "d10": 24
+  },
+  {
+   "text": "Travelling tinker",
+   "skills": {
+    "Lore": "Craft: Practical",
+    "Social": "Persuade",
+    "Adventuring": "Perception"
+   },
+   "d10": 25
+  },
+  {
+   "text": "Duelist",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Social": "Wit",
+    "Adventuring": "Athletics"
+   },
+   "d10": 26
+  },
+  {
+   "text": "Masked avenger",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Adventuring": "Stealth",
+    "Social": "Intimidate"
+   },
+   "d10": 27
+  },
+  {
+   "text": "Beast-tamer",
+   "skills": {
+    "Adventuring": "Ride",
+    "Lore": "Naturewise",
+    "Social": "Insight"
+   },
+   "d10": 28
+  },
+  {
+   "text": "Cartographer",
+   "skills": {
+    "Adventuring": "Survival",
+    "Lore": "Common Lore",
+    "Combat": "Missile"
+   },
+   "d10": 29
+  },
+  {
+   "text": "Faded aristocrat",
+   "skills": {
+    "Social": "Protocol",
+    "Lore": "Commerce",
+    "Adventuring": "Willpower"
+   },
+   "d10": 30
+  },
+  {
+   "text": "Sworn bodyguard",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Adventuring": "Perception",
+    "Social": "Intimidate"
+   },
+   "d10": 31
+  },
+  {
+   "text": "Assassin who wants out",
+   "skills": {
+    "Combat": "Thrown",
+    "Adventuring": "Stealth",
+    "Social": "Deceive"
+   },
+   "d10": 32
+  },
+  {
+   "text": "Street urchin",
+   "skills": {
+    "Adventuring": "Sleight of Hand",
+    "Lore": "Streetwise",
+    "Combat": "Dodge"
+   },
+   "d10": 33
+  },
+  {
+   "text": "Wizard's apprentice",
+   "skills": {
+    "Lore": "Arcana",
+    "Adventuring": "Willpower",
+    "Social": "Wit"
+   },
+   "d10": 34
+  },
+  {
+   "text": "Inquisitor",
+   "skills": {
+    "Social": "Intimidate",
+    "Lore": "Divinity",
+    "Adventuring": "Perception"
+   },
+   "d10": 35
+  },
+  {
+   "text": "Forester",
+   "skills": {
+    "Combat": "Missile",
+    "Adventuring": "Track",
+    "Lore": "Naturewise"
+   },
+   "d10": 36
+  },
+  {
+   "text": "Mercenary captain",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Social": "Inspire",
+    "Lore": "Commerce"
+   },
+   "d10": 37
+  },
+  {
+   "text": "Charlatan prophet",
+   "skills": {
+    "Social": "Deceive",
+    "Lore": "Divinity",
+    "Adventuring": "Sleight of Hand"
+   },
+   "d10": 38
+  },
+  {
+   "text": "Retired hero",
+   "skills": {
+    "Combat": "Melee: Heavy",
+    "Social": "Inspire",
+    "Adventuring": "Willpower"
+   },
+   "d10": 39
+  },
+  {
+   "text": "Shieldmaiden",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Adventuring": "Athletics",
+    "Social": "Intimidate"
+   },
+   "d10": 40
+  },
+  {
+   "text": "Fence",
+   "skills": {
+    "Lore": "Commerce",
+    "Social": "Persuade",
+    "Adventuring": "Perception"
+   },
+   "d10": 41
+  },
+  {
+   "text": "Siege engineer",
+   "skills": {
+    "Lore": "Craft: Practical",
+    "Combat": "Missile",
+    "Adventuring": "Endurance"
+   },
+   "d10": 42
+  },
+  {
+   "text": "Grave-warden",
+   "skills": {
+    "Lore": "Divinity",
+    "Adventuring": "Willpower",
+    "Combat": "Melee: Heavy"
+   },
+   "d10": 43
+  },
+  {
+   "text": "Cult escapee",
+   "skills": {
+    "Adventuring": "Stealth",
+    "Lore": "Arcana",
+    "Social": "Insight"
+   },
+   "d10": 44
+  },
+  {
+   "text": "Herald",
+   "skills": {
+    "Social": "Protocol",
+    "Adventuring": "Ride",
+    "Lore": "Common Lore"
+   },
+   "d10": 45
+  },
+  {
+   "text": "Headhunter",
+   "skills": {
+    "Combat": "Thrown",
+    "Adventuring": "Track",
+    "Social": "Intimidate"
+   },
+   "d10": 46
+  },
+  {
+   "text": "Chronicler",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Social": "Insight",
+    "Adventuring": "Perception"
+   },
+   "d10": 47
+  },
+  {
+   "text": "Wrecker",
+   "skills": {
+    "Adventuring": "Sail/Boat",
+    "Combat": "Might",
+    "Lore": "Streetwise"
+   },
+   "d10": 48
+  },
+  {
+   "text": "Minstrel-spy",
+   "skills": {
+    "Social": "Perform",
+    "Adventuring": "Stealth",
+    "Lore": "Streetwise"
+   },
+   "d10": 49
+  },
+  {
+   "text": "Hunter of men",
+   "skills": {
+    "Adventuring": "Track",
+    "Combat": "Missile",
+    "Social": "Intimidate"
+   },
+   "d10": 50
+  },
+  {
+   "text": "Barber-surgeon",
+   "skills": {
+    "Lore": "Heal",
+    "Combat": "Melee: Light",
+    "Social": "Wit"
+   },
+   "d10": 51
+  },
+  {
+   "text": "Pilgrim",
+   "skills": {
+    "Lore": "Divinity",
+    "Adventuring": "Endurance",
+    "Social": "Persuade"
+   },
+   "d10": 52
+  },
+  {
+   "text": "Rat-catcher",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Adventuring": "Stealth",
+    "Lore": "Streetwise"
+   },
+   "d10": 53
+  },
+  {
+   "text": "Horse thief",
+   "skills": {
+    "Adventuring": "Ride",
+    "Combat": "Missile",
+    "Social": "Deceive"
+   },
+   "d10": 54
+  },
+  {
+   "text": "Temple guard",
+   "skills": {
+    "Combat": "Melee: Heavy",
+    "Lore": "Divinity",
+    "Adventuring": "Perception"
+   },
+   "d10": 55
+  },
+  {
+   "text": "Deserter",
+   "skills": {
+    "Adventuring": "Survival",
+    "Combat": "Melee: Medium",
+    "Social": "Deceive"
+   },
+   "d10": 56
+  },
+  {
+   "text": "Alchemist",
+   "skills": {
+    "Lore": "Arcana",
+    "Adventuring": "Perception",
+    "Social": "Persuade"
+   },
+   "d10": 57
+  },
+  {
+   "text": "Gladiator's widow",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Social": "Seduce",
+    "Adventuring": "Willpower"
+   },
+   "d10": 58
+  },
+  {
+   "text": "Tax collector",
+   "skills": {
+    "Lore": "Commerce",
+    "Social": "Intimidate",
+    "Adventuring": "Perception"
+   },
+   "d10": 59
+  },
+  {
+   "text": "Wild child",
+   "skills": {
+    "Adventuring": "Survival",
+    "Combat": "Thrown",
+    "Lore": "Naturewise"
+   },
+   "d10": 60
+  }
+ ],
+ "streaks": [
+  {
+   "d10": 1,
+   "text": "with a casanova streak",
+   "skills": {
+    "Social": "Seduce"
+   }
+  },
+  {
+   "d10": 2,
+   "text": "with a gambler's nerve",
+   "skills": {
+    "Social": "Wit",
+    "Adventuring": "Sleight of Hand"
+   }
+  },
+  {
+   "d10": 3,
+   "text": "who cannot leave a lock alone",
+   "skills": {
+    "Adventuring": "Locks & Traps"
+   }
+  },
+  {
+   "d10": 4,
+   "text": "with an unnerving stare",
+   "skills": {
+    "Social": "Intimidate"
+   }
+  },
+  {
+   "d10": 5,
+   "text": "who talks to things that do not answer",
+   "skills": {
+    "Lore": "Arcana",
+    "Adventuring": "Willpower"
+   }
+  },
+  {
+   "d10": 6,
+   "text": "with a scavenger's eye",
+   "skills": {
+    "Adventuring": "Perception",
+    "Lore": "Craft: Practical"
+   }
+  },
+  {
+   "d10": 7,
+   "text": "who lies more easily than not",
+   "skills": {
+    "Social": "Deceive"
+   }
+  },
+  {
+   "d10": 8,
+   "text": "with a brawler's habits",
+   "skills": {
+    "Combat": "Might"
+   }
+  },
+  {
+   "d10": 9,
+   "text": "who reads people before rooms",
+   "skills": {
+    "Social": "Insight"
+   }
+  },
+  {
+   "d10": 10,
+   "text": "with a horseman's impatience",
+   "skills": {
+    "Adventuring": "Ride",
+    "Combat": "Melee: Heavy"
+   }
+  },
+  {
+   "text": "with a hero's luck",
+   "skills": {
+    "Adventuring": "Athletics",
+    "Social": "Inspire"
+   },
+   "d10": 11
+  },
+  {
+   "text": "who never forgets a slight",
+   "skills": {
+    "Social": "Insight",
+    "Adventuring": "Willpower"
+   },
+   "d10": 12
+  },
+  {
+   "text": "with a price for everything",
+   "skills": {
+    "Lore": "Commerce",
+    "Social": "Persuade"
+   },
+   "d10": 13
+  },
+  {
+   "text": "who hums while they kill",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Social": "Perform"
+   },
+   "d10": 14
+  },
+  {
+   "text": "with a soft spot for strays",
+   "skills": {
+    "Lore": "Heal",
+    "Adventuring": "Survival"
+   },
+   "d10": 15
+  },
+  {
+   "text": "who trusts the dice over people",
+   "skills": {
+    "Social": "Wit",
+    "Adventuring": "Sleight of Hand"
+   },
+   "d10": 16
+  },
+  {
+   "text": "with a noble's manners and a gutter's mouth",
+   "skills": {
+    "Social": "Protocol",
+    "Lore": "Streetwise"
+   },
+   "d10": 17
+  },
+  {
+   "text": "who has read too many old books",
+   "skills": {
+    "Lore": "Ancient Lore"
+   },
+   "d10": 18
+  },
+  {
+   "text": "with a temper like dry kindling",
+   "skills": {
+    "Combat": "Might",
+    "Social": "Intimidate"
+   },
+   "d10": 19
+  },
+  {
+   "text": "who sees omens in everything",
+   "skills": {
+    "Lore": "Divinity",
+    "Adventuring": "Perception"
+   },
+   "d10": 20
+  },
+  {
+   "text": "with a thief's fingers",
+   "skills": {
+    "Adventuring": "Sleight of Hand"
+   },
+   "d10": 21
+  },
+  {
+   "text": "who can't refuse a dare",
+   "skills": {
+    "Adventuring": "Athletics",
+    "Social": "Wit"
+   },
+   "d10": 22
+  },
+  {
+   "text": "with a scholar's patience",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Adventuring": "Willpower"
+   },
+   "d10": 23
+  },
+  {
+   "text": "who charms their way out",
+   "skills": {
+    "Social": "Seduce",
+    "Adventuring": "Ride"
+   },
+   "d10": 24
+  },
+  {
+   "text": "with a veteran's calm",
+   "skills": {
+    "Adventuring": "Willpower",
+    "Combat": "Dodge"
+   },
+   "d10": 25
+  },
+  {
+   "text": "who keeps a ledger of debts",
+   "skills": {
+    "Lore": "Commerce",
+    "Social": "Insight"
+   },
+   "d10": 26
+  },
+  {
+   "text": "with a poet's tongue",
+   "skills": {
+    "Social": "Perform",
+    "Lore": "Common Lore"
+   },
+   "d10": 27
+  },
+  {
+   "text": "who sleeps with a knife",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Adventuring": "Perception"
+   },
+   "d10": 28
+  },
+  {
+   "text": "with a hunter's patience",
+   "skills": {
+    "Adventuring": "Track",
+    "Combat": "Missile"
+   },
+   "d10": 29
+  },
+  {
+   "text": "who prays loudly and often",
+   "skills": {
+    "Lore": "Divinity",
+    "Social": "Inspire"
+   },
+   "d10": 30
+  },
+  {
+   "text": "with a sailor's superstitions",
+   "skills": {
+    "Adventuring": "Sail/Boat",
+    "Lore": "Divinity"
+   },
+   "d10": 31
+  },
+  {
+   "text": "who never takes off the mask",
+   "skills": {
+    "Social": "Deceive",
+    "Adventuring": "Stealth"
+   },
+   "d10": 32
+  },
+  {
+   "text": "with a smile that hides the knife",
+   "skills": {
+    "Social": "Deceive",
+    "Combat": "Thrown"
+   },
+   "d10": 33
+  },
+  {
+   "text": "who laughs at the wrong moments",
+   "skills": {
+    "Social": "Wit"
+   },
+   "d10": 34
+  },
+  {
+   "text": "with a gift for tongues",
+   "skills": {
+    "Social": "Persuade",
+    "Lore": "Common Lore"
+   },
+   "d10": 35
+  },
+  {
+   "text": "who follows the old ways",
+   "skills": {
+    "Lore": "Naturewise",
+    "Adventuring": "Survival"
+   },
+   "d10": 36
+  },
+  {
+   "text": "with a head for machines",
+   "skills": {
+    "Lore": "Craft: Practical"
+   },
+   "d10": 37
+  },
+  {
+   "text": "who collects trophies",
+   "skills": {
+    "Combat": "Thrown",
+    "Adventuring": "Track"
+   },
+   "d10": 38
+  },
+  {
+   "text": "with a bleeding heart",
+   "skills": {
+    "Lore": "Heal",
+    "Social": "Persuade"
+   },
+   "d10": 39
+  },
+  {
+   "text": "who counts every coin twice",
+   "skills": {
+    "Lore": "Commerce",
+    "Adventuring": "Perception"
+   },
+   "d10": 40
+  }
+ ],
+ "troubles": [
+  {
+   "d10": 1,
+   "text": "fleeing prosecution",
+   "skills": {
+    "Adventuring": "Stealth",
+    "Lore": "Streetwise"
+   }
+  },
+  {
+   "d10": 2,
+   "text": "haunted by a last command",
+   "skills": {
+    "Adventuring": "Willpower",
+    "Combat": "Melee: Medium"
+   }
+  },
+  {
+   "d10": 3,
+   "text": "chasing a forbidden truth",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Adventuring": "Perception"
+   }
+  },
+  {
+   "d10": 4,
+   "text": "in debt to the wrong house",
+   "skills": {
+    "Lore": "Commerce",
+    "Social": "Persuade"
+   }
+  },
+  {
+   "d10": 5,
+   "text": "carrying someone else's name",
+   "skills": {
+    "Social": [
+     "Deceive",
+     "Protocol"
+    ]
+   }
+  },
+  {
+   "d10": 6,
+   "text": "hunted across three borders",
+   "skills": {
+    "Adventuring": [
+     "Survival",
+     "Track"
+    ]
+   }
+  },
+  {
+   "d10": 7,
+   "text": "sworn to a grave",
+   "skills": {
+    "Adventuring": "Willpower",
+    "Lore": "Divinity"
+   }
+  },
+  {
+   "d10": 8,
+   "text": "exiled and not sorry",
+   "skills": {
+    "Social": "Intimidate",
+    "Adventuring": "Endurance"
+   }
+  },
+  {
+   "d10": 9,
+   "text": "looking for the one who lived",
+   "skills": {
+    "Adventuring": "Track",
+    "Social": "Insight"
+   }
+  },
+  {
+   "d10": 10,
+   "text": "one job from getting out",
+   "skills": {
+    "Lore": "Streetwise",
+    "Adventuring": "Sleight of Hand"
+   }
+  },
+  {
+   "text": "sworn to avenge a murdered family",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Adventuring": "Track"
+   },
+   "d10": 11
+  },
+  {
+   "text": "carrying a cursed heirloom",
+   "skills": {
+    "Lore": "Arcana",
+    "Adventuring": "Willpower"
+   },
+   "d10": 12
+  },
+  {
+   "text": "wanted for a crime they did commit",
+   "skills": {
+    "Adventuring": "Stealth",
+    "Social": "Deceive"
+   },
+   "d10": 13
+  },
+  {
+   "text": "wanted for a crime they did not commit",
+   "skills": {
+    "Social": "Persuade",
+    "Lore": "Streetwise"
+   },
+   "d10": 14
+  },
+  {
+   "text": "hiding a bloodline someone wants ended",
+   "skills": {
+    "Social": "Protocol",
+    "Adventuring": "Stealth"
+   },
+   "d10": 15
+  },
+  {
+   "text": "owing their life to a monster",
+   "skills": {
+    "Lore": "Arcana",
+    "Social": "Insight"
+   },
+   "d10": 16
+  },
+  {
+   "text": "marked by a prophecy they do not believe",
+   "skills": {
+    "Lore": "Divinity",
+    "Adventuring": "Willpower"
+   },
+   "d10": 17
+  },
+  {
+   "text": "searching for a lost sibling",
+   "skills": {
+    "Adventuring": "Track",
+    "Social": "Insight"
+   },
+   "d10": 18
+  },
+  {
+   "text": "bound by a promise to the dying",
+   "skills": {
+    "Adventuring": "Willpower",
+    "Lore": "Heal"
+   },
+   "d10": 19
+  },
+  {
+   "text": "betrayed by their own company",
+   "skills": {
+    "Combat": "Melee: Medium",
+    "Social": "Insight"
+   },
+   "d10": 20
+  },
+  {
+   "text": "the last witness to a massacre",
+   "skills": {
+    "Adventuring": "Stealth",
+    "Lore": "Common Lore"
+   },
+   "d10": 21
+  },
+  {
+   "text": "pursued by a jilted lover",
+   "skills": {
+    "Social": "Seduce",
+    "Adventuring": "Ride"
+   },
+   "d10": 22
+  },
+  {
+   "text": "heir to a ruined house",
+   "skills": {
+    "Social": "Protocol",
+    "Lore": "Commerce"
+   },
+   "d10": 23
+  },
+  {
+   "text": "hunted by the church they served",
+   "skills": {
+    "Lore": "Divinity",
+    "Adventuring": "Stealth"
+   },
+   "d10": 24
+  },
+  {
+   "text": "holding a map to something buried",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Adventuring": "Survival"
+   },
+   "d10": 25
+  },
+  {
+   "text": "haunted by a ghost only they can see",
+   "skills": {
+    "Lore": "Arcana",
+    "Adventuring": "Willpower"
+   },
+   "d10": 26
+  },
+  {
+   "text": "carrying a letter they must not read",
+   "skills": {
+    "Social": "Protocol",
+    "Adventuring": "Ride"
+   },
+   "d10": 27
+  },
+  {
+   "text": "with a bounty that grows every season",
+   "skills": {
+    "Adventuring": "Stealth",
+    "Combat": "Dodge"
+   },
+   "d10": 28
+  },
+  {
+   "text": "owing a favour to a crime lord",
+   "skills": {
+    "Lore": "Streetwise",
+    "Social": "Deceive"
+   },
+   "d10": 29
+  },
+  {
+   "text": "looking for the teacher who vanished",
+   "skills": {
+    "Lore": "Arcana",
+    "Adventuring": "Track"
+   },
+   "d10": 30
+  },
+  {
+   "text": "sole survivor of a doomed expedition",
+   "skills": {
+    "Adventuring": "Survival",
+    "Lore": "Naturewise"
+   },
+   "d10": 31
+  },
+  {
+   "text": "pretending to be someone else",
+   "skills": {
+    "Social": "Deceive",
+    "Lore": "Common Lore"
+   },
+   "d10": 32
+  },
+  {
+   "text": "dying slowly and telling no one",
+   "skills": {
+    "Adventuring": "Endurance",
+    "Lore": "Heal"
+   },
+   "d10": 33
+  },
+  {
+   "text": "promised in marriage to an enemy",
+   "skills": {
+    "Social": "Protocol",
+    "Adventuring": "Ride"
+   },
+   "d10": 34
+  },
+  {
+   "text": "keeper of a stolen relic",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Adventuring": "Stealth"
+   },
+   "d10": 35
+  },
+  {
+   "text": "in thrall to a pact they regret",
+   "skills": {
+    "Lore": "Arcana",
+    "Social": "Persuade"
+   },
+   "d10": 36
+  },
+  {
+   "text": "hounded by an old rival",
+   "skills": {
+    "Combat": "Melee: Light",
+    "Social": "Wit"
+   },
+   "d10": 37
+  },
+  {
+   "text": "trying to buy back their freedom",
+   "skills": {
+    "Lore": "Commerce",
+    "Adventuring": "Endurance"
+   },
+   "d10": 38
+  },
+  {
+   "text": "chasing a legend no one else believes",
+   "skills": {
+    "Lore": "Ancient Lore",
+    "Social": "Persuade"
+   },
+   "d10": 39
+  },
+  {
+   "text": "on the run from their own army",
+   "skills": {
+    "Adventuring": "Survival",
+    "Combat": "Melee: Medium"
+   },
+   "d10": 40
+  }
+ ],
+ "_sources": "Archetypes familiar from fantasy fiction and film, written generically: no character, place or phrase is taken from any particular work."
 }

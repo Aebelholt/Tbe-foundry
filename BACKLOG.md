@@ -18,6 +18,13 @@ retire once the new window covers what they do.
   post-creation jobs move to the sheet and TBE: Advancement) and Build
   Character, porting their checks first.
 
+Roll aids for stage 2 (Seb, 2026-09-27: easing decisions by roll suits the
+table better than strict RAW): keep every "roll it" button the Wizard has
+(race, culture, Human homeland, life events, concept, age) and look for more
+places a roll can suggest instead of a blank choice, e.g. Ability Score
+picks, the Talent picks, Personality Traits, a name. Always a suggestion the
+player can override, labelled when the table is original.
+
 Gaps the Hadrion example exposed, for stage 2 to give a place: the Human's
 extra Expertise on any skill including a Bind (p.108 gives Hadrion Ex3 Bind:
 Control); a Bind as a Savvy pick; Rounding Out points on a custom -wise;

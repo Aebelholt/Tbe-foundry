@@ -820,10 +820,14 @@ const conceptRollable = await page.evaluate(async () => {
   /* The roller must include the added row on the very next roll, and roll the
      column's real length rather than a hardcoded d10. */
   const w = window.__wizard;
+  /* Roll until the custom row comes up. 40 rolls were enough for a 10-row
+     column; since v0.51.0 the column has 60 rows plus this one, so a fixed
+     count turned into a coin toss. The harness die is seeded, so this is
+     still deterministic; the cap only stops a broken roller looping. */
   const lens = [];
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 600 && !lens.includes("fallen inquisitor"); i++) {
     w.element.querySelector('[data-action="roll-concept-col"][data-col="role"]').click();
-    await new Promise((r) => setTimeout(r, 12));
+    await new Promise((r) => setTimeout(r, 4));
     const pick = w.draft.conceptPicks.role;
     if (pick) lens.push(pick.text);
   }
