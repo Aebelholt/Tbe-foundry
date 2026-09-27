@@ -257,7 +257,8 @@ console.log("\n5. The sheet: carry picker and roll dialog");
 console.log("\n6. The Character Wizard keeps its draft");
 {
   const w = cmd("TBE: Character Wizard");
-  check(/TBE\.remember\("wizardDraft", this\.actor\.id, this\._snapshot\(\)\)/.test(w), "the draft is saved on the user, keyed by the actor");
+  check(/TBE\.remember\("wizardDraft", this\.actor\.id, untouched \? null : this\._snapshot\(\)\)/.test(w),
+    "the draft is saved on the user, keyed by the actor (and an untouched one is not)");
   check(/activateListeners\(html\) \{[\s\S]{0,400}this\._saveDraft\(\)/.test(w), "after every page change");
   check(/async close\(options\) \{[\s\S]{0,400}this\._readCurrentStep\(el\)[\s\S]{0,120}this\._saveDraft\(\)/.test(w),
     "and on close, after reading the page being left");
