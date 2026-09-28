@@ -1,3 +1,12 @@
+## Character Creator v0.7.0 — checked 2026-09-28, held for next batch
+
+Vasco Brown's Creator v0.7.0 (2026-09-26, shared to Seb's Drive) has the
+same Character Sheet layout as v0.6.5, 78 x 19, every label in place; the
+converter reads it unchanged. Two converter bugs found on the way, both
+present for v0.6.5 too: an untouched "Native Languge" slot imported under the
+typo, and a Savvy "*" on a Strand name was kept. Fixed, with the v0.7.0 blank
+as a second fixture (`sheet_exchange_check.mjs` 6b).
+
 ## Oracle import — done in v0.55.0, 2026-09-27
 
 Seb asked to use his Mythic Magazine Compilation transcription (JSON).

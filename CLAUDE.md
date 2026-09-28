@@ -694,7 +694,9 @@ scope at least one pass at the player-facing output itself.
   claims: export then import the same CSV plans no change, and fill the real
   PDF then read it back plans no change. Section 8 needs the blank PDF
   (TBE_SHEET_PDF); it is the publisher's and is NOT committed. The Creator
-  fixture is `test-fixtures/creator_v065_character_sheet.csv`. Import never
+  fixtures are `test-fixtures/creator_v065_character_sheet.csv` and
+  `creator_v070_character_sheet.csv` (v0.7.0, 2026-09-26: same layout, and
+  section 6b fails if any structural label moves between them). Import never
   deletes, never guesses a skill group, and never approximates a name.
 - `node boot_check.mjs [dir]` — 45 checks that the system STARTS. Imports the
   real entry module against stubbed Foundry globals, runs `init` on both

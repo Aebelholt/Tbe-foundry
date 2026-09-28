@@ -167,6 +167,39 @@ console.log("\n6. The Character Creator v0.6.5 \"Character Sheet\" tab");
   check(C.detect(C.toCsv(broken)) !== "creator" && C.fromCreator(broken).rows === null, "a moved heading (A28) refuses the whole file");
 }
 
+console.log("\n6b. The Character Creator v0.7.0 (2026-09-26): same layout");
+{
+  const v6 = C.parse(readFileSync("test-fixtures/creator_v065_character_sheet.csv", "utf8"), true);
+  const csv = readFileSync("test-fixtures/creator_v070_character_sheet.csv", "utf8");
+  const v7 = C.parse(csv, true);
+  /* Every cell that is not data (a number, TRUE/FALSE, blank) in the v0.6.5
+     fixture's structural rows must read the same in v0.7.0. Character content
+     (names, picks, Life Events) differs and is excluded by position. */
+  const data = (v) => v === "" || /^-?\d+(\.\d+)?$/.test(v) || /^(TRUE|FALSE)$/.test(v);
+  const content = (r, c) => (c === 1 && r < 26) || c === 17 || (r >= 12 && r <= 13 && c <= 1) || (r >= 28 && r <= 38) || r >= 40
+    || ([2, 11, 20].includes(r) && [9, 14].includes(c));
+  const moved = [];
+  for (let r = 0; r < 40; r++) for (let c = 0; c < 19; c++) {
+    const a = (v6[r] || [])[c] ?? "", b = (v7[r] || [])[c] ?? "";
+    if (a !== b && !(data(a) && data(b)) && !content(r, c)) moved.push(r + 1 + ":" + c + " " + a + " -> " + b);
+  }
+  check(!moved.length, "no structural label moved between v0.6.5 and v0.7.0", moved);
+  check(v6.length === v7.length && Math.max(...v7.map((r) => r.length)) === 19, "same grid: 78 rows by 19 columns");
+  check(C.detect(csv) === "creator", "v0.7.0 is recognised as the Creator layout");
+  const conv = C.fromCreator(v7);
+  const find = (sec, name) => conv.rows.find((r) => r[0] === sec && r[1] === name);
+  check(find("actor", "race")?.[2] === "Ogre" && find("skill", "Might")?.[2] === "35" && find("skill", "Endurance")?.[2] === "45", "an Ogre reads its race and race-adjusted skills");
+  check(find("skill", "Native Language")?.[2] === "70" && !conv.rows.some((r) => /Languge/.test(r[1]))
+    && conv.problems.some((p) => /native language is not named/.test(p)), "the unnamed \"Native Languge\" slot keeps its 70 under a clean name, and says so", conv.problems);
+  check(find("skill", "Low Vestrian")?.[2] === "20", "a named language still imports as itself");
+  /* The Strands column appends "*" for Savvy like every other column. */
+  const starred = C.parse(csv, true); starred[28][17] = "Air*"; starred[28][18] = "2";
+  const s2 = C.fromCreator(starred);
+  check(s2.rows.some((r) => r[0] === "strand" && r[1] === "Air" && r[2] === "2") && !s2.rows.some((r) => r[1] === "Air*"), "a Savvy-marked Strand (\"Air*\") imports as Air");
+  const v6c = C.fromCreator(v6);
+  check(!v6c.problems.some((p) => /native language/.test(p)), "a named native language (Gael) is not reported");
+}
+
 console.log("\n7. Names from other sheets resolve to the compendium, or are reported");
 {
   const eq = JSON.parse(readFileSync("data/equipment_docs.json", "utf8"));

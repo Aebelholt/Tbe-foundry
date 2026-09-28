@@ -1,0 +1,78 @@
+Identity,,,Wounds,,,,Body (1-5),,,,,Head (0),,,,,Talents,
+Name,,,Total Lethal WP,,0,,T?,AP,Armor,Sund,Bulk,T?,AP,Armor,Sund,Bulk,,
+Race,Ogre,,Base Recovery,,45,,,,,,,,,,,,,
+Sex,,,Shock?,,FALSE,,WP,NL?,Wounds,INF,RB,WP,NL?,Wounds,INF,RB,,
+"Age, Relative",Young,,Rounds Dying,,,,,FALSE,,,,,FALSE,,,,,
+Age in Years,,,Shield,,,,,FALSE,,,,,FALSE,,,,,
+Cultural Background,,,NONE,,,,,FALSE,,,,,FALSE,,,,,
+Region of Origin,,,Armor Points,,0,,,FALSE,,,,,FALSE,,,,,
+Previous Career,,,Shield Bash,,0,,,FALSE,,,,,FALSE,,,,,
+Size,,,Encumberance,,0,,Right Arm (6),,,,,Left Arm (7),,,,,,
+XP,0,,Split?,,FALSE,,T?,AP,Armor,Sund,Bulk,T?,AP,Armor,Sund,Bulk,,
+Ability Score,Descriptor,,Armor Penalties,,,,,,,,,,,,,,,
+Strength,Muscled,,Athletics,,0,,WP,NL?,Wounds,INF,RB,WP,NL?,Wounds,INF,RB,,
+Constitution,Tough,,Rise from Prone,,0,,,FALSE,,,,,FALSE,,,,,
+Personality Traits,,,Stealth,,0,,,FALSE,,,,,FALSE,,,,,
+CHOOSE ONE,,,Dodge,,0,,,FALSE,,,,,FALSE,,,,,
+CHOOSE ONE,,,Perception,,0,,,FALSE,,,,,FALSE,,,,,
+CHOOSE ONE,,,Resources,,,,,FALSE,,,,,FALSE,,,,,
+Attributes,,,Gear Die,,,,Right Leg (8),,,,,Left Leg (9),,,,,,
+Max Resolve,10,,Ammo Die,,,,T?,AP,Armor,Sund,Bulk,T?,AP,Armor,Sund,Bulk,,
+Initative,10,,Rations Die,,,,,,,,,,0,,,,,
+Initiative Penalty,0,,Medical Die,,,,WP,NL?,Wounds,INF,RB,WP,NL?,Wounds,INF,RB,,
+Initiative Total,10,,Silver Pieces,,,,,FALSE,,,,,FALSE,,,,,
+Toughness,1,,Status,,,,,FALSE,,,,,FALSE,,,,,
+Death Threshold,23,,,,,,,FALSE,,,,,FALSE,,,,,
+Lethality Level,8,,,,,,,FALSE,,,,,FALSE,,,,Fraying,
+,,,,,,,,FALSE,,,,,FALSE,,,,Points,
+Combat,%,EX,Adventuring,%,EX,Social,%,EX,Lore,%,EX,Binds,,,%,EX,Strands,Lvl
+Dodge,20,0,Athletics,5,0,Decieve,20,0,Ancient Lore,20,0,Change,,,0,0,Air,0
+Melee: Light,0,0,Endurance,45,0,Insight,20,0,Arcana,20,0,Conjure,,,0,0,Beast,0
+Melee: Medium,25,0,Locks & Traps,20,0,Inspire,20,0,Commerce,20,0,Control,,,0,0,Body,0
+Melee: Heavy,25,0,Perception,20,0,Intimidate,25,0,Common Lore,20,0,Destroy,,,0,0,Earth,0
+Might,35,0,Ride,20,0,Perform,20,0,Craft: Practical,25,0,Witness,,,0,0,Fire,0
+Missile,20,0,Sail/Boat,25,0,Persuade,20,0,Craft: Artistic,20,0,Language,,,%,EX,Plant,0
+Thrown,25,0,Slight of Hand,20,0,Protocol,20,0,Divinity,20,0,Native Languge,,,70,0,Spheres,0
+,,,Stealth,0,0,Seduce,20,0,Heal,20,0,Low Vestrian,,,20,0,Spirit,0
+,,,Survival,25,0,Wit,20,0,Naturewise,20,0,n/a,,,0,0,Thought,0
+,,,Track,25,0,,,,Streetwise,20,0,__________-Wise,,,20,0,Water,0
+,,,Willpower,20,0,,,,__________-Wise,20,0,__________-Wise,,,20,0, Starting Piety,0
+Weapons,,,,,,,,,,,,,,,,,,
+Name,Type,ATT,PRY,RCH,DMG,CL,CS,DIS,T,ENC,RNG,Notes,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Life Events,,,,,,,,,Relationship NPCs,,,,,,,,,
+Name,Description,,,,,,,,Type,Description,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Goals,,,,,,,,Shared,Goals,,,,,,,,,Shared
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+,,,,,,,,FALSE,,,,,,,,,,FALSE
+Inventory,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Notes,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,

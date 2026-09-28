@@ -3,6 +3,15 @@
 - **Imported table names keep their capitals after an opening quote.** The
   focus table read "“meaningful” Standard Focus Table". Import again and it
   is renamed in place.
+- **TBE: Sheet Exchange reads the Character Creator v0.7.0.** Its Character
+  Sheet tab has the same layout as v0.6.5, cell for cell, so it already
+  imported; now that is checked.
+- **An unnamed native language keeps its points.** The Creator's untouched
+  slot reads "Native Languge"; it imports as "Native Language" at its
+  value, with a note to rename it, instead of under the typo.
+- **A Savvy-marked Strand imports under its own name.** The Creator puts
+  the Savvy "*" on Strands too, and "Air*" came in as a Strand called
+  "Air*".
 
 # 0.55.0 — 2026-09-27
 

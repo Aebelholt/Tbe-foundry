@@ -2180,7 +2180,9 @@ TBE.sheetCsv.detect = function (text) {
   return "unknown";
 };
 
-/* ---- Vasco Brown's Character Creator v0.6.5, "Character Sheet" tab ---- */
+/* ---- Vasco Brown's Character Creator, "Character Sheet" tab ---------- */
+/* v0.6.5 and v0.7.0 (2026-09-26) share one layout, cell for cell: checked */
+/* by diffing the two (sheet_exchange_check.mjs 6b).                        */
 /* Fixed cells, pinned by the labels around them: if a later version moves */
 /* anything, the check fails and nothing is read, rather than reading the  */
 /* wrong cells.                                                            */
@@ -2202,10 +2204,10 @@ TBE.sheetCsv.creatorCheck = function (rows) {
 };
 TBE.sheetCsv.fromCreator = function (rows) {
   const chk = TBE.sheetCsv.creatorCheck(rows);
-  if (!chk.ok) return { rows: null, problems: ["This does not look like the Character Creator v0.6.5 \"Character Sheet\" tab: " + chk.wrong.slice(0, 3).join("; ")] };
+  if (!chk.ok) return { rows: null, problems: ["This does not look like the Character Creator (v0.6.5 or v0.7.0) \"Character Sheet\" tab: " + chk.wrong.slice(0, 3).join("; ")] };
   const c = (ref) => _cell(rows, ref);
   const blank = (v) => !v || /^(none|choose one|n\/a\*?)$/i.test(v) || /^_+-wise$/i.test(v);
-  const out = [TBE.sheetCsv.HEADER.slice(), ["meta", "format", TBE.sheetCsv.FORMAT, "1", "from Character Creator v0.6.5"]];
+  const out = [TBE.sheetCsv.HEADER.slice(), ["meta", "format", TBE.sheetCsv.FORMAT, "1", "from Character Creator v0.6.5/v0.7.0"]];
   const problems = [];
   const field = (name, v) => { if (!blank(v)) out.push(["actor", name, String(v).trim(), "", ""]); };
   field("name", c("B2"));
@@ -2243,9 +2245,22 @@ TBE.sheetCsv.fromCreator = function (rows) {
     skill("J" + r, "K" + r, "L" + r, "Lore");
   }
   for (let r = 29; r <= 33; r++) skill("M" + r, "P" + r, "Q" + r, "Bind");
-  for (let r = 35; r <= 39; r++) skill("M" + r, "P" + r, "Q" + r, /-wise/i.test(c("M" + r)) ? "Wise" : "Language");
+  /* The Creator's untouched native-language slot reads "Native Languge"
+     (its spelling). It is a real language at 70, just not named yet: keep
+     the points under a clean name and say so, rather than import the typo. */
+  for (let r = 35; r <= 39; r++) {
+    const raw = c("M" + r).replace(/\*\s*$/, "").trim();
+    if (/^native langu?a?ge?$/i.test(raw) && Number(c("P" + r)) > 0) {
+      out.push(["skill", "Native Language", c("P" + r), c("Q" + r) === "0" ? "" : c("Q" + r),
+        (/\*\s*$/.test(c("M" + r)) ? "savvy" : "not savvy") + "; group Language"]);
+      problems.push("The native language is not named on the sheet (\"" + raw + "\", " + c("P" + r) + "%): imported as \"Native Language\", rename it on the sheet.");
+      continue;
+    }
+    skill("M" + r, "P" + r, "Q" + r, /-wise/i.test(c("M" + r)) ? "Wise" : "Language");
+  }
   for (let r = 29; r <= 38; r++) {
-    const n = c("R" + r).trim(), lvl = c("S" + r);
+    /* The Strands column carries the Savvy "*" too (the cell formula appends it). */
+    const n = c("R" + r).replace(/\*\s*$/, "").trim(), lvl = c("S" + r);
     if (n && Number(lvl) > 0) out.push(["strand", n, lvl, "", ""]);
   }
   if (Number(c("S39")) > 0) out.push(["skill", "Piety", c("S39"), "", "group Lore"]);

@@ -9,7 +9,7 @@
  * IMPORT (the format is recognised on its own)
  *   a filled fillable character sheet PDF,
  *   a TBE-CSV file,
- *   the Character Creator v0.6.5 "Character Sheet" tab, downloaded as CSV
+ *   the Character Creator v0.6.5 or v0.7.0 "Character Sheet" tab, downloaded as CSV
  *   (File > Download > Comma-separated values) or copied from cell A1 and
  *   pasted.
  * Before anything is written you see exactly what will change and what was
@@ -140,10 +140,10 @@ if (head === "%PDF-") {
   if (kind === "tbe-csv") { rows = C.parse(text); source = "a TBE-CSV file"; }
   else if (kind === "creator") {
     const conv = C.fromCreator(C.parse(text, true));
-    rows = conv.rows; conversionProblems = conv.problems; source = "the Character Creator v0.6.5";
+    rows = conv.rows; conversionProblems = conv.problems; source = "the Character Creator";
   } else {
     const why = C.creatorCheck(C.parse(text, true)).wrong.slice(0, 2).join("; ");
-    ui.notifications?.warn("TBE: that is neither a TBE-CSV file nor the Character Creator v0.6.5 \"Character Sheet\" tab." + (why ? " (" + why + ")" : ""));
+    ui.notifications?.warn("TBE: that is neither a TBE-CSV file nor the Character Creator (v0.6.5 or v0.7.0) \"Character Sheet\" tab." + (why ? " (" + why + ")" : ""));
     return;
   }
 }
