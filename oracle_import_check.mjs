@@ -84,6 +84,7 @@ check(T("meaning_tables.elements.tables.places").twice && T("location_crafter_ra
   "Elements tables and tables whose notes say \"roll twice\" roll twice by default");
 check(T("meaning_tables.elements.tables.places").name === "Meaning Tables · Elements · Places & Halls", "names come from the path, with a printed title where there is one");
 check(new Set(plan.tables.map((t) => t.name)).size === plan.tables.length, "every table name is unique");
+check(O.displayName(["x"], { title: "“QUOTED” STANDARD TABLE" }) === "“Quoted” Standard Table", "a title that opens with a quote is still capitalised");
 const refs = plan.reference.map((r) => r.key).sort();
 check(["creatures", "disposition_score_modifier_table", "fate_check_modifiers_updated", "fulfillment", "mythic_deck_resisted_ranks_modifier",
   "simplified_npc_action_table", "the_entity"].every((k) => refs.includes(k)) && refs.length === 7,

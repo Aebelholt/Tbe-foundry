@@ -47,7 +47,7 @@ const DROP = new Set(["variants", "tables", "descriptions", "actions", "entries"
 
 const isObj = (v) => v && typeof v === "object" && !Array.isArray(v);
 const words = (k) => String(k).replace(/_/g, " ").replace(/\b([a-z])/g, (m) => m.toUpperCase());
-const titleCase = (s) => String(s).toLowerCase().replace(/(^|[\s(/&-])([a-z])/g, (m, a, b) => a + b.toUpperCase());
+const titleCase = (s) => String(s).toLowerCase().replace(/(^|[\s(/&"“‘'-])([a-z])/g, (m, a, b) => a + b.toUpperCase());
 
 export function displayName(path, node) {
   const segs = path.filter((s) => !DROP.has(s)).map(words);

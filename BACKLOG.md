@@ -8,11 +8,13 @@ and a world setting lets Random Events use them.
 `module/helpers/oracle-import.mjs`, `oracle_import_check.mjs` (70), fixture
 `test-fixtures/oracle_shapes.json` (invented words, same shapes).
 
-- **Not yet run against the real file**: it lives in the conversation, not in
-  the repo. `TBE_ORACLE_JSON=path node oracle_import_check.mjs` plans it and
-  lists what is refused. Known from reading it: GODS 40-41 and NAMES 43-44
-  possible slips, and the inferred layouts (Known Elements sheet, 2e list
-  dice, Mythic Deck arrows) surface as notes.
+- **Run against the real file (2026-09-28)**, uploaded, not committed:
+  113 tables, 0 refused, 7 reference pages, 7 record sheets skipped, 9
+  notes (GODS 40-41 and NAMES 43-44 slips, two inferred labels, the three
+  orphan Simplified NPC Action lines, the Mythic Deck reconstruction, the
+  stray COUNT). Random Events pick the Meaningful Standard focus and the v3
+  Actions pair. One fix held for the next batch: a title opening with a
+  curly quote was lower-cased.
 - **Untested on a real table**: the file input in DialogV2, RollTable
   create/update with results on V12 and V13, `table.roll({roll})` with a
   modifier.

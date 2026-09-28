@@ -1,3 +1,9 @@
+# Unreleased (next batch)
+
+- **Imported table names keep their capitals after an opening quote.** The
+  focus table read "“meaningful” Standard Focus Table". Import again and it
+  is renamed in place.
+
 # 0.55.0 — 2026-09-27
 
 **Oracle tables from your own file.**
