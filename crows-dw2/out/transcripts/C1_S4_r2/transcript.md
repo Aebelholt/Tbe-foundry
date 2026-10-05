@@ -138,3 +138,17 @@ Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · t
 Ref: Move: Take something away · B claws +2 [4,6]=12 → T2 · A2 claws +2 [2,9]=13 → T2
 
 Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · a razorback squats in the arch, and the longclaw is a stroke from dead.
+
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+[TOOLS]
+`python3 ledger.py test A --why "slip past the razorback in the arch to the exit stair"` -> TEST slip past the razorback in the arch to the exit stair · A+1 · - · [4,3]=8 → T1 / STATUS Stamina 17 · AD 5 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead A4 claws (Move: Hurt them)"` -> Ref: TEST · Undead A4 claws (Move: Hurt them) · +2 · [4,9]=15 → T2
+`python3 ledger.py take 3` -> LEDGER: took 3 (AD 5→2, Stamina 17→17, wounds 0→0) / STATUS Stamina 17 · AD 2 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] There is nothing in the vault to carry, only black water and bone dust, and you go for the arch anyway, low, trying to go under the razorback squatting in it. It is faster. It lashes out with its claws and tears you off the stone, and as you stumble the second razorback swings in from the flank and rakes your side. Your armor is a few scraps of buckled plate now, hanging by a rivet or two, and the next strike will find you. The one in the arch has not moved from the doorway. The longclaw hauls itself upright behind you, one claw hanging, rattling in its throat.
+
+Ref: Move: Hurt them · TEST · Undead A4 claws · +2 · [4,9]=15 → T2
+
+Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · the arch is still blocked, your armor is nearly gone, and three foes are on you.
+DONE
+Ran 14 turns (script ended; Mara still in area 5, DT 2, alive).

@@ -194,3 +194,26 @@ Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [3,1]=6 → T1
 Ref: TEST · Undead A3 spine (unengaged, tier-1 move) vs Mara · +2 · [7,5]=14 → T2
 
 Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · sword stuck in a shelf, the longclaw turning back on you
+
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+(roll on request: attack / Trade Blows)
+[TOOLS]
+$ python3 ledger.py attack --b 2
+ATTACK attack · S+3 · bb · [6,6]=15 → T1 · MISS
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py test 2 --why "Undead B claws (engaged) vs Mara"
+Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [1,6]=9 → T1
+$ python3 engine/engine.py test 2 --why "Undead A4 spine (unengaged, tier-1 move) vs Mara"
+Ref: TEST · Undead A4 spine (unengaged, tier-1 move) vs Mara · +2 · [7,8]=17 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 9→6, Stamina 17→17, wounds 0/10)
+STATUS Stamina 17 · AD 6 · wounds 0/10 · uses Slashing 3 · UD torch 0
+[REF]
+Mara wrenches at the stuck blade and presses in on the longclaw, and her cut goes high and wide, and the heavy blade only grazes cold, dry hide. The thing does not even flinch. It flares its long hands wide and she sees, by the pale shine of its own eyes, that it is herding her. Two razorbacks have slipped around either side and a third sits on the steps she came down. One spine takes her square in the shoulder, ringing through the plate and leaving the armor hanging in pieces, and the cold now reaches her skin. The gap past the longclaw, where the clean air comes from, is closing as it shifts its stance, and she must go through it or be sealed in.
+
+Move: Make them choose (break through now, or be boxed in)
+Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [1,6]=9 → T1
+Ref: TEST · Undead A4 spine (unengaged, tier-1 move) vs Mara · +2 · [7,8]=17 → T3
+
+Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · the gap beside the longclaw is closing, razorbacks flank you on both sides

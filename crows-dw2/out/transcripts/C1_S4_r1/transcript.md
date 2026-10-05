@@ -219,3 +219,15 @@ ATTACK attack · S+3 · - · [8,3]=14 → T2 · HIT 7 dam
 
 Side vault · DT 3 (rooms 5) · Stamina 17 · AD 15 · wounds 0/10 · torch lit (UD 1) · four razorbacks converge and the exit stair waits a dozen paces past them
 
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [14/14]: I take what I can carry and head for the stair.
+[REF]
+Nothing in the vault is worth the carrying; the sarcophagi are split and empty, their lids gone to grit. You go for the stair with a shoulder lowered. The razorbacks flank you in a clicking rush, one leaping a sarcophagus to land beside you, spines grating against your plates, none yet finding a gap. The water runs shallower, then gives out to bare stone, and the draft hits your face, wet and clean. You reach the foot of the stair with the dead at your heels. Overhead the dark thins to gray, and from the steps above comes a dry scrape, bone on stone, before anything shows.
+
+Cellar exit stair · DT 3 (rooms 5) · Stamina 17 · AD 15 · wounds 0/10 · torch lit (UD 1) · the draft is on your face and four razorbacks are on your heels at the stair's foot
+
+DONE
+Ran 14 turns (player script ended; Mara reached area 6 with DT 3 in progress).

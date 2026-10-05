@@ -247,3 +247,21 @@ Its claws come up, and then just hang there, half-raised and trembling. It is sp
 
 Move: Have it backfire | Ref: TEST · razorback 6 claws (engaged) · +2 · [2,7]=11 → T1
 Where: cellar corridor mouth, ground lost · Stamina 17 · AD 3 · wounds 0/10 · torch lit (UD 1) · your sword clamped in the last razorback's ribs, it is barely standing
+
+## Turn 15
+[PLAYER] PLAYER [16/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [6,6]=15 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 3 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You wrench the blade sideways and the ribs shatter around it. The razorback comes apart in a single dry rush, spine, skull and claws collapsing into a heap of gray dust and brittle bone that settles across your boots. The sword comes free and rings once against the flagstones.
+
+Silence. The torch crackles behind you. The corridor is empty, a long black throat with nothing moving in it, and the only sound is the drip of water from somewhere deeper in the cellar and your own breath. Six heaps of dust and splintered spines lie scattered across the corridor mouth, already cooling.
+
+Your armor hangs from you in strips, and the torch is burning low.
+
+Where: cellar corridor mouth, ground lost · Stamina 17 · AD 3 · wounds 0/10 · torch lit (UD 1) · all six razorbacks destroyed, the corridor silent
+
+DONE
+Ran 15 turns (all six razorbacks destroyed; Player's script showed 17 entries, indices 5 skipped by the tool). Note: Turn 2 mechanics line summarized rather than pasting engine lines verbatim.
