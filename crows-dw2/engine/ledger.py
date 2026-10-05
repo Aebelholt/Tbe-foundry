@@ -92,6 +92,10 @@ def main():
         s["stamina"] = s.get("stamina_max", s["stamina"])
         if s["wounds"] > 0: s["wounds"] -= 2 if "--tend" in a else 1
         if not miasma: s["uses"] = dict(s.get("uses_max", s["uses"]))
+        # R13: only UD marked "Rest" (spellbooks) come back on a rest. A torch or lantern ("Useless; DT") does not.
+        keep = s.get("ud_norest", ["torch", "lantern"])
+        for k, mx in s.get("ud_max", {}).items():
+            if not any(w in k.lower() for w in keep): s["ud"][k] = mx
         if "--repair" in a: s["ad"] = s.get("ad_max", s["ad"])
         line = f"LEDGER: rest{' (Miasma: expertise uses not restored)' if miasma else ''}{' · tend wounds' if '--tend' in a else ''}{' · armor repaired' if '--repair' in a else ''}"
     elif cmd == "set":       # set <field> <value>: ledger edits the Ref relays from the player (xp, gear, UD refuel)
