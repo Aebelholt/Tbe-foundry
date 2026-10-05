@@ -8,7 +8,7 @@ Run every command from `{DIR}` with:
 `cd {DIR} && export LEDGER_STATE=$PWD/ledger_state.json CROWS_STATE=$PWD/engine_state.json && <command>`
 - Ref-side rolls: `python3 engine/engine.py ...` (see the rules for which command). Paste the engine's `Ref:` line verbatim on the mechanics line. `SEALED:` lines never go in a reply.
 - The crow's rolls and state belong to the Ledger: `python3 ledger.py attack|test|take|ud|status ...` (`test A|M|S --e N --b N --why TEXT`; `attack`; `move A|M|S` for variant B; `take N [--p]` applies damage the Ref has rolled; `ud torch`). Run the crow's rolls when the rules say the crow rolls, and paste the Ledger line as given. Never recompute a Ledger result.
-- The scripted Player: `python3 player.py {SCEN}` prints the crow's next declared action. Call it once per turn. You never write the crow's actions or words.
+- The scripted Player: `python3 player.py {SCEN}` prints the crow's next declared action. Call it **exactly once per turn, at the start of the turn, only after the previous turn is fully resolved and written**. Never call it twice in one batch and never read ahead. You never write the crow's actions or words.
 
 ## The loop
 For each turn:

@@ -33,3 +33,48 @@ Ref: Trade Blows (bear): inflict max damage (10), the bear dies (Stamina 10 to 0
 
 Chapel nave, bear dead, wolves far and closing from both flanks · DT 3 · Stamina 17 · AD 15 · torch lit · two wolves, one at each side, are about to spring.
 
+## Turn 3
+[PLAYER] PLAYER [4/7]: I turn on the nearest wolf.
+(Note: this line was printed by player.py during Turn 2's batch, before Turn 2 was resolved; it is resolved here as Turn 3's action.)
+[TOOLS]
+$ python3 ledger.py move S --why "Trade Blows vs wolf 1"
+MOVE Trade Blows vs wolf 1 · S+3 · - · [1,6]=10 → T3
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 15→12, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You wheel away from the dead bear and the nearer wolf launches itself at you. It is quick, all grey shoulder and gleaming teeth, but you are already turning with the sword low. The blade catches it in the chest mid-leap and the force of it throws the animal sideways. Its jaws still rake your armor as it goes by, a short hard bite that finds a gap at the hip. Then it hits the stone and does not get up.
+
+The second wolf has stopped flanking and stands with its head dropped, a growl rolling in its throat. It is alone now. The torch gutters and steadies. The animal edges sideways, watching the sword, watching you.
+
+Ref: Trade Blows (wolf 1): inflict max damage (10), wolf 1 dies (Stamina 10 to 0); wolf bite suffers 3 (AD). MOVE Trade Blows vs wolf 1 · S+3 · - · [1,6]=10 → T3
+
+Chapel nave, bear and one wolf dead, last wolf close and growling · DT 3 · Stamina 17 · AD 12 · torch lit · the second wolf is gathering itself to come in.
+
+## Turn 4
+[PLAYER] PLAYER [5/7]: I hit the closest wolf again.
+(Note: this line was printed by player.py during Turn 3's batch, before Turn 3 was resolved; it is resolved here as Turn 4's action. PLAYER [6/7] "I finish the last one standing." was also printed in that batch and is moot: the last wolf died here, so the scene ended.)
+[TOOLS]
+$ python3 ledger.py move S --why "Trade Blows vs wolf 2"
+MOVE Trade Blows vs wolf 2 · S+3 · - · [6,3]=12 → T3
+STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 12→9, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py ud torch
+UD torch · [1] → 1→0 · EXPIRED
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py enc --en 9 --why "DT 3 end"
+Ref: encounter d10=7 vs EN 9 → none · DT 3 end
+[REF]
+The last wolf comes in low and fast, going for the legs, and you meet it with the flat of your weight and the point of the sword. It yelps once. The blade goes through and the animal drops against your boots, shuddering, then still. Its teeth had already found the edge of your armor, a quick tearing bite, and you feel the plates give a little more.
+
+Silence settles over the nave. The bear lies across its kill, the wolves where they fell. Then the torch sputters, a thin blue flame running down the last of the pitch, and it goes out in your hand. The dark comes down at once, thick with the smell of blood and old stone, and the only sound is your own breath rasping back at you from the pews.
+
+Ref: Trade Blows (wolf 2): inflict max damage (10), wolf 2 dies (Stamina 10 to 0); wolf bite suffers 3 (AD). MOVE Trade Blows vs wolf 2 · S+3 · - · [6,3]=12 → T3 · DT 3 end: UD torch · [1] → 1→0 · EXPIRED · Ref: encounter d10=7 vs EN 9 → none
+
+Chapel nave, all three animals dead · DT 3 ended, DT 4 begins · Stamina 17 · AD 9 · no light · the torch is dead in your hand and the dark has closed in around you.
+
+DONE
+Ran 4 turns (player.py script pointer ran ahead of resolution; all printed lines were accounted for, lines 3/7 skipped by the script's own conditions and 6/7 moot).

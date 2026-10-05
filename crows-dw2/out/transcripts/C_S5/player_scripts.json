@@ -1,0 +1,50 @@
+{
+ "S1": [
+  {"say": "I hold the torch high and step in on the bear, sword out, and drive at it.", "roll": "attack / Trade Blows with the bear, expertise only on a T1"},
+  {"say": "I keep pressing the bear and give it no room."},
+  {"if": "stamina<=4 or wounds>=2", "say": "I backpedal to the doorway so only one can reach me, and swing at whatever steps up."},
+  {"say": "I turn on the nearest wolf."},
+  {"say": "I hit the closest wolf again."},
+  {"say": "I finish the last one standing."},
+  {"say": "I check the room and wipe the blood off my hands."}
+ ],
+ "S2": [
+  {"say": "I find the steward in the long hall and ask her straight out for a loan of 200 gc, repayable at the next cycle.", "roll": "only if the Ref asks for one"},
+  {"say": "I tell her the Ember Vault delve will pay it back many times over and offer my share of the first haul as security.", "roll": "only if the Ref asks for one"},
+  {"say": "I ask her what she would need from me to say yes."},
+  {"say": "I accept whatever she names and shake on it."}
+ ],
+ "S3": [
+  {"say": "It is dusk on the road home. I make camp off the road in the open and rest through the night, eating a ration.", "roll": "Miasma RR (Mind) after the rest, only if the Ref asks"},
+  {"say": "I walk in to the village at dawn and report to the steward."},
+  {"say": "I spend the ten days quietly resting and repairing, and do not found or upgrade any institution and spend nothing at merchants."},
+  {"say": "The cycle turns. I ask around what changed in the village."}
+ ],
+ "S4": [
+  {"say": "I enter the cellar by the stair and look the first room over before stepping in.", "roll": "only if asked"},
+  {"say": "I search the first room carefully, checking the floor and the shelves.", "roll": "only if asked"},
+  {"say": "I step across the room to the far door."},
+  {"say": "I deal with whatever comes through, sword first. Torch high.", "roll": "attack / Trade Blows"},
+  {"say": "I press on the nearest one."},
+  {"say": "I finish them and move on to the next room."},
+  {"say": "I open the next door and go in."},
+  {"say": "I search the room for treasure and the way on.", "roll": "only if asked"},
+  {"say": "I go on to the next room."},
+  {"say": "I go through the next door."},
+  {"if": "stamina>=1 or wounds<4", "say": "I engage whatever is in the way, sword first.", "roll": "attack / Trade Blows"},
+  {"say": "I press the nearest."},
+  {"say": "I finish it and look for the exit."},
+  {"say": "I take what I can carry and head for the stair."}
+ ],
+ "S5": [
+  {"say": "I plant myself in the corridor mouth with the torch behind me, and wait for the first one to come into reach.", "roll": "none yet"},
+  {"say": "I cut at the first one in reach.", "roll": "attack / Trade Blows"},
+  {"say": "I hit the nearest one again."},
+  {"say": "I hit the nearest one again."},
+  {"if": "stamina<=5 or wounds>=3", "say": "I fall back one step down the corridor, making them come single file."},
+  {"say": "I keep cutting the nearest one."},
+  {"say": "I keep cutting the nearest one."},
+  {"say": "I keep cutting the nearest one."},
+  {"say": "I finish the last of them and breathe."}
+ ]
+}
