@@ -217,3 +217,59 @@ Ref: initiative d10=7 → crows act first · Ref: TEST · razorback 1 claws · +
 
 Cellar, storeroom (area 2), combat round 5 done · DT 1 (rooms 2 of 5) · Stamina 8 · wounds 0/10 · AD 0 · torch lit · the wounded razorback crouches over the scattering coins and hisses at your torch.
 
+## Turn 9
+[PLAYER] PLAYER [9/14]: I go on to the next room.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [9/14]: I go on to the next room.
+$ python3 engine/engine.py init
+Ref: initiative d10=3 → enemies act first
+$ python3 engine/engine.py test 2 --why "razorback 1 claws"
+Ref: TEST · razorback 1 claws · +2 · [10,1]=13 → T2
+$ python3 engine/engine.py test 2 --why "razorback 2 spine"
+Ref: TEST · razorback 2 spine · +2 · [3,6]=11 → T1
+$ python3 engine/engine.py test 2 --why "razorback 3 spine"
+Ref: TEST · razorback 3 spine · +2 · [7,8]=17 → T3
+$ python3 ledger.py take 2   (claws T2)
+LEDGER: took 2 (AD 0→0, Stamina 8→6, wounds 0→0)
+STATUS Stamina 6 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3   (spine T3)
+LEDGER: took 3 (AD 0→0, Stamina 6→3, wounds 0→0)
+STATUS Stamina 3 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py test A --b 1 --why "slip past razorbacks 2 and 3 through the arch, dim light"
+TEST slip past razorbacks 2 and 3 through the arch, dim light · A+1 · b · [3,2]=4(incl -2) → T1
+STATUS Stamina 3 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(T1 non-attack: Move: Have it backfire; Mara goes prone)
+[REF]
+They strike first. The razorback on the chest rakes your side, and a bone nail from the arch punches into your thigh and stays. You are bleeding fast now. You lower your shoulder and drive for the arch anyway, between two shapes that give no ground. The torch hand swings wide and the flame stutters against the dripping wall. Your boot finds the seep-slick floor and goes out from under you. You hit the flagstone on one hip, torch rolling in your fist, and a hooked claw comes down on the stone where your head was a heartbeat before. Water soaks your cloth. Three razorbacks crowd the light above you, their ribs rattling, their jaws open, and one of them is dragging a boot of yours toward the dark.
+
+Move: Have it backfire
+TEST slip past razorbacks 2 and 3 through the arch, dim light · A+1 · b · [3,2]=4(incl -2) → T1
+Ref: initiative d10=3 → enemies act first · Ref: TEST · razorback 1 claws · +2 · [10,1]=13 → T2 · Ref: TEST · razorback 2 spine · +2 · [3,6]=11 → T1 · Ref: TEST · razorback 3 spine · +2 · [7,8]=17 → T3
+
+Cellar, storeroom (area 2), combat round 6 done · DT 1 (rooms 2 of 5) · Stamina 3 · wounds 0/10 · AD 0 · torch lit · you are prone on the wet stone with all three razorbacks over you.
+
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [10/14]: I go through the next door.
+$ python3 engine/engine.py init
+Ref: initiative d10=4 → enemies act first
+$ python3 engine/engine.py test 2 --why "razorback 1 claws"
+Ref: TEST · razorback 1 claws · +2 · [1,5]=8 → T1
+$ python3 engine/engine.py test 2 --why "razorback 2 spine"
+Ref: TEST · razorback 2 spine · +2 · [3,10]=15 → T2
+$ python3 engine/engine.py test 2 --why "razorback 3 spine"
+Ref: TEST · razorback 3 spine · +2 · [2,2]=6 → T1
+(razorback 1 claws miss: Mara's counter, sword T2 = 4 + S 3 = 7 dam, same as the Ledger's T2 attack row; razorback 1 Stamina 3 -> destroyed)
+$ python3 ledger.py take 1   (razorback 2 spine T2)
+LEDGER: took 1 (AD 0→0, Stamina 3→2, wounds 0→0)
+STATUS Stamina 2 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You are on the floor, and you do not stay there. The razorback above you lunges and misses, claws scraping stone, and your sword is already coming up under its ribs. The blade goes in to the hilt and the thing folds off the blade, spilling gray fluid, and stops. A spine hisses past your face and another burns across your shoulder, tearing cloth, but you are up, one knee, then your feet, the torch still burning in your hand. Two remain, side by side in the arch, their spines flaring. The way you meant to take is theirs. They will not let you through, and blood is running warm down your leg into the water. The second one tilts its skull toward your torch and clicks its jaws, patient, counting.
+
+Ref: initiative d10=4 → enemies act first · Ref: TEST · razorback 1 claws · +2 · [1,5]=8 → T1 · Ref: TEST · razorback 2 spine · +2 · [3,10]=15 → T2 · Ref: TEST · razorback 3 spine · +2 · [2,2]=6 → T1
+
+Cellar, storeroom (area 2), combat round 7 done · DT 1 (rooms 2 of 5) · Stamina 2 · wounds 0/10 · AD 0 · torch lit · two razorbacks hold the arch with their spines drawn, and one more hit will open you to wounds.
+

@@ -217,3 +217,49 @@ Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [1,6]=9 → T1
 Ref: TEST · Undead A4 spine (unengaged, tier-1 move) vs Mara · +2 · [7,8]=17 → T3
 
 Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · the gap beside the longclaw is closing, razorbacks flank you on both sides
+
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+(roll on request: attack / Trade Blows)
+[TOOLS]
+$ python3 ledger.py attack --b 2
+ATTACK attack · S+3 · bb · [6,10]=19 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 6 · wounds 0/10 · uses Slashing 3 · UD torch 0
+(Undead B Stamina 20 - 7 = 13/20)
+$ python3 engine/engine.py test 2 --why "Undead B claws (engaged) vs Mara"
+Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [1,7]=10 → T1
+[REF]
+This time the blade finds it. Mara tears her sword free of the splintered shelf in the same pull and drives it up under the longclaw's ribs. Something wet and cold pours over her hand, and the creature gives a rasping shriek that is half a laugh. It does not fall. It staggers a half step, its claws sweeping the air where she stood, a hand's breadth short, and in that half step the gap opens. A hand's breadth of cold, cleaner air presses against her face from a low door just past its flank. It is hurt, and furious, and still between her and it. The razorbacks rattle close at her back, one more strike from reaching her.
+
+Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [1,7]=10 → T1
+ATTACK attack · S+3 · bb · [6,10]=19 → T2 · HIT 7 dam
+
+Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · the longclaw reels with a wound in its ribs, the low door is one stride past its flank
+
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+(roll on request: only if asked)
+[TOOLS]
+$ python3 ledger.py test A --b 2 --why "slip past the staggered longclaw through the low door to the exit stair"
+TEST slip past the staggered longclaw through the low door to the exit stair · A+1 · bb · [8,2]=11 → T1
+STATUS Stamina 17 · AD 6 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py test 2 --why "Undead B claws (move: Hurt them) vs Mara"
+Ref: TEST · Undead B claws (move: Hurt them) vs Mara · +2 · [3,10]=15 → T2
+$ python3 engine/engine.py test 2 --why "Undead A2 spine (unengaged, tier-1 move) vs Mara"
+Ref: TEST · Undead A2 spine (unengaged, tier-1 move) vs Mara · +2 · [10,5]=17 → T3
+$ python3 ledger.py take 4
+LEDGER: took 4 (AD 6→2, Stamina 17→17, wounds 0/10)
+STATUS Stamina 17 · AD 2 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 2→0, Stamina 17→16, wounds 0/10)
+STATUS Stamina 16 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 0
+[REF]
+Mara lunges for the low door and almost has it. The longclaw, reeling, throws out an arm without looking, and its claws catch her across the back of the shoulder. They go through the last of the shredded plate and score the leather beneath. Before she can steady, a spine hits her in the ribs from the dark with a hard, bruising crack, and for the first time she feels it through to the flesh. The armor is gone, hanging off her in strips. The low door is a hand's reach ahead, breathing the clean cold of the stair. The longclaw stands wounded between her and it, and the razorbacks are at her back, their rattle now all around her.
+
+Move: Hurt them
+Ref: TEST · Undead B claws (move: Hurt them) vs Mara · +2 · [3,10]=15 → T2
+Ref: TEST · Undead A2 spine (unengaged, tier-1 move) vs Mara · +2 · [10,5]=17 → T3
+
+Side vault · DT 3 (rooms 1 of 5) · Stamina 16 · wounds 0/10 · no light, darkness · armor gone, the longclaw wounded at the low door, three razorbacks at your back
+DONE
+Ran 14 turns (script ended at 14/14); Mara did not reach area 6.
