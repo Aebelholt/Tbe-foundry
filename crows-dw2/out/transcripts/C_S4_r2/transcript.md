@@ -171,3 +171,26 @@ Ref: TEST · Undead B claws (move: Hurt them) vs Mara · +2 · [1,9]=12 → T2
 Ref: TEST · Undead A2 spine (unengaged, tier-1 move) vs Mara · +2 · [1,9]=12 → T2
 
 Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · the longclaw blocks the way to the draft of clean air, three razorbacks closing behind
+
+## Turn 11
+[PLAYER] PLAYER [11/14]: I engage whatever is in the way, sword first.
+(roll on request: attack / Trade Blows)
+[TOOLS]
+$ python3 ledger.py attack --b 2
+ATTACK attack · S+3 · bb · [2,5]=10 → T1 · MISS
+STATUS Stamina 17 · AD 11 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py test 2 --why "Undead B claws (engaged) vs Mara"
+Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [3,1]=6 → T1
+$ python3 engine/engine.py test 2 --why "Undead A3 spine (unengaged, tier-1 move) vs Mara"
+Ref: TEST · Undead A3 spine (unengaged, tier-1 move) vs Mara · +2 · [7,5]=14 → T2
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 11→9, Stamina 17→17, wounds 0/10)
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 0
+[REF]
+Mara lunges at the great shape and her blade goes into the dark and meets a shelf upright instead. The old wood splits and the blade bites deep and sticks, and for one long breath she is hauling on a trapped sword while the longclaw rears over her. Its swing goes wild and rakes only the shelf above her head, spraying splinters. A spine slaps her from the side and bites through a joint in the plate. Her own cut has pinned her blade, and the thing is turning its long head, its jaws working with a dry crackle, to find her again by the sound of her breath. The draft of clean air is a single stride past it.
+
+Move: Have it backfire (blade stuck in the shelf)
+Ref: TEST · Undead B claws (engaged) vs Mara · +2 · [3,1]=6 → T1
+Ref: TEST · Undead A3 spine (unengaged, tier-1 move) vs Mara · +2 · [7,5]=14 → T2
+
+Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · sword stuck in a shelf, the longclaw turning back on you

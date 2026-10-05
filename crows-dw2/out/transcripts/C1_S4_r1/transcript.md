@@ -187,3 +187,35 @@ ATTACK attack · S+3 · - · [7,5]=15 → T2 · HIT 7 dam
 Side vault · DT 3 (rooms 5) · Stamina 17 · AD 15 · wounds 0/10 · torch lit (UD 1) · the longclaw is in hand with claws raised, razorbacks pressing your back
 (note: Ref called player.py for turn 12 before writing turn 11 to transcript; Ref error, line recorded below as Turn 12)
 
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [7,6]=16 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "B longclaw claws vs Mara"
+Ref: TEST · B longclaw claws vs Mara · +2 · [2,5]=9 → T1
+[REF]
+You step into the swing before it finishes and drive your sword into the longclaw's chest. Something inside cracks like a dry branch. The thing shudders and its claws sweep past your head, a hand's breadth wide, fouling the air with grave dust. A rib comes away and clatters into the water. It is bent now, one arm hanging, jaw working soundlessly, and still it stays on its feet and still it is between you and the vault's back wall. At your back a razorback's claws click against your plates, patient, waiting for you to turn.
+
+Ref: TEST · B longclaw claws vs Mara · +2 · [2,5]=9 → T1
+ATTACK attack · S+3 · - · [7,6]=16 → T2 · HIT 7 dam
+
+Side vault · DT 3 (rooms 5) · Stamina 17 · AD 15 · wounds 0/10 · torch lit (UD 1) · the longclaw is cracked and swaying but still standing in hand, razorbacks at your back
+
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [8,3]=14 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "B longclaw claws vs Mara"
+Ref: TEST · B longclaw claws vs Mara · +2 · [4,3]=9 → T1
+[REF]
+The third stroke takes the longclaw across the throat-bones and the whole frame comes apart, skull bouncing off a sarcophagus lid, talons skittering over stone, then only a heap of gray dust and brown bone in the shallows. The vault does not go quiet. The razorbacks in the arch shriek and shove past the wreck of their leader, and the one that was waiting between the sarcophagi crouches to leap. Past it, at the vault's back wall, a narrow stair climbs out of the water into a cold draft that smells of rain and open air. It is perhaps a dozen paces away, with bone blades between you and it.
+
+Ref: TEST · B longclaw claws vs Mara · +2 · [4,3]=9 → T1
+ATTACK attack · S+3 · - · [8,3]=14 → T2 · HIT 7 dam
+
+Side vault · DT 3 (rooms 5) · Stamina 17 · AD 15 · wounds 0/10 · torch lit (UD 1) · four razorbacks converge and the exit stair waits a dozen paces past them
+

@@ -184,3 +184,36 @@ Ref: initiative d10=9 → crows act first · Ref: TEST · razorback 1 Agility RR
 
 Cellar, storeroom (area 2), combat round 4 done · DT 1 (rooms 2 of 5) · Stamina 11 · wounds 0/10 · AD 0 · torch lit · the razorback sways on the burst chest with a ruined claw, the arch is still full behind it, and you are bleeding through cloth.
 
+## Turn 8
+[PLAYER] PLAYER [8/14]: I search the room for treasure and the way on.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [8/14]: I search the room for treasure and the way on.
+(roll on request: only if asked)
+$ python3 engine/engine.py init
+Ref: initiative d10=7 → crows act first
+$ python3 ledger.py test M --b 1 --why "search storeroom in dim light under attack"
+TEST search storeroom in dim light under attack · M+0 · b · [4,9]=11(incl -2) → T1
+STATUS Stamina 11 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(T1 non-attack: Move: Take something away)
+$ python3 engine/engine.py test 2 --why "razorback 1 claws"
+Ref: TEST · razorback 1 claws · +2 · [9,4]=15 → T2
+$ python3 engine/engine.py test 2 --why "razorback 2 spine"
+Ref: TEST · razorback 2 spine · +2 · [7,1]=10 → T1
+$ python3 engine/engine.py test 2 --why "razorback 3 spine"
+Ref: TEST · razorback 3 spine · +2 · [7,7]=16 → T2
+$ python3 ledger.py take 2   (claws T2)
+LEDGER: took 2 (AD 0→0, Stamina 11→9, wounds 0→0)
+STATUS Stamina 9 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 1   (spine T2)
+LEDGER: took 1 (AD 0→0, Stamina 9→8, wounds 0→0)
+STATUS Stamina 8 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You hold the torch low and sweep the burst chest with its light, but the glare is poor, the water seep runs everywhere, and the razorback squatting on the chest will not give up its seat. Shards of scorched shelf-plank and wet ash fill the floor. A dull gleam shows through the ash, coin or brass, you cannot tell, and the claws that rake across it scatter it into the black pool by the wall. Whatever the chest held is going down the drain, one coin at a time, under the creature's feet. The creature takes your search for an opening and comes at you, claws tearing cloth and flesh. One spine from behind goes wide. Another finds your thigh. The arch behind the beast is still packed with dark shapes, and nothing in this room leads out except through them.
+
+Move: Take something away
+TEST search storeroom in dim light under attack · M+0 · b · [4,9]=11(incl -2) → T1
+Ref: initiative d10=7 → crows act first · Ref: TEST · razorback 1 claws · +2 · [9,4]=15 → T2 · Ref: TEST · razorback 2 spine · +2 · [7,1]=10 → T1 · Ref: TEST · razorback 3 spine · +2 · [7,7]=16 → T2
+
+Cellar, storeroom (area 2), combat round 5 done · DT 1 (rooms 2 of 5) · Stamina 8 · wounds 0/10 · AD 0 · torch lit · the wounded razorback crouches over the scattering coins and hisses at your torch.
+

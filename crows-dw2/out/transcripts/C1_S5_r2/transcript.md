@@ -229,3 +229,20 @@ Its own grip slips as it strikes, and your blade grates free with a shriek of bo
 Ref: TEST · razorback A6 claws (engaged, Move: Hurt them, doom) · +2 · [9,4]=15 → T2
 
 Cellar corridor mouth · DT 1 (rooms 2) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · the last razorback is a pace off, reeling, claws and spine raised
+
+## Turn 14
+[PLAYER] PLAYER [15/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [9,5]=17 → T3 · HIT 10 dam
+STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+The last razorback never gets its spine loosed. You step through the reeling thing's guard and drive the blade down through the base of its neck, and it comes apart like a dropped basket of kindling. The skull bounces once and settles. The ridge of spines clatters down, one barb at a time.
+
+Then there is no more dragging, no more clicking. The corridor is silent but for the torch, which pops and spits behind you, and for the slow tick of black ichor running off your blade onto the flags. Six heaps of bone lie scattered across the stones, and none of them move. The dark beyond the light holds nothing but cold air flowing past you from somewhere deeper in the cellar.
+
+Your torch burns low, its flame shrunk to a hand's width of yellow.
+
+Cellar corridor mouth · DT 1 (rooms 2) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · six razorbacks in pieces at your feet, the dark beyond them still
+DONE
+Ran 14 turns; all six undead destroyed, Mara alive at Stamina 17, 0 wounds.

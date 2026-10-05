@@ -231,3 +231,19 @@ This is the last of them. It staggers into reach.
 
 Ref: TEST · razorback 6 claws (engaged) · +2 · [1,1]=4 → T1 DOOM
 Where: cellar corridor mouth, ground lost · Stamina 17 · AD 3 · wounds 0/10 · torch lit (UD 1) · last razorback ruined and staggering into reach
+
+## Turn 14
+[PLAYER] PLAYER [15/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [4,3]=10 → T1 · MISS
+STATUS Stamina 17 · AD 3 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "razorback 6 claws (engaged)"
+Ref: TEST · razorback 6 claws (engaged) · +2 · [2,7]=11 → T1
+[REF]
+You swing hard and the razorback does something no living thing could. It lets the blade pass through the hollow of its ruined chest, and as the steel comes out the other side it clamps its ribs shut on it. The sword stops dead. Your own momentum yanks you a half step forward and nearly off your feet, the pommel jamming against your palm.
+
+Its claws come up, and then just hang there, half-raised and trembling. It is spent, held up only by whatever pins it to the world. The ribs creak around your blade, tightening.
+
+Move: Have it backfire | Ref: TEST · razorback 6 claws (engaged) · +2 · [2,7]=11 → T1
+Where: cellar corridor mouth, ground lost · Stamina 17 · AD 3 · wounds 0/10 · torch lit (UD 1) · your sword clamped in the last razorback's ribs, it is barely standing
