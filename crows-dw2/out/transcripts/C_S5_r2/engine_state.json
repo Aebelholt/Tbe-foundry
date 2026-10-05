@@ -1,0 +1,1 @@
+{"log": ["Ref: TEST · razorback 1 claws (engaged) · +2 · [1,9]=12 → T2", "Ref: TEST · Move: unengaged razorback A spine · +2 · [3,10]=15 → T2", "Ref: TEST · Move: unengaged razorback B spine · +2 · [2,6]=10 → T1", "Ref: TEST · razorback 1 claws (engaged) · +2 · [10,7]=19 → T3"], "travel": {"day": 0, "hexes": 0, "lost": false}, "next_event": null, "maps": {}}
