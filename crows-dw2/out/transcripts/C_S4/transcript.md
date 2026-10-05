@@ -191,7 +191,30 @@ STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 1
 (scene: A2 3/10 engaged hand; A3 10/10 engaged close. Move: Require a cost or opportunity)
 [REF] Your stroke goes into dark and finds only water. You mis-measured the wounded one by a hand, and it was not where its sound said it was. It does not waste the gap, and its claws come across your guard and open a long seam in the side plate, deeper than the last. Armor you have not mended in months is going to ribbons. The second razorback takes its chance and comes in fast, leaping the first, and lands at your off hand so that you have claws on both sides, and the pale firelight from your dropped torch behind them shows you their backs and nothing of their faces. To fight either well you want more light than the arch gives. The torch lies behind them now.
 
-Ref: ATTACK attack · S+3 · b · [5,3]=9(incl -2) → T1 · MISS | Ref: TEST · Undead A2 claws vs Mara · +2 · [4,6]=12 → T2 | Move: Require a cost or opportunity
+ATTACK attack · S+3 · b · [5,3]=9(incl -2) → T1 · MISS | Ref: TEST · Undead A2 claws vs Mara · +2 · [4,6]=12 → T2 | Move: Require a cost or opportunity
 
 Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind them, dim here · Both razorbacks are at your sides and your armor is nearly through.
+
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [13/14]: I finish it and look for the exit.
+(roll on request: attack / Trade Blows)
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [7,1]=9(incl -2) → T1 · MISS
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "Undead A2 claws vs Mara"
+Ref: TEST · Undead A2 claws vs Mara · +2 · [8,6]=16 → T2
+$ python3 engine/engine.py enc --en 9   (noise from the backfire: extra check)
+Ref: encounter d10=5 vs EN 9 → none
+$ python3 ledger.py take 3   (12-16 dam 2, +1)
+LEDGER: took 3 (AD 9→6, Stamina 17→17, wounds 0/10 -> 0)
+STATUS Stamina 17 · AD 6 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(scene: A2 3/10 engaged hand; A3 10/10 engaged close. Move: Have it backfire)
+[REF] You swing for the wounded one's neck and it ducks under, and your blade rings against the shelf of the arch with a crack that fills the whole hall. A row of stacked bones comes down in a clattering slide across your boots, skulls bouncing in the water, and for an instant you cannot find your footing on the round things. The razorback's claws take the opening and rake through the thinning plate at your flank, and you feel a hot wire of strain across the ribs under the metal. The echo of the crash runs out through the vaults and dies. Nothing answers it. Your breath sounds loud in the arch, and both razorbacks are still on you, the wounded one on its knee and the other behind it, clicking.
+
+ATTACK attack · S+3 · b · [7,1]=9(incl -2) → T1 · MISS | Ref: TEST · Undead A2 claws vs Mara · +2 · [8,6]=16 → T2 | Ref: encounter d10=5 vs EN 9 → none | Move: Have it backfire
+
+Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind them, dim here · Bones slide under your boots and both razorbacks are still on you.
 

@@ -248,3 +248,29 @@ Ref: TEST · razorback A5 claws · +2 · [7,5]=14 → T2
 Ref: TEST · razorback A6 claws · +2 · [7,1]=10 → T1
 
 Cellar corridor mouth · combat · Stamina 0 · wounds 4/10 · torch on the floor, coals (UD 1) · two razorbacks left, one nearly dead
+
+## Turn 16
+[PLAYER] PLAYER [17/17]: I finish the last of them and breathe.
+[TOOLS] python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [8,2]=11(incl -2) → T1 · MISS
+STATUS Stamina 0 · AD 0 · wounds 4/10 · uses Slashing 3 · UD torch 1
+python3 ledger.py ud torch
+UD torch · [2] → 1→0 · EXPIRED
+STATUS Stamina 0 · AD 0 · wounds 4/10 · uses Slashing 3 · UD torch 0
+python3 engine/engine.py test 2 --why "razorback A5 claws"
+Ref: TEST · razorback A5 claws · +2 · [3,5]=10 → T1
+python3 engine/engine.py test 2 --why "razorback A6 claws (Move: Require a cost)"
+Ref: TEST · razorback A6 claws (Move: Require a cost) · +2 · [9,10]=21 → T3 CRIT
+python3 ledger.py take 4
+LEDGER: took 4 (AD 0→0, Stamina 0→0, wounds 4→8)
+STATUS Stamina 0 · AD 0 · wounds 8/10 · uses Slashing 3 · UD torch 0
+[REF] Your cut turns on the dead razorback's ribs and the blade glances off bone. Behind you the last coals of the torch pop and go out, and the corridor is black. The wounded one lunges and misses. The other does not. It comes out of the dark like something thrown and its claws go in under your ribs, deep and sudden, and your knees give a little. Eight cuts now, and you can feel each one. In the pitch black you hear two sets of claws on the stone, one a stride away on the left, one almost on your boots.
+
+Ref: TEST · razorback A5 claws · +2 · [3,5]=10 → T1
+Ref: TEST · razorback A6 claws (Move: Require a cost) · +2 · [9,10]=21 → T3 CRIT
+Move: Require a cost or opportunity
+
+Cellar corridor mouth, dark · combat · Stamina 0 · wounds 8/10 · torch out · two razorbacks left, one nearly dead, both in reach
+
+DONE
+Ran 16 turns; script ended with 2 of 6 razorbacks alive, Mara at 8/10 wounds.

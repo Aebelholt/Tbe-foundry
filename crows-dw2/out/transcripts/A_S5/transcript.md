@@ -258,3 +258,27 @@ STATUS Stamina 0 · AD 0 · wounds 5/10 · uses Slashing 3 · UD torch 1
 
 Ref: TEST · U5 claws vs Mara · +2 · [9,3]=14 → T2 | Ref: TEST · U6 spine vs Mara · +2 · [2,3]=7 → T1
 Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 5/10 · torch lit and burning low, dim light · the razorback is on you again, and its mate is edging up behind.
+
+## Turn 16
+[PLAYER] PLAYER [17/17]: I finish the last of them and breathe.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [7,2]=10(incl -2) → T1 · MISS
+STATUS Stamina 0 · AD 0 · wounds 5/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U5 claws vs Mara"
+Ref: TEST · U5 claws vs Mara · +2 · [3,8]=13 → T2
+$ python3 engine/engine.py test 2 --why "U6 spine vs Mara"
+Ref: TEST · U6 spine vs Mara · +2 · [8,10]=20 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 0→0, wounds 5→8)
+STATUS Stamina 0 · AD 0 · wounds 8/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 0→0, wounds 8→11) · CROW DEAD
+STATUS Stamina 0 · AD 0 · wounds 11/10 · uses Slashing 3 · UD torch 1
+[REF] You swing for the last of them and your arm does not follow. The blade rings off bone and hangs. The razorback's claws open you from hip to breast and a spine from the dark behind it punches in under your ribs, and there is no more pain, only a great cold weight. Your knees go. The floor comes up wet against your cheek, the torch gutters and drops its light across the bodies, and the ticking of the last two creatures comes close and settles, patient, over you.
+
+Ref: TEST · U5 claws vs Mara · +2 · [3,8]=13 → T2 | Ref: TEST · U6 spine vs Mara · +2 · [8,10]=20 → T3
+Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 11/10 · torch guttering · Mara is dead.
+
+DONE
+16 turns run (script ended at its 17th line; Mara died on turn 16 with two razorbacks, U5 and U6, still alive).
