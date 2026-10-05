@@ -118,3 +118,72 @@ LEDGER: took 2 (AD 22→20, Stamina 17→17, wounds 0→0)
 
 Crypt hall · DT 1 (rooms 3 of 3) · Stamina 17 · AD 20 · wounds 0/10 · torch lit (UD 1) · all three razorbacks on you and the stuck door at your back
 
+## Turn 9
+[PLAYER] PLAYER [9/14]: I go on to the next room.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [9/14]: I go on to the next room.
+$ python3 ledger.py test S --e 0 --b 0 --why "force the swollen ossuary door with undead at her back"
+TEST force the swollen ossuary door with undead at her back · S+3 · - · [9,9]=21 → T3
+STATUS Stamina 17 · AD 20 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(DT 1 ends: three rooms explored)
+$ python3 ledger.py ud torch
+UD torch · [6] → 1→1
+STATUS Stamina 17 · AD 20 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=1 vs EN 9 → none
+$ python3 engine/engine.py roll d6 --why "DT2 length (rooms)"
+Ref: d6 [1]=1 · DT2 length (rooms)
+[REF]
+You set your shoulder to the swollen door and drive. Wood shrieks, the hinges let go their grip, and the slab swings wide onto a long low room. You stumble through into dry air and the smell of old marrow. Shelves climb the walls, stacked to the ceiling with bones sorted by kind: skulls grinning in rows, long bones bundled like kindling, ribs, jaws. The torch makes every hollow eye socket flicker. The razorbacks pour in after you, clicking over the threshold, claws scoring the doorframe, one springing to the top of a shelf and sending skulls clattering into the water. They have not tired, and they do not mean to.
+
+Ref: d6 [1]=1 · DT2 length (rooms)
+
+Ossuary · DT 2 (rooms 1) · Stamina 17 · AD 20 · wounds 0/10 · torch lit (UD 1) · three razorbacks spilling in behind you and one already above you on the shelf
+
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [10/14]: I go through the next door.
+(DT 2 ends: one room explored)
+$ python3 ledger.py ud torch
+UD torch · [3] → 1→1
+STATUS Stamina 17 · AD 20 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=10 vs EN 9 → ENCOUNTER NOW
+$ python3 engine/engine.py table undead_dungeon_encounters --why "DT2 end natural 10 encounter"
+Ref: Undead Dungeon Encounters (F34) d10 [8]=8 → 1 undead D · DT2 end natural 10 encounter
+$ python3 engine/engine.py roll d6 --why "DT3 length (rooms)"
+Ref: d6 [5]=5 · DT3 length (rooms)
+[REF]
+The far door is a low arch of black iron, unlatched. You duck through with claws at your heels and the vault swallows the torchlight: a squat stone chamber, sarcophagi along both walls, lids askew. Two shapes stand waiting between them. One is a razorback like the others. The other is a head taller, long arms trailing to the floor, a longclaw whose talons are caked in old black, and it turns its skull toward you with something like patience. Above its shoulder a loop of leather cord hangs from a hook, knotted with tally notches, fresh cuts in the leather. Far behind you, back through the ossuary, something enormous drags itself across stone.
+
+Ref: Undead Dungeon Encounters (F34) d10 [8]=8 → 1 undead D · DT2 end natural 10 encounter
+
+Side vault · DT 3 (rooms 5) · Stamina 17 · AD 20 · wounds 0/10 · torch lit (UD 1) · the longclaw steps forward as the razorbacks crowd the arch behind you
+
+## Turn 11
+[PLAYER] PLAYER [11/14]: I engage whatever is in the way, sword first.
+(roll on request: attack / Trade Blows)
+[TOOLS]
+$ python3 player.py S4
+PLAYER [11/14]: I engage whatever is in the way, sword first.
+(roll on request: attack / Trade Blows)
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [7,5]=15 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 20 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "B longclaw claws vs Mara"
+Ref: TEST · B longclaw claws vs Mara · +2 · [7,8]=17 → T3
+$ python3 ledger.py take 5
+LEDGER: took 5 (AD 20→15, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You go in low and fast and your blade bites the longclaw under the ribs, parting dry sinew and sending a spray of gray dust across the torchlight. It does not so much as stagger. Its answer comes in a long, sweeping rake that your plates catch and shriek under, the talons ripping a bright strip out of the armor and hammering you back against the arch. Behind you the razorbacks crowd the doorway, claws scraping on your shoulder plates. The longclaw lifts its arm again, black talons dripping, and the vault goes still around it.
+
+Ref: TEST · B longclaw claws vs Mara · +2 · [7,8]=17 → T3
+ATTACK attack · S+3 · - · [7,5]=15 → T2 · HIT 7 dam
+
+Side vault · DT 3 (rooms 5) · Stamina 17 · AD 15 · wounds 0/10 · torch lit (UD 1) · the longclaw is in hand with claws raised, razorbacks pressing your back
+(note: Ref called player.py for turn 12 before writing turn 11 to transcript; Ref error, line recorded below as Turn 12)
+

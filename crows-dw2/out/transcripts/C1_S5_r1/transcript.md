@@ -68,3 +68,58 @@ python3 ledger.py take 2 -> LEDGER: took 2 (AD 16→14, Stamina 17→17, wounds 
 
 Move: Escalate the situation (unengaged: undead #5) · Ref: TEST · undead #4 claws (engaged) · +2 · [2,9]=13 → T2 · Ref: TEST · undead #5 spine (unengaged) · +2 · [7,3]=12 → T2
 Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 14 · wounds 0/10 · torch lit (UD 1) · one razorback on you, another perched on the dead ready to fire again.
+
+## Turn 9
+[PLAYER] PLAYER [10/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack -> ATTACK attack · S+3 · - · [6,1]=10 → T1 · MISS
+python3 engine/engine.py test 2 --why "undead #4 claws (engaged)" -> Ref: TEST · undead #4 claws (engaged) · +2 · [1,9]=12 → T2
+python3 engine/engine.py test 2 --why "undead #6 spine (unengaged), Move: Require a cost or opportunity" -> Ref: TEST · undead #6 spine (unengaged), Move: Require a cost or opportunity · +2 · [2,8]=12 → T2
+python3 ledger.py ud torch -> UD torch · [6] → 1→1
+python3 ledger.py take 3 -> LEDGER: took 3 (AD 14→11, Stamina 17→17, wounds 0→0)
+python3 ledger.py take 2 -> LEDGER: took 2 (AD 11→9, Stamina 17→17, wounds 0→0)
+[REF] You swing and the razorback is simply not where the blade lands. It has slid under your arm and hangs on your side, claws working at the plates. To clear it you have to turn your back toward the torch, and the flame leans and flares as your cloak drags through it. The light holds, barely, but the pitch is burning fast. The sixth steps out of the dark at last and sends a spine across the corridor, rattling off your pauldron, bright against the dark. Metal is giving in a dozen places. The armor will not last long at this rate.
+
+Move: Require a cost or opportunity (unengaged: undead #6) · Ref: TEST · undead #4 claws (engaged) · +2 · [1,9]=12 → T2 · Ref: TEST · undead #6 spine (unengaged) · +2 · [2,8]=12 → T2
+Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 9 · wounds 0/10 · torch lit (UD 1, die held) · one razorback clinging to you, two more behind it.
+
+## Turn 10
+[PLAYER] PLAYER [11/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack -> ATTACK attack · S+3 · - · [1,9]=13 → T2 · HIT 7 dam
+python3 engine/engine.py test 2 --why "undead #4 claws" -> Ref: TEST · undead #4 claws · +2 · [5,6]=13 → T2
+python3 ledger.py take 3 -> LEDGER: took 3 (AD 9→6, Stamina 17→17, wounds 0→0)
+[REF] You drive your elbow back and the blade after it, pinning the thing against the wall and opening its side to the ribs. It shrieks, a high cracked sound, and still gets a hand free and drags it across your breastplate. The plate dents inward and a bright tear runs through the lacquer. What is left of your armor hangs loose and rattling. The razorback is sagging, but the two behind it are close now and the nearer one has its spines flat and its weight forward, the way a dog sits before it runs.
+
+Ref: TEST · undead #4 claws · +2 · [5,6]=13 → T2
+Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 6 · wounds 0/10 · torch lit (UD 1) · a razorback pinned and sagging, two more crowding behind it.
+
+## Turn 11
+[PLAYER] PLAYER [12/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack -> ATTACK attack · S+3 · - · [8,10]=21 → T3 · HIT 10 dam
+[REF] The blade comes down through the pinned thing's neck with a sound like a splitting log. The head rolls under the dead and the rest of it hangs on your steel a moment before it falls. You wrench the sword free and put your back square to the corridor mouth again. Two are left. The nearer one has stopped perched on the pile of its fellows and tilts its head at you, spines up along its shoulders like a cat's hackles, claws opening and closing. The other stands behind it in the dark, still. The torch pops. A thread of black smoke curls up from it.
+
+Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 6 · wounds 0/10 · torch lit (UD 1) · two left, one crouched on the dead and ready to spring.
+
+## Turn 12
+[PLAYER] PLAYER [13/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack -> ATTACK attack · S+3 · - · [8,6]=17 → T3 · HIT 10 dam
+[REF] It springs and you meet it in the air. The blade takes it under the jaw and out through the crown, and it lands in a heap with its claws still twitching, a spine snapped off against the wall. The last razorback does not charge. It stands in the corridor beyond the bodies, gaunt and patient, and slowly sets its feet apart on the slick stone, spines rising one by one along its back. The torch behind you has burned low, the light shrinking on the floor. At the edge of it the thing lowers its head and a long thread of dark drool runs from its jaw to the flagstones.
+
+Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 6 · wounds 0/10 · torch lit (UD 1, burning low) · one left, the last razorback, poised in the failing light.
+
+## Turn 13
+[PLAYER] PLAYER [14/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack -> ATTACK attack · S+3 · - · [5,7]=15 → T2 · HIT 7 dam
+python3 engine/engine.py test 2 --why "undead #6 claws" -> Ref: TEST · undead #6 claws · +2 · [2,7]=11 → T1
+[REF] It leaps at last, clearing the dead in one bound, and you meet it with the edge. The blade bites deep into its shoulder and drags a long grey wound across the chest. It comes on regardless, claws swinging, but they go wide and rake only the stone beside your leg. It is hurt now, badly, listing to one side with its jaw hanging. It does not flee. It crouches against your shins, hands up, spines shivering, and the torchlight shows what is left of its face.
+
+Ref: TEST · undead #6 claws · +2 · [2,7]=11 → T1
+Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 6 · wounds 0/10 · torch lit (UD 1) · the last razorback, wounded and crouched against you.
+
+## Turn 14
+[PLAYER] PLAYER [15/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack -> ATTACK attack · S+3 · - · [5,5]=13 → T2 · HIT 7 dam
+[REF] The blade comes down once more and the last razorback stops mid-breath. Its spines fall flat, its claws unclench, and it folds slowly onto the heap of its fellows. Nothing moves in the corridor. The scraping is gone. Only the torch crackles at your back, low and orange, and the smoke of it hangs under the vault with the smell of ash. Six bodies lie in the stone throat, grey and ruined. Far down the corridor, past the reach of the light, something small and wet drips, steady as a clock.
+
+Status: Cellar corridor mouth · DT 1 · Stamina 17 · AD 6 · wounds 0/10 · torch lit (UD 1) · all six razorbacks down; the corridor beyond is dark and dripping.
+DONE
+Ran 14 turns (player script indices 1-4, 6-15); all six undead destroyed, Mara alive.

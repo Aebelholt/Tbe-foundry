@@ -98,3 +98,76 @@ ATTACK attack · S+3 · bb · [9,10]=22 → T3 CRIT · HIT 10 dam
 ATTACK attack · S+3 · bb · [2,1]=6 → T1 DOOM · MISS
 
 Crypt hall · DT 2 (rooms 2 of 4) · Stamina 17 · wounds 0/10 · no light, darkness · one razorback dead, one raking at you, one at your back between you and the storeroom
+
+## Turn 7
+[PLAYER] PLAYER [7/14]: I open the next door and go in.
+(roll on request: only if asked)
+[TOOLS] (none; moving costs an exchange with no roll, and no one takes a free blow)
+[REF]
+She backs along the pillar line, feeling for the wall, and finds the far door by its cold iron ring. It opens inward with a shriek of dry hinges. She slips through and into a narrower dark that smells of chalk and old marrow. Underfoot something skitters and crunches. Along both walls, her hand brushes shelves, and on the shelves are rows of round, smooth things, skulls, and bundles of long bones tied with rotted cord. Behind her the razorbacks do not hesitate. The claw-footed scrabble of the nearer one comes through the doorway at her heels, and the hiss of a spine passes her ear and shatters a skull on the shelf in a puff of white dust. The ossuary is long and close, with no room to turn.
+
+Ossuary · DT 2 (rooms 3 of 4) · Stamina 17 · wounds 0/10 · no light, darkness · a razorback at your heels and another throwing spines from the doorway
+
+## Turn 8
+[PLAYER] PLAYER [8/14]: I search the room for treasure and the way on.
+(roll on request: only if asked)
+[TOOLS]
+$ python3 ledger.py test M --b 2 --why "search ossuary in darkness with razorbacks on her"
+TEST search ossuary in darkness with razorbacks on her · M+0 · bb · [8,7]=15 → T1
+STATUS Stamina 17 · AD 20 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py test 2 --why "Undead A3 spine (unengaged, tier-1 move) vs Mara"
+Ref: TEST · Undead A3 spine (unengaged, tier-1 move) vs Mara · +2 · [6,10]=18 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 20→17, Stamina 17→17, wounds 0/10)
+STATUS Stamina 17 · AD 17 · wounds 0/10 · uses Slashing 3 · UD torch 0
+[REF]
+Mara works her hands along the shelves, tipping skulls aside, turning bundles of bone. Her fingers are numb with cold, and in the dark every skull is the same smooth shape. She finds nothing she can name. The shelves are too crowded and the work is too slow with the razorback breathing its dry rattle at her shoulder. A spine slams into her chest plate from the doorway, a hard, ringing blow that drives the air out of her, and then she realizes why the hits keep landing. She is standing in the narrow aisle where both of them can see her, and neither can be dodged. To search this room she must first get out of that line.
+
+Move: Require a cost or opportunity (better position first)
+Ref: TEST · Undead A3 spine (unengaged, tier-1 move) vs Mara · +2 · [6,10]=18 → T3
+
+Ossuary · DT 2 (rooms 3 of 4) · Stamina 17 · wounds 0/10 · no light, darkness · one razorback at your shoulder, one in the doorway with a clear line to you
+
+## Turn 9
+[PLAYER] PLAYER [9/14]: I go on to the next room.
+(roll on request: only if asked)
+[TOOLS] (none for the move; DT 2 ends on entering its fourth room)
+$ python3 ledger.py ud torch
+UD torch · [] → 0→0 · EXPIRED
+STATUS Stamina 17 · AD 17 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=7 vs EN 9 → none
+$ python3 engine/engine.py roll d6 --why "DT 3 length (rooms)"
+Ref: d6 [5]=5 · DT 3 length (rooms)
+[REF]
+She breaks along the shelves to the ossuary's far end and finds a low arch. She ducks through it and the floor drops two steps into a side vault, its air close and heavy and strangely warm. The shelves here are empty. The smell of rot is so thick it is almost a taste. Then something very large shifts in the dark ahead, a slow scrape of long claws on stone, and a second, lighter rattle answers it from the left. A voice that is not a voice, a wet, grinding breath, comes from a height above her head. Behind her the razorbacks pour in through the arch after her, and the vault fills with the sound of too many things closing.
+
+Ref: encounter d10=7 vs EN 9 → none (UD torch: expired, nothing to roll)
+
+Side vault · DT 3 begins (5 rooms) · Stamina 17 · wounds 0/10 · no light, darkness · a longclaw and a razorback ahead, two razorbacks pouring in behind you
+
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+(roll on request: only if asked)
+[TOOLS]
+$ python3 ledger.py test A --b 2 --why "cross the dark side vault past longclaw and razorbacks to the far door"
+TEST cross the dark side vault past longclaw and razorbacks to the far door · A+1 · bb · [9,3]=13 → T1
+STATUS Stamina 17 · AD 17 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py test 2 --why "Undead B claws (move: Hurt them) vs Mara"
+Ref: TEST · Undead B claws (move: Hurt them) vs Mara · +2 · [1,9]=12 → T2
+$ python3 engine/engine.py test 2 --why "Undead A2 spine (unengaged, tier-1 move) vs Mara"
+Ref: TEST · Undead A2 spine (unengaged, tier-1 move) vs Mara · +2 · [1,9]=12 → T2
+$ python3 ledger.py take 4
+LEDGER: took 4 (AD 17→13, Stamina 17→17, wounds 0/10)
+STATUS Stamina 17 · AD 13 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 13→11, Stamina 17→17, wounds 0/10)
+STATUS Stamina 17 · AD 11 · wounds 0/10 · uses Slashing 3 · UD torch 0
+[REF]
+Mara goes down the steps at a run and angles across the vault toward where she thinks the far wall stands. She does not reach it. A huge shape rises across her path, tall, lean, trailing clawed hands as long as her forearm. She feels the wind of its swing and twists, and the claws take her armor instead of her ribs, three shrieking furrows that tear a plate half loose. A thin spine whips out of the dark on her left and glances off the other shoulder. The longclaw is square in front of her, between her and a faint draft of cleaner air that she can feel on her face from somewhere beyond it. The three razorbacks are spreading behind her to cut the room.
+
+Move: Hurt them
+Ref: TEST · Undead B claws (move: Hurt them) vs Mara · +2 · [1,9]=12 → T2
+Ref: TEST · Undead A2 spine (unengaged, tier-1 move) vs Mara · +2 · [1,9]=12 → T2
+
+Side vault · DT 3 (rooms 1 of 5) · Stamina 17 · wounds 0/10 · no light, darkness · the longclaw blocks the way to the draft of clean air, three razorbacks closing behind

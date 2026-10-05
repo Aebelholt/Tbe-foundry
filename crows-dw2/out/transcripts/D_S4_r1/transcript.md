@@ -110,3 +110,77 @@ Ref: initiative d10=8 → crows act first · Ref: TEST · razorback 1 claws · +
 
 Cellar, storeroom (area 2), combat round 2 done · DT 1 (rooms 2 of 5) · Stamina 17 · wounds 0/10 · AD 10 · torch lit · the wounded razorback sways on the chest within reach, and your armor will not take many more volleys.
 
+## Turn 6
+[PLAYER] PLAYER [6/14]: I finish them and move on to the next room.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [6/14]: I finish them and move on to the next room.
+$ python3 engine/engine.py init
+Ref: initiative d10=9 → crows act first
+$ python3 ledger.py attack --b 1 --why "sword vs razorback 1 (3 Stamina), torch dim"
+ATTACK sword vs razorback 1 (3 Stamina), torch dim · S+3 · b · [2,5]=8(incl -2) → T1 · MISS
+STATUS Stamina 17 · AD 10 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2   (razorback 1 counter, claws T2)
+LEDGER: took 2 (AD 10→8, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 8 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "razorback 1 claws"
+Ref: TEST · razorback 1 claws · +2 · [9,8]=19 → T3
+$ python3 engine/engine.py test 2 --why "razorback 2 spine"
+Ref: TEST · razorback 2 spine · +2 · [3,2]=7 → T1
+$ python3 engine/engine.py test 2 --why "razorback 3 spine"
+Ref: TEST · razorback 3 spine · +2 · [6,3]=11 → T1
+$ python3 ledger.py take 4   (claws T3; AD absorbs all, no Stamina damage so no laceration)
+LEDGER: took 4 (AD 8→4, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 4 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+Your sword goes in low and wide, and the torch's shadow cheats you again. The razorback ducks the blade, and the answering rake is slow, half-hearted, a counter against the plate. Then it surges up and puts all its weight behind a real blow. The claws hit your breastplate with a crack, and the last of the good scale gives way across your ribs. The metal is a ruin now, plates gaping and rattling. Behind it the other two loose their spines, but one throws wild into the pillar and the other whistles past your ear into the dark of the storeroom. Chips of bone tick off the stone. The wounded razorback is bleeding gray down its flank, still on the chest, its whole attention on the torch hand. Beneath its claws the chest lid has shifted a finger's width, and a thin line of orange light seeps through the crack.
+
+ATTACK sword vs razorback 1 (3 Stamina), torch dim · S+3 · b · [2,5]=8(incl -2) → T1 · MISS
+Ref: initiative d10=9 → crows act first · Ref: TEST · razorback 1 claws · +2 · [9,8]=19 → T3 · Ref: TEST · razorback 2 spine · +2 · [3,2]=7 → T1 · Ref: TEST · razorback 3 spine · +2 · [6,3]=11 → T1
+
+Cellar, storeroom (area 2), combat round 3 done · DT 1 (rooms 2 of 5) · Stamina 17 · wounds 0/10 · AD 4 · torch lit · the chest lid is shifting under the razorback's claws and the embers inside are waking.
+
+## Turn 7
+[PLAYER] PLAYER [7/14]: I open the next door and go in.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [7/14]: I open the next door and go in.
+$ python3 engine/engine.py init
+Ref: initiative d10=9 → crows act first
+(razorback 1 tears the chest lid open on its own action: embers disturbed, printed trap, Agility RR for each creature in the room: Mara and razorback 1; razorbacks 2 and 3 hold the arch, outside the room)
+$ python3 ledger.py test A --why "Agility RR embers explode"
+TEST Agility RR embers explode · A+1 · - · [5,10]=16 → T2
+STATUS Stamina 17 · AD 4 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py read floating_manor_a11_embers_explode 16
+Floating Manor area 11: embers explosion (D17) 16 → 4 dam
+note: Agility RR for each creature in the room if the embers are disturbed.
+$ python3 ledger.py take 4
+LEDGER: took 4 (AD 4→0, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 1 --why "razorback 1 Agility RR embers"
+Ref: TEST · razorback 1 Agility RR embers · +1 · [8,9]=18 → T3
+$ python3 engine/engine.py read floating_manor_a11_embers_explode 18
+Floating Manor area 11: embers explosion (D17) 18 → No effect
+$ python3 engine/engine.py test 2 --why "razorback 1 claws"
+Ref: TEST · razorback 1 claws · +2 · [10,3]=15 → T2
+$ python3 engine/engine.py test 2 --why "razorback 2 spine"
+Ref: TEST · razorback 2 spine · +2 · [10,6]=18 → T3
+$ python3 engine/engine.py test 2 --why "razorback 3 spine"
+Ref: TEST · razorback 3 spine · +2 · [8,2]=12 → T2
+$ python3 ledger.py take 2   (claws T2)
+LEDGER: took 2 (AD 0→0, Stamina 17→15, wounds 0→0)
+STATUS Stamina 15 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3   (spine T3)
+LEDGER: took 3 (AD 0→0, Stamina 15→12, wounds 0→0)
+STATUS Stamina 12 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 1   (spine T2)
+LEDGER: took 1 (AD 0→0, Stamina 12→11, wounds 0→0)
+STATUS Stamina 11 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You throw your weight toward the arch and find it full of razorbacks. There is no door to open, only the dark archway packed with bone and hooked claws, and the way through is theirs. Before you can find another route the wounded one on the chest bares its teeth and slams its claws under the lid. The iron bands shriek and the chest bursts open. The embers inside flare white and the whole storeroom goes off in your face. You turn into the blast, and the heat takes the last of your armor in one roar of scorched plate, leaving only cloth and skin. The razorback on the chest shrugs the fire off like rain. It sets on you at once. Its claws find you, and the two behind lace your ribs with bone nails. They bleed you where the metal was.
+
+TEST Agility RR embers explode · A+1 · - · [5,10]=16 → T2 · 4 dam
+Ref: initiative d10=9 → crows act first · Ref: TEST · razorback 1 Agility RR embers · +1 · [8,9]=18 → T3 · Ref: TEST · razorback 1 claws · +2 · [10,3]=15 → T2 · Ref: TEST · razorback 2 spine · +2 · [10,6]=18 → T3 · Ref: TEST · razorback 3 spine · +2 · [8,2]=12 → T2
+
+Cellar, storeroom (area 2), combat round 4 done · DT 1 (rooms 2 of 5) · Stamina 11 · wounds 0/10 · AD 0 · torch lit · the razorback sways on the burst chest with a ruined claw, the arch is still full behind it, and you are bleeding through cloth.
+

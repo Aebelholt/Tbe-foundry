@@ -66,3 +66,75 @@ Ref: encounter d10=4 vs EN 9 → none
 Ref: d6 [4]=4 · DT 2 length (rooms)
 
 Where: ossuary (area 4) · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch lit · two razorbacks are at the doorway behind you, one with spines drawn.
+
+## Turn 8
+[PLAYER] PLAYER [8/14]: I search the room for treasure and the way on.
+[TOOLS]
+`python3 ledger.py test M --why "search ossuary with razorbacks at the door"` -> TEST search ossuary with razorbacks at the door · M+0 · - · [3,1]=4 → T1 / STATUS Stamina 17 · AD 21 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead A2 claws (Move: Escalate the situation)"` -> Ref: TEST · Undead A2 claws (Move: Escalate the situation) · +2 · [6,10]=18 → T3
+`python3 ledger.py take 4` -> LEDGER: took 4 (AD 21→17, Stamina 17→17, wounds 0→0) / STATUS Stamina 17 · AD 17 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] You turn your back on the door and rake the torch along the shelves, but the skulls blur into one another and your eyes slide off them. You see only grinning bone, a thousand hollow sockets, and nothing that glints. Behind you claws scrape, then a rush of dry air: the nearer razorback leaps the span of the room in a single bound and lands on your shoulder blades. Its claws rip across your armor, ringing, and gouge long bright channels in the plate, but the steel holds. The second one comes in behind it, sliding along the base of the shelves, spines flared, hunting for a flank.
+
+Ref: Move: Escalate the situation · TEST · Undead A2 claws · +2 · [6,10]=18 → T3
+Foes: A2 Stamina 10/10 [engaged] hand · A3 Stamina 10/10 [unengaged] near (tracked)
+
+Where: ossuary (area 4) · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch lit · a razorback is on your back, claws still in your armor, and nothing here has glinted yet.
+
+## Turn 9
+[PLAYER] PLAYER [9/14]: I go on to the next room.
+[TOOLS] (disengaging toward the vault door costs the exchange, no roll; area 5 entered = room 2/4 of DT 2)
+[REF] You wrench free of the claws and lunge for the iron door at the back of the ossuary. It opens inward onto a low vault, the air colder, the floor slick with a skin of black water. Two shapes wait inside, and both stand to meet your light. One is another razorback, spines bristling. The other is longer, taller, its forearms hung with claws as long as short swords, and bone ridges plated along its back. It tilts its head at the torch. Behind you the ossuary rattles as the two razorbacks you left come on, and the black water ahead ripples, with the long-clawed one stepping forward as if it already owns the room.
+
+Ref: (none)
+
+Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · a longclaw and a razorback face you from inside, and two more are at your back.
+
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+[TOOLS]
+`python3 ledger.py test A --why "dash through the vault past the longclaw to the far door"` -> TEST dash through the vault past the longclaw to the far door · A+1 · - · [2,4]=7 → T1 / STATUS Stamina 17 · AD 17 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead B claws (Move: Hurt them)"` -> Ref: TEST · Undead B claws (Move: Hurt them) · +2 · [10,7]=19 → T3
+`python3 ledger.py take 5` -> LEDGER: took 5 (AD 17→12, Stamina 17→17, wounds 0→0) / STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] You spot the far door, a low arch on the opposite wall, and you run for it along the black water. The longclaw is there before you. It crosses the vault in two strides, one forearm sweeping through the torchlight, and the long claws come down across your chest and shoulder. Plate screams, rivets pop and a sheet of metal peels away, but the blow stops at the armor. You skid, the water flinging up around your boots, the arch still a good ten feet off. The longclaw stands between you and it, head cocked, claws dripping. At your back the ossuary doorway fills as the razorbacks you left come in.
+
+Ref: Move: Hurt them · TEST · Undead B claws · +2 · [10,7]=19 → T3
+
+Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · the longclaw is in your face and bars the arch, with razorbacks at your back.
+
+## Turn 11
+[PLAYER] PLAYER [11/14]: I engage whatever is in the way, sword first.
+[TOOLS]
+`python3 ledger.py attack` -> ATTACK attack · S+3 · - · [8,4]=15 → T2 · HIT 7 dam / STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead B claws"` -> Ref: TEST · Undead B claws · +2 · [4,1]=7 → T1
+[REF] You set your boots in the black water and cut at the longclaw as it rears. The blade finds the join of neck and shoulder and splits dry hide, and a gout of dark ichor and gray dust spills out over your hands. It reels, but it is not slowed; the claws sweep back across the space where your head was, and you duck under them, the wind of the swipe riffling your hair. The blow goes wide and chips stone from the wall. Behind you the first razorback is a stride away and the second one is circling toward the water at your flank. The vault stinks of grave earth and old blood.
+
+Ref: TEST · Undead B claws · +2 · [4,1]=7 → T1
+Foes: B Stamina 13/20 [engaged] hand · A4 10/10 [unengaged] near · A2 10/10 [unengaged] close · A3 10/10 [unengaged] near
+
+Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · the longclaw is hurt but still standing in front of the arch, and the razorbacks are closing from behind.
+
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+[TOOLS]
+`python3 ledger.py attack` -> ATTACK attack · S+3 · - · [10,6]=19 → T3 · HIT 10 dam / STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead B claws"` -> Ref: TEST · Undead B claws · +2 · [8,1]=11 → T1
+[REF] You drive in, all your weight behind the blade, and it goes through the longclaw's chest to the guard. The leader jerks on the steel, ribs cracking, ichor running down the flat of the sword in a black sheet, and the light in its eye sockets gutters. It rakes at you with the last of its strength, but the claws find only air and the water at your feet. It is nearly spent, hanging off your blade, the dry rattle of its breathing loud in the vault. Behind you the razorbacks have stopped their circling. One of them hisses, low and ugly, and the sound comes from very close behind your left shoulder.
+
+Ref: TEST · Undead B claws · +2 · [8,1]=11 → T1
+Foes: B Stamina 3/20 [engaged] hand · A4 10/10 [unengaged] near · A2 10/10 [unengaged] close · A3 10/10 [unengaged] near
+
+Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · the longclaw hangs nearly dead on your blade, and a razorback hisses at your left shoulder.
+
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+[TOOLS]
+`python3 ledger.py attack` -> ATTACK attack · S+3 · - · [1,6]=10 → T1 · MISS / STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead B claws (engaged)"` -> Ref: TEST · Undead B claws (engaged) · +2 · [4,6]=12 → T2
+`python3 engine/engine.py test 2 --why "Undead A2 claws (Move: Take something away)"` -> Ref: TEST · Undead A2 claws (Move: Take something away) · +2 · [2,9]=13 → T2
+`python3 ledger.py take 4` -> LEDGER: took 4 (AD 12→8, Stamina 17→17, wounds 0→0) / STATUS Stamina 17 · AD 8 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 ledger.py take 3` -> LEDGER: took 3 (AD 8→5, Stamina 17→17, wounds 0→0) / STATUS Stamina 17 · AD 5 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] Your swing goes wide, slicing only water, and the longclaw wrenches itself off the blade and slashes back. Its claws drag across your armor and the plate buckles under them. At the same instant the razorback on your flank bursts forward, shouldering past you and landing in the low arch, squatting in the doorway with its spines raised toward you. It has taken the way out. The armor on your chest hangs in strips, and the plates at your back grate with every breath. Both of them are close, and the longclaw staggers on the edge of falling, one claw hanging limp at its side.
+
+Ref: Move: Take something away · B claws +2 [4,6]=12 → T2 · A2 claws +2 [2,9]=13 → T2
+
+Where: side vault (area 5) · DT 2 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · a razorback squats in the arch, and the longclaw is a stroke from dead.
