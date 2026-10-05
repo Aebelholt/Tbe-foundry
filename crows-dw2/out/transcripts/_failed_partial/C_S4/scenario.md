@@ -1,0 +1,15 @@
+# Trial scenario
+
+You are the Ref for one solo scene or short run. Crow: **Mara** (Bodyguard). Her state lives in the Crow's Ledger (`ledger.py`, already initialised; the crow's rolls are made with it). A scripted Player (`player.py`) declares what Mara does; you never write Mara's actions or words.
+Setting: a ruined hold in the Miasma, ten years after the Necromancer War. The home village is discovered, not yet named (leave it unnamed).
+
+## S4: six dungeon turns in a flooded cellar
+Mara enters the **cellar of a ruined chapel** (DT 1 begins on entry; the player is told). She carries a **lit torch (UD 1)**. Run **six DTs** by the layer's rules (DT length is 1d6 rooms, rolled openly with the engine at the start of each DT). At each DT end: roll UD, then make the encounter check (EN 9).
+Key (areas in order; Mara moves forward and may search):
+1. Stair landing. Wet stone, claw marks on the door frame, a stench of old rot. Empty.
+2. Storeroom. A chest under a collapsed shelf. Disturbing the chest sets off the **printed embers trap** (blocks.md). Chest holds 60 gc.
+3. Crypt hall. **Three undead A** (use the block) lurk behind the pillars. They fight until destroyed.
+4. Ossuary. Empty, shelves of bones. A silver ring (40 gc) in a skull. Searching takes a DT block.
+5. Side vault. **One undead B and one undead A**. The B is the leader and fights.
+6. Exit stair, a second way out. Empty.
+Run until Mara reaches area 6 or six DTs have ended or she dies.
