@@ -202,3 +202,43 @@ Behind you the razorbacks flood into the vault, their spines clicking. One split
 Ref: TEST · longclaw claws · +2 · [1,5]=8 → T1
 
 Where: cellar, side vault · DT 3 (rooms 0/4) · Stamina 17 · wounds 0/10 · torch lit · the wounded longclaw squares up while razorbacks close in behind and beside you
+
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [12/14]: I press the nearest.
+$ python3 ledger.py attack --why "Trade Blows vs longclaw"
+ATTACK Trade Blows vs longclaw · S+3 · - · [2,4]=9 → T1 · MISS
+STATUS Stamina 17 · AD 16 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "longclaw claws"
+Ref: TEST · longclaw claws · +2 · [8,1]=11 → T1
+$ python3 engine/engine.py test 2 --why "razorback 2 claws (unengaged, crow T1 move)"
+Ref: TEST · razorback 2 claws (unengaged, crow T1 move) · +2 · [1,7]=10 → T1
+[REF]
+You lunge at the leader, but your boots slip in the wet, and the stroke goes wide of the grey ribs. It answers with a backhand that your shield catches, and the blow rings up your arm. From behind, one of the razorbacks drives its claws at your kidney and finds only the angle of your armor, scraping a long bright line across the plate.
+
+The longclaw bares black gums. For a moment you have all four of them in the torchlight, the leader before you, one razorback crowding your back, one slipping along the coffins to your left, and the last hanging by the door, spines flaring. The torch gutters in a draught from somewhere.
+
+Ref: TEST · longclaw claws · +2 · [8,1]=11 → T1; Ref: TEST · razorback 2 claws (unengaged, crow T1 move) · +2 · [1,7]=10 → T1
+
+Where: cellar, side vault · DT 3 (rooms 0/4) · Stamina 17 · wounds 0/10 · torch lit · the leader squares up, razorbacks at your back, flank and the door
+
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [13/14]: I finish it and look for the exit.
+$ python3 ledger.py attack --why "Trade Blows vs longclaw"
+ATTACK Trade Blows vs longclaw · S+3 · - · [10,8]=21 → T3 · HIT 10 dam
+STATUS Stamina 17 · AD 16 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "longclaw claws"
+Ref: TEST · longclaw claws · +2 · [6,3]=11 → T1
+[REF]
+You step through the leader's guard and cut upward, and the blade goes in under the jaw and out through the ridge of black hooks. It reels, spilling grey rot, one clawed hand scrabbling at the ruin of its throat, but it is still on its feet. Its backhand comes late and slow and glances off your shield with no force behind it.
+
+It is not dead. It stands with its head cocked at a wrong angle, and the three razorbacks press in around you, one at your back and two on your flanks, spines rattling. Beyond the leader, past the toppled coffins, a narrow stair climbs into dark, a draught of cleaner air coming down it. The way out is there, and every step of it runs past the longclaw.
+
+Ref: TEST · longclaw claws · +2 · [6,3]=11 → T1
+
+Where: cellar, side vault · DT 3 (rooms 0/4) · Stamina 17 · wounds 0/10 · torch lit · the mauled longclaw stands between you and the stair, razorbacks at your back and flanks

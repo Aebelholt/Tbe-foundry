@@ -131,3 +131,69 @@ Ref: TEST · razorback A5 claws (Move: Have it backfire) · +2 · e · [9,3]=16 
 Move: Have it backfire
 
 Cellar corridor mouth · combat · Stamina 17 · wounds 0/10 · torch lit (UD 1) · armor nearly gone, two razorbacks tearing at you, the third coming
+
+## Turn 10
+[PLAYER] PLAYER [11/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack
+ATTACK attack · S+3 · - · [1,1]=5 → T1 DOOM · MISS
+STATUS Stamina 17 · AD 4 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 ledger.py ud torch
+UD torch · [6] → 1→1
+STATUS Stamina 17 · AD 4 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 engine/engine.py test 2 --e 1 --why "razorback A4 claws (doom, off balance)"
+Ref: TEST · razorback A4 claws (doom, off balance) · +2 · e · [6,8]=18 → T3
+python3 engine/engine.py test 2 --e 1 --why "razorback A5 claws (Move: Require a cost)"
+Ref: TEST · razorback A5 claws (Move: Require a cost) · +2 · e · [4,9]=17 → T3
+python3 ledger.py take 4
+LEDGER: took 4 (AD 4→0, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 ledger.py take 4
+LEDGER: took 4 (AD 0→0, Stamina 17→13, wounds 0→0)
+STATUS Stamina 13 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] The swing is worse than the last, and the heap of dead takes your footing for good. A claw rips through the last of your plate and the armor falls off in pieces. The second claw comes in under your ribs and opens you from hip to belly, a hot line that goes cold at once. Blood runs into your belt. The torch smokes and sputters in its bracket, the light dimming, but it holds. The third razorback is almost on the heap now, and the whole corridor mouth is a snarl of claws and teeth and ridged backs.
+
+Ref: TEST · razorback A4 claws (doom, off balance) · +2 · e · [6,8]=18 → T3
+Ref: TEST · razorback A5 claws (Move: Require a cost) · +2 · e · [4,9]=17 → T3
+Move: Require a cost or opportunity
+
+Cellar corridor mouth · combat · Stamina 13 · wounds 0/10 · torch lit (UD 1) · armor gone, a laceration across your belly, three razorbacks closing
+
+## Turn 11
+[PLAYER] PLAYER [12/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack
+ATTACK attack · S+3 · - · [4,2]=9 → T1 · MISS
+STATUS Stamina 13 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 engine/engine.py test 2 --why "razorback A4 claws"
+Ref: TEST · razorback A4 claws · +2 · [7,1]=10 → T1
+python3 engine/engine.py test 2 --why "razorback A6 claws (Move: Hit the ground running)"
+Ref: TEST · razorback A6 claws (Move: Hit the ground running) · +2 · [7,4]=13 → T2
+python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 13→10, wounds 0→0)
+STATUS Stamina 10 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] You swing and catch nothing but air. The razorback in front of you lunges and snaps and misses, its jaws clacking an inch from your face. But the last one has come through the gap without a sound and its claws tear across your thigh, and the pain is sudden and wet. Three of them now, nose to nose, all in reach. The torch spits and the shadows of the claws crawl over the ceiling. You are standing in a ring of dead things and the floor is slick under your boots.
+
+Ref: TEST · razorback A4 claws · +2 · [7,1]=10 → T1
+Ref: TEST · razorback A6 claws (Move: Hit the ground running) · +2 · [7,4]=13 → T2
+Move: Hit the ground running
+
+Cellar corridor mouth · combat · Stamina 10 · wounds 0/10 · torch lit (UD 1) · three razorbacks in reach, one lacerating cut across the belly
+
+## Turn 12
+[PLAYER] PLAYER [13/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack
+ATTACK attack · S+3 · - · [3,2]=8 → T1 · MISS
+STATUS Stamina 10 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 engine/engine.py test 2 --why "razorback A4 claws"
+Ref: TEST · razorback A4 claws · +2 · [10,10]=22 → T3 CRIT
+python3 engine/engine.py test 2 --why "razorback A5 claws (Move: Make them choose)"
+Ref: TEST · razorback A5 claws (Move: Make them choose) · +2 · [3,1]=6 → T1
+python3 ledger.py take 4
+LEDGER: took 4 (AD 0→0, Stamina 10→6, wounds 0→0)
+STATUS Stamina 6 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] Your blade skids off a spine and the razorback in front of you rises, jaws wide, and rakes you across the chest so hard that you feel something give. Blood in your mouth. The one at your flank misses entirely, its claws sparking on the wall. Above you the torch bracket cracks with a dry snap and the brand hangs by a splinter of wood, the flame leaning toward the dark. If it falls, the light goes with it, and you are down to six Stamina with three of them standing in the ring of your own blood.
+
+Ref: TEST · razorback A4 claws · +2 · [10,10]=22 → T3 CRIT
+Ref: TEST · razorback A5 claws (Move: Make them choose) · +2 · [3,1]=6 → T1
+Move: Make them choose
+
+Cellar corridor mouth · combat · Stamina 6 · wounds 0/10 · torch lit (UD 1), bracket cracking · three razorbacks in reach

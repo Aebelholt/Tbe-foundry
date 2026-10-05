@@ -120,3 +120,23 @@ Ref: TEST · Undead A2 claws vs Mara · +2 · [10,8]=20 → T3 | Ref: TEST · Un
 
 Crypt hall · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch (UD 1) · One razorback holds the far arch at arm's length and the other has you by the back, and your armor is ringing.
 
+## Turn 9
+[PLAYER] PLAYER [9/14]: I go on to the next room.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [9/14]: I go on to the next room.
+$ python3 ledger.py test A --why "slip past the razorback blocking the far arch"
+TEST slip past the razorback blocking the far arch · A+1 · - · [2,4]=7 → T1
+STATUS Stamina 17 · AD 18 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "Undead A3 spine vs Mara"
+Ref: TEST · Undead A3 spine vs Mara · +2 · [7,10]=19 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 18→15, Stamina 17→17, wounds 0/10 -> 0)
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(scene: A2 10/10 engaged close; A3 10/10 unengaged near. Move: Take something away)
+[REF] You cut left for the gap beside the pillar and the razorback is simply there, as if it had read your feet. Its shoulder meets your chest and the pillar meets your back, and the torch, jammed between you and the stone, is knocked clean out of your hand. It skitters across the wet flags and fetches up against the foot of a pillar four paces off, still burning, lying on its side and throwing its light low and sideways, so that every shadow in the hall leans the wrong way. The one behind you takes the moment and a spine rings off your shoulder plate. The arch ahead is a darker dark now, and the claws in front of you are the clearest thing in it.
+
+Ref: TEST · Undead A3 spine vs Mara · +2 · [7,10]=19 → T3 | Move: Take something away
+
+Crypt hall · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor, four paces off, still lit · The razorback pins you against the pillar and its twin is behind you in the dark.
+

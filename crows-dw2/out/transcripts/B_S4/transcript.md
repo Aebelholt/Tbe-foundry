@@ -106,3 +106,47 @@ You step wide as it springs, the claws passing a hand's breadth from your hip, a
 
 Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 17 · wounds 0/10 · torch lit, UD 1 · the longclaw lifts its head and wades toward you, its razorback close behind.
 
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+[TOOLS]
+$ python3 ledger.py move A --why "Defy Danger: cross the flooded vault past the longclaw to the far door"
+MOVE Defy Danger: cross the flooded vault past the longclaw to the far door · A+1 · - · [1,4]=6 → T1
+STATUS Stamina 17 · AD 17 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 17→14, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 14 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+The door is in the wall past the pair, and the water does not let you hurry. You wade three steps and your foot finds a slick drop in the floor. You stumble to one knee, the torch dipping, and the longclaw is on you before the flame rights itself. One claw comes down across your back and shoulder with a sound like a shovel on slate, driving you into the wall. The other hand grips the door frame above you, a long grey arm barring the way out. The razorback behind it sets its spines and waits for its master to finish. The door is shut by that arm and by the creature standing in front of it.
+
+Ref move: Hurt Them (3 dam, AD first)
+Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 14 · wounds 0/10 · torch lit, UD 1 · the longclaw looms over you, arm across the door, razorback at its heel.
+
+## Turn 11
+[PLAYER] PLAYER [11/14]: I engage whatever is in the way, sword first.
+(roll on request: attack / Trade Blows)
+[TOOLS]
+$ python3 ledger.py move S --why "Trade Blows vs longclaw (Undead B)"
+MOVE Trade Blows vs longclaw (Undead B) · S+3 · - · [4,4]=11 → T3
+STATUS Stamina 17 · AD 14 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 14→11, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 11 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You come up off the knee with the sword already swinging. It takes the longclaw high across the chest and opens a gash that smokes with grave-cold, and the thing barely staggers. Its answer is a backhand that finds your ribs through the plate and throws you into the stone, scattering water, but the armor holds and you stay on your feet. The arm across the door has dropped. The longclaw stands half turned, head cocked, black fluid running down its chest. It is hurt and it is still coming. Behind it the razorback shifts its weight, looking for an angle past its master's shoulder.
+
+Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 11 · wounds 0/10 · torch lit, UD 1 · the longclaw is bleeding but upright, the razorback circling for a line.
+
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+[TOOLS]
+$ python3 ledger.py move S --why "Trade Blows vs longclaw (nearest)"
+MOVE Trade Blows vs longclaw (nearest) · S+3 · - · [2,4]=9 → T2
+STATUS Stamina 17 · AD 11 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 11→8, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 8 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You lunge into the gap and your blade goes in under its ribs, a shuddering, grinding cut that stops the longclaw cold and pulls a low sound from it like a pipe in wind. It does not fall. Its claws come down again as you close, raking your armor to the stitching, and the plate along your side gives out a sour crack. In that moment of closeness the razorback finds its line, slipping around the larger body and stepping up at your shoulder, spines flaring. The longclaw sways, very nearly spent, one hand tearing at the wall for balance. The water around your legs is going dark.
+
+Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 8 · wounds 0/10 · torch lit, UD 1 · the longclaw swaying and nearly done, the razorback at your shoulder.
+

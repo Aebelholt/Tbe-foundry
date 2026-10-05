@@ -165,3 +165,50 @@ $ python3 ledger.py take 2
 Roll: Trade Blows · S · MOVE move · S+3 · - · [4,4]=11 → T3 · max damage dealt (7), 2 suffered
 
 Cellar corridor mouth · DT 1 · Stamina 17 · AD 5 · wounds 0/10 · torch lit (1 UD) · the fifth razorback gutted and swaying on you, the last one stepping into the light behind it
+
+## Turn 12
+[PLAYER] PLAYER [13/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py move S
+MOVE move · S+3 · - · [2,6]=11 → T3
+STATUS Stamina 17 · AD 5 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(Ruling: max damage 7 kills razorback #5 (3 left); foe's 2 suffered.)
+$ python3 ledger.py take 2
+(see output below)
+[REF] The fifth razorback folds under your blade and does not rise. Its claws still catch you on the way down, a hard scrape across the mail that leaves your arm trembling. The last of them steps over the dead without hurry and plants itself in front of you. It is the biggest of the six, or seems so, hide scarred with old burns, one spine broken and healed crooked. It looks at you. It looks at the torch behind you. Then it opens its jaws and a low clicking comes from deep in its chest, the sound of a thing counting.
+
+Roll: Trade Blows · S · MOVE move · S+3 · - · [2,6]=11 → T3 · max damage dealt (7), 2 suffered
+
+Cellar corridor mouth · DT 1 · Stamina 17 · AD 3 · wounds 0/10 · torch lit (1 UD) · five razorbacks down, the last one before you, clicking
+
+## Turn 13
+[PLAYER] PLAYER [14/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py move S
+MOVE move · S+3 · - · [1,6]=10 → T3
+STATUS Stamina 17 · AD 3 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(Ruling: max damage 7 on razorback #6 (3 left); foe's 2 suffered.)
+$ python3 ledger.py take 2
+(see output below)
+[REF] The blade takes it across the chest and it staggers back a step, spines thrashing, a rattle going through the heap of dead behind it. It comes forward again anyway, claws raking, and the last of your mail's plates cracks along the seam with a sound you feel in your teeth. The clicking in its throat has risen to a scrape, almost a word. Torchlight shows the wet dark of its wounds. Whatever held it back before is gone now. Your sword arm is heavy and the ground is slick.
+
+Roll: Trade Blows · S · MOVE move · S+3 · - · [1,6]=10 → T3 · max damage dealt (7), 2 suffered
+
+Cellar corridor mouth · DT 1 · Stamina 17 · AD 1 · wounds 0/10 · torch lit (1 UD) · the last razorback torn and furious, your armor nearly gone
+
+## Turn 14
+[PLAYER] PLAYER [15/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py move S
+MOVE move · S+3 · - · [6,5]=14 → T3
+STATUS Stamina 17 · AD 1 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(Ruling: max damage 7 kills razorback #6 (3 left); foe's 2 suffered at once.)
+$ python3 ledger.py take 2
+(see output below)
+[REF] You put everything into the stroke and the last razorback comes apart under it, spine and rib and grey hide, and goes down in a heap on top of its five kin. Its dying claws find the last of your armor and the last of the plate gives way, and the second scrape is the first that reaches skin, a hot line across your ribs. Then the corridor is silent. The torch crackles. Somewhere a drip of water falls into the dark. Nothing moves in the column. The only sound is your own breath, loud and ragged, and the smell of grave-earth thick in your throat.
+
+Roll: Trade Blows · S · MOVE move · S+3 · - · [6,5]=14 → T3 · max damage dealt (7), 2 suffered
+
+Cellar corridor mouth · DT 1 · Stamina 16 · AD 0 · wounds 0/10 · torch lit (1 UD) · all six razorbacks destroyed, the corridor silent
+DONE
+Ran 14 turns.

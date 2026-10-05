@@ -150,3 +150,52 @@ STATUS Stamina 11 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
 
 Ref: TEST · U2 claws vs Mara · +2 · [3,10]=15 → T2 | Ref: TEST · U5 spine vs Mara · +2 · [9,9]=20 → T3 | Ref: TEST · U6 spine vs Mara · +2 · [10,10]=22 → T3 CRIT
 Status: Cellar corridor mouth · DT 1 · Stamina 11 · wounds 0/10 · torch lit and burning low, dim light · the unmarked razorback is a claw's length from your throat, and no armor is left to turn the next blow.
+
+## Turn 9
+[PLAYER] PLAYER [10/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [5,8]=14(incl -2) → T2 · HIT 7 dam
+STATUS Stamina 11 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U2 claws vs Mara"
+Ref: TEST · U2 claws vs Mara · +2 · [8,4]=14 → T2
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 11→8, wounds 0→0)
+STATUS Stamina 8 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] This one lands. The blade opens the razorback from hip to ribs and black ichor pours over the stone, and it staggers, one claw dragging. It still reaches you. The hooked fingers rake across your arm, peeling skin from the bone, and the pain is clean and bright. The thing is sagging now, jaw working, but its eyes stay on your throat. Behind it the others have stopped their ticking. They are waiting, and they know how little you have left.
+
+Ref: TEST · U2 claws vs Mara · +2 · [8,4]=14 → T2
+Status: Cellar corridor mouth · DT 1 · Stamina 8 · wounds 0/10 · torch lit and burning low, dim light · the gutted razorback is still upright, claws up, and it has not stopped coming.
+
+## Turn 10
+[PLAYER] PLAYER [11/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [2,7]=10(incl -2) → T1 · MISS
+STATUS Stamina 8 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U2 claws vs Mara"
+Ref: TEST · U2 claws vs Mara · +2 · [4,1]=7 → T1
+$ python3 engine/engine.py test 2 --why "U3 spine vs Mara"
+Ref: TEST · U3 spine vs Mara · +2 · [5,9]=16 → T2
+$ python3 engine/engine.py test 2 --why "U4 spine vs Mara"
+Ref: TEST · U4 spine vs Mara · +2 · [6,4]=12 → T2
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 8→6, wounds 0→0)
+STATUS Stamina 6 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 6→4, wounds 0→0)
+STATUS Stamina 4 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] The gutted razorback falls against the wall as you swing, and the blade sweeps through empty air above it. Its claws find only your boot. Then a pair of spines come out of the dark together, quick and low. One drives into your thigh and the other pierces your side under the ribs, and your breath goes out of you in a rough bark. Your hands are slick and the torch is a low orange smear. You can hear your own heart over the ticking.
+
+Ref: TEST · U2 claws vs Mara · +2 · [4,1]=7 → T1 | Ref: TEST · U3 spine vs Mara · +2 · [5,9]=16 → T2 | Ref: TEST · U4 spine vs Mara · +2 · [6,4]=12 → T2
+Status: Cellar corridor mouth · DT 1 · Stamina 4 · wounds 0/10 · torch lit and burning low, dim light · the gutted razorback clings to your boot while two barbed spines hang from your side.
+
+## Turn 11
+[PLAYER] PLAYER [12/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [6,9]=16(incl -2) → T2 · HIT 7 dam
+STATUS Stamina 4 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] The blade comes down through the razorback's spine and it stops with a dry crack, the claws falling slack from your boot. Two are down. The corpses lie crossed in the corridor mouth, and for a moment the passage is a plug of dead flesh. Beyond them four shapes come to the edge of the light and stand there in a column, spines flexed, heads low, and none of them is in a hurry. Your breath is loud. The torch gutters.
+
+Status: Cellar corridor mouth · DT 1 · Stamina 4 · wounds 0/10 · torch lit and burning low, dim light · four razorbacks stand at the edge of the light, spines raised, and the nearest has begun to climb the bodies.

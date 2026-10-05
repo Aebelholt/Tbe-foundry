@@ -148,3 +148,70 @@ Five remain. The one at her other shoulder steps over the fallen and fills the g
 Ref: initiative d10=1 → enemies act first | Ref: TEST · U1 claws · +2 · [10,2]=14 → T2 | Ref: TEST · U2 claws · +2 · [8,2]=12 → T2 | Ref: TEST · U3 spine · +2 · [2,9]=13 → T2 | Ref: TEST · U4 spine · +2 · [4,1]=7 → T1 | Ref: TEST · U5 spine · +2 · [7,8]=17 → T3 | Ref: TEST · U6 spine · +2 · [5,3]=10 → T1 | ATTACK attack · S+3 · - · [2,8]=13 → T2 · HIT 7 dam
 
 Corridor cellar · Round 4 · Stamina 14 · wounds 0/10 · AD 0 · torch lit (1 UD) · five razorbacks left, one at her shoulder
+
+## Turn 5
+[PLAYER] PLAYER [6/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 engine/engine.py init
+Ref: initiative d10=3 → enemies act first
+$ python3 engine/engine.py test 2 --why "U2 claws" (and U3 claws after stepping up, U4-U6 spine; in sequence)
+Ref: TEST · U2 claws · +2 · [10,6]=18 → T3
+Ref: TEST · U3 claws · +2 · [2,8]=12 → T2
+Ref: TEST · U4 spine · +2 · [10,2]=14 → T2
+Ref: TEST · U5 spine · +2 · [10,7]=19 → T3
+Ref: TEST · U6 spine · +2 · [10,8]=20 → T3
+$ python3 ledger.py take 4   (U2 T3 claws, damages Stamina: Lacerate, 1 laceration on Mara)
+LEDGER: took 4 (AD 0→0, Stamina 14→10, wounds 0→0)
+STATUS Stamina 10 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 10→8, wounds 0→0)
+STATUS Stamina 8 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 1
+LEDGER: took 1 (AD 0→0, Stamina 8→7, wounds 0→0)
+STATUS Stamina 7 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 7→4, wounds 0→0)
+STATUS Stamina 4 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 4→1, wounds 0→0)
+STATUS Stamina 1 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [6,8]=17 → T3 · HIT 10 dam
+STATUS Stamina 1 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+Now it all lands. A claw rakes her flank and keeps raking, the hooked tips dragging down through cloth and into meat, and she feels a long red line open that does not close. A second razorback shoves into the gap beside the first and claws her once, hard. Spines come in a flurry from the dark and three of them find her, one in the thigh, one in the shoulder, one glancing off the ribs, each hot as a coal. The world narrows to breath and the torch's guttering red.
+
+Mara cuts through it anyway. The blade takes the razorback that raked her square across the chest and drives clean through, the spine splitting, the whole thing coming apart in a rattle of bone that clatters off the walls. The glow in it goes out.
+
+Four left. The one that stepped up is at her left shoulder, jaw hanging open, claws pulling back. The three behind it are tense and rattling, spines up.
+
+Ref: initiative d10=3 → enemies act first | Ref: TEST · U2 claws · +2 · [10,6]=18 → T3 | Ref: TEST · U3 claws · +2 · [2,8]=12 → T2 | Ref: TEST · U4 spine · +2 · [10,2]=14 → T2 | Ref: TEST · U5 spine · +2 · [10,7]=19 → T3 | Ref: TEST · U6 spine · +2 · [10,8]=20 → T3 | ATTACK attack · S+3 · - · [6,8]=17 → T3 · HIT 10 dam
+
+Corridor cellar · Round 5 · Stamina 1 · wounds 0/10 · AD 0 · laceration 1 · torch lit (1 UD) · four razorbacks left, one at her shoulder
+
+## Turn 6
+[PLAYER] PLAYER [7/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 engine/engine.py init
+Ref: initiative d10=1 → enemies act first
+$ python3 engine/engine.py test 2 --why "U3 claws" (and U4-U6 spine; in sequence)
+Ref: TEST · U3 claws · +2 · [1,6]=9 → T1
+Ref: TEST · U4 spine · +2 · [4,2]=8 → T1
+Ref: TEST · U5 spine · +2 · [1,7]=10 → T1
+Ref: TEST · U6 spine · +2 · [8,7]=17 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 1→0, wounds 0→2)
+STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [6,7]=16 → T2 · HIT 7 dam
+STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
+[REF]
+Her legs are shaking now. The claw that comes for her chest sweeps wide, and the two spines that follow tick harmlessly off the wall, but the last one drives into the meat of her thigh and out of the other side of her pack straps, and something inside her gives. Her belt-pouch is slick and wet. The pain does not stop. It builds, and it settles in her like a stone.
+
+She cuts anyway. The nearest razorback takes the stroke across the ribs and reels back, split nearly through, the glow in it wavering like a bad candle. It clings to the wall, one arm dangling, but it is still reaching.
+
+Three more rattle behind it, spines rising. Her torch gutters behind her. The red of it has gone thin and the dark leans in at the edges of the light. Her breath is loud in her own ears, and the wound beside her ribs is still running.
+
+Ref: initiative d10=1 → enemies act first | Ref: TEST · U3 claws · +2 · [1,6]=9 → T1 | Ref: TEST · U4 spine · +2 · [4,2]=8 → T1 | Ref: TEST · U5 spine · +2 · [1,7]=10 → T1 | Ref: TEST · U6 spine · +2 · [8,7]=17 → T3 | ATTACK attack · S+3 · - · [6,7]=16 → T2 · HIT 7 dam
+
+Corridor cellar · Round 6 · Stamina 0 · wounds 2/10 · AD 0 · laceration 1 · torch lit (1 UD) · four razorbacks left, one nearly split
