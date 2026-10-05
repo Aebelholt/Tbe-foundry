@@ -172,3 +172,23 @@ STATUS Stamina 17 · AD 4 · wounds 0/10 · uses Slashing 3 · UD torch 0
 Ref: TEST · round 4 undead A #2 (3 Stamina) claws · +2 · [6,10]=18 → T3 | Ref: TEST · round 4 undead A #3 claws · +2 · [10,7]=19 → T3 | Ref: TEST · round 4 undead vault A #4 claws · +2 · [8,1]=11 → T1 | Ref: TEST · round 4 undead vault B claws · +2 · [4,9]=15 → T2
 
 Side vault · DT 2 (rooms 1 of 2) · Stamina 17 · wounds 0/10 · dark, torch out · four undead around her, armor nearly gone
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [10/14]: I go through the next door.
+$ python3 engine/engine.py init
+Ref: initiative d10=8 → crows act first
+(Mara acts first and reaches area 6. Rooms 2 of 2: DT 2 ends. Scenario stop condition met, so the undead's round 5 turn is not run.)
+$ python3 ledger.py ud torch
+UD torch · [] → 0→0 · EXPIRED
+STATUS Stamina 17 · AD 4 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=5 vs EN 9 → none
+[REF] Mara drives through the far door and her boots hit a stair, rising stone steps under a rim of cold, moving air. The air smells of rain and old earth, and far above, a grey, faint smear of light shows where the cellar gives out into the open. Behind her the vault boils with claws and scraping, the leader's wet rasp in the door. The undead are coming, and she has a lead of a single stride, perhaps two. Her armor hangs off her in dented plates, her breath loud in her ears. The steps go up into the pale. They are slick. The scrape of claws starts on the stone behind her.
+
+Ref: initiative d10=8 → crows act first | Ref: encounter d10=5 vs EN 9 → none
+
+Exit stair · DT 2 ended (rooms 2 of 2) · Stamina 17 · wounds 0/10 · dark below, grey light above · the claws are on the steps behind her
+DONE
+Ran 10 turns (scenario stop: Mara reached area 6 at end of DT 2).

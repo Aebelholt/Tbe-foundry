@@ -197,3 +197,35 @@ Ref: TEST · razorback A5 claws (Move: Make them choose) · +2 · [3,1]=6 → T1
 Move: Make them choose
 
 Cellar corridor mouth · combat · Stamina 6 · wounds 0/10 · torch lit (UD 1), bracket cracking · three razorbacks in reach
+
+## Turn 13
+[PLAYER] PLAYER [14/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack
+ATTACK attack · S+3 · - · [3,4]=10 → T1 · MISS
+STATUS Stamina 6 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 engine/engine.py test 2 --why "razorback A4 claws"
+Ref: TEST · razorback A4 claws · +2 · [5,5]=12 → T2
+python3 engine/engine.py test 2 --why "razorback A6 claws (Move: Take something away)"
+Ref: TEST · razorback A6 claws (Move: Take something away) · +2 · [9,7]=18 → T3
+python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 6→3, wounds 0→0)
+STATUS Stamina 3 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+python3 ledger.py take 4
+LEDGER: took 4 (AD 0→0, Stamina 3→0, wounds 0→1)
+STATUS Stamina 0 · AD 0 · wounds 1/10 · uses Slashing 3 · UD torch 1
+[REF] Your blade finds nothing. A claw hooks your forearm and tears, and a second razorback comes in low from the left and takes you across the ribs, deep this time, deep enough that your legs go weak. The bracket gives and the torch drops. It lands on the heap of the dead and rolls, still burning, throwing a crazy light up the walls, then lodges against a corpse and gutters low. The three of them are right on you, jaws and claws, and the light has dimmed to a brown glow at your feet.
+
+Ref: TEST · razorback A4 claws · +2 · [5,5]=12 → T2
+Ref: TEST · razorback A6 claws (Move: Take something away) · +2 · [9,7]=18 → T3
+Move: Take something away
+
+Cellar corridor mouth · combat · Stamina 0 · wounds 1/10 · torch on the floor, low (UD 1) · three razorbacks in reach
+
+## Turn 14
+[PLAYER] PLAYER [15/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [8,9]=18(incl -2) → T3 · HIT 10 dam
+STATUS Stamina 0 · AD 0 · wounds 1/10 · uses Slashing 3 · UD torch 1
+[REF] You swing blind in the brown light and the blade goes through the razorback's chest and out the other side. The thing folds around the steel, claws still twitching against your leg, then goes limp and drops across the heap of its fellows. Four down. The two that are left do not rush. They stand at the edge of the dying torchlight, ridged backs rising and falling, heads low, watching the red running down your leg. Behind you the stone is cold against your shoulders and the light is almost gone.
+
+Cellar corridor mouth · combat · Stamina 0 · wounds 1/10 · torch on the floor, low (UD 1) · two razorbacks left, both in reach

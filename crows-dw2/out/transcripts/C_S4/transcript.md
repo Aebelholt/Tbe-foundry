@@ -153,3 +153,24 @@ STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
 
 Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind you, still lit · Two razorbacks at your back, an unlit ossuary ahead, your torch's light fading behind.
 
+## Turn 11
+[PLAYER] PLAYER [11/14]: I engage whatever is in the way, sword first.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [11/14]: I engage whatever is in the way, sword first.
+(roll on request: attack / Trade Blows)
+$ python3 ledger.py attack --b 1   (dim light at the arch, bane on attacks)
+ATTACK attack · S+3 · b · [9,2]=12(incl -2) → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "Undead A2 claws vs Mara"
+Ref: TEST · Undead A2 claws vs Mara · +2 · [9,5]=16 → T2
+$ python3 ledger.py take 3   (12-16 dam 2, +1)
+LEDGER: took 3 (AD 15→12, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(scene: A2 3/10 engaged hand; A3 10/10 engaged close)
+[REF] You turn in the mouth of the arch and take the nearer one with the sword, aiming by the clicking and the pale shine of its spine. In the thin light you only half see it. The blade lands anyway, a deep chop across the grey hip that drops the razorback to one knee in the water, hissing, an arm hanging. It answers with its good hand, a short raking blow that bites into your side plate and jars something loose in the straps. Your armor holds, but it is thin now at the ribs, scored through to the padding. Behind it the second one has not closed. It paces the edge of the torchlight with its spines raised, waiting for the first to go down so it can come in over it.
+
+ATTACK attack · S+3 · b · [9,2]=12(incl -2) → T2 · HIT 7 dam | Ref: TEST · Undead A2 claws vs Mara · +2 · [9,5]=16 → T2
+
+Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind, still lit, dim here · One razorback is down on a knee at your blade and the other waits at the edge of the light.
+

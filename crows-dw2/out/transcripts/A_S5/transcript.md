@@ -220,3 +220,23 @@ STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
 
 Ref: TEST · U3 claws vs Mara · +2 · [1,9]=12 → T2 | Ref: TEST · U4 spine vs Mara · +2 · [6,9]=17 → T3
 Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 2/10 · torch lit and burning low, dim light · the fresh razorback is against you, claws already rising, and your legs are going.
+
+## Turn 13
+[PLAYER] PLAYER [14/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [9,7]=17(incl -2) → T3 · HIT 10 dam
+STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
+[REF] The cut comes up from the hip and takes the razorback under the jaw. Bone and gristle part and the head lolls back on a thread of hide, and the body drops across the other two. Three left. They are bunched at the edge of the torchlight, and one of them is already crawling over the pile with its claws spread, dragging its belly on the stone. You taste iron and your arm shakes on the grip. The torch is a coal in the gloom behind you, and the flame leans away.
+
+Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 2/10 · torch lit and burning low, dim light · three razorbacks left, and the nearest is scrabbling up the pile of its dead.
+
+## Turn 14
+[PLAYER] PLAYER [15/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [10,7]=18(incl -2) → T3 · HIT 10 dam
+STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
+[REF] The razorback is still pulling itself over the heap when your blade cleaves down through its skull. It flops and goes still across the other bodies, claws twitching once against the stone. Two remain. They hang back at the limit of the torchlight, close together, spines flexed and shivering, heads low. The corridor is a slaughterhouse and the floor is slick under your boots. The nearer one tilts its head, and the farther one lets out a thin shriek that echoes down the cellar.
+
+Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 2/10 · torch lit and burning low, dim light · two razorbacks left at the edge of the light, watching you over the heap of their dead.
