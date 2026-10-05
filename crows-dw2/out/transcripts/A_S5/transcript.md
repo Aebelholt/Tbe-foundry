@@ -240,3 +240,21 @@ STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
 [REF] The razorback is still pulling itself over the heap when your blade cleaves down through its skull. It flops and goes still across the other bodies, claws twitching once against the stone. Two remain. They hang back at the limit of the torchlight, close together, spines flexed and shivering, heads low. The corridor is a slaughterhouse and the floor is slick under your boots. The nearer one tilts its head, and the farther one lets out a thin shriek that echoes down the cellar.
 
 Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 2/10 · torch lit and burning low, dim light · two razorbacks left at the edge of the light, watching you over the heap of their dead.
+
+## Turn 15
+[PLAYER] PLAYER [16/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [1,8]=10(incl -2) → T1 · MISS
+STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U5 claws vs Mara"
+Ref: TEST · U5 claws vs Mara · +2 · [9,3]=14 → T2
+$ python3 engine/engine.py test 2 --why "U6 spine vs Mara"
+Ref: TEST · U6 spine vs Mara · +2 · [2,3]=7 → T1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 0→0, wounds 2→5)
+STATUS Stamina 0 · AD 0 · wounds 5/10 · uses Slashing 3 · UD torch 1
+[REF] Your cut skips off a plate of bone on the razorback's shoulder. It does not miss. Its claws take you across the ribs and open you to the cold air, and you feel the hurt go deep, wet and crushing. The thing behind it only shrieks, its spine skittering uselessly off the wall. You are leaning on the wall and your legs have the look of something that does not intend to hold. Five wounds, and the pack of bodies at your feet are the only thing between you and the floor.
+
+Ref: TEST · U5 claws vs Mara · +2 · [9,3]=14 → T2 | Ref: TEST · U6 spine vs Mara · +2 · [2,3]=7 → T1
+Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 5/10 · torch lit and burning low, dim light · the razorback is on you again, and its mate is edging up behind.

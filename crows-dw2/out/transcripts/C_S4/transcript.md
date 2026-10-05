@@ -174,3 +174,24 @@ ATTACK attack · S+3 · b · [9,2]=12(incl -2) → T2 · HIT 7 dam | Ref: TEST �
 
 Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind, still lit, dim here · One razorback is down on a knee at your blade and the other waits at the edge of the light.
 
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [12/14]: I press the nearest.
+(roll on request: attack / Trade Blows)
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [5,3]=9(incl -2) → T1 · MISS
+STATUS Stamina 17 · AD 12 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "Undead A2 claws vs Mara"
+Ref: TEST · Undead A2 claws vs Mara · +2 · [4,6]=12 → T2
+$ python3 ledger.py take 3   (12-16 dam 2, +1)
+LEDGER: took 3 (AD 12→9, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(scene: A2 3/10 engaged hand; A3 10/10 engaged close. Move: Require a cost or opportunity)
+[REF] Your stroke goes into dark and finds only water. You mis-measured the wounded one by a hand, and it was not where its sound said it was. It does not waste the gap, and its claws come across your guard and open a long seam in the side plate, deeper than the last. Armor you have not mended in months is going to ribbons. The second razorback takes its chance and comes in fast, leaping the first, and lands at your off hand so that you have claws on both sides, and the pale firelight from your dropped torch behind them shows you their backs and nothing of their faces. To fight either well you want more light than the arch gives. The torch lies behind them now.
+
+Ref: ATTACK attack · S+3 · b · [5,3]=9(incl -2) → T1 · MISS | Ref: TEST · Undead A2 claws vs Mara · +2 · [4,6]=12 → T2 | Move: Require a cost or opportunity
+
+Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind them, dim here · Both razorbacks are at your sides and your armor is nearly through.
+

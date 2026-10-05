@@ -229,3 +229,22 @@ STATUS Stamina 0 · AD 0 · wounds 1/10 · uses Slashing 3 · UD torch 1
 [REF] You swing blind in the brown light and the blade goes through the razorback's chest and out the other side. The thing folds around the steel, claws still twitching against your leg, then goes limp and drops across the heap of its fellows. Four down. The two that are left do not rush. They stand at the edge of the dying torchlight, ridged backs rising and falling, heads low, watching the red running down your leg. Behind you the stone is cold against your shoulders and the light is almost gone.
 
 Cellar corridor mouth · combat · Stamina 0 · wounds 1/10 · torch on the floor, low (UD 1) · two razorbacks left, both in reach
+
+## Turn 15
+[PLAYER] PLAYER [16/17]: I keep cutting the nearest one.
+[TOOLS] python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [2,9]=12(incl -2) → T2 · HIT 7 dam
+STATUS Stamina 0 · AD 0 · wounds 1/10 · uses Slashing 3 · UD torch 1
+python3 engine/engine.py test 2 --why "razorback A5 claws"
+Ref: TEST · razorback A5 claws · +2 · [7,5]=14 → T2
+python3 engine/engine.py test 2 --why "razorback A6 claws (Move: none, tier 2)"
+Ref: TEST · razorback A6 claws (Move: none, tier 2) · +2 · [7,1]=10 → T1
+python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 0→0, wounds 1→4)
+STATUS Stamina 0 · AD 0 · wounds 4/10 · uses Slashing 3 · UD torch 1
+[REF] Your blade bites into the razorback's neck and stops, a hand's depth in. It shrieks and rakes you anyway, claws punching into the meat of your side, and the pain goes white. The one behind it lunges past its fellow and snaps, and the jaws close on empty air a finger from your throat. Blood is pooling in your boots now. The torch on the floor is a smear of orange gone to coals. The wounded razorback is hanging half off your sword, teeth bared, still on its feet, the other circling for your flank in the dark.
+
+Ref: TEST · razorback A5 claws · +2 · [7,5]=14 → T2
+Ref: TEST · razorback A6 claws · +2 · [7,1]=10 → T1
+
+Cellar corridor mouth · combat · Stamina 0 · wounds 4/10 · torch on the floor, coals (UD 1) · two razorbacks left, one nearly dead

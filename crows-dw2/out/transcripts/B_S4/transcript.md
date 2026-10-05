@@ -164,3 +164,22 @@ You throw your weight behind the sword and drive it through the longclaw's breas
 
 Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 5 · wounds 0/10 · torch lit, UD 1 · the longclaw is down, the exit stair stands open beyond it, and the razorback is about to spring.
 
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+[TOOLS]
+$ python3 ledger.py move A --why "Defy Danger: reach the exit stair past the razorback"
+MOVE Defy Danger: reach the exit stair past the razorback · A+1 · - · [3,3]=7 → T2
+STATUS Stamina 17 · AD 5 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py ud torch
+UD torch · [6] → 1→1
+STATUS Stamina 17 · AD 5 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=2 vs EN 9 → none
+[REF]
+You go for the low door with the longclaw's bulk between you and the spring. The razorback comes anyway, over the corpse in a single bounding leap, and hits the door frame beside you as you cross, claws shrieking on the stone. You are through. Stone steps climb into the dark, dry above the waterline, and cold air moves down them, clean and thin. Behind you the vault is a dim, wet cave, the dead longclaw sprawled across the floor. The torch burns steady, its flame barely changed. You have the exit under your boots, and the razorback is on the first step behind you, spines flared, close enough to hear it breathe.
+
+Ref: encounter d10=2 vs EN 9 → none
+Exit stair · DT 1 ends (rooms 6 of 6) · Stamina 17 · AD 5 · wounds 0/10 · torch lit, UD 1 · the razorback is on the first step behind you.
+
+DONE
+Ran 14 turns (player script ended at 14/14; Mara reached area 6, DT 1 ended with UD torch 1 held and encounter check none).
