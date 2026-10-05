@@ -1,0 +1,1 @@
+{"log": ["Ref: TEST · A1 claws (engaged) · +2 · [2,5]=9 → T1", "Ref: TEST · A2 claws (move: unengaged) · +2 · [5,5]=12 → T2", "Ref: TEST · A3 spine (move: unengaged) · +2 · [7,10]=19 → T3"], "travel": {"day": 0, "hexes": 0, "lost": false}, "next_event": null, "maps": {}}
