@@ -99,3 +99,22 @@ STATUS Stamina 11 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
 Mara drives up off her knee with the torch in one hand and the sword in the other, and the bear's head comes down into the arc of the blade. The stroke goes in under the jaw, through the thick of the neck, and the great animal folds with a grunt, its weight crashing across the pew behind it. Its paws scrape once at the stones and then are still. The two wolves flinch at the sound. They stay on her all the same, teeth bared and bloody, one gripping her sleeve, the other crouched for her leg, but their eyes slide to the fallen bear and back, and their growling has a shake in it. The torchlight jumps on their wet muzzles. Her breath comes loud in the vault, and blood runs warm down her arm.
 
 Nave · DT 3 · Stamina 11 · wounds 0/10 · torch lit · the bear is dead and both wolves are on her, snarling and wary.
+
+## Turn 6
+[PLAYER] PLAYER [7/7]: I check the room and wipe the blood off my hands.
+[TOOLS]
+(Ref ruling, no roll: with the bear dead and Mara standing, the wolves flee a losing fight per system layer §4; no engaged foe attacks because Mara takes no hostile action and the pack has broken. Fight over, DT 3 ends.)
+$ python3 ledger.py ud torch
+UD torch · [4] → 1→1
+STATUS Stamina 11 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=4 vs EN 9 → none
+[REF]
+Mara lowers the sword, and that is enough. The wolves give up the fight all at once. The one at her sleeve lets go and slinks backward, belly low, and its mate follows, both of them staring at the dead bear as if it might rise. Then they bolt, claws skittering over the flagstones, and vanish through a gap in the north wall where the rubble has fallen in. Their howling thins out into the dark and is gone. Silence settles over the nave. The torch burns steady. Mara looks over the ruin: toppled pews, a cracked altar stone, the half eaten carcass where the animals were feeding, the bear lying in its own blood. She wipes her hands on her coat, and the cuffs come away dark and sticky. The dust is still settling, and somewhere deeper in the hold a loose stone clicks and rolls.
+
+UD torch · [4] → 1→1 | Ref: encounter d10=4 vs EN 9 → none
+
+Nave, west door at her back · end of DT 3 · Stamina 11 · wounds 0/10 · torch lit (UD 1) · a stone clicks somewhere deeper in the hold.
+
+DONE
+6 turns run (player script ended at 7/7; turn 1 and 2 of the crow's exchanges included a crit extra exchange).

@@ -126,3 +126,54 @@ One wolf left, circling to her left with its lips peeled back, and behind it the
 Ref: initiative d10=5 → enemies act first · Ref: TEST · bear bite vs Mara R4, stood up first · +2 · [8,3]=13 → T2 · Ref: TEST · wolf1 bite vs Mara R4 (+1, +3 flank) · +4 · [5,6]=15 → T2 · Ref: TEST · wolf2 bite vs Mara R4 (+1, +3 flank) · +4 · [2,2]=8 → T1 · ATTACK sword at wolf1 R4, dim · S+3 · b · [1,3]=5(incl -2) → T2 · expertise used (Slashing 1 left) · HIT 7 dam
 
 Chapel nave · DT 3 · round 4 · Stamina 7 · wounds 0/10 · torch lit (dim) · one wolf dead, bear on her, the last wolf circling
+
+## Turn 5
+[PLAYER] PLAYER [6/7]: I finish the last one standing.
+[TOOLS]
+$ python3 engine/engine.py init
+Ref: initiative d10=10 → crows act first
+$ python3 ledger.py attack --b 1 --exp --why "sword at wolf2 R5, dim"
+ATTACK sword at wolf2 R5, dim · S+3 · b · [9,1]=11(incl -2) → T2 · expertise used (Slashing 0 left) · HIT 7 dam
+STATUS Stamina 7 · AD 0 · wounds 0/10 · uses Slashing 0 · UD torch 1
+(Ref: wolf2 10→3. Ruling: lone wolf at 3 Stamina flees the fight (F31), runs east; reads as "last wolf".)
+$ python3 engine/engine.py test 2 --why "bear bite vs Mara R5"
+Ref: TEST · bear bite vs Mara R5 · +2 · [9,3]=14 → T2
+$ python3 ledger.py take 6
+LEDGER: took 6 (AD 0→0, Stamina 7→1, wounds 0→0)
+STATUS Stamina 1 · AD 0 · wounds 0/10 · uses Slashing 0 · UD torch 1
+[REF]
+The last wolf takes the sword across the haunch and its nerve breaks. It spins, yelping, and bolts east along the wall, belly low, dragging a hind leg through the blood. It does not look back.
+
+The bear does. It has been looking at her the whole time. It surges in, shoulder low, and its jaws close on her side above the hip. There is nothing left between her and the teeth. The pain is white and total, and for a moment the torchlight swims and she can hear only her own pulse and the wet sound of the animal's breathing. When it lets go she is still on her feet, but only just, and her sword arm trembles.
+
+The bear stands over her, blood running down its chest from the first cut, great head swinging. Behind it, the wounded wolf has stopped at the altar rubble and is watching, tail clamped.
+
+Ref: initiative d10=10 → crows act first · ATTACK sword at wolf2 R5, dim · S+3 · b · [9,1]=11(incl -2) → T2 · expertise used (Slashing 0 left) · HIT 7 dam · Ref: TEST · bear bite vs Mara R5 · +2 · [9,3]=14 → T2
+
+Chapel nave · DT 3 · round 5 · Stamina 1 · wounds 0/10 · torch lit (dim) · the bear stands over her, the hurt wolf watching from the rubble
+
+## Turn 6
+[PLAYER] PLAYER [7/7]: I check the room and wipe the blood off my hands.
+[TOOLS]
+$ python3 engine/engine.py init
+Ref: initiative d10=8 → crows act first
+(Ref: Mara's declared action is a look around, no attack and no roll. Bear acts.)
+$ python3 engine/engine.py test 2 --why "bear bite vs Mara R6"
+Ref: TEST · bear bite vs Mara R6 · +2 · [7,10]=19 → T3
+(Ref: T3 bite 6 +2 Dangerous When Cornered = 8)
+$ python3 ledger.py take 8
+LEDGER: took 8 (AD 0→0, Stamina 1→0, wounds 0→7)
+STATUS Stamina 0 · AD 0 · wounds 7/10 · uses Slashing 0 · UD torch 1
+[REF]
+Mara lifts her eyes from the red on her palms and the room is suddenly very clear. The long nave, the dead wolf by her boot, the blood-slick path to the altar rubble. She sees the second wolf crouched there with one hind leg held off the floor. She sees the bear's bulk blocking the light.
+
+It does not wait for her to finish looking. The bear's jaws take her across the ribs and hip in a single huge bite, and she feels things inside give that were never meant to. Her knees go loose. The world narrows to the torchlight and the dark wet mouth and the smell of copper and old meat. The stones come up to meet her hands, and she is down on one knee, the sword a long way from her grip.
+
+The bear breathes over her. Its blood drips on the flagstones beside her.
+
+Ref: initiative d10=8 → crows act first · Ref: TEST · bear bite vs Mara R6 · +2 · [7,10]=19 → T3
+
+Chapel nave · DT 3 · round 6 · Stamina 0 · wounds 7/10 · torch lit (dim) · on one knee under the bear, the hurt wolf watching from the rubble
+
+DONE
+Ran 6 turns (player script ended at line 7/7 mid-fight; bear alive, DT 3 not ended).
