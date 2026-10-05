@@ -54,3 +54,17 @@ Ref: cycle end · Prosperity 0 → -1 (nothing raised it, C45) · set it in the 
 Ref: next Village Event rolled: d10-1 [8]=7 · sealed until it lands
 
 The village (unnamed) · cycle day 10/10 ends, new cycle begins · Stamina 17 · wounds 0/10 · Prosperity -1 · light evening · the toll-house smoke stands over the north road
+
+## Turn 4
+[PLAYER] PLAYER [4/4]: The cycle turns. I ask around what changed in the village.
+[TOOLS]
+$ python3 engine/engine.py event
+Ref: Village Event lands (d10-1 [8]=7): A merchant institution has a small surplus. Treat them as 1 level higher until the end of the cycle.
+[REF] Asking is easy; everyone is awake with the new cycle and glad to talk. The baker says the lower lane smells of fresh tallow, and she is right: the general store's back door stands propped open and crates are being walked in off a mule from somewhere that was not on anyone's mind a week ago. Shelves that were bare at the top are full to the beam, lamp oil, nails, cheap cloth, a stack of salt in paper. A boy hauling a sack tells you the stewards say a trader came through short of buyers and sold at a loss. Orla Venn stands in the doorway with her arms folded, ink on her cuffs, counting the crates with her lips and not smiling. "Stock is not coin," she says to nobody. "Do not let anyone tell you the store is flush." Past the roofs, up at the north gate, the watch has doubled and the toll-house smoke is still standing in the evening, thin and straight as a nail.
+
+Ref: Village Event lands (d10-1 [8]=7): A merchant institution has a small surplus. Treat them as 1 level higher until the end of the cycle.
+
+The village (unnamed) · cycle day 1/10 · Stamina 17 · wounds 0/10 · Prosperity -1 · light evening · Orla is waiting to see if you will speak to her
+
+DONE
+Ran 4 turns.
