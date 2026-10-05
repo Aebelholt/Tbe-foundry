@@ -178,5 +178,21 @@
   {
    "say": "I finish the last of them and breathe."
   }
+ ],
+ "S2b": [
+  {
+   "say": "I find Orla in the long hall and ask her straight out for a loan of 200 gc, repayable at the next cycle."
+  },
+  {
+   "say": "I try to move her with an honest argument: the vault will pay the village back, and I will bring back whatever I find that is hers.",
+   "roll": "Pull Strings, approach persuade. The Ref must call this roll."
+  },
+  {
+   "say": "While she answers I watch her closely to see whether she is telling me the whole truth about the store's money.",
+   "roll": "Sense Motive. The Ref must call this roll."
+  },
+  {
+   "say": "I accept whatever terms she names and shake on it."
+  }
  ]
 }

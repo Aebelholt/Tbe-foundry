@@ -8,6 +8,8 @@ def swap(text, start, end, new):
     return text[:i] + new + "\n" + text[j:]
 def hotfix(h, kind):
     if kind == "RAW": return h
+    if kind == "D":
+        return h.replace("- **Misses and crits:**", "- **Tier 1 off the attack row:** name a move from the card on the mechanics line (`Move: <name>`), per §9c. A weapon miss keeps its counter.\n- **Misses and crits:**")
     h = h.replace("- **Initiative:** each round, d10: 6+ means the crows act first.\n- **Turn:** a maneuver plus an action, or two maneuvers.\n",
                   "- **Combat:** no initiative, no rounds, no enemy turns. A run of exchanges; each exchange the crow engages one foe (§9).\n")
     h = h.replace("- **Misses and crits:** a melee miss lets the target counter (T2 dmg). A crit grants an extra action.\n",
@@ -36,11 +38,11 @@ def build(kind):
         L = swap(L, "**Combat** (R18–23):", "**Travel** (R24–29):", (F("A_combat.md") if kind == "A" else m1(F("C_combat.md")) if base == "C1" else F("C_combat.md")))
     if kind == "B":
         L = swap(L, "**Combat** (R18–23):", "**Travel** (R24–29):", "**Combat:** see §B. No grid, no initiative.\n")
-    if kind in ("C", "B"):
+    if kind in ("C", "B", "D"):
         L = swap(L, "**Imported layer: fronts with portents", "---\n\n## 6", F("C_threats.md"))
-    if kind == "C":
-        L = L.replace("**Travel** (R24–29):", F("C_social_misses.md") + "\n**Travel** (R24–29):", 1)
-    if kind != "RAW":
+    if kind in ("C", "D"):
+        L = L.replace("**Travel** (R24–29):", (F("C_social_misses.md") if kind == "C" else F("D_social_misses.md")) + "\n**Travel** (R24–29):", 1)
+    if kind not in ("RAW", "D"):
         L = L.replace("| Combat | Round (R18) | Side initiative is rerolled at the start of each round | Ref |",
                       "| Combat | Exchange | Nothing fixed; foes act only through Trade Blows or Ref moves | Ref |")
         L = L.replace('initiative (R18, "a player of the Ref\'s choice": default the player), ', '')
@@ -51,4 +53,4 @@ def build(kind):
     os.makedirs(f"{ROOT}/out/variants/{base}", exist_ok=True)
     open(f"{ROOT}/out/variants/{base}/rules.md", "w").write(out.replace("VARIANT: " + kind, "VARIANT: " + base, 1))
     print(base, len(out), "chars")
-for k in ("RAW", "A", "B", "C", "C1"): build(k)
+for k in ("RAW", "A", "B", "C", "C1", "D"): build(k)
