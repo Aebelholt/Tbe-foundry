@@ -21,10 +21,19 @@ def hotfix(h, kind):
                       "- **Moves:** 2d6 + stat. 10+ full, 7–9 with a cost, 6− the Ref makes a named move (§B). No crits or dooms.")
         h = h.replace("- **Edges and banes:** one edge is +2, one bane −2. A double edge or bane shifts the tier instead. They cancel pairwise.\n- **Expertise:** spend a use after the roll for +1 tier. Not on a doom.\n", "")
     return h
+def m1(t):
+    old = [l for l in t.split("\n") if l.startswith("- **When the crow gets tier 1**")][0]
+    new = ("- **When the crow gets tier 1**, the Ref makes a **named move from the Ref move card (§9c)** and says its name on the mechanics line (`Move: <name>`). "
+           "The move always includes this: **exactly one** unengaged live foe, **named on the mechanics line**, attacks the crow (one engine `test`, damage as in step 2). "
+           "Never more than one. If no foe is unengaged, only the named move happens.")
+    return t.replace(old, new)
+
 def build(kind):
+    base = kind
+    if kind.startswith("C") and kind != "C": kind = "C"
     L = layer
     if kind in ("A", "C"):
-        L = swap(L, "**Combat** (R18–23):", "**Travel** (R24–29):", F("A_combat.md" if kind == "A" else "C_combat.md"))
+        L = swap(L, "**Combat** (R18–23):", "**Travel** (R24–29):", (F("A_combat.md") if kind == "A" else m1(F("C_combat.md")) if base == "C1" else F("C_combat.md")))
     if kind == "B":
         L = swap(L, "**Combat** (R18–23):", "**Travel** (R24–29):", "**Combat:** see §B. No grid, no initiative.\n")
     if kind in ("C", "B"):
@@ -39,7 +48,7 @@ def build(kind):
     if kind == "B":
         out += "\n\n---\n\n" + F("B_overlay.md")
     out = "VARIANT: " + kind + "\nThis file is the only rulebook you have. The chassis is not loaded; conduct is the hot card above.\n\n" + out
-    os.makedirs(f"{ROOT}/out/variants/{kind}", exist_ok=True)
-    open(f"{ROOT}/out/variants/{kind}/rules.md", "w").write(out)
-    print(kind, len(out), "chars")
-for k in ("RAW", "A", "B", "C"): build(k)
+    os.makedirs(f"{ROOT}/out/variants/{base}", exist_ok=True)
+    open(f"{ROOT}/out/variants/{base}/rules.md", "w").write(out.replace("VARIANT: " + kind, "VARIANT: " + base, 1))
+    print(base, len(out), "chars")
+for k in ("RAW", "A", "B", "C", "C1"): build(k)

@@ -19,6 +19,6 @@ def build(v,s,tag=""):
     subprocess.run([sys.executable,"ledger.py","init","mid"],cwd=d,env=env,check=True,capture_output=True)
     return d
 if __name__=="__main__":
-    vs=sys.argv[1].split(","); ss=sys.argv[2].split(",")
+    vs=sys.argv[1].split(","); ss=sys.argv[2].split(","); tag=sys.argv[3] if len(sys.argv)>3 else ""
     for v in vs:
-        for s in ss: print(build(v,s))
+        for s in ss: print(build(v,s,tag))
