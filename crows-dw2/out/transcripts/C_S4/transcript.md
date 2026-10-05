@@ -218,3 +218,22 @@ ATTACK attack · S+3 · b · [7,1]=9(incl -2) → T1 · MISS | Ref: TEST · Unde
 
 Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind them, dim here · Bones slide under your boots and both razorbacks are still on you.
 
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [14/14]: I take what I can carry and head for the stair.
+$ python3 ledger.py test A --why "break away from two razorbacks and run for the stair"
+TEST break away from two razorbacks and run for the stair · A+1 · - · [4,7]=12 → T2
+STATUS Stamina 17 · AD 6 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "Undead A3 claws vs Mara as she breaks away"
+Ref: TEST · Undead A3 claws vs Mara as she breaks away · +2 · [7,1]=10 → T1
+(T2 cost chosen: fewer pursuers is the gain, one pursuer remains; A3 attack T1 no damage. scene: A2 3/10 down on a knee, left behind, unengaged far; A3 10/10 pursuing, close band. Script ended.)
+[REF] You have nothing in your hands but the sword, and the stair is behind you. You hit the wounded one with a shoulder as you go and it falls sprawling in the water, clutching an arm that will not close, and it does not follow. The other does. Its claws sweep the air where your neck was a heartbeat before, a hand-width short, and then you are running, back across the flooded hall with the water kicking up around your knees, past the small fire of your own torch lying on its side by the pillar's foot. Behind you the leap comes, a flat slap of water, the ticking close at your heels. The storeroom's arch is ahead, then the landing and the stair, and the chest under its shelf sits square in your path.
+
+Ref: TEST · Undead A3 claws vs Mara as she breaks away · +2 · [7,1]=10 → T1
+
+Crypt hall, running for the stair · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor by the pillar, lit · One razorback is at your heels in the water and the storeroom arch is ahead of you.
+
+DONE
+Ran 14 turns (script ended); Mara alive, DT 2 not yet ended.

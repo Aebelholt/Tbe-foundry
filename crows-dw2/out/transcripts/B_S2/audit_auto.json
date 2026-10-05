@@ -1,0 +1,34 @@
+{
+ "turns": 3,
+ "ledger_attacks": 0,
+ "ledger_tests": 0,
+ "crow_T1": 0,
+ "crow_T2": 0,
+ "crow_T3": 0,
+ "dooms": 0,
+ "crits": 0,
+ "engine_lines": 0,
+ "engine_tests": 0,
+ "named_moves": 0,
+ "lookups": 0,
+ "state_block_words": 173,
+ "state_block_tokens_est": 233,
+ "ref_words_total": 578,
+ "invented_candidates": [
+  {
+   "turn": 2,
+   "number": "25",
+   "ctx": " \u00b7 village day, no DT \u00b7 Stamina 17 \u00b7 AD 25 \u00b7 no wounds \u00b7 daylight, hall "
+  },
+  {
+   "turn": 3,
+   "number": "25",
+   "ctx": " \u00b7 village day, no DT \u00b7 Stamina 17 \u00b7 AD 25 \u00b7 no wounds \u00b7 daylight, hall "
+  },
+  {
+   "turn": 4,
+   "number": "25",
+   "ctx": " \u00b7 village day, no DT \u00b7 Stamina 17 \u00b7 AD 25 \u00b7 no wounds \u00b7 daylight, hall "
+  }
+ ]
+}

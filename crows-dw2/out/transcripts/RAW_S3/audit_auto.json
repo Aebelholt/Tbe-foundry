@@ -1,0 +1,18 @@
+{
+ "turns": 3,
+ "ledger_attacks": 0,
+ "ledger_tests": 0,
+ "crow_T1": 0,
+ "crow_T2": 0,
+ "crow_T3": 0,
+ "dooms": 0,
+ "crits": 0,
+ "engine_lines": 8,
+ "engine_tests": 0,
+ "named_moves": 0,
+ "lookups": 1,
+ "state_block_words": 233,
+ "state_block_tokens_est": 314,
+ "ref_words_total": 736,
+ "invented_candidates": []
+}
