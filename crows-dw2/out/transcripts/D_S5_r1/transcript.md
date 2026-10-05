@@ -150,3 +150,133 @@ Ref: initiative d10=6 → crows act first
 
 Corridor mouth, cellar · DT 1 · round 7 · Stamina 17 · wounds 0/10 · torch lit · the wounded razorback sags in front of you while three more bunch up behind it, ready to spring.
 
+## Turn 8
+[PLAYER] PLAYER [9/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [9,5]=17 → T3 · HIT 10 dam
+$ python3 engine/engine.py test 2 --why "razorback 4 claws vs Mara"
+Ref: TEST · razorback 4 claws vs Mara · +2 · [5,2]=9 → T1
+$ python3 engine/engine.py test 2 --why "razorback 5 spine vs Mara"
+Ref: TEST · razorback 5 spine vs Mara · +2 · [6,10]=18 → T3
+$ python3 engine/engine.py test 2 --why "razorback 6 spine vs Mara"
+Ref: TEST · razorback 6 spine vs Mara · +2 · [8,7]=17 → T3
+$ python3 engine/engine.py init
+Ref: initiative d10=4 → enemies act first
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 6→3, Stamina 17→17, wounds 0→0)
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 3→0, Stamina 17→17, wounds 0→0)
+[REF]
+You hit the crippled razorback with everything behind it and it comes apart at the hip, the two halves of it flopping into the dark. Three left. The nearest springs over the wreckage and claws at you, and you shoulder the blow away. But the two behind it let fly together, and both spines punch home, one after the other. Your armor groans, a strap parts, and something heavy slides off your shoulder and clatters to the stone. Whatever is left of its padding is gone. You can feel the next hit land on flesh.
+
+Ledger: ATTACK attack · S+3 · [9,5]=17 → T3 · HIT 10 dam
+Ref: initiative d10=4 → enemies act first · TEST claws [5,2]=9 → T1 · TEST spine [6,10]=18 → T3 (3 dam) · TEST spine [8,7]=17 → T3 (3 dam)
+
+Corridor mouth, cellar · DT 1 · round 8 · Stamina 17 · wounds 0/10 · torch lit · three razorbacks left, your armor is gone, and the lead one is on you again.
+
+## Turn 9
+[PLAYER] PLAYER [10/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 engine/engine.py test 2 --why "razorback 4 claws vs Mara"
+Ref: TEST · razorback 4 claws vs Mara · +2 · [1,9]=12 → T2
+$ python3 engine/engine.py test 2 --why "razorback 5 spine vs Mara"
+Ref: TEST · razorback 5 spine vs Mara · +2 · [9,4]=15 → T2
+$ python3 engine/engine.py test 2 --why "razorback 6 spine vs Mara"
+Ref: TEST · razorback 6 spine vs Mara · +2 · [10,6]=18 → T3
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 17→15, wounds 0→0)
+$ python3 ledger.py take 1
+LEDGER: took 1 (AD 0→0, Stamina 15→14, wounds 0→0)
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 14→11, wounds 0→0)
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [8,8]=19 → T3 · HIT 10 dam
+$ python3 engine/engine.py init
+Ref: initiative d10=8 → crows act first
+[REF]
+The lead razorback's claws find you first, and this time there is nothing between them and you. They rake across your ribs, hot and wet, and a spine, then a second, stings into your side and thigh. You feel the cold go in. Then your blade comes round in a clean, brutal arc and takes the thing's head off at the neck. The body folds. The others scrabble over their fallen, and the nearest is only now straightening and drawing its claws back, close enough that its breath fouls the torch smoke.
+
+Ledger: ATTACK attack · S+3 · - · [8,8]=19 → T3 · HIT 10 dam
+Ref: TEST claws [1,9]=12 → T2 (2 dam) · TEST spine [9,4]=15 → T2 (1 dam) · TEST spine [10,6]=18 → T3 (3 dam) · initiative d10=8 → crows act first
+
+Corridor mouth, cellar · DT 1 · round 8 · Stamina 11 · wounds 0/10 · torch lit · two razorbacks left, and you have the first move next round.
+
+## Turn 10
+[PLAYER] PLAYER [11/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [7,10]=20 → T3 · HIT 10 dam
+$ python3 engine/engine.py test 2 --why "razorback 6 claws vs Mara"
+Ref: TEST · razorback 6 claws vs Mara · +2 · [2,3]=7 → T1
+$ python3 engine/engine.py init
+Ref: initiative d10=3 → enemies act first
+[REF]
+You step into the nearest razorback before it can finish drawing back, and the blade goes in under the ribs and out through the spine. It drops with its claws still open. Only one left. It wades over the fallen, swinging a hooked hand that you ride aside with a twist of the shoulder, and the claws score the stone where you stood. Its back is bristling, its jaw hanging open, and what is left of the column behind it is nothing but dark and the dry creak of settling bone. There is blood running down your side, and the torch behind you gutters low.
+
+Ledger: ATTACK attack · S+3 · [7,10]=20 → T3 · HIT 10 dam
+Ref: TEST claws [2,3]=7 → T1 (miss) · initiative d10=3 → enemies act first
+
+Corridor mouth, cellar · DT 1 · round 10 · Stamina 11 · wounds 0/10 · torch lit (guttering) · one razorback left, at arm's reach, and it moves before you do.
+
+## Turn 11
+[PLAYER] PLAYER [12/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 engine/engine.py test 2 --why "razorback 6 claws vs Mara"
+Ref: TEST · razorback 6 claws vs Mara · +2 · [4,9]=15 → T2
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [5,3]=11 → T1 · MISS
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 11→9, wounds 0→0)
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 9→7, wounds 0→0)
+$ python3 engine/engine.py init
+Ref: initiative d10=8 → crows act first
+[REF]
+The last razorback's claws find your ribs again, and this time they bite deep, the sting of it running up under your arm. You swing back and miss, your blade skipping off a spine. It twists inside your guard and rakes you a second time with the backhand. Warm blood is sheeting down your leg now, and every breath stabs. The thing is hurt, though, its hide scored and dry, bristling with the broken stubs of its own spines. It crouches, the torchlight in its eyes, and there is nothing behind it now but empty dark.
+
+Ledger: ATTACK attack · S+3 · [5,3]=11 → T1 · MISS
+Ref: TEST claws [4,9]=15 → T2 (2 dam) · counter 2 dam (T2) · initiative d10=8 → crows act first
+
+Corridor mouth, cellar · DT 1 · round 11 · Stamina 7 · wounds 0/10 · torch lit · the last razorback crouches at arm's reach, and you have the first move.
+
+## Turn 12
+[PLAYER] PLAYER [13/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [5,6]=14 → T2 · HIT 7 dam
+$ python3 engine/engine.py test 2 --why "razorback 6 claws vs Mara"
+Ref: TEST · razorback 6 claws vs Mara · +2 · [1,7]=10 → T1
+$ python3 engine/engine.py init
+Ref: initiative d10=3 → enemies act first
+[REF]
+Your blade drives into its chest and the razorback jerks, spilling grey fluid down its front. It lashes out with a ragged swing and misses wide, the claws only fanning the air by your shoulder. It is slower now, its movements stuttering, and the rattle in its throat has become a wet, broken sound. Its eyes still track you, though, and the spines along its spine are lifting. It is the last of them. The dark beyond it is quiet at last, and the torch hisses behind you.
+
+Ledger: ATTACK attack · S+3 · [5,6]=14 → T2 · HIT 7 dam
+Ref: TEST claws [1,7]=10 → T1 (miss) · initiative d10=3 → enemies act first
+
+Corridor mouth, cellar · DT 1 · round 12 · Stamina 7 · wounds 0/10 · torch lit · the last razorback is badly hurt and still swaying toward you.
+
+## Turn 13
+[PLAYER] PLAYER [14/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 engine/engine.py test 2 --why "razorback 6 claws vs Mara"
+Ref: TEST · razorback 6 claws vs Mara · +2 · [6,7]=15 → T2
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [10,10]=23 → T3 CRIT · HIT 10 dam
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 0→0, Stamina 7→5, wounds 0→0)
+$ python3 ledger.py ud torch
+UD torch · [3] → 1→1
+$ python3 engine/engine.py enc
+Ref: encounter d10=1 vs EN 9 → none
+[REF]
+The razorback's claws rake across your forearm in a last ragged swing, and the pain is a bright white line. Then your blade comes down and takes it across the throat, through the neck and clean into the wall behind. The head rolls. The body stands a heartbeat longer, then folds in on itself, the spine-ridge cracking like kindling as it collapses onto the others. Six lie in the passage mouth. The corridor is silent except for the hiss of the torch and the sound of your own breath tearing in and out. The cellar air is cold on the blood drying down your side, and beyond the pile of bone the dark runs on, empty.
+
+Ledger: ATTACK attack · S+3 · [10,10]=23 → T3 CRIT · HIT 10 dam
+Ref: TEST claws [6,7]=15 → T2 (2 dam) · encounter d10=1 vs EN 9 → none
+
+Corridor mouth, cellar · DT 1 ended · Stamina 5 · wounds 0/10 · torch lit (1 UD) · all six razorbacks destroyed, and the dark beyond the corridor is quiet.
+
+DONE
+Ran 13 turns (player script lines 1-14 of 17 used; all six razorbacks destroyed, crow alive).
