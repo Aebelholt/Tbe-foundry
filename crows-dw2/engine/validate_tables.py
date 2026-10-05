@@ -1,6 +1,6 @@
 """Validate table JSON files. Usage: python3 validate_tables.py file.json [...]"""
 import json,sys,re
-DIE={"d4":(1,4),"d6":(1,6),"d8":(1,8),"d10":(1,10),"d12":(1,12),"d20":(1,20),"d100":(1,100),"2d6":(2,12),"2d10":(2,20),"3d6":(3,18)}
+DIE={"d50":(1,50),"d4":(1,4),"d6":(1,6),"d8":(1,8),"d10":(1,10),"d12":(1,12),"d20":(1,20),"d100":(1,100),"2d6":(2,12),"2d10":(2,20),"3d6":(3,18)}
 ok=True
 for f in sys.argv[1:]:
     data=json.load(open(f))

@@ -1,0 +1,3737 @@
+[
+ {
+  "id": "wyrd_locations",
+  "title": "A Hundred Wyrd Locations",
+  "src": "W&W 224-237",
+  "die": "d100",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Abbey to the Godflesh: a rotting abbey; living flesh of a god pulses on the altar and warps reality nearby"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Abstersion Pool: a crystal pool made from a god's tear; cleanses ailments; two elder dryads judge who may bathe"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Ale Spring: a cold spring of lager"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Altioc's Grave: sickly oaks over piled ancient warriors, weapons standing like saplings"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Bathing Pools: hot-spring pools on a poplar hill; the waters have an odd property"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Bauik Hive: forested mountains, foul smell, deep cracks; sweet voices call from the tunnels"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Bliss Fields: thick sweet green mist, tall grass, dead barkless trees; hard to see"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Boreal Woods: vast pine, spruce and larch wood; resin smell, needle-crunch"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Bramble Maze: a thorn maze that shifts when unwatched and feeds on flesh"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Bristlepine Grove: ancient stunted pines on a scree slope, older than memory"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "Broken Shrine: shattered druid altar; something ended it all in one night"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "Cairn of the First Hunters: stone pile, each stone scratched with a prehistoric beast"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "Cenotaph to a Dead Seraph: a monument carved with a hundred lines of script; a divine beast fell here"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "Cliffface Amphitheater: terraced bowl under a concave cliff with perfect acoustics"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "Clonal Forest: one tree, one root, one will, for miles; it expects respect"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "Collector's Statue Garden: rag-wrapped Collector wanders among alabaster statues of mortals in terror"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "Council of Blind Archmages: five ruined, blind, lonely archmages who will talk at length"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "Darkly Lake: salt-and-pepper beach, emerald-dark water"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "Deciduous Growth: ordinary thick hardwood forest, busy with small animals"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "Desolate Crater: blasted bowl where a meteor fell; ash remains buried at the centre"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "Devil's Garden: only larch and crabgrass grow; demonic sprites poisoned the rest"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "Dwelling of the Scroll Man: hermit Gallinade carves words from his skin each day; they regrow"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "Elk Haven: a safe creek-side grove for an elk herd"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "Enormous Owl Statue: a huge ivy-grown owl statue with an alien gaze"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "Exile's Camp: a lawless camp of renegades and criminals; tradeable if you are careful"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "Fairy Grove: concentric tree rings around a mushroom ring; tiny fey at their business"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "Fester Pond: stinking green pond with flies; things lurk in the sludge"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "Fields of Silence: grass dotted with dead pines; no sound can be made; a hunter's ideal ambush"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "The Fisher King's River: a black trench river; corpses tangle in hungry roots"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "Foetid Garden: pulp ground, rot, slimes and molds that cling and breed sickness"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "Fossil Graveyard: a collapsed slope of fossils, small and enormous"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "Fruit Trees of Rotten Truth: maggoty fruit; eating it gives a few useless facts, and more"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "Fungal Carpet: dark, spongy fungus floor; corroded gear of the digested"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "Giant Spider Web: silver webs and bones; the spiders will bargain for passage"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "Glowlight Swamp: foggy marsh, drifting bodies, lights that are lures"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "Gorm's Flesh Weald: the ground, trees and roots turn to flesh and vein"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "The Great Honey Comb: cat-sized bees and an enormous hive in a hillside fissure"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "The Grove of Tea and Candles: candle-lit trees and a campfire of reverent tea-lovers"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "Grove of the Millennia Trees: tower-sized trees, eternal dark, whole communities in the branches"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "Hearthstone of Frost: freezing ruined hall; one runed stone cursed by a slighted god"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "Hungry Ground: tiny human mouths in the soil clicking and biting"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "Hysterical Hermit: a mad, shouting hermit with something to trade"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "Idol of Bones: a tree-like heap of bones that speaks plans into your sleep"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "Infectious Scrawl-Stone: touching it covers you in cursed tattoos"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "Ire Briar: low briar that lashes when you show anger, and feeds on it"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "Jeweled Trees: silver-leaved trees with gem nodules in the trunks"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "Junkyard: a gorge heaped with ruined common goods and scavengers"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "Kaleidescopic Trail: a straight trail that refracts into splits and reflections the deeper you go"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "Knowledgeable Knotgrass: sleeping in it brings dreams of history and philosophy"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "Kudzu-ville: a village strangled and sculpted by kudzu"
+   },
+   {
+    "lo": 51,
+    "hi": 51,
+    "text": "Lair of the Mega-Raccoon: a blood-rimmed cave of a legendary beast; you were warned"
+   },
+   {
+    "lo": 52,
+    "hi": 52,
+    "text": "Log Hollow: fallen giant logs hollowed into tunnels held by skulking predators"
+   },
+   {
+    "lo": 53,
+    "hi": 53,
+    "text": "Lost Fortress: an empty keep with its furnishings intact, as if left overnight"
+   },
+   {
+    "lo": 54,
+    "hi": 54,
+    "text": "Mead Tree: a hollow oak full of fine mead; tapping it carries a small risk of collapse"
+   },
+   {
+    "lo": 55,
+    "hi": 55,
+    "text": "Megacolony Mound: a bark-stripped mound of loam and insects; the queen has a plan"
+   },
+   {
+    "lo": 56,
+    "hi": 56,
+    "text": "Megalith Circle: concentric granite slabs aligned to the stars, worn petroglyphs"
+   },
+   {
+    "lo": 57,
+    "hi": 57,
+    "text": "Mirror Copse: trees repeat exactly; something moves off the path; perhaps a duplicate of you"
+   },
+   {
+    "lo": 58,
+    "hi": 58,
+    "text": "Mocking Ossuary: skulls in wall-holes insult you, and know things"
+   },
+   {
+    "lo": 59,
+    "hi": 59,
+    "text": "Moebius Creek: a freezing creek that loops back to its start"
+   },
+   {
+    "lo": 60,
+    "hi": 60,
+    "text": "Moot of the Treefolk: treefolk elders on a hilltop deciding the Wilds' direction; they may ask for a task"
+   },
+   {
+    "lo": 61,
+    "hi": 61,
+    "text": "Mossbed: thick moss over everything; disturbed spores choke the air"
+   },
+   {
+    "lo": 62,
+    "hi": 62,
+    "text": "Mushroom Forest: house-sized mushrooms, glowing at night"
+   },
+   {
+    "lo": 63,
+    "hi": 63,
+    "text": "Muulifan's Myconid Farm: a mirthful grub tends rows of every mushroom, magic or mundane"
+   },
+   {
+    "lo": 64,
+    "hi": 64,
+    "text": "Old Growth: a primordial, root-like, hungry growth draining colour and air"
+   },
+   {
+    "lo": 65,
+    "hi": 65,
+    "text": "Owl Gryphon Lair: a mountaintop nest of carcasses; a giant owl-gryphon sleeps by day, with eggs"
+   },
+   {
+    "lo": 66,
+    "hi": 66,
+    "text": "Palace of Antlers: a gorge palace of stacked antlers; its mad hunter stalks the halls"
+   },
+   {
+    "lo": 67,
+    "hi": 67,
+    "text": "Pete's Shack: a legendary moonshiner's hill shack, rival of Petunia"
+   },
+   {
+    "lo": 68,
+    "hi": 68,
+    "text": "Petrified Forest: stone trees marked by something that lived when they did"
+   },
+   {
+    "lo": 69,
+    "hi": 69,
+    "text": "Petroglyph Cove: a river cave you reach by swimming under a cliff into a carved antechamber"
+   },
+   {
+    "lo": 70,
+    "hi": 70,
+    "text": "Petunia's Shack: a legendary moonshiner's hill shack, rival of Pete"
+   },
+   {
+    "lo": 71,
+    "hi": 71,
+    "text": "Pit of Bodies: a pond-sized pit of rendered bodies, grey mud"
+   },
+   {
+    "lo": 72,
+    "hi": 72,
+    "text": "Plummeting Waterfall: a high waterfall and rocky pool"
+   },
+   {
+    "lo": 73,
+    "hi": 73,
+    "text": "Ponderous Silhouette: a cliff that looks like a thinking face from one spot"
+   },
+   {
+    "lo": 74,
+    "hi": 74,
+    "text": "Prehistoric Butte: a sheer volcanic plateau with no handholds; rumour says something is on top"
+   },
+   {
+    "lo": 75,
+    "hi": 75,
+    "text": "Quail God: a dog-sized, gold-lit divine quail with its flock; it brings life where it walks"
+   },
+   {
+    "lo": 76,
+    "hi": 76,
+    "text": "Quarry: a deep marble quarry with a flooded floor, nesting birds, trapped creatures"
+   },
+   {
+    "lo": 77,
+    "hi": 77,
+    "text": "Respite of the Grey Knight: a silent tarnished knight meditating on a mountain of blades"
+   },
+   {
+    "lo": 78,
+    "hi": 78,
+    "text": "Returning Mound: a cherry-crowned mound in a flowering glade; an unflowered tree and something at its base"
+   },
+   {
+    "lo": 79,
+    "hi": 79,
+    "text": "Scrawl Trees: pines carved and painted with thousands of stories by crimson-cloaked carvers"
+   },
+   {
+    "lo": 80,
+    "hi": 80,
+    "text": "Shale Field: treeless splintered shale; a fall cuts to the bone"
+   },
+   {
+    "lo": 81,
+    "hi": 81,
+    "text": "Singer's Domain: a copse without animals; travellers dream of a high hollow song"
+   },
+   {
+    "lo": 82,
+    "hi": 82,
+    "text": "The Slate: roots converge on a huge crude slate megalith"
+   },
+   {
+    "lo": 83,
+    "hi": 83,
+    "text": "Sleeping Linnorm: a vast wyrm asleep like a mossy log; waking it risks its fury"
+   },
+   {
+    "lo": 84,
+    "hi": 84,
+    "text": "Smoldering Woods: ash-black woods crawling with cinder trails; cursed by some power"
+   },
+   {
+    "lo": 85,
+    "hi": 85,
+    "text": "Soot Crag: sooty crag over a burning coal seam venting gas"
+   },
+   {
+    "lo": 86,
+    "hi": 86,
+    "text": "Spike Throne: a thorn-and-bramble throne in a fly-ridden fen"
+   },
+   {
+    "lo": 87,
+    "hi": 87,
+    "text": "Spiral Earthwork: a giant salt-and-stone spiral for some ceremony"
+   },
+   {
+    "lo": 88,
+    "hi": 88,
+    "text": "Switchback River: a slow river that doglegs into rocky rapids"
+   },
+   {
+    "lo": 89,
+    "hi": 89,
+    "text": "Talisman Garden: thousands of hideous charms hung in the canopy, chiming"
+   },
+   {
+    "lo": 90,
+    "hi": 90,
+    "text": "Tar Pits: bubbling asphalt that drags down the heavy; old and new remains"
+   },
+   {
+    "lo": 91,
+    "hi": 91,
+    "text": "Time-warped Weald: plants age and regress in minutes; staying is dangerous"
+   },
+   {
+    "lo": 92,
+    "hi": 92,
+    "text": "Tomb of the First Mortals: a crawlspace tomb of skeletons in primitive jewelry"
+   },
+   {
+    "lo": 93,
+    "hi": 93,
+    "text": "Torpid Marshlands: a stagnant fen; leeches make boats the only way"
+   },
+   {
+    "lo": 94,
+    "hi": 94,
+    "text": "Trees Marked by a Dark Touch: a trail of dead earth and tarry handprints; something terrible passed"
+   },
+   {
+    "lo": 95,
+    "hi": 95,
+    "text": "Vast Mound: a man-made hill, hollow inside, a ritual space"
+   },
+   {
+    "lo": 96,
+    "hi": 96,
+    "text": "Vermin Fields: ground of cracking bones and hiding vermin; best not stay after dark"
+   },
+   {
+    "lo": 97,
+    "hi": 97,
+    "text": "Watching Trees: lone trees whose bark grooves fold open as glassy eyes"
+   },
+   {
+    "lo": 98,
+    "hi": 98,
+    "text": "The Weaver's Den: a woven den of twine and web, previous heroes bricked into its walls, spider-things on patrol"
+   },
+   {
+    "lo": 99,
+    "hi": 99,
+    "text": "Wyrd Stones: carved shale pillars; a caster studying them a week learns their secrets"
+   },
+   {
+    "lo": 100,
+    "hi": 100,
+    "text": "Yaruinne's Haven: a dragon impaled on a tree, healed around it; she holds court and sells knowledge of great beasts"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Use as a POI or a place on a hex."
+ },
+ {
+  "id": "wyrd_hazards",
+  "title": "Wyrd hazards and traps",
+  "src": "W&W 208-213",
+  "die": "d100",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 5,
+    "text": "Amoeba Bog: still clean water that is one giant amoeba; it lashes at anyone near and digests flesh. Detect: the water shimmers like jelly. Avoid: throw bait to distract it. Crows: A RR each exchange in reach; tier 1 1d6 acid, tier 2 half"
+   },
+   {
+    "lo": 6,
+    "hi": 10,
+    "text": "Blistering Ivy: star-leaved ivy; touch gives painful blisters for days. Detect: nature knowledge or experience. Avoid: no skin contact; herbal soap cures. Crows: S RR; tier 1 a bane on tests for 1d3 DT-days, tier 2 one test"
+   },
+   {
+    "lo": 11,
+    "hi": 14,
+    "text": "Bonemeal Quicksand: scree of animated bones; harmless if you keep moving, drags you down if you stop. Detect: anything dropped sinks. Avoid: cross without stopping. Crows: A RR; tier 1 pinned then dragged under, 2d6 crushing a turn until two tier 3 RRs; tier 2 pinned"
+   },
+   {
+    "lo": 15,
+    "hi": 19,
+    "text": "Cutting Scrawl: carved runes that hurt and wipe the last hour from your mind if read. Detect: magic, or reading it. Avoid: close your eyes. Crows: M RR; tier 1 1d6 psychic and lose the last hour, tier 2 lose the hour"
+   },
+   {
+    "lo": 20,
+    "hi": 24,
+    "text": "Doom Stones: a standing stone with a bound fiend that presses on minds nearby. Detect: soft horrid voices. Avoid: holy symbol; holy water for an hour. Crows: M RR; tier 1 one random madness, tier 2 a level of cruelty (Miasma, R27) for the day"
+   },
+   {
+    "lo": 25,
+    "hi": 29,
+    "text": "Drowning Pond: animals sing a charming chord so you walk in and drown. Detect: music too perfect; skeletons in the weeds. Avoid: sing worse, or better. Crows: M RR after a minute; tier 1 compelled to the pond bottom, tier 2 one stumble in"
+   },
+   {
+    "lo": 30,
+    "hi": 33,
+    "text": "Euphoria Stream: warm teal stream whose drug absorbs through skin. Detect: drug-den air; drowning flies. Avoid: no skin contact. Crows: S RR after a minute; tier 1 happy and useless for an hour, tier 2 a bane for the hour"
+   },
+   {
+    "lo": 34,
+    "hi": 38,
+    "text": "Fen of Thievery: a gold-flecked fen that picks pockets. Detect: items on the floor; grasping water. Avoid: pay a coin first; keep valuables dry. Crows: A RR; tier 1 lose 1d3 loose items, tier 2 lose one"
+   },
+   {
+    "lo": 39,
+    "hi": 43,
+    "text": "Flensing Grass: silver chest-high blades that slice anyone crossing. Detect: it twitches; sliced animals at its base. Avoid: fire frightens it. Crows: A RR each turn inside; tier 1 2d6 piercing, tier 2 1d6"
+   },
+   {
+    "lo": 44,
+    "hi": 48,
+    "text": "Gallowlurks: noose-vines of a limpet creature that hoist you by the neck. Detect: intestine-like coils. Avoid: trigger from a distance. Crows: A RR; tier 1 hoisted and 1d6 strangle a turn until free, tier 2 caught but not lifted"
+   },
+   {
+    "lo": 49,
+    "hi": 52,
+    "text": "Gluttonous Tree: carnivorous root bed that pins and crushes. Detect: slow roots, bloody bones. Avoid: climb above, or throw 100 lb of meat. Crows: S RR; tier 1 pinned and 1d6 a turn until you break free, tier 2 pinned one turn"
+   },
+   {
+    "lo": 53,
+    "hi": 57,
+    "text": "Hallucinogenic Moss: purple moss that spores hallucinations. Detect: nature knowledge. Avoid: crude mask, hold breath. Crows: S RR; tier 1 an hour of hallucination (roll the table), tier 2 half an hour"
+   },
+   {
+    "lo": 58,
+    "hi": 62,
+    "text": "Hideous Totems: rusted-blade totems that curse a trail so you loop back. Detect: malicious magic. Avoid: leave a weapon impaled in it. Crows: no RR; the party loops for half an hour unless it leaves a weapon"
+   },
+   {
+    "lo": 63,
+    "hi": 67,
+    "text": "Hungry Lilies: blood-red lilies that bleed prey dry. Detect: tiny clicking teeth. Avoid: garlic. Crows: A RR each turn inside; tier 1 bleeding 1d4 a round until staunched, tier 2 one cut"
+   },
+   {
+    "lo": 68,
+    "hi": 71,
+    "text": "Papa Sleep: a corpse dragging a grandfather clock, singing a lullaby of sleep. Detect: drowsiness and a song. Avoid: offer to repair the clock; fixing it earns a magic ring. Crows: M RR; tier 1 falls asleep, tier 2 awake but a bane until rest"
+   },
+   {
+    "lo": 72,
+    "hi": 76,
+    "text": "Reaper's Fingers: bone-coloured toxic fungi; touch sickens, repeat touches kill. Detect: nature knowledge. Avoid: no skin contact. Crows: S RR per touch; tier 1 nauseated an hour (bane), second touch unconscious, third touch Stamina 0"
+   },
+   {
+    "lo": 77,
+    "hi": 81,
+    "text": "Skull Children: masked spirit-children who haunt travellers with pranks nightly. Detect: laughing and skull masks in the dark. Avoid: give a toy or sweet. Crows: no RR; each night roll the prank table"
+   },
+   {
+    "lo": 82,
+    "hi": 86,
+    "text": "Spite Beds: a bone bed that radiates hatred into the mind. Detect: nausea, dying vermin sounds. Avoid: holy water or sanctified salt. Crows: M RR; tier 1 dizzy (attacks vs you gain an edge) for an hour, a second RR to avoid rage; tier 2 dizzy only"
+   },
+   {
+    "lo": 87,
+    "hi": 90,
+    "text": "Stink Stalks: child-high fungal stalks whose spores attract predators. Detect: bait smell. Avoid: sneak (they sense vibration). Crows: A RR; tier 1 double the encounter checks for 1d12 hours, tier 2 one extra check"
+   },
+   {
+    "lo": 91,
+    "hi": 95,
+    "text": "Volatile Cadaver: bloated corpses that burst on touch with shrapnel and disease. Detect: pulsing seams. Avoid: throw a stone from afar. Crows: A RR; tier 1 2d6 and a disease roll, tier 2 1d6"
+   },
+   {
+    "lo": 96,
+    "hi": 100,
+    "text": "Wyrd Flare: reality warps; entering gives a random effect from the Wyrd magic chart. Detect: magic-sense; Wyrd-attuned know. Avoid: carry a Wild Elf piece. Crows: no RR; the Ref rules a strange effect (no table in this build)"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. 21 entries spread over d100. Roll `table wyrd_hazards`, then the crow's test is a Crows RR with the stat shown."
+ },
+ {
+  "id": "wyrd_flora",
+  "title": "Wild flora",
+  "src": "W&W 200-203",
+  "die": "d20",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Banshee Morel: skull-headed mushroom that wails and deafens when threatened; dried, a trumpet"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Beedlesprouts: amber buds; eating them lets you hear the trees sing, shrill near predators"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Boletus Posterum: pink lattice mushroom; poisonous, gives visions of the near future"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Canticle Holly: blue-leaf tree with glowing berries; sleeping near it eases fatigue; berries make Saints' Respite"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Carol Trees: silver-leaved conifers whose song heals but can lull you into endless sleep"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Coal-nettle: foul black shrub that burns hard; ground fine it is explosive powder"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Dame's Seal: elegant crimson-veined flower prized by nobles and alchemists"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Deer Weed: antler-like leafless sprout that can pass as antler to the unskilled"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Dirkberry: thorn bush hiding berries for fighters' brandy and a mind-freeing wine"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Elf-ear: grass blade that whistles; attracts some wildlife when used as a whistle"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "Gristle Pear: warty tree with fat-and-gristle fruit; one feeds an adult for a day"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "Kingsleep Moss: soft turquoise moss; a night's rest on it is deeply restorative"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "Knitting Onion: onion that revives the unconscious like smelling salts"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "Night Cherry: black cherries causing an hour-long coma; extract is Red Slumber poison"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "Obsequy Ragwort: funeral flower; a body buried with it will not rise as undead"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "Pissboils: foul fungus that bursts into caustic liquid; causes memory loss, attracts predators, used to etch metal"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "Plump Friars: sweet berries; brewed into an illegal euphoria elixir"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "Ring Root: boiled it feeds; raw it helps neutralise poison"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "Scribe's Birch: bark peels as vellum-like sheets"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "Swineweed: stalk that burns into thick smoke causing blindness for hours"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Effects are qualitative; the Ref rules any number and logs it."
+ },
+ {
+  "id": "wyrd_diseases",
+  "title": "Wilderness diseases",
+  "src": "W&W 204-207",
+  "die": "d12",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "The Bleeding: you bleed from every orifice; bleeding damage is worse; can be transfused. Cure: two successes in a row, or a transfusion"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Etch Mites: burrowing mites carve half-words and drawings into your skin; constant itching. Cure: three successes, or a full shave and lye bath"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Fleshspawn: flesh grows out of control; each day you gain bulk until you burst. Cure: three successes in a row, or brown recluse venom; excess flesh can be cooked and eaten"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Mind Drift: your soul leaves your body for an hour at a time, leaving it helpless. Cure: two successes in a day, or a day asleep under a Carol Tree"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Mire Creeps: spore-filled skin balls that burst in heat for damage and spread. Cure: three successes in a row, or Pissboil salve"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Treewylding: you slowly become a tree; saves only delay it; no cure but divine or great Wyrd intervention"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Saint Agrella's Wart: swelling warts spread across the body, slowing and stiffening you. Cure: three successes, or a scalding herbal bath, leeching and wart removal"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Scribe's Bane: you lose the ability to read and write. Cure: two successes in a row, or an eaten, ground spellbook paste"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Spell-Scum: casters' spells come out random. Cure: two successes in a row, or an Oracle Sludge elixir"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Vein Nettle: needle pain flares every few hours and makes every test harder. Cure: two successes in a day, or distilled Gristle Pear juice and weak acid"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "Whittle Worms: parasites eat nerves; you lose pain and then sight, taste, hearing, smell. Cure: two successes in a row, or a week-long surgery"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "The Wretches: your organs rot and you vomit them up, losing vitality. Cure: three successes in a row, or holy birch tea"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Crows prints no disease rule. House procedure: at each rest end the crow makes a Strength RR; tier 3 counts as a success toward the cure; tier 1 worsens the disease one step."
+ },
+ {
+  "id": "wyrd_body_search",
+  "title": "I search the body and find",
+  "src": "W&W 214",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "lice combs and soap"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "glass jar of teeth"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "torches of limb, root and bone"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "coins with face and mint scratched off"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "squirming sack holding an infant Wild Elf"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "knucklebone dice"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "arrows tipped with a great beast's molars"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "petrified head of an ancient druid"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "crude phrasebook of Fangspek"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "dark carnivore hides"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "wreath of useful plants"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "tinderboxes with dry tinder"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "used cast-iron skillet"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "aged purple wood mask with scrawl"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "mud-coated goat jerky"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "jug of spirits with a dead mouse"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "holy book with pressed leaves"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "fancy helmet whose faceplate won't stay up"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "pipe-weed and a stained oak pipe"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "two silver compasses pointing different ways"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "jugs of sulfur-smelling water"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "heraldic patchwork quilt"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "stoneware crock with a hideous face"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "bag of Sanctified Salt"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "tin cage with an unruly Quilluff"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "necklace of wooden sigils for reading scrawl"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "sack of dead, bright-plumed birds"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "wool-and-cotton blankets"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "envelope of disease-marked scabs"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "basket of edible mushrooms"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "necklace of severed fingers"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "a Wild Elf treasure"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "fragment of a spellbook with one spell"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "patchwork backpack"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "bone-handled knives, rusty but sharp"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "pocket map of the local area"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "journal of a dead adventurer, with secrets"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "rope of human and animal hair"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "broken-in leather gloves"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "vellum sheets made from human skin"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "poem in Rhymespeak about hidden treasure"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "woodcutter's axe with 23 handle notches"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "burlap sack of oats"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "wool cloak with patches of adventuring bands"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "battered shield with a fighting snail"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "dark children's tales about the Wilds"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "ironwood walking stick"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "scrawl-etched bone charms"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "antler deer-call whistle"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "tin-and-wood birdcall"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_trails",
+  "title": "Random trails and paths",
+  "src": "W&W 215",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "wide path dusted with coal ash and black sand"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "crumbling knee-high stone wall"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "pale cobbles that are skulls"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "path paved with legible gravestones"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "narrow trail gouged by hooves"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "overgrown old road of broken cobble"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "trail edged with faintly glowing mushrooms"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "path along the buried spine of a colossal corpse"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "steep mossy switchbacks up a cliff"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "lifeless path smelling of sulfur and blood"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "narrow damp fissure like a scar"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "twisting flood-gouged track"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "loam canyon walled with twitching roots"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "marble steps lit by bronze braziers"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "knotted carpet of vine"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "moldy boardwalks through a rancid fen"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "felled trees laid flat as a walkway"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "aged suspension bridge over a misty gorge"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "former creek, now muddy and fly-ridden"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "crushed quartz path that glitters"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "deer path with salt-licks and snares"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "road through a deserted village with watching eyes"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "terrace tunnel of spider web and dried bodies"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "sandstone trail lined with monstrous totems"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "strangely straight trail with echoing voices"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "hot path of smouldering embers"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "crumbling battlement of a great wall used as a path"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "wood slats etched with poems"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "ferry pier and raft run by a robed figure who takes secrets as payment"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "trail made by a carpet of ants that ignore you"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "small weathered trail beside a stream"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "trail strewn with broken glass and mirrors"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "standing stones with greedy faces as markers"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "whistling bird leads through a thicket"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "trail of laid-out weapons and armour"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "giant frog offers a ride across a poison swamp"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "through the mouth and gullet of a sleeping linnorm"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "trail of rusted pennies winding round trees"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "ancient stone staircase down a wooded gulch"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "trail of decapitated animals into the dark"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "trees carved with the same unnerving symbol"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "cathedral ruins whose archways mark the path"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "skeletons hanging from nooses line the trail"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "nithing poles bearing skulls mark a footpath"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "ivy-covered aqueduct used as a road"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "slimy path of an impossibly large slug that smells of wet paint"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "footpath carved by deliberate burning"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "river ford marked by defaced statues of dead gods"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "silent robed monks pointing the way"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "untouched kingly road, clearly ancient"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_dungeon_prefix",
+  "title": "Wilderness dungeon name: first word",
+  "src": "W&W 216",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Aviary"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Backwoods"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Bog"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Burial Ground"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Burrows"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Canyon"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Cliffs"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Conifers"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Copse"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Cradle"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "Crater"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "Den"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "Evergreens"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "Fen"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "Flowerbed"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "Forest"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "Garden"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "Gorges"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "Graveyard"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "Greenlands"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "Grove"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "Haven"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "Hearth"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "Hills"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "Hive"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "Hunting Grounds"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "Marsh"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "Maze"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "Mire"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "Mound"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "Mountain"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "Nest"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "Old-Growth"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "Orchard"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "Primeval Woods"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "Remains"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "Road"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "Rotfields"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "Ruins"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "Sporebed"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "Swamps"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "Thicket"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "Timberline"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "Trail"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "Valley"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "Weald"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "Wetlands"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "Wildlands"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "Woodland"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "Woods"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Roll prefix and suffix separately: `prefix of suffix` (the suffix already includes its 'of' or 'of the')."
+ },
+ {
+  "id": "wyrd_dungeon_suffix",
+  "title": "Wilderness dungeon name: suffix",
+  "src": "W&W 216",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "of Absolution"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "of Anguish"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "of Awakening"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "of Blades"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "of Bloodshed"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "of Bones"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "of Bounty"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "of Broken Time"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "of Burning"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "of Corpses"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "of Dead Gods"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "of Dead Kings"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "of Decay"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "of Desolation"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "of Disease"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "of Drowning"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "of Druids"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "of Eternal Dreams"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "of Euphoria"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "of Filth"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "of Fool's Gold"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "of Hunger"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "of Madness"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "of Mutation"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "of Night"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "of Nightmares"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "of Poison"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "of Regret"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "of Rime"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "of Sacrifice"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "of Silence"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "of Singing"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "of Snares and Traps"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "of Spores"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "of Standing Stones"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "of Storms"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "of the Ancients"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "of the Behemoth"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "of the Crows"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "of the Flesh"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "of the Lost"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "of the Megalith"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "of the Mother"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "of the Ritual"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "of the Totems"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "of the Void"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "of Trickery"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "of Vermin"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "of Worms"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "of Wraiths"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_dungeon_danger",
+  "title": "Wilderness dungeon: the danger",
+  "src": "W&W 217",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "feral knights patrol in pairs"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "sleep brings nightmares of an unholy shrine"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "ravagers hunt travellers for sport"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "a monstrous intelligent spider's home"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "it snatches corpses and the fallen"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "canopy so thick it is total darkness"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "the ground heaves and hungers for flesh"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "robs adventurers at every turn"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "travel is mostly up cliff faces"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "game and flora are diseased"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "the wildlife hunts together"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "a mad druid holds a primal deity's name"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "far too easy to get lost"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "a false god demands worship"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "magic and spells have lives of their own"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "the dead do not stay dead"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "no fire or lamp will burn"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "rust eats metal fast"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "it takes eyes and ears"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "the trees and flora conspire against you"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "a fiend lives in the shadows"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "a gibbering cult demands sacrifice"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "no one leaves unscathed"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "regular flooding"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "a crazed bard rules a ruined keep"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "apparent shelters are always trapped"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "nighttime ambushes are common"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "private hunting ground of a Wild Elf lord"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "memories are hard to keep"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "one spark starts a wildfire"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "trails change course every full moon"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "vampylfs have infected every beast"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "it knows your darkest desires"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "thick sinking mud everywhere"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "tolls are paid in fingers"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "it hates and destroys holy symbols"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "at least one traveller always goes mad"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "loud noises rouse a primordial beast"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "wyrd flares cause mutation and worse"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "loners are always captured"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "music is punished"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "everyone is a backstabber and liar"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "time flows in many directions"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "trust what you hear, never what you see"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "tests strength in brutal ways"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "easy to enter, hard to leave"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "trails and paths are ambush spots"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "it enjoys riddles and punishes the unclever"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "deadly chill at night"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "it always takes one life"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_dungeon_secret",
+  "title": "Wilderness dungeon: the secret or treasure",
+  "src": "W&W 217",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "a tree that makes horrid but perfect predictions"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "a way to gain immortality"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "the name of a powerful primal deity"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "gold statues"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "a mage's ancient spellbooks"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "the location of the Wilds' beating heart"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "blueprints for terrible magic weapons"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "a way to control the Wyrd briefly"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "a legendary dryadi craftsman's workshop"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "standing stones that show the future"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "a way to travel back in time"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "a saint's relic bones"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "mythic iron armour buried with its champion"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "a grimoire listing every mortal's sins"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "the invulnerable pelt of an ancient wolf god"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "the last writings of a warrior-poetess"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "a magic forge fuelled by flesh and bone"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "spider-silk made by the first arachnids"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "an insane bard's maddening songbook"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "a long-held secret of the Lady of Broken Branches"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "a dark ritual able to change the world's fate"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "a sure way to bring back the dead"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "a legendary warrior's teachings"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "a way to command mortals with one word"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "a brazier whose fire never goes out"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "the body of a forgotten deity"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "a painting hidden for its terrible beauty"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "the tomb of a legendary civilization"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "flesh of a divine being"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "knowledge of every trail and where it goes"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "a bow that calls storm clouds and lightning"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "a way to keep the mind while the body decays"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "a portal of shadow and ivy to the afterlife"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "an ironwood chest with a sleeping godling"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "the tower of a demigod who weeps sapphire"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "the name of a watchful living star"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "an important, long-forgotten memory"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "a song that wins any heart"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "a flower that cures any ailment"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "a way to kill The Ruin"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "a crown worth more than any castle"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "a key that opens anything, not only locks"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "the sarcophagus of an ancient hero"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "the cure for Treewylding"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "a forgotten library of powerful tomes"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "where a falling star last landed"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "a barbarian king's buried riches"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "an heirloom that spells disaster for a ruler"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "a terrible truth about a noble line"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "a deity's loving embrace"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_call_of_the_wild",
+  "title": "The Call of the Wild (a lasting change)",
+  "src": "W&W 22-24",
+  "die": "d50",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "you read by eating the page"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "bark hardens your skin but dulls your hands"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "paranoia that the moon is watching"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "seedlings sprout in your skin"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "you can smell and taste spilled blood nearby"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "you sense nearby heartbeats"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "you echolocate by clicking"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "you despise towns and civilisation"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "your body wastes to a corpse-like look"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "you never forget a smell"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "your body hair grows thick"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "you wake exactly when you meant to"
+   },
+   {
+    "lo": 13,
+    "hi": 13,
+    "text": "you accept your own insignificance and feel little suffering"
+   },
+   {
+    "lo": 14,
+    "hi": 14,
+    "text": "twitchy eyes see tiny details and traps"
+   },
+   {
+    "lo": 15,
+    "hi": 15,
+    "text": "antlers grow from your skull"
+   },
+   {
+    "lo": 16,
+    "hi": 16,
+    "text": "you smell magic"
+   },
+   {
+    "lo": 17,
+    "hi": 17,
+    "text": "a terrible word lives in your gut and must be shouted daily"
+   },
+   {
+    "lo": 18,
+    "hi": 18,
+    "text": "you avoid caravans and merchants"
+   },
+   {
+    "lo": 19,
+    "hi": 19,
+    "text": "you must eat every part of your prey"
+   },
+   {
+    "lo": 20,
+    "hi": 20,
+    "text": "you predict tomorrow's weather from a treetop"
+   },
+   {
+    "lo": 21,
+    "hi": 21,
+    "text": "you carve symbols into trees or they appear on you"
+   },
+   {
+    "lo": 22,
+    "hi": 22,
+    "text": "the trees sing to you directions and warnings"
+   },
+   {
+    "lo": 23,
+    "hi": 23,
+    "text": "a terrifying ghost follows you and warns of ambush"
+   },
+   {
+    "lo": 24,
+    "hi": 24,
+    "text": "your ears hear every small noise and deafen easily"
+   },
+   {
+    "lo": 25,
+    "hi": 25,
+    "text": "you can learn the language of the dark between trees"
+   },
+   {
+    "lo": 26,
+    "hi": 26,
+    "text": "your flesh regrows fast but sprouts horrors"
+   },
+   {
+    "lo": 27,
+    "hi": 27,
+    "text": "your fingernails become claws"
+   },
+   {
+    "lo": 28,
+    "hi": 28,
+    "text": "fungus in your gut neutralises poison but you must eat double"
+   },
+   {
+    "lo": 29,
+    "hi": 29,
+    "text": "your limbs lengthen and you gallop on all fours"
+   },
+   {
+    "lo": 30,
+    "hi": 30,
+    "text": "slitted cat eyes"
+   },
+   {
+    "lo": 31,
+    "hi": 31,
+    "text": "monthly dreams point to a demigod"
+   },
+   {
+    "lo": 32,
+    "hi": 32,
+    "text": "you cannot digest cooked food"
+   },
+   {
+    "lo": 33,
+    "hi": 33,
+    "text": "you can howl in terror"
+   },
+   {
+    "lo": 34,
+    "hi": 34,
+    "text": "you must resist devouring the newly dead"
+   },
+   {
+    "lo": 35,
+    "hi": 35,
+    "text": "you will not sleep on the ground"
+   },
+   {
+    "lo": 36,
+    "hi": 36,
+    "text": "you go voiceless and read body language and scent"
+   },
+   {
+    "lo": 37,
+    "hi": 37,
+    "text": "your skeleton goes feral: a longer skull, fangs, longer limbs"
+   },
+   {
+    "lo": 38,
+    "hi": 38,
+    "text": "you can speak to vermin"
+   },
+   {
+    "lo": 39,
+    "hi": 39,
+    "text": "you cannot show your face"
+   },
+   {
+    "lo": 40,
+    "hi": 40,
+    "text": "sharp fangs grow and must be pried out weekly"
+   },
+   {
+    "lo": 41,
+    "hi": 41,
+    "text": "your mind feels little; you resist madness and mind effects"
+   },
+   {
+    "lo": 42,
+    "hi": 42,
+    "text": "you suddenly know how to build one random artifact"
+   },
+   {
+    "lo": 43,
+    "hi": 43,
+    "text": "your eyes go pale and iris-less"
+   },
+   {
+    "lo": 44,
+    "hi": 44,
+    "text": "your blood heals those who drink it"
+   },
+   {
+    "lo": 45,
+    "hi": 45,
+    "text": "sigils and glyphs appear on your skin"
+   },
+   {
+    "lo": 46,
+    "hi": 46,
+    "text": "your strength follows the moon's fullness"
+   },
+   {
+    "lo": 47,
+    "hi": 47,
+    "text": "you hear treasure calling"
+   },
+   {
+    "lo": 48,
+    "hi": 48,
+    "text": "your skin slowly takes on your surroundings' colour"
+   },
+   {
+    "lo": 49,
+    "hi": 49,
+    "text": "you understand Fangspek, the Ravager tongue"
+   },
+   {
+    "lo": 50,
+    "hi": 50,
+    "text": "your hair grows a foot a day, tough as silk rope"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Suggested trigger for a Crows game: a crow who has gone through a Miasma Effects result of 13+, or survived a legendary creature. Flavour first; the Ref rules any mechanical effect and logs it."
+ },
+ {
+  "id": "wyrd_madness_quirk",
+  "title": "Madness: quirks",
+  "src": "W&W 26",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Totem Maker: you build grotesque effigies and must hunt for their parts"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Scratches: you scratch and carve your own skin"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Repeat, Repeat: you must repeat phrases and small acts until they are right"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Filthy: you stop bathing or grooming"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Idle Chatter: you talk constantly to animals, objects and the sky"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Autocannibalism: you eat pieces of yourself"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Texture for a crow or NPC at a given cruelty level (R27)."
+ },
+ {
+  "id": "wyrd_madness_mad",
+  "title": "Madness: mad",
+  "src": "W&W 27",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Into the Dark: you must press on and find what hides in the Wilds"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Offerings: you must feed the Wilds a meal and supplies each night, and no one may stop you"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Book of Flesh: you must carve patterns into your own skin"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Moon's Lover: sunlight burns; you prefer the night"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Sinner's Ghosts: ghosts of those you killed follow and want you dead"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Eschew the Shield: you refuse armour and shields"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_madness_deep",
+  "title": "Madness: deep",
+  "src": "W&W 27-28",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "The Weak Are Meat: the fallen are your rightful food, friends included"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "I'm Home: you will never leave the Wilds again"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "We're All Just Beasts: you drop language and decency"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Metal Is a Sin: no metal may touch you, and you destroy it"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "The Grand Ritual: you are architect of a vast ritual and nothing may stop you"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Too Much Skin: you must remove your skin and find others who dance flayed"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_hallucination",
+  "title": "Hallucination",
+  "src": "W&W 211",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "a friend is your worst enemy"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "you are surrounded by what you fear most"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "everything is on fire"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "the ground is swallowing you"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "the trees shout insults"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "the Skulk is watching you"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_skull_children_prank",
+  "title": "Skull Children prank (per night)",
+  "src": "W&W 212",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "pilfered food: some of your rations are eaten"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "firebug: oil on your clothes that ignites at a spark"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "stones thrown at you through the day"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "thieving hands take some coin or items"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "hide-and-seek: a great monster is lured to you"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "bored: they leave and the haunting ends"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_moon_special",
+  "title": "Special moon",
+  "src": "W&W 21",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Blood Moon: encounters and their numbers double; red glow, smell of copper"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Demented Moon: madness and mind effects are harder to resist; manic racing light"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Conjurer's Moon: magic is stronger but may backfire; aurora shimmer"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Gentle Moon: healing doubled and emotions calm; warm steady light"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Sower's Moon: life grows rapidly and out of control; spore and spawn in the air"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Ref's choice (or none)"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Special moons replace a full moon at the Ref's discretion."
+ },
+ {
+  "id": "wyrd_moon_names",
+  "title": "Moon names (flavour)",
+  "src": "W&W 21",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Morislathe: penny-small, jade, flickers"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Grun: fist-sized, ghost-pale, hums when full"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Auloi: apple-sized, fuchsia, shattered with drifting pieces"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Lukattab: fills the sky, corpse-blue, craters like faces"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Chandri: wagon-wheel yellow, warm when full"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Maane: grapefruit-sized, bone white with red dust, surface changes yearly"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Kuut: dark grey, distance and size vary widely"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Baretkh: hand-mirror grey with dark holes"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Selenea: coin-sized rusted copper with geometric shapes"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Goa Kuys: twin moons (roll again for each)"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_lost_return",
+  "title": "Where you end up when found again",
+  "src": "W&W 25",
+  "die": "d8",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "exactly where you started"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "a ruined camp with dead adventurers and some of their goods"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "a burned hut with an unspoiled root cellar of food and strong drink"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "a rocky den with some stashed gold"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "a river clearing with a wary, helpful fisherman"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "standing stones with piles of burnt bodies and a warning in blood"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "a tree with a lady's face, lit candles and offerings"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "a shack of crazed monks offering strange meat and dark stories"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_hunt_track",
+  "title": "Hunt: tracking result (per day)",
+  "src": "W&W 16",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Major setback"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Minor setback"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Mark, and a minor setback"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Mark"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Double marks"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Double marks, and a boon"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_hunt_major",
+  "title": "Hunt: major setback",
+  "src": "W&W 17",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Ambush: bandits or ravagers who have followed you strike"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Utterly lost: lost for 1d20 days"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Maddening Wilds: 1d4 of you roll on the Call of the Wild table"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Cursed grove: this stretch of Wilds hosts horror and danger"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "The beast awakens: an ancient creature wakes in its territory"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Stumbled into a court of powerful beings in the middle of something"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Crippling injury that persists until medical aid: the crow takes a wound that rests do not remove"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "The hunters become the hunted: the quarry turns on you"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Supplies destroyed: lose 1d6 rations, and a UD die"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "'Not another step': make camp now and the party loses its expertise uses this rest"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Resources scaled to Crows (rations, UD, wounds, expertise uses)."
+ },
+ {
+  "id": "wyrd_hunt_minor",
+  "title": "Hunt: minor setback",
+  "src": "W&W 17",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Lost supplies: lose 1d6 rations"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Sleepless night: 1d4 of you gain a bane on tests until a rest completes"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Vermin nest: low-level vermin hungry for travellers"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Lost the tracks: lost for 1d6 days"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Arduous terrain: spend a ration or take a bane on the next travel test"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Unfriendly locals: ruffians or xenophobes; bloodshed possible"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Horrid quagmire: a fetid swamp, slow if avoided, dangerous if crossed"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Cutting flora: blood-tasting brush, 1d6 to each"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Hostile fauna: a wild animal seeks you (roll the animal encounter table for the habitat)"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Rot pit: offal and disease; roll a disease on a tier 1 Strength RR"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_hunt_boon",
+  "title": "Hunt: boon",
+  "src": "W&W 17",
+  "die": "d8",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Hospice: a remote cabin; the party takes a full rest safely"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Hidden cache: 1d6 rations and a little coin"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "The trail revealed: an extra mark"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Friendly hunters offer a trade for news and supplies"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Healing spring: bathing removes a wound"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Magic grove: healing fruit or a wondrous item (Ref's call)"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Unhindered: wildlife ignores you for the day"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Mysterious guide offers help for a price"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_goods_uncommon",
+  "title": "Cleaning a body: uncommon good",
+  "src": "W&W 19",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "a handful of organs of a strange sort"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "tight springy tendons"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "healthy unbroken bones"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "an unscathed skull"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "a fresh heart"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "delicious bone marrow"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "undamaged organs"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "a good hide"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "very clean teeth"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "a still-wet tongue"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Flavour for a harvest rest activity (R15). Prices and crafting use Crows' (C36, C42)."
+ },
+ {
+  "id": "wyrd_goods_rare",
+  "title": "Cleaning a body: rare good",
+  "src": "W&W 19",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "an organ that writhes like an earthworm"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "a bone that hums when struck"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "an eye whose colours shift in the light"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "nervous tissue that clings and twists like ivy"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "a preposterously perfect pelt"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "a heart that twitches in the moonlight"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "bile that eats metal and nothing else"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "a live vestigial twin"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "a brain that seems to whisper"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "a row of teeth fused together"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_task_minor",
+  "title": "Patron bargain: minor task",
+  "src": "W&W 143",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "root out a den of rabid coyotes"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "clear a trail of underbrush"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "protect a deer giving birth"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "purify a water source"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "move a ravenous fish out of a pond"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "help a village with its harvest"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "cure a pack of animals"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "defeat a small camp of Ravagers"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "stop a cannibalistic hunter"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "return a spellbook to its owner"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules. Quest seeds for a patron like Ei-Criomoran."
+ },
+ {
+  "id": "wyrd_task_major",
+  "title": "Patron bargain: major task",
+  "src": "W&W 143",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "fend off a pack of Primal Skaals"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "stop a Rittermotte mad with bloodlust"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "find an artifact hidden in the Wilds"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "steal a treasure from a Bauik hive"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "defuse a dispute between a village and the Wilds"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "save a rare species of bird"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "join the fight against a wildfire"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "stem the spread of a disease"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "close a portal leaking evil"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "destroy the meeting place of a cabal of evil druids"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_task_grand",
+  "title": "Patron bargain: grand task",
+  "src": "W&W 143",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "slay a mad Linnorm"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "broker peace between a country and the Wilds"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "trap the Skulk"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "prevent the Sorrow-Hunt"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "perform an ancient and powerful ritual"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "save a captive from a Wild Elf fortress"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "find a long-lost demigod"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "find and burn the most ancient Curseweald"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "stop a pandemic of Treewylding"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "find the beating heart of the Wilds"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_lord_title",
+  "title": "Lord of the Broken Court: title",
+  "src": "W&W 139",
+  "die": "d4",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Earl/Earless"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Baron/Baroness"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Count/Countess"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Duke/Duchess"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_lord_name",
+  "title": "Lord of the Broken Court: name",
+  "src": "W&W 139",
+  "die": "d6",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Argamel"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Cail'lundol"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Madadh"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Lup-Laicom"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Fenn"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Borriean"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_lord_claim",
+  "title": "Lord of the Broken Court: claim",
+  "src": "W&W 139",
+  "die": "d8",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "The Thrice Stitched"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "First of the Seers"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Speaker for the Nightmare"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "The Sevenfold Alpha"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Of the Elder Sap"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "The Silver Singer"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Keeper of the Bones"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "The Sorrow-Song"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_lord_desc",
+  "title": "Lord of the Broken Court: appearance",
+  "src": "W&W 139",
+  "die": "d10",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "a giant wolf in jewels and a crown"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "a headless human with green fire from the wound"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "two mortals stitched at the waist who speak in unison"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "a beautiful head nested in writhing vines"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "a blinding white glowing elk"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "an elegant skeleton woven with red and gold silk"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "a swarm of spiders with gems in their abdomens"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "the severed head of a beast that moves and talks"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "a black frog riding a glorious deer"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "whispers and humming"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "wyrd_lord_notes",
+  "title": "Lord of the Broken Court: notes",
+  "src": "W&W 139",
+  "die": "d12",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "despises mortal civilisation"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "mourns a long-dead love"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "patrols the Wilds' edge"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "demands tribute from mortals"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "fights unnatural horrors"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "personal guardian of the Lady"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "grudge against Ravagers"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "rules the swamps"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "record-keeper of the Wilds"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "speaks for the trees"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "secretly helps those in need"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "lost the Lady's favour"
+   }
+  ],
+  "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ }
+]

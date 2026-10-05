@@ -44,3 +44,13 @@ These follow from the audits, where the Ref kept a count by hand and lost it. Th
 - **`tick <threat> [source]`.** Stores `d/n` and the session tick count, refuses the third tick, prints the sealed-ledger line. Conflicts with the engine README's "sealed file owns fronts and clocks", so it needs your OK.
 - **`moon`.** See `weird_wyld_notes.md`.
 - **Foe roster.** A `foe` command that stores each foe's Stamina and position, so the scene line is not hand-kept (audits: forgotten foes and stat drift were the largest error classes in the hybrid variants and recurred in D_S5).
+
+
+## Amendment 2 and v1.1 (added after you approved "all useful elements")
+- **`crows_01_system_layer_v1.1.md`** is the layer with Amendment 1 applied (research parentheticals removed) and a new **§16 wilderness supplement**. `crows_06_hot_card_v1.1.md` carries the patch. The v1 files are unchanged.
+- **§16 / engine.** `engine/tables_wyrd.json` (33 tables, 681 entries, paraphrased from *Into the Wyrd and Wild*, private use) plus three engine commands: `day`, `moon` (and `travel --moon`), `hunt`. The moon EN adjustment, the hazard RR stats and damage dice, and the disease procedure are HOUSE conversions and are marked so.
+- **`03_director_sealed_template.md`** with three Threat seeds from W&W factions (The Night Summons, The Changeling Tithe, The Sorrow-Hunt), a patron, and the hunts note.
+- **`tools/extract_sources.py`** rebuilds `crows/src/*.txt` from your own HTML books with the PDFPAGE markers the index expects. **`tools/assemble_layer.py`** rebuilds v1.1 from v1 and the amendment.
+- **`engine/ledger.py`** gains `init custom`, `rest` and `set` so it can run a real campaign, not only the trial crows.
+- **Not done:** bestiary conversion (needs Crows stat blocks; see §16 "Not imported"), the wilderness-dungeon hex generator, Magic of the Wyrd.
+- **Untested:** all of the above. The trials covered Amendment 1 only.

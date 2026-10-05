@@ -179,3 +179,7 @@ Duelist example: Finesse the Blade (C, Slashing tree) lets Agility replace Stren
 ## Appended anchors (the GM appends here; newest last)
 
 Format: `subject · BOOK page · grep anchor`
+
+## Wilderness supplement (v1.1)
+- **Tables as data (wilderness).** `crows/engine/tables_wyrd.json` holds 33 tables paraphrased from *Into the Wyrd and Wild* (private use). `python3 engine.py tables wyrd` lists ids. See layer §16.
+- **Threat seeds.** `03_director_sealed_template.md`: The Night Summons, The Changeling Tithe, The Sorrow-Hunt (factions, W&W p.136–151).

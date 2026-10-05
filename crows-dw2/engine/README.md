@@ -76,3 +76,16 @@ Transcription notes live in each table's `note`. Three are printed errors, fixed
 
 - **The crow's state:** the Ledger owns it.
 - **Fronts, clocks and NPC moves:** the sealed file owns them. The one exception is the sealed next Village Event, which the engine holds until it lands. One owner per fact (system layer §15).
+
+## Additions (Amendment 1 and the wilderness supplement; HOUSE, not in the original engine)
+
+| Need | Command |
+|---|---|
+| Campaign day, village cycle day, moon day | `day` · `day +3` · `day set 40` (travel adds 1 day itself) |
+| Moon phase and EN adjustment | `moon` · `moon --day 14` · `moon special Blood Moon` · `moon special off` |
+| Travel with the moon | `travel normal --moon` |
+| A hunt as a Mark clock | `hunt new elk 3` · `hunt day elk` · `hunt day elk --adv` · `hunt show` |
+| Wilderness tables | `tables wyrd` lists 33 tables in `tables_wyrd.json` (locations, hazards, flora, diseases, trails, body search, wilderness dungeon names, danger and secret, hunts, harvest goods, madness, the Call of the Wild, patron tasks, Lords of the Broken Court) |
+
+- `tables_wyrd.json` is **built** from paraphrased data in `wyrd/` (`python3 wyrd/build_tables.py`). It paraphrases *Into the Wyrd and Wild* (all rights reserved by the publisher): keep it private. The engine loads every `tables_*.json` beside `engine.py`.
+- Validate after any edit: `python3 validate_tables.py tables_wyrd.json`.

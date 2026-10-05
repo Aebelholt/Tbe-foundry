@@ -69,7 +69,11 @@ _T = None
 def tables():
     global _T
     if _T is None:
-        _T = {t["id"]: t for t in json.load(open(os.path.join(HERE, "tables.json")))}
+        import glob
+        _T = {}
+        for f in [os.path.join(HERE, "tables.json")] + sorted(glob.glob(os.path.join(HERE, "tables_*.json"))):
+            for t in json.load(open(f)):
+                _T[t["id"]] = t
     return _T
 
 def lookup(tid, total):
@@ -233,9 +237,43 @@ HELP = """commands (open output starts 'Ref:', secret output starts 'SEALED:')
   where MAPID TOKEN                        token position and area
   dist MAPID A B                           distance in squares (diagonals = 1, R18); A/B = token or x,y
   los MAPID A B                            line of sight between A and B
+  day [+N | set N]                         campaign day (travel adds 1 itself); prints cycle day and moon day
+  moon [--day N] | moon special NAME|off  moon phase and EN adjustment (HOUSE); `travel ... --moon` applies it
+  hunt new NAME MARKS | day NAME [--adv] | show   a hunt as a Mark clock (W&W p.16-17, adapted)
   log [N]                                  last N log lines (default 20)
   export / import BLOB                     compact state for a SAVE (sealed half)
   reset                                    wipe state (asks nothing; be sure)"""
+
+
+# ---------------------------------------------------------------- calendar, moon, hunts (HOUSE additions, see Amendment 1 notes)
+MOON = [  # (first day, last day) in a 30-day month, name, EN adjustment. HOUSE mapping of W&W p.20-21 (1-in-6 .. 5-in-6) onto Crows EN
+    (0, 1, "New Moon", 2), (2, 6, "Waxing Crescent", 1), (7, 8, "Waxing Half", 0), (9, 13, "Waxing Gibbous", -1),
+    (14, 15, "Full Moon", -2), (16, 20, "Waning Gibbous", -1), (21, 22, "Waning Half", 0), (23, 27, "Waning Crescent", 1), (28, 29, "New Moon", 2)]
+def calday(s):
+    return s.setdefault("cal", {"day": 0})["day"]
+def moon_phase(s, day=None):
+    d = (calday(s) if day is None else day) % 30
+    name, adj = next((n, a) for lo, hi, n, a in MOON if lo <= d <= hi)
+    sp = s.get("moon_special")
+    if sp:
+        name += f" ({sp})"
+        if sp.lower().startswith("blood"): adj -= 2
+    return d, name, adj
+def hunt_roll(s, name, adv):
+    h = s.setdefault("hunts", {}).get(name) or raise_(f"no hunt {name}; hunt new {name} MARKS")
+    r1 = R.randint(1, 6); r2 = R.randint(1, 6) if adv else None
+    r = max(r1, r2) if adv else r1
+    e = lookup("wyrd_hunt_track", r)
+    h["days"] += 1
+    gain = 2 if "Double marks" in e["text"] else 1 if "Mark" in e["text"] else 0
+    h["marks"] += gain
+    out(s, f"hunt {name} day {h['days']} · d6{' (best of ' + str(r1) + ',' + str(r2) + ')' if adv else ''}={r} → {e['text']} · marks {h['marks']}/{h['need']}")
+    if "Major setback" in e["text"]: roll_table(s, "wyrd_hunt_major")
+    if "inor setback" in e["text"]: roll_table(s, "wyrd_hunt_minor")
+    if "boon" in e["text"]: roll_table(s, "wyrd_hunt_boon")
+    if h["marks"] >= h["need"] and not h.get("done"):
+        h["done"] = True
+        out(s, f"hunt {name}: marks reached, the quarry is found; the party plans how to take it on")
 
 def opt(args, name, default=None, flag=False):
     if name in args:
@@ -298,12 +336,14 @@ def main(argv):
 
     elif cmd == "travel":
         pace = a[0]; base = {"slow": (8, 1), "normal": (7, 2), "fast": (6, 3)}.get(pace) or raise_("pace: slow|normal|fast")
-        en = min(10, base[0] + int(opt(a, "--en-adj", 0)))
+        mo = moon_phase(s)[2] if opt(a, "--moon", flag=True) else 0
+        en = max(2, min(10, base[0] + int(opt(a, "--en-adj", 0)) + mo))
         tv = s["travel"]
+        s.setdefault("cal", {"day": 0})["day"] += 1
         if opt(a, "--lost", flag=True): tv["lost"] = True
         tid = opt(a, "--table", "travel_encounters")
         tv["day"] += 1; tv["hexes"] += base[1]
-        out(s, f"travel day {tv['day']} · {pace} · {base[1]} hex{'es' if base[1] > 1 else ''} · EN {en}")
+        out(s, f"travel day {tv['day']} · {pace} · {base[1]} hex{'es' if base[1] > 1 else ''} · EN {en}{' (moon ' + format(mo, '+d') + ')' if mo else ''}")
         r = R.randint(1, 10)
         hit = r >= en
         out(s, f"travel encounter d10={r} vs EN {en} → {'ENCOUNTER NOW' if r == 10 else 'encounter today, Ref picks when' if hit else 'none'}")
@@ -311,6 +351,30 @@ def main(argv):
         if tv["lost"]:
             dirs = [lookup("lost_direction", R.randint(1, 6))["text"] for _ in range(base[1])]
             out(s, f"lost drift, day {tv['day']}: {' → '.join(dirs)} (count clockwise from north, R27)", sealed=True)
+
+    elif cmd == "day":
+        c = s.setdefault("cal", {"day": 0})
+        if a and a[0] == "set": c["day"] = int(a[1])
+        elif a: c["day"] += int(a[0])
+        out(s, f"campaign day {c['day']} · village cycle day {c['day'] % 10 + 1}/10 · moon day {c['day'] % 30}")
+
+    elif cmd == "moon":
+        if a and a[0] == "special":
+            s["moon_special"] = None if len(a) < 2 or a[1] == "off" else " ".join(a[1:])
+        dv = opt(a, "--day")
+        d, name, adj = moon_phase(s, int(dv) if dv is not None else None)
+        out(s, f"moon day {d}/30 · {name} · travel EN {adj:+d} (use travel --moon or --en-adj {adj}; HOUSE mapping)" + (" · Blood Moon doubles numbers encountered" if "Blood" in name else ""))
+
+    elif cmd == "hunt":
+        sub = a[0]
+        if sub == "new":
+            s.setdefault("hunts", {})[a[1]] = {"need": int(a[2]), "marks": 0, "days": 0}
+            out(s, f"hunt {a[1]} begun · {a[2]} marks needed (W&W p.16 guide: mundane 1-2, uncommon 3-9, rare 10-20, mythic 24+)")
+        elif sub == "day":
+            hunt_roll(s, a[1], opt(a, "--adv", flag=True))
+        elif sub == "show":
+            for n, h in s.get("hunts", {}).items(): print(f"{n}: marks {h['marks']}/{h['need']} · days {h['days']}{' · FOUND' if h.get('done') else ''}")
+            return
 
     elif cmd == "found":
         s["travel"]["lost"] = False; out(s, "the group knows where it is again")
