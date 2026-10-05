@@ -19,9 +19,15 @@ for f in sorted(glob.glob(os.path.join(src, "*.html"))):
     t = re.sub(r"\n\s*\n+", "\n", t)
     # the books print "© 2026 MCDM Productions LLC" then the page number at each page end
     parts = re.split(r"© 2026 MCDM Productions LLC\s*\n\s*(\d+)\s*\n", t)
-    res, page = [], 1
+    res, prev = [], 0
     for i in range(0, len(parts), 2):
-        res.append(f"===== PDFPAGE {page} =====\n{parts[i].strip()}\n")
-        if i + 1 < len(parts): page = int(parts[i + 1]) + 1
+        text = parts[i].strip()
+        last = int(parts[i + 1]) if i + 1 < len(parts) else prev + 1
+        # a page without a printed footer is folded into the next block: give that block a marker for EVERY page it covers
+        for pg in range(prev + 1, max(last, prev + 1) + 1):
+            note = f"  (pages {prev + 1}-{last} share this text: footer not printed)" if last > prev + 1 else ""
+            res.append(f"===== PDFPAGE {pg} ====={note}\n{text}\n")
+        prev = max(last, prev + 1)
+    n = len(res)
     open(os.path.join(out, NAMES[m.group(1)]), "w").write("\n".join(res))
-    print(NAMES[m.group(1)], len(res), "pages")
+    print(NAMES[m.group(1)], n, "markers")
