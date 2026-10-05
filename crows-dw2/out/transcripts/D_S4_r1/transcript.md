@@ -273,3 +273,88 @@ Ref: initiative d10=4 → enemies act first · Ref: TEST · razorback 1 claws ·
 
 Cellar, storeroom (area 2), combat round 7 done · DT 1 (rooms 2 of 5) · Stamina 2 · wounds 0/10 · AD 0 · torch lit · two razorbacks hold the arch with their spines drawn, and one more hit will open you to wounds.
 
+## Turn 11
+[PLAYER] PLAYER [11/14]: I engage whatever is in the way, sword first.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [11/14]: I engage whatever is in the way, sword first.
+(roll on request: attack / Trade Blows)
+$ python3 engine/engine.py init
+Ref: initiative d10=9 → crows act first
+$ python3 ledger.py attack --b 1 --why "sword vs razorback 2, torch dim"
+ATTACK sword vs razorback 2, torch dim · S+3 · b · [3,3]=7(incl -2) → T1 · MISS
+STATUS Stamina 2 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2   (razorback 2 counter, claws T2 = 2 dam)
+LEDGER: took 2 (AD 0→0, Stamina 2→0, wounds 0→0)
+STATUS Stamina 0 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "razorback 2 claws"
+Ref: TEST · razorback 2 claws · +2 · [1,1]=4 → T1 DOOM
+$ python3 engine/engine.py test 2 --why "razorback 3 spine"
+Ref: TEST · razorback 3 spine · +2 · [5,9]=16 → T2
+(razorback 2 claws doom = miss, Mara's counter at T3: sword 7 + S 3 = 10 dam, razorback 2 Stamina 10 -> destroyed)
+$ python3 ledger.py take 1   (razorback 3 spine T2)
+LEDGER: took 1 (AD 0→0, Stamina 0→0, wounds 0→1)
+STATUS Stamina 0 · AD 0 · wounds 1/10 · uses Slashing 3 · UD torch 1
+[REF]
+Your sword goes wide and the nearest razorback answers with a rake across your forearm that drops your Stamina to nothing. You feel the cold come into the cut. It rears for a killing blow and the claws hit only the wall, the swing so wild it throws its own spine out of line. Your counter finds the gap and the sword takes it through the neck. The skull rolls into the black pool and the body sags into the arch, bones chattering and still. The last razorback does not hesitate. Its spine flicks across the gap and catches you above the hip, and the wound is deep and real, no armor, no breath left to take it. Something under your cloth is warm and spreading. One razorback left, and it is climbing over the fallen.
+
+Ref: initiative d10=9 → crows act first · Ref: TEST · razorback 2 claws · +2 · [1,1]=4 → T1 DOOM · Ref: TEST · razorback 3 spine · +2 · [5,9]=16 → T2
+
+Cellar, storeroom (area 2), combat round 8 done · DT 1 (rooms 2 of 5) · Stamina 0 · wounds 1/10 · AD 0 · torch lit · the last razorback comes over its fallen kin with its claws lifted.
+
+## Turn 12
+[PLAYER] PLAYER [12/14]: I press the nearest.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [12/14]: I press the nearest.
+$ python3 engine/engine.py init
+Ref: initiative d10=3 → enemies act first
+$ python3 ledger.py attack --b 1 --why "sword vs razorback 3, torch dim"
+ATTACK sword vs razorback 3, torch dim · S+3 · b · [10,9]=20(incl -2) → T3 CRIT · HIT 10 dam
+STATUS Stamina 0 · AD 0 · wounds 1/10 · uses Slashing 3 · UD torch 1
+(enemies first)
+$ python3 engine/engine.py test 2 --why "razorback 3 claws"
+Ref: TEST · razorback 3 claws · +2 · [6,7]=15 → T2
+$ python3 ledger.py take 2   (claws T2)
+LEDGER: took 2 (AD 0→0, Stamina 0→0, wounds 1→3)
+STATUS Stamina 0 · AD 0 · wounds 3/10 · uses Slashing 3 · UD torch 1
+(Mara's hit lands after: 10 dam = razorback 3 Stamina 10 -> destroyed. Fight cleared: ruled as the time block that ends DT 1.)
+DT 1 ends:
+$ python3 ledger.py ud torch
+UD torch · [4] → 1→1
+STATUS Stamina 0 · AD 0 · wounds 3/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=6 vs EN 9 → none
+DT 2 begins:
+$ python3 engine/engine.py roll d6 --why "DT2 length (rooms)"
+Ref: d6 [6]=6 · DT2 length (rooms)
+[REF]
+The last razorback strikes first. Its claws open you across the belly and you fold around the pain, the wound filling your pack with something that is not gear. Then you are inside its reach, and your sword goes up through the jaw and into the skull in one stroke. The creature jerks once. Its spine gutters out and it drops across the chest in a slither of gray fluid, rattling to rest. The storeroom is quiet but for the dripping seam and your own breath. Three still shapes lie across the stone, the arch behind them empty. The torch still burns, though weaker, and the cold you felt in your cuts has not gone away. A long minute passes. Whatever else is down here has not come to look.
+
+Ref: encounter d10=6 vs EN 9 → none
+
+Cellar, storeroom (area 2) · DT 2 (rooms 6) · Stamina 0 · wounds 3/10 · AD 0 · torch lit · the arch lies open and quiet, and only the dripping answers.
+
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [13/14]: I finish it and look for the exit.
+[REF]
+Nothing in the room is left to finish, and the exit is through the arch, where the razorbacks came from. You step over the chest's burst iron and past the coin-pitted ash, and through into the crypt hall. Pillars rise out of the dark in two rows, thick and fluted, their bases carved with a pattern of wheat and skulls. Between them the floor is churned with claw-marks and scattered bone, but nothing stirs. The torch shows an open aisle ahead, running between the pillars toward a squared doorway at the far end, low and narrow, with fresh scratches on its lintel. Behind a pillar to your left lies a heap of rags that was a person once. The stench here is richer and sweeter than it was on the stair.
+
+Cellar, crypt hall (area 3) · DT 2 (rooms 1 of 6) · Stamina 0 · wounds 3/10 · AD 0 · torch lit · the aisle runs straight to a low doorway, and the rags beside the pillar have a boot sticking out of them.
+
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [14/14]: I take what I can carry and head for the stair.
+(No tool rolls: the retrieval of the 60 gc is a plain task with time and no contest; the Player's script ends here.)
+[REF]
+The rags beside the pillar hold only a rotted belt and a boot with no foot in it, nothing a crow can carry. You go back the way you came, through the arch and over the razorbacks. In the storeroom you kneel by the black pool and sift the ash and the silt with your free hand. The coins are there, green and slick, sixty gold crowns pulled out one by one from the muck, and they weigh in your fist like a promise of a bed. You pocket them. The torch gutters but holds. You climb the clawed stair on shaking legs, cold water running from your hem, past the landing and its gouged frame. Daylight lies in a gray bar across the top step, and the door of the chapel hangs open. Far below, behind you in the dark, something clicks twice, patiently, and stops.
+
+Cellar, stair to the chapel (area 1) · DT 2 (rooms 3 of 6) · Stamina 0 · wounds 3/10 · AD 0 · torch lit · the gray door stands open above you and the clicking below has gone quiet.
+
+DONE
+Ran 14 turns (script ended at 14/14; 8 combat rounds against three razorbacks in DT 1, DT 2 under way, Mara alive at Stamina 0, wounds 3/10).
