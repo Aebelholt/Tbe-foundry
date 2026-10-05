@@ -215,3 +215,35 @@ Three more rattle behind it, spines rising. Her torch gutters behind her. The re
 Ref: initiative d10=1 → enemies act first | Ref: TEST · U3 claws · +2 · [1,6]=9 → T1 | Ref: TEST · U4 spine · +2 · [4,2]=8 → T1 | Ref: TEST · U5 spine · +2 · [1,7]=10 → T1 | Ref: TEST · U6 spine · +2 · [8,7]=17 → T3 | ATTACK attack · S+3 · - · [6,7]=16 → T2 · HIT 7 dam
 
 Corridor cellar · Round 6 · Stamina 0 · wounds 2/10 · AD 0 · laceration 1 · torch lit (1 UD) · four razorbacks left, one nearly split
+
+## Turn 7
+[PLAYER] PLAYER [8/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 engine/engine.py init
+Ref: initiative d10=1 → enemies act first
+$ python3 engine/engine.py test 2 --why "U3 claws" (and U4-U6 spine; in sequence)
+Ref: TEST · U3 claws · +2 · [9,8]=19 → T3
+Ref: TEST · U4 spine · +2 · [1,10]=13 → T2
+Ref: TEST · U5 spine · +2 · [2,6]=10 → T1
+Ref: TEST · U6 spine · +2 · [8,10]=20 → T3
+$ python3 ledger.py take 4
+LEDGER: took 4 (AD 0→0, Stamina 0→0, wounds 2→6)
+STATUS Stamina 0 · AD 0 · wounds 6/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 1
+LEDGER: took 1 (AD 0→0, Stamina 0→0, wounds 6→7)
+STATUS Stamina 0 · AD 0 · wounds 7/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 0→0, wounds 7→10) · CROW DEAD
+STATUS Stamina 0 · AD 0 · wounds 10/10 · uses Slashing 3 · UD torch 1
+[REF]
+The wounded razorback goes first and goes all the way. Its claws rake down through the last of her, deep, and the hooked tips catch and drag. Then a spine takes her in the throat of her breath, and another in the chest, and the corridor tilts.
+
+Mara's sword is still lifting when her knees fold. The stone is cold against her cheek. The torch behind her gutters and gutters, throwing her shadow long across the flags, and the dead step over her without a sound, their jaws working, their glow turning toward the light.
+
+The cellar goes quiet but for the dry click of their feet. The torch hisses once and holds. In the doorway behind her there is nothing at all but dark.
+
+Ref: initiative d10=1 → enemies act first | Ref: TEST · U3 claws · +2 · [9,8]=19 → T3 | Ref: TEST · U4 spine · +2 · [1,10]=13 → T2 | Ref: TEST · U5 spine · +2 · [2,6]=10 → T1 | Ref: TEST · U6 spine · +2 · [8,10]=20 → T3
+
+Corridor cellar · Round 7 · Stamina 0 · wounds 10/10 · AD 0 · Mara is dead · four razorbacks stand over her, the torch still burning
+DONE
+Ran 7 turns; Mara died in round 7 (10/10 wounds). Two razorbacks destroyed (U1, U2); U3 at 3 Stamina; U4, U5, U6 unhurt.

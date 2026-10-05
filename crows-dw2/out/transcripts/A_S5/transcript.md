@@ -199,3 +199,24 @@ STATUS Stamina 4 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
 [REF] The blade comes down through the razorback's spine and it stops with a dry crack, the claws falling slack from your boot. Two are down. The corpses lie crossed in the corridor mouth, and for a moment the passage is a plug of dead flesh. Beyond them four shapes come to the edge of the light and stand there in a column, spines flexed, heads low, and none of them is in a hurry. Your breath is loud. The torch gutters.
 
 Status: Cellar corridor mouth · DT 1 · Stamina 4 · wounds 0/10 · torch lit and burning low, dim light · four razorbacks stand at the edge of the light, spines raised, and the nearest has begun to climb the bodies.
+
+## Turn 12
+[PLAYER] PLAYER [13/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack --b 1
+ATTACK attack · S+3 · b · [6,3]=10(incl -2) → T1 · MISS
+STATUS Stamina 4 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U3 claws vs Mara"
+Ref: TEST · U3 claws vs Mara · +2 · [1,9]=12 → T2
+$ python3 engine/engine.py test 2 --why "U4 spine vs Mara"
+Ref: TEST · U4 spine vs Mara · +2 · [6,9]=17 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 4→1, wounds 0→0)
+STATUS Stamina 1 · AD 0 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 0→0, Stamina 1→0, wounds 0→2)
+STATUS Stamina 0 · AD 0 · wounds 2/10 · uses Slashing 3 · UD torch 1
+[REF] The fresh razorback is over the bodies before your blade comes round, and the cut meets only its raised forearm, glancing. Its claws rip down your front. A spine from the column behind it hits you square in the chest and sticks, and something gives inside you. Your legs go loose. The corridor tilts and the torch light smears across the flagstones. You are standing in your own blood and it is warm, and the ticking in the dark has started up again.
+
+Ref: TEST · U3 claws vs Mara · +2 · [1,9]=12 → T2 | Ref: TEST · U4 spine vs Mara · +2 · [6,9]=17 → T3
+Status: Cellar corridor mouth · DT 1 · Stamina 0 · wounds 2/10 · torch lit and burning low, dim light · the fresh razorback is against you, claws already rising, and your legs are going.

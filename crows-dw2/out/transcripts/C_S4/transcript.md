@@ -140,3 +140,16 @@ Ref: TEST · Undead A3 spine vs Mara · +2 · [7,10]=19 → T3 | Move: Take some
 
 Crypt hall · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor, four paces off, still lit · The razorback pins you against the pillar and its twin is behind you in the dark.
 
+## Turn 10
+[PLAYER] PLAYER [10/14]: I go through the next door.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [10/14]: I go through the next door.
+$ python3 ledger.py test S --why "shoulder free of the pin and drive through the far arch"
+TEST shoulder free of the pin and drive through the far arch · S+3 · - · [4,7]=14 → T2
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(T2 cost chosen: dropped gear + position. scene: A2 10/10 engaged hand; A3 10/10 engaged close; both at her back)
+[REF] You throw your weight against the claws and the pillar and something gives, the razorback's grip breaking on your armor. You tear free and drive for the far arch, and you reach its mouth with two paces gained and cold bone-smell in your face. You do not reach it clean. The torch is still lying where it fell, behind you, a small yellow fire on the flags, and every step into the arch is a step out of its reach. At your back the water slaps twice, hard, and both razorbacks are on you, one at your shoulder and one a pace behind, spines raised and clicking. Beyond the arch the dark is total except where your own shadow runs ahead of you into it, long and thin, over the first rows of shelved bones.
+
+Crypt hall, far arch · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch on the floor behind you, still lit · Two razorbacks at your back, an unlit ossuary ahead, your torch's light fading behind.
+

@@ -242,3 +242,24 @@ It is not dead. It stands with its head cocked at a wrong angle, and the three r
 Ref: TEST · longclaw claws · +2 · [6,3]=11 → T1
 
 Where: cellar, side vault · DT 3 (rooms 0/4) · Stamina 17 · wounds 0/10 · torch lit · the mauled longclaw stands between you and the stair, razorbacks at your back and flanks
+
+## Turn 14
+[PLAYER] PLAYER [14/14]: I take what I can carry and head for the stair.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [14/14]: I take what I can carry and head for the stair.
+$ python3 ledger.py attack --why "Trade Blows vs longclaw blocking stair"
+ATTACK Trade Blows vs longclaw blocking stair · S+3 · - · [8,3]=14 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 16 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "longclaw claws"
+Ref: TEST · longclaw claws · +2 · [1,8]=11 → T1
+[REF]
+Nothing in the vault is worth the carrying, only coffin lids and bone dust, so you go straight for the stair and the leader steps into your road. You cut it down where it stands. Your blade takes it across the knee and then the neck, and the longclaw folds onto the flagstones without a sound, the black hooks along its back clattering like dropped knives. Its dying swipe goes wide and tears a gouge in a coffin lid.
+
+The path to the stair is open for as long as it takes to cross it. The three razorbacks hem you in, one on each flank and one at your back, close enough to touch. Cold air spills down the stair, smelling of rain and open sky.
+
+Ref: TEST · longclaw claws · +2 · [1,8]=11 → T1
+
+Where: cellar, side vault · DT 3 (rooms 0/4) · Stamina 17 · wounds 0/10 · torch lit · the stair is a dozen steps away and three razorbacks are on you
+DONE
+Ran 14 turns (script ended; Mara alive, 3 razorbacks remain, area 6 not yet reached).

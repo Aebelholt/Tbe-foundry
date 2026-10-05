@@ -150,3 +150,17 @@ You lunge into the gap and your blade goes in under its ribs, a shuddering, grin
 
 Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 8 · wounds 0/10 · torch lit, UD 1 · the longclaw swaying and nearly done, the razorback at your shoulder.
 
+## Turn 13
+[PLAYER] PLAYER [13/14]: I finish it and look for the exit.
+[TOOLS]
+$ python3 ledger.py move S --why "Trade Blows vs longclaw (finish)"
+MOVE Trade Blows vs longclaw (finish) · S+3 · - · [2,2]=7 → T2
+STATUS Stamina 17 · AD 8 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 8→5, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 5 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You throw your weight behind the sword and drive it through the longclaw's breastbone. It hangs on the blade a heartbeat, its claws raking your armor one last time as it dies, then slides off into the dark water and does not move. The plate along your ribs is split and buckled and will not take much more. Over the corpse you see the exit. A low door on the vault's far wall, its frame cracked, with the first grey steps of a stair rising beyond. The razorback does not give you time to look at it long. It has its spines pointed at your face and its crouch is a coiled spring.
+
+Side vault · DT 1 (rooms 5 of 6) · Stamina 17 · AD 5 · wounds 0/10 · torch lit, UD 1 · the longclaw is down, the exit stair stands open beyond it, and the razorback is about to spring.
+
