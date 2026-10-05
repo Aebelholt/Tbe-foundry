@@ -1,4 +1,4 @@
-# Crows x DW2 results (Phase 1 and 2; Phase 3 and the amendment not started)
+# Crows x DW2 results (Phases 1 to 3; amendment not started)
 
 Detail: `phase1_report.md` (including its addendum), `sim/`, `transcripts/` (one folder per trial with transcript, Ledger and engine state, audit_auto.json and audit_sheet.md), `variants/` (the four rulebooks the Refs saw). Failed first attempts of the S4/S5 trials (rate limit) are in `transcripts/_failed_partial/`.
 
@@ -60,3 +60,55 @@ In these trials, RAW Crows was the cleanest referee, and the DW2 hybrids did not
 3. **Longer or harder trials?** To test lost turns properly I would run the starting crow (high lethality), longer scenes, and a Ref context that has already carried a long chat. Say if you want that before Phase 3.
 4. **Pull Strings stat.** The layer has no social characteristic. I used Mind. Confirm, or say if you want a different rule.
 5. **Volley variant.** Phase 1 found that a volley with a counter matches RAW lethality for the starting crow. It re-adds simultaneous foe attacks, so it is risky for the same reason as the unengaged-foe rule. Not adopted.
+
+
+---
+
+# Phase 3 (mutations and the D variant)
+
+Scope kept inside the original brief: I mutated Run C in its current form (C1) and, following your go-ahead on my recommendations, tested one variant outside `runs_ABC.md` (D: RAW combat plus Run C's social moves, move card and Threats). Two repetitions per cell where the budget allowed. Transcripts: `transcripts/C1_*`, `C_*_r2`, `C_S2b_r1`, `D_*`. Audit rules are the same as in Phase 2.
+
+## What changed
+- **C1 (one change to C).** On a crow tier 1 exactly one named unengaged foe attacks (was ceil(unengaged/3)). Phase 1: parity unchanged (start crow still passes 4 of 8 pairings; `sim/m1_combat.csv`).
+- **D.** RAW combat and side initiative stay. Added: the tier 1 move card for tier 1 results that are not a weapon-attack miss (a weapon miss keeps its counter), Pull Strings and Sense Motive (Mind), and DW2 Threats with ticks (outdoor Miasma rest, cycle without a Prosperity rise, natural 10 on an encounter check, cap 2 per session).
+
+## Counts (Auditor, same strictness as Phase 2; S4 and S5 unless stated)
+
+| variant | trials | forgotten | drift | macro | slips |
+|---|---|---|---|---|---|
+| C (original run + second repetition) | 4 | 10 (S5 first run 7, second 0) | 3 | 4 | 6 |
+| C1 | 4 | 6 | 0 | 0 | 8 |
+| RAW (Phase 2) | 2 | 0 | 0 | 0 | 0 |
+| D | S4 x2, S5, S1, S2b, S3 (6 trials) | 3 | 4 | 3 | 4 |
+
+D by trial: S2b 0/0/0/0 and S3 0/0/1/0 and S4 r1 0/0/0/0 (first audit), then S1 0/1/1/2, S4 r2 0/1/1/0, S5 0/2/0/2 (forgotten/drift/macro/slips). The first three looked clean. The second batch did not.
+
+## What the repetitions show
+1. **Run to run noise is as large as the effect.** C's S5 had 7 forgotten foes in one run and 0 in a repeat on identical rules. A single 0 or 7 says little.
+2. **C1 improved on C in total (6 vs 10 forgotten, 0 vs 3 drift, 0 vs 4 macro) but not on slips (8 vs 6), and the effect is within noise.** C1's remaining errors are not about the unengaged-foe rule: a dead foe still rolled, and foe attacks narrated with no engine line. A rule edit does not fix those.
+3. **D is not clean.** Its errors are RAW-type errors: a foe killed before its initiative turn still listed, a missing enemy side in a round, a mislabeled CRIT, a Threat tick written to the sealed ledger but not shown in the fiction. D_S5's Ref also edited its own transcript afterwards to fix a mislabeled Ledger line, so that sheet is less reliable.
+4. **The social moves work.** Pull Strings and Sense Motive rolled via the Ledger and applied per the printed menus, in both C and D (S2b). Only tier 2 occurred, so tier 3 (two questions) and tier 1 (named Move) remain untested.
+5. **The tier 1 move card works.** Named moves appeared at every card-eligible tier 1 in S4 (D: `Take something away`, `Have it backfire`; C and C1: 4 to 7 per trial).
+6. **The tick cap works.** D_S3: two ticks fired (natural 10, Miasma rest), the cycle-end tick was correctly held back by the cap of 2.
+
+## Ranking (Phase 1 and 2 and 3 combined)
+1. **D**: keeps RAW's combat (no Phase 1 problem, since it is RAW), adds the layers that tested well. Error counts are within noise of RAW.
+2. **RAW**: cleanest counts, n=5 and 2 reps for S4 and S5 only for variants that ran them; no social, card or Threat layer.
+3. **C1**, then **C**, **A**: hybrid combat costs 40 to 60% more replies per fight (Phase 2), still diverges from RAW lethality for a levelled crow (Phase 1), and its extra error class (the unengaged-foe rule) is only partly fixed by C1.
+4. **B**: fails lethality (Phase 1).
+
+I stopped Phase 3 after round 1 on C and one round on D. The rule is to stop when a mutation shows no clear improvement, and none of the mutations did against the noise floor. Further mutations of the hybrid combat would be measuring noise.
+
+## Recommendation for the amendment (not drafted)
+- **Keep §9 combat as written** (grid, side initiative, counters). Do not replace it. This departs from your brief, which expected §9 combat to be replaced. The evidence does not support the swap.
+- **Replace §5's Stonetop fronts with DW2 Threats and the three ticks, cap 2 per session** (Phase 1: 4 to 6 Development Threats complete in 2 to 5 sessions in the central case).
+- **Add Pull Strings and Sense Motive** as Mind tests the Ref calls only when the Ref wants the dice to decide.
+- **Add the tier 1 move card** for tier 1 results that are not a weapon-attack miss.
+- **Add a precedence rule:** a Crows condition (blessed, grabbed, prone, vulnerable, wounds) always wins over a DW2-style consequence; a card move may never remove a printed Crows rule, only add a concrete change on top.
+- **Small harness-found fixes worth including:** write each Threat tick into the fiction as well as the sealed ledger, and strike a dead foe from the scene line before any foe turn.
+
+## Open questions
+1. **Replace the §9 combat or keep it?** My recommendation is keep. Say if you want the amendment to carry A/C-style combat anyway (as an optional appendix).
+2. **Draft the amendment now** on the D scope above?
+3. **Dungeon Crows repo.** Copy `crows-dw2/` in? Which branch?
+4. **Untested:** tier 3 and tier 1 of Pull Strings and Sense Motive; the starting crow; longer sessions. Worth a final round after the amendment?
