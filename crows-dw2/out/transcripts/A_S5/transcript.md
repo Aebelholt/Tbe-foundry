@@ -37,3 +37,91 @@ STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
 
 ATTACK attack · S+3 · - · [8,8]=19 → T3 · HIT 10 dam
 Cellar corridor mouth · DT 1 (rooms 5) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · one razorback down, the next stepping into your reach
+
+## Turn 4
+[PLAYER] PLAYER [4/9]: I hit the nearest one again.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [3,8]=14 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U2 claws"
+Ref: TEST · U2 claws · +2 · [2,5]=9 → T1
+[REF] Your edge opens the second razorback from hip to ribs and it staggers, grey ichor pooling at its feet. Its answering swipe goes wide, claws screeching off the wall beside your head and showering you with grit. It is hurt badly, one leg buckling, but the thing still drives forward, jaw gaping, a dry rasp coming from somewhere deep in its chest. Over its shoulder the column has begun to spread. One of the far ones crouches, the spines on its back flaring, and you realize the bone ridges are aimed straight at you.
+
+ATTACK attack · S+3 · - · [3,8]=14 → T2 · HIT 7 dam / Ref: TEST · U2 claws · +2 · [2,5]=9 → T1
+Cellar corridor mouth · DT 1 (rooms 5) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · the second razorback reels but holds, a spined one crouching behind it
+
+## Turn 5
+[PLAYER] PLAYER [6/9]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [1,2]=6 → T1 DOOM · MISS
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U2 claws"
+Ref: TEST · U2 claws · +2 · [7,1]=10 → T1
+$ python3 engine/engine.py test 2 --why "U3 spine"
+Ref: TEST · U3 spine · +2 · [1,2]=5 → T1 DOOM
+$ python3 engine/engine.py test 2 --why "U4 spine"
+Ref: TEST · U4 spine · +2 · [2,5]=9 → T1
+[REF] Your swing goes wrong. Your boot skids on the slick of grey ichor and the blade bites nothing but air, dragging you half a step off the mouth of the corridor and out of your set stance. The wounded razorback lunges into the gap and rakes at you, but its claws slap short of your chest. Spines whistle out of the dark behind it, one clipping the stone by your ear, another skittering off your pauldron with a flat tick and falling away. Neither finds flesh. Your torch gutters at your back, and the shadow of the thing in front of you leaps tall across the wall, claws spread. The two spined ones at the rear are crouched and ready to loose again.
+
+Ref: TEST · U2 claws · +2 · [7,1]=10 → T1 / Ref: TEST · U3 spine · +2 · [1,2]=5 → T1 DOOM / Ref: TEST · U4 spine · +2 · [2,5]=9 → T1
+Cellar corridor mouth · DT 1 (rooms 5) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · the wounded razorback is in your face, spines coming from the dark
+
+## Turn 6
+[PLAYER] PLAYER [7/9]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [2,5]=10 → T1 · MISS
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U2 claws"
+Ref: TEST · U2 claws · +2 · [7,1]=10 → T1
+$ python3 engine/engine.py test 2 --why "U3 spine"
+Ref: TEST · U3 spine · +2 · [6,2]=10 → T1
+$ python3 engine/engine.py test 2 --why "U5 spine"
+Ref: TEST · U5 spine · +2 · [6,9]=17 → T3
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 22→19, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] The razorback ducks under your stroke and your edge only scrapes the wall. It claws back, and again the swipe finds nothing but empty air. Then a spine hisses out of the dark and slams into your chest plate with a bright crack, hard enough to punch the wind from you and rattle the metal. It does not pierce, but the dent is deep and you feel the shock to the bone. Another spine sings past your cheek. The column behind has spread along the corridor now, three of them in a loose fan, bone ridges flared, all of them aimed at the one warm thing in the light. The wounded one in front of you drools grey and keeps coming.
+
+Ref: TEST · U2 claws · +2 · [7,1]=10 → T1 / Ref: TEST · U3 spine · +2 · [6,2]=10 → T1 / Ref: TEST · U5 spine · +2 · [6,9]=17 → T3
+ATTACK attack · S+3 · - · [2,5]=10 → T1 · MISS / LEDGER: took 3 (AD 22→19, Stamina 17→17, wounds 0→0)
+Cellar corridor mouth · DT 1 (rooms 5) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · the wounded razorback crowds you, spines flaring from the dark
+
+## Turn 7
+[PLAYER] PLAYER [8/9]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [7,4]=14 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(no foe attack rolled: the engaged foe, U2 at 3 Stamina, was destroyed by the 7 dam hit)
+[REF] This time the blade finds the gap beneath the razorback's ribs and rips upward. The thing folds around the steel, claws scrabbling once at your vambrace, then slides off the edge and collapses across its fellow's remains. For a breath the corridor mouth is clear. The torch pops behind you and light spills out over two heaps of ruined bone. Four shapes remain, close now, picking their way over the stone with spines raised and heads low, no longer bunched, no longer hesitating. The nearest is only a few strides away. It opens its jaws and the dry click of its teeth carries down the cellar.
+
+ATTACK attack · S+3 · - · [7,4]=14 → T2 · HIT 7 dam
+Cellar corridor mouth · DT 1 (rooms 5) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · four razorbacks left, advancing over the dead
+
+## Turn 8
+[PLAYER] PLAYER [9/9]: I finish the last of them and breathe.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [5,2]=10 → T1 · MISS
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "U3 claws"
+Ref: TEST · U3 claws · +2 · [10,7]=19 → T3
+$ python3 engine/engine.py test 2 --why "U4 spine"
+Ref: TEST · U4 spine · +2 · [6,5]=13 → T2
+$ python3 ledger.py take 4
+LEDGER: took 4 (AD 19→15, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 15 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 15→13, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 13 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] You swing for the finish, but the next razorback is not the weakened thing you cut down. It rolls inside the arc, and your blade clangs off the stone. Its claws come back hard across your breastplate, tearing a bright seam in the metal, and a second spine lands a moment later with a dull thump against your ribs, rattling you. Nothing has broken through, but the armor is chewed and ringing now. And you cannot finish the last of them, because there are still four, ragged and low, their dry jaws clicking as they fan out over the bone-heap. The nearest is close enough that its breath stinks of old earth.
+
+ATTACK attack · S+3 · - · [5,2]=10 → T1 · MISS / Ref: TEST · U3 claws · +2 · [10,7]=19 → T3 / Ref: TEST · U4 spine · +2 · [6,5]=13 → T2 / LEDGER: took 4 then 2 (AD 19→13, Stamina 17→17, wounds 0→0)
+Cellar corridor mouth · DT 1 (rooms 5) · Stamina 17 · wounds 0/10 · torch lit, 1 UD · four razorbacks left, one on you, the rest fanned behind
+
+(player.py after Turn 8 returned PLAYER [9/9] again, the same line as Turn 8: script exhausted, no new action. Stopped.)
+DONE
+8 turns run (script ended at its final line; 4 of 6 undead still live, Mara alive).

@@ -42,3 +42,83 @@ You cross the flooded storeroom with the chest at your elbow and leave it be. Pa
 
 Cellar, crypt hall (area 3) · DT 1 (rooms 4/5) · Stamina 17 · wounds 0/10 · torch lit (UD 1) · three razorbacks, the nearest within a lunge of you
 
+## Turn 6
+[PLAYER] PLAYER [6/14]: I finish them and move on to the next room.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [10,4]=17 → T3 · HIT 10 dam
+STATUS Stamina 17 · AD 25 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(razorback 1 dead; it never closed to act)
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [9,1]=13 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 25 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(razorback 2 at 3/10)
+$ python3 engine/engine.py test 2 --why "razorback 2 claws vs Mara"
+Ref: TEST · razorback 2 claws vs Mara · +2 · [1,2]=5 → T1 DOOM
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [10,4]=17 → T3 · HIT 10 dam
+STATUS Stamina 17 · AD 25 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(razorback 2 dead)
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [6,7]=16 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 25 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(razorback 3 at 3/10)
+$ python3 engine/engine.py test 2 --why "razorback 3 claws vs Mara"
+Ref: TEST · razorback 3 claws vs Mara · +2 · [6,6]=14 → T2
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 25→22, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [5,1]=9 → T1 · MISS
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(crow tier 1; no unengaged foe, Ref move is the engaged foe's attack)
+$ python3 engine/engine.py test 2 --why "razorback 3 claws vs Mara"
+Ref: TEST · razorback 3 claws vs Mara · +2 · [4,9]=15 → T2
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 22→19, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [10,5]=18 → T3 · HIT 10 dam
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(razorback 3 dead; hall clear. Mara moves into area 4, rooms 5/5, DT 1 ends)
+$ python3 ledger.py ud torch
+UD torch · [1] → 1→0 · EXPIRED
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 0
+$ python3 engine/engine.py enc --en 9
+Ref: encounter d10=6 vs EN 9 → none
+$ python3 engine/engine.py roll d6 --why "DT2 length (rooms)"
+Ref: d6 [3]=3 · DT2 length (rooms)
+[REF]
+The first razorback dies on your first stroke, split from shoulder to ribs, and the second comes in under your guard and gets only a shriek out of its ruined jaw before you take its head. The third rakes your armor twice, each blow a hard punch you feel through the leather, and you answer with a cut that drops it into the black water. Silence returns, and the stench of rot sits heavier than before. You wade on through a low archway into a narrow chamber lined with shelves of stacked bones, skulls grinning in rows. Your torch gutters, shrinks to a blue bead, and goes out. The dark here is complete, and the water ticks loudly in it.
+
+Ref: encounter d10=6 vs EN 9 → none
+
+Cellar, ossuary (area 4) · DT 2 (rooms 0/3) · Stamina 17 · AD 19 · wounds 0/10 · no light (torch spent) · total darkness, the shelves unseen around you
+
+## Turn 7
+[PLAYER] PLAYER [7/14]: I open the next door and go in.
+[TOOLS] (none; Mara feels her way through the ossuary to the far door and into area 5, DT 2 rooms 1/3. Scene line: longclaw Stamina 20/20 unengaged near; razorback Stamina 10/10 unengaged near. Mara is in darkness: double bane on attacks and searches)
+[REF]
+You grope along the shelves, knuckles knocking over bones that clatter and roll, and find the far door by the cold iron of its ring. It opens with a groan. The air beyond is colder and close, a vault with a low vaulted roof, and the dark in it is not empty. Something breathes in short wet sips ahead and to the left, and claws tick on stone, one set heavy and slow, the other quick and light. Water laps against a moving body. A longer rasp comes from deeper in, a sound like a blade drawn across a wet whetstone, and the heavy one stops dead, listening for you.
+
+Cellar, side vault (area 5) · DT 2 (rooms 1/3) · Stamina 17 · AD 19 · wounds 0/10 · no light, darkness · two clawed things within a few strides of you, and they can see you
+
+## Turn 8
+[PLAYER] PLAYER [8/14]: I search the room for treasure and the way on.
+[TOOLS]
+$ python3 ledger.py test M --b 2 --why "search the vault in darkness for treasure and the way on"
+TEST search the vault in darkness for treasure and the way on · M+0 · bb · [2,6]=8 → T1
+STATUS Stamina 17 · AD 19 · wounds 0/10 · uses Slashing 3 · UD torch 0
+(crow T1: Ref move; unengaged foes 2, ceil(2/3)=1 attacks: the longclaw. The search counts as a time block, DT 2 rooms 2/3)
+$ python3 engine/engine.py test 2 --why "longclaw claws vs Mara (Ref move after crow T1)"
+Ref: TEST · longclaw claws vs Mara (Ref move after crow T1) · +2 · [9,9]=20 → T3
+$ python3 ledger.py take 5
+LEDGER: took 5 (AD 19→14, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 14 · wounds 0/10 · uses Slashing 3 · UD torch 0
+[REF]
+You sweep your hands over the vault in the dark, over slick walls and cold niches that hold only dust and wet bone, and you find no edge of a door, no glint, nothing. The heavy claws stop ticking, and then they are very close. Something big drives into you from the left, a hook of raw force that crashes across your armor and shoves you off your feet and onto one knee in the black water. You smell rot breath, hear the long claws scrape the stone beside your head, and feel another hot rake of bone across the leather. The lighter thing is sliding around behind it, water lapping at its legs.
+
+Ref: TEST · longclaw claws vs Mara · +2 · [9,9]=20 → T3
+
+Cellar, side vault (area 5) · DT 2 (rooms 2/3) · Stamina 17 · AD 14 · wounds 0/10 · no light, darkness · the longclaw on top of you, the razorback circling to your flank
+

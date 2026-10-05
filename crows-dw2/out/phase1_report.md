@@ -97,3 +97,40 @@ Across the 972-point sweep (DTs per session 4/6/10, Miasma rest chance 0.5/1.0, 
 1. Upload `crows-dw2/` (layer, engine, runs_ABC.md, Final Alpha) so Phase 2 uses your real rules and engine. Phone upload is the blocker; Cowork or a desktop session could drop the folder in the repo.
 2. The levelled-crow gap is structural. Options inside scope: (a) accept it and call Trade Blows a low-level tool, with Ref-side scaling by foe Power; (b) a Run C mutation where the crow's tier decides damage dealt and the foe's own engine roll (2d10 + printed attack bonus) decides damage suffered, keeping one engine call per exchange. Option (b) is a change to Run A's core, so I will not test it without your OK.
 3. Define "doom on an encounter check": natural 10, or any encounter?
+
+---
+
+# Addendum (after crows-dw2.zip, your decisions 1 to 3)
+
+## Rerun of RAW against the layer's §9
+- RAW is **unchanged**. Same seeds give identical results on all 16 pairings. The layer's weapon table (index, PT1 cards) matches what I used: sword 3+S / 6+S, Parry 4. Counter on a melee miss at tier 2, tier 3 on a doom, crit gives an extra action, one reaction a round, d10 side initiative: all match.
+- **What did change:**
+  - **DT clock.** The layer's default is 1d6 rooms per DT, and a fight that clears ends the DT (layer §7). So a fight costs about one DT in every variant, and the Phase 1 UD saving (30 to 50% for Run A/C) only holds under the real-time timer variant. Under the default, UD drain per fight is the same for RAW, A, B and C.
+  - **Torch.** The layer's SAVE example shows `torch 2UD`. The card says UD 1, Fine 2 (Inventory Cards Annotated p.4). I kept 1.
+  - **Social.** Layer §1 and R6 say Crows has no social characteristic. Run C's Pull Strings and Sense Motive therefore use Mind, not CHA as runs_ABC wrote. Flagged.
+  - **Doom on the encounter check.** Replaced by a natural 10 (R14), as you said.
+
+## Forms (a) and (b), engine-rolled foe, no initiative, unengaged-foe knob kept
+(a) every exchange: the crow's tier sets damage dealt, the engaged foe's engine roll (2d10 + printed bonus) sets damage suffered. Crow tier 1 triggers the Ref move: ceil(unengaged/3) unengaged foes attack, each with its own roll.
+(b) as (a), but the foe rolls only on crow tier 1 or 2. Tier 3 suffers nothing.
+Cells: death / raw damage taken. Pass = within 15% of RAW on both (death: 2 points absolute when RAW is under 5%).
+
+| config | start crow: pairings passing (of 8) | 5,000 TXP crow |
+|---|---|---|
+| (a) + K2 | 2 | 0 |
+| (a) + K2 + K1 (foe tier 2 +1) | **4** | 1 |
+| (b) + K2 | 1 | 0 |
+| (b) + K2 + K1 | 4 | 0 |
+
+Parity table, start crow, RAW vs (a)+K2+K1: ape 0%/4 vs 0%/7, bear 14%/16 vs 16%/22, wolves 53%/24 vs 49%/26, undead A 33%/21 vs 36%/22, undead C 39%/24 vs 66%/31, Bear Cave 54%/30 vs 83%/33, S1 72%/32 vs 82%/34, S5 82%/32 vs 82%/33. Full tables in `sim/forms_combat.csv`.
+
+Levelled crow, RAW vs (a)+K2: bear 0%/7 vs 0%/11, wolves 15%/23 vs 1%/14, undead A 2%/15 vs 0%/10, undead C 1%/12 vs 1%/17, S1 2%/21 vs 0%/19, S5 swarm 47%/39 vs 8%/25.
+
+Findings:
+1. Making the foe roll independently fixes the expertise-as-defense leak, but the levelled crow still diverges in both directions: **solo foes too hard (+40 to +60% damage), groups too soft (swarm 8% vs 47% death)**. Cause: RAW lets every foe attack every round with its own initiative; one engaged foe per exchange cannot match a swarm.
+2. (b) is 20 to 40% softer than RAW and has no case against (a).
+3. Exploratory, not adopted: a simultaneous volley (every foe rolls each exchange, no order) plus a counter when a foe misses fits the starting crow closely (damage within 14% of RAW in all 8 pairings, death within 15% on 5) and gets the levelled crow to +12 to +43% harsher (`sim/volley_combat.csv`). It keeps the "no initiative, no turn order" constraint but lets all foes act each exchange. It is beyond the two forms you approved, so I am asking before using it.
+4. Counters on a foe miss (KC) did not help the two approved forms.
+
+## Threat ticks, final settings
+Natural 10 on the encounter check, cap 2 per session. Central case (6 DT a session, one Miasma rest, 2 sessions a cycle, 30% Prosperity rise): D4 median 3 sessions, D5 3, D6 4; 100%, 100%, 99.5% finish in 2 to 5 sessions. Across the 54-point sweep per D: mean pass 97% (D4), 93% (D5), 85% (D6). Floor is 79%, 55%, 31%, always in the corner of 4-DT sessions, rare Miasma rests and 3-session cycles (`sim/threat_ticks.csv`). The target holds for the intended pace. Slow tables (few DTs per session) need the cap lifted to 3 or an extra tick source.
