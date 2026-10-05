@@ -1,1 +1,1 @@
-{"log": ["Ref: d6 [3]=3 · DT1 length (rooms)"], "travel": {"day": 0, "hexes": 0, "lost": false}, "next_event": null, "maps": {}}
+{"log": ["Ref: d6 [3]=3 · DT1 length (rooms)", "Ref: TEST · A1 claws vs Mara · +2 · [8,2]=12 → T2", "Ref: TEST · A2 claws (Move attack) vs Mara · +2 · [6,1]=9 → T1", "Ref: TEST · A3 spine (Move attack, unengaged) vs Mara · +2 · [3,7]=12 → T2"], "travel": {"day": 0, "hexes": 0, "lost": false}, "next_event": null, "maps": {}}

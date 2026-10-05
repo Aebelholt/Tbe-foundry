@@ -56,3 +56,65 @@ You wade through the archway toward the scraping and the vault opens around you:
 
 
 Crypt hall · DT 1 (rooms 3 of 3) · Stamina 17 · wounds 0/10 · torch lit (UD 1) · the nearest razorback is a single step off your torch hand and rising
+
+## Turn 6
+[PLAYER] PLAYER [6/14]: I finish them and move on to the next room.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [6/14]: I finish them and move on to the next room.
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [6,2]=11 → T1 · MISS
+STATUS Stamina 17 · AD 25 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "A1 claws vs Mara"
+Ref: TEST · A1 claws vs Mara · +2 · [8,2]=12 → T2
+$ python3 engine/engine.py test 2 --why "A2 claws (Move attack) vs Mara"
+Ref: TEST · A2 claws (Move attack) vs Mara · +2 · [6,1]=9 → T1
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 25→22, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+Your blade cuts only air and gray silt as the nearest razorback twists aside, quick as a cat for something dead. Its claws rake down across your armor, three hard scrapes that spark and push you back a step, and the plates take the worst of it. Before you can set your feet, a second corpse comes bounding off its pillar in a long, impossible leap, landing in the shallows at your flank and sending black water up over your knees. It swipes and misses, ribs rattling. The third hangs back among the columns, spines lifting along its back, watching the torch.
+
+Move: Escalate the situation
+Ref: TEST · A1 claws vs Mara · +2 · [8,2]=12 → T2
+Ref: TEST · A2 claws (Move attack) vs Mara · +2 · [6,1]=9 → T1
+ATTACK attack · S+3 · - · [6,2]=11 → T1 · MISS
+LEDGER: took 3 (AD 25→22, Stamina 17→17, wounds 0→0)
+
+Crypt hall · DT 1 (rooms 3 of 3) · Stamina 17 · AD 22 · wounds 0/10 · torch lit (UD 1) · two razorbacks at your throat and a third pulling its spines taut behind the pillars
+
+## Turn 7
+[PLAYER] PLAYER [7/14]: I open the next door and go in.
+[TOOLS]
+$ python3 player.py S4
+PLAYER [7/14]: I open the next door and go in.
+[REF]
+The next door is an iron-banded slab at the far end of the hall, a long wade past the pillars with the dead at your back. You go for it. The razorbacks do not let you go: one leaps clean over a pillar and lands ahead of you, the other splashes close behind, claws clicking on your armor plates without finding purchase. At the door you heave on the ring and the swollen wood grinds, only a hand's width, then sticks fast in the damp. Bone-white blades quiver along the spines at your shoulder. Behind the leaper, the third shape slides out into your torchlight, closing.
+
+Crypt hall, far door stuck · DT 1 (rooms 3 of 3) · Stamina 17 · AD 22 · wounds 0/10 · torch lit (UD 1) · a razorback in front, one at your back, the door barely open and the wood fighting you
+
+## Turn 8
+[PLAYER] PLAYER [8/14]: I search the room for treasure and the way on.
+(roll on request: only if asked)
+[TOOLS]
+$ python3 player.py S4
+PLAYER [8/14]: I search the room for treasure and the way on.
+(roll on request: only if asked)
+$ python3 ledger.py test M --e 0 --b 1 --why "search the hall while three undead press her"
+TEST search the hall while three undead press her · M+0 · b · [6,1]=5(incl -2) → T1
+STATUS Stamina 17 · AD 22 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "A3 spine (Move attack, unengaged) vs Mara"
+Ref: TEST · A3 spine (Move attack, unengaged) vs Mara · +2 · [3,7]=12 → T2
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 22→20, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 20 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You try to read the hall with three dead things breathing rot on you, and the torchlight skips off every surface: pillar bases, silt, a toppled sarcophagus lid, none of it holding still long enough to mean anything. A gap between two columns might be an alcove or only shadow. The stuck door is the one thing that is certain. Behind you the third razorback stops, all its spines swinging to point at you, and looses them: a spray of bone needles that hisses across the water. One pricks through a gap in your armor and bites at the join of your shoulder, shallow but cold. The others crowd closer.
+
+Move: Hurt them
+Ref: TEST · A3 spine (Move attack, unengaged) vs Mara · +2 · [3,7]=12 → T2
+TEST search the hall while three undead press her · M+0 · b · [6,1]=5(incl -2) → T1
+LEDGER: took 2 (AD 22→20, Stamina 17→17, wounds 0→0)
+
+Crypt hall · DT 1 (rooms 3 of 3) · Stamina 17 · AD 20 · wounds 0/10 · torch lit (UD 1) · all three razorbacks on you and the stuck door at your back
+

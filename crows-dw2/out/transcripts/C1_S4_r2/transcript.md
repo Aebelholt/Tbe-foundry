@@ -27,3 +27,42 @@ Where: storeroom (area 2) · DT 1 (rooms 2/4) · Stamina 17 · wounds 0/10 · to
 [REF] You plant your feet, blade level, torch raised until the heat licks your wrist. Nothing comes through. The storeroom holds its breath with you: water dripping, a plank settling in the heap by the chest, a jar rolling a slow half-circle and stopping. Then, beyond the far doorway, bone clicks on stone, soft and patient, from somewhere deeper than your light reaches. The sound moves a little to the left and stops, the way a thing stops when it has noticed the light and is deciding. The torch flame leans toward that doorway, drawn by the draught, and shows you the first pale curve of a pillar out in the dark. Nobody has crossed to you. Whatever is out there is waiting for you to be the one who moves.
 
 Where: storeroom (area 2) · DT 1 (rooms 2/4) · Stamina 17 · wounds 0/10 · torch lit · bone clicks beyond the far doorway, and the chest sits untouched at your elbow.
+
+## Turn 5
+[PLAYER] PLAYER [5/14]: I press on the nearest one.
+[TOOLS]
+`python3 ledger.py attack` -> ATTACK attack · S+3 · - · [6,7]=16 → T2 · HIT 7 dam
+`python3 ledger.py attack` status -> STATUS Stamina 17 · AD 25 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py test 2 --why "Undead A1 claws"` -> Ref: TEST · Undead A1 claws · +2 · [6,9]=17 → T3
+`python3 ledger.py take 4` -> LEDGER: took 4 (AD 25→21, Stamina 17→17, wounds 0→0) / STATUS Stamina 17 · AD 21 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF] You cross the doorway into a wide crypt hall, pillars marching away into the black. The nearest pillar gives up a razor-backed shape, gray skin stretched over a ridge of spines, and it comes off the stone to meet you. Your blade bites its shoulder and takes a slab of dead flesh with it. It does not cry out. Its claws rake back across your armor in a wet arc, shrieking on the plates and leaving bright scores in the metal, but nothing reaches you. Beyond it, two more shapes slide from behind farther pillars, spines rattling, and stop at the edge of the light, watching.
+
+Ref: TEST · Undead A1 claws · +2 · [6,9]=17 → T3
+Foes: A1 Stamina 3/10 [engaged] close · A2 Stamina 10/10 [unengaged] near · A3 Stamina 10/10 [unengaged] near
+
+Where: crypt hall (area 3) · DT 1 (rooms 3/4) · Stamina 17 · wounds 0/10 · torch lit · the wounded razorback is in your face, and two more wait to flank.
+
+## Turn 6
+[PLAYER] PLAYER [6/14]: I finish them and move on to the next room.
+[TOOLS]
+`python3 ledger.py attack` -> ATTACK attack · S+3 · - · [5,5]=13 → T2 · HIT 7 dam / STATUS Stamina 17 · AD 21 · wounds 0/10 · uses Slashing 3 · UD torch 1
+(A1 Stamina 3 → 0, destroyed before it can answer; no foe attack roll this exchange)
+[REF] You step into the wounded razorback and drive the blade down through the ridge of its spine. It folds, claws scrabbling once at your boot, and goes still, a heap of gray hide and dry bone. The other two do not wait for it to stop. The nearer one drops low behind a pillar and comes around it at a crouch, spines flaring, the second sliding wide to your left to put the pillar between you and your torch. They move like things that learned the hall's corners long ago. The stench is heavy enough now to taste. The one on the right opens its jaw, and a rattling hiss rolls out of it.
+
+Ref: (none; A1 destroyed, no foe roll)
+
+Where: crypt hall (area 3) · DT 1 (rooms 3/4) · Stamina 17 · wounds 0/10 · torch lit · two razorbacks circle the pillars, and the right-hand one has just drawn its spines back to loose them.
+
+## Turn 7
+[PLAYER] PLAYER [7/14]: I open the next door and go in.
+[TOOLS]
+(crossing to the door with two foes alive costs the exchange, no roll; area 4 entered = room 4/4, DT 1 ends)
+`python3 ledger.py ud torch` -> UD torch · [5] → 1→1 / STATUS Stamina 17 · AD 21 · wounds 0/10 · uses Slashing 3 · UD torch 1
+`python3 engine/engine.py enc --en 9` -> Ref: encounter d10=4 vs EN 9 → none
+`python3 engine/engine.py roll d6 --why "DT 2 length (rooms)"` -> Ref: d6 [4]=4 · DT 2 length (rooms)
+[REF] You back and then turn for the far door, shoulder first, and the hall closes behind your heels. A spine goes past your ear and cracks against a pillar, a bone-white sliver ringing on the stone. The latch gives; you throw the door wide and step through, torch swinging. Beyond is a narrow ossuary, shelf upon shelf of stacked skulls and long bones climbing to the ceiling, grinning at the light. The razorbacks are on your trail, claws scraping at the threshold, no more than a stride or two behind. Your first dungeon turn is over; the torch burns on, none the worse. Dust shifts down from the shelves as the claws come.
+
+Ref: encounter d10=4 vs EN 9 → none
+Ref: d6 [4]=4 · DT 2 length (rooms)
+
+Where: ossuary (area 4) · DT 2 (rooms 1/4) · Stamina 17 · wounds 0/10 · torch lit · two razorbacks are at the doorway behind you, one with spines drawn.

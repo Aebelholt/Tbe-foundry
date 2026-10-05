@@ -54,3 +54,76 @@ It is hurt badly, swaying, spines flat against its back. The others have not mov
 
 Ref: TEST · razorback 1 claws (engaged) · +2 · [10,7]=19 → T3
 Where: cellar corridor mouth · Stamina 17 · AD 16 · wounds 0/10 · torch lit (UD 1) · wounded razorback at your blade, five more waiting just past the light
+
+## Turn 4
+[PLAYER] PLAYER [4/17]: I hit the nearest one again.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [2,8]=13 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 16 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+The second blow takes the razorback through the neck. The head tips, hangs by a strip of gray hide, and the body goes down in a clatter of spines, the claws still opening and closing on the stone. It lies still. The torch gutters and steadies.
+
+The others come on at once, as though the first one's death was a signal. Five of them now, in a loose crescent just outside arm's reach, claws scratching the flagstones, spines lifting along their backs. Something in the air smells of wet ash. The nearest of them crouches, haunches bunching under it, and its leg muscles tighten for the leap.
+
+Where: cellar corridor mouth · Stamina 17 · AD 16 · wounds 0/10 · torch lit (UD 1) · one razorback destroyed, five crouched at the edge of reach, about to spring
+
+## Turn 5
+[PLAYER] PLAYER [6/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [3,6]=12 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 16 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "razorback 2 claws (engaged)"
+Ref: TEST · razorback 2 claws (engaged) · +2 · [2,3]=7 → T1
+[REF]
+The nearest razorback springs before the leap finishes forming in your mind, and your blade meets it in the air. The cut opens its shoulder to the bone. It lands badly, one arm hanging, and its answering swipe is slow and clumsy, the claws only fanning the air in front of your face. The smell of old ash rolls off it.
+
+Behind it the crescent tightens. Four more pale shapes shuffle into the edge of the torchlight and stop, backs arched, spines lifting. They are not rushing. Each one is watching how the first fares, and none of them is blinking.
+
+Ref: TEST · razorback 2 claws (engaged) · +2 · [2,3]=7 → T1
+Where: cellar corridor mouth · Stamina 17 · AD 16 · wounds 0/10 · torch lit (UD 1) · one razorback gravely hurt at your blade, four more circling at the edge of the light
+
+## Turn 6
+[PLAYER] PLAYER [7/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [4,4]=11 → T1 · MISS
+STATUS Stamina 17 · AD 16 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 engine/engine.py test 2 --why "razorback 2 claws (engaged)"
+Ref: TEST · razorback 2 claws (engaged) · +2 · [9,2]=13 → T2
+$ python3 engine/engine.py test 2 --why "Move: razorback 3 spine"
+Ref: TEST · Move: razorback 3 spine · +2 · [8,5]=15 → T2
+$ python3 engine/engine.py test 2 --why "Move: razorback 4 spine"
+Ref: TEST · Move: razorback 4 spine · +2 · [7,3]=12 → T2
+$ python3 ledger.py take 3
+LEDGER: took 3 (AD 16→13, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 13 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 13→11, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 11 · wounds 0/10 · uses Slashing 3 · UD torch 1
+$ python3 ledger.py take 2
+LEDGER: took 2 (AD 11→9, Stamina 17→17, wounds 0→0)
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+Your cut is too eager. The razorback leans out of it, and your blade passes through only air and the smell of ash. Before you can bring it back, the wounded thing rakes you across the ribs. The armor groans and gives ground, rivets popping loose.
+
+Then two spines whip out of the dark from the edge of the light, one off your hip, one off your forearm, each hit a hard bee-sting that shoves you a half step back. Your heel finds the cellar's uneven flagstones and the corridor mouth feels, suddenly, a little wider than it did.
+
+The wounded razorback follows your retreat, dragging its ruined arm, mouth open.
+
+Move: Require a cost or opportunity | Ref: TEST · razorback 2 claws (engaged) · +2 · [9,2]=13 → T2 | Ref: TEST · Move: razorback 3 spine · +2 · [8,5]=15 → T2 | Ref: TEST · Move: razorback 4 spine · +2 · [7,3]=12 → T2
+Where: cellar corridor mouth, ground lost · Stamina 17 · AD 9 · wounds 0/10 · torch lit (UD 1) · hurt razorback on you, four more at the edge of the light with spines raised
+
+## Turn 7
+[PLAYER] PLAYER [8/17]: I keep cutting the nearest one.
+[TOOLS]
+$ python3 ledger.py attack
+ATTACK attack · S+3 · - · [4,6]=13 → T2 · HIT 7 dam
+STATUS Stamina 17 · AD 9 · wounds 0/10 · uses Slashing 3 · UD torch 1
+[REF]
+You step into its stagger and cut downward. The blade splits the razorback from the crown of its skull to the notch of its collarbone, and it comes apart in two dry halves that slide across the flagstones. The ash smell blooms and the torch pops once behind you.
+
+The four left do not bunch up this time. They spread, one hugging each wall of the cellar mouth, two coming straight on the flagstones, their claws ticking in unison. The nearest is so close you can see the grit packed in its eye sockets. Its jaw drops open and a spine slides out of the back of its throat, wet and gleaming, pointed square at your face.
+
+Where: cellar corridor mouth, ground lost · Stamina 17 · AD 9 · wounds 0/10 · torch lit (UD 1) · two razorbacks destroyed, four fanning out to flank, one with a spine aimed at your face
