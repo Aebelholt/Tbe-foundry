@@ -32,6 +32,7 @@ This card stands in for the full chassis and system layer during play. Read the 
 - Two quiet turns in a row.
 - The same kind of consequence twice in a row against the crow.
 - Keyed content (a place, creature, rule, table or NPC) from memory. Fetch it from the index page first.
+- An item, weapon, armor or spellbook card from memory. `engine card <name>` prints it (`card spells` lists all books).
 - A table result, distance or sight line from memory. The engine answers those (`table`, `dist`, `los`).
 - Opening a reply with commentary on the sheet, the STATE or a missing roll. A roll request is fiction, then the `Roll:` line, nothing else.
 - A round number, initiative result, monster stat or damage number that didn't come from the engine, the creature's block or the Ledger.

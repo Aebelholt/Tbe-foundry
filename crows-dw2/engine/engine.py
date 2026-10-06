@@ -214,6 +214,7 @@ RESERVED = set("#.,+=\"x/^<>:ThbcoFrPwgMO*Stk&")
 
 # ---------------------------------------------------------------- commands
 HELP = """commands (open output starts 'Ref:', secret output starts 'SEALED:')
+  card NAME | card list [FILTER] | card spells   print an inventory or spellbook card from the deck (needs crows/src/cards.json)
   roll EXPR [--secret] [--why TEXT]        any dice: 2d10+3, d100, 3d6
   test MOD [--e N] [--b N] [--table ID] [--why TEXT]
                                            Ref-side 2d10 test (monster attack, suspicion F31, NPC)
@@ -389,6 +390,25 @@ def main(argv):
         dv = opt(a, "--day")
         d, name, adj = moon_phase(s, int(dv) if dv is not None else None)
         out(s, f"moon day {d}/30 · {name} · travel EN {adj:+d} (use travel --moon or --en-adj {adj}; HOUSE mapping)" + (" · Blood Moon doubles numbers encountered" if "Blood" in name else ""))
+
+    elif cmd == "card":
+        here = os.path.dirname(os.path.abspath(__file__))
+        paths = [os.environ.get("CROWS_CARDS", ""), os.path.join(here, "..", "crows", "src", "cards.json"), os.path.join(here, "..", "src", "cards.json")]
+        pth = next((x for x in paths if x and os.path.exists(x)), None)
+        if not pth: raise_("no cards.json. Run: python3 tools/extract_cards.py <folder with the card PDFs> crows/src/cards.json")
+        deck = json.load(open(pth))
+        q = " ".join(a).lower().strip()
+        if q in ("", "list") or q.startswith("list "):
+            f = q[5:].strip()
+            names = [n for n in deck if f in n.lower()]
+            print(f"{len(names)} cards: " + "; ".join(names))
+        elif q in ("spells", "books"):
+            names = [n for n in deck if n.endswith(" Book")]
+            print(f"{len(names)} spellbooks: " + "; ".join(names))
+        else:
+            hit = [n for n in deck if n.lower() == q] or [n for n in deck if q in n.lower()]
+            if not hit: raise_(f"no card matches '{q}'. `card list` shows the deck.")
+            for n in hit[:4]: print(f"[{n}] (cards p.{deck[n]['page']})\n{deck[n]['text']}\n")
 
     elif cmd == "hunt":
         sub = a[0]

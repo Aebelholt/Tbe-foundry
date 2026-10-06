@@ -61,3 +61,7 @@ These follow from the audits, where the Ref kept a count by hand and lost it. Th
 - **Hot card v1.2** carries the combat round and the new Nevers.
 - **Engine and Ledger.** Ledger v2 (pack slots, wounds in slots, `pool`, `void`, `weapon`, `book`, `cond`, `rest` with `ud_norest`, `set`, blank-stat refusal). Engine: unknown flags rejected before any roll, `--why` lint, `enc --travel`, `travel --part`, cycle-end prompt, `pos`.
 - Untested in play. Re-run the pilot checklist.
+
+
+## Cards
+- `tools/extract_cards.py` builds `crows/src/cards.json` (128 cards incl. all 28 spellbooks) from the user's card PDFs; `engine card NAME|list|spells` prints them. Spell result rows can lose the `≤11` column header in extraction; the PDF page is the check.

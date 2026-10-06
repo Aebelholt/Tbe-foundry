@@ -183,3 +183,7 @@ Format: `subject · BOOK page · grep anchor`
 ## Wilderness supplement (v1.1)
 - **Tables as data (wilderness).** `crows/engine/tables_wyrd.json` holds 33 tables paraphrased from *Into the Wyrd and Wild* (private use). `python3 engine.py tables wyrd` lists ids. See layer §16.
 - **Threat seeds.** `03_director_sealed_template.md`: The Night Summons, The Changeling Tithe, The Sorrow-Hunt (factions, W&W p.136–151).
+
+
+## Cards (Playtest 2 inventory cards, files 02 and 04)
+All items, weapons, armor and the 28 spellbooks: `python3 engine/engine.py card <name>` (built from your own PDFs by `tools/extract_cards.py` into `crows/src/cards.json`). POI and dungeon cards: `crows/src/cards_04.txt`. A spell card's `≤11 / 12-16 / 17+` row is the casting result by tier (R30-31). If a card's text looks cut, read the PDF page named in the output.

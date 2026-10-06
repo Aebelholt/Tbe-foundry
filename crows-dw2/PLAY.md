@@ -19,6 +19,8 @@ Load these. They are small (about 100 KB together):
 
 **Source text** (needed because the layer streams one page at a time): your own copies of the five Playtest 2 books. Run `python3 tools/extract_sources.py <folder of the five .html files> crows/src`. It writes `crows/src/crows_0N_*.txt` with `===== PDFPAGE n =====` markers, which is what the index's page references use. **Do not commit these** (they are in `.gitignore`).
 
+**Cards (items, weapons, armor, all 28 spellbooks).** Put your three card PDFs (files 02, 04, 05) in the project too, then run `pip install pymupdf` and `python3 tools/extract_cards.py <folder with the PDFs> crows/src/cards.json`. The Ref then prints any card with `python3 engine/engine.py card <name>` (`card spells` lists every spellbook, `card list` the whole deck). Do not commit `cards.json`.
+
 **Leave out:** `out/` (research and trial transcripts), `runs_ABC.md` (the design brief), `src/`, the DW2 PDFs. The layer already carries the DW2 rules it uses.
 
 ## First session
