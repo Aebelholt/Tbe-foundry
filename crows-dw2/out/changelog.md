@@ -54,3 +54,10 @@ These follow from the audits, where the Ref kept a count by hand and lost it. Th
 - **`engine/ledger.py`** gains `init custom`, `rest` and `set` so it can run a real campaign, not only the trial crows.
 - **Not done:** bestiary conversion (needs Crows stat blocks; see §16 "Not imported"), the wilderness-dungeon hex generator, Magic of the Wyrd.
 - **Untested:** all of the above. The trials covered Amendment 1 only.
+
+
+## Amendment 3 and v1.2 (from Pilot 01)
+- **Layer v1.2** appends §17: Ledger-rolled crow dice in the open (player override, `pool`, `void`), one reply per round, a `Maneuver?` prompt before foes act, clever-plan rule, card-move fiction check, no authored crow interiority, `pos`, `--note` for secrets, split SAVE, telegraph beat, night travel HOUSE ruling, F6/F1 note, session-zero pack placement.
+- **Hot card v1.2** carries the combat round and the new Nevers.
+- **Engine and Ledger.** Ledger v2 (pack slots, wounds in slots, `pool`, `void`, `weapon`, `book`, `cond`, `rest` with `ud_norest`, `set`, blank-stat refusal). Engine: unknown flags rejected before any roll, `--why` lint, `enc --travel`, `travel --part`, cycle-end prompt, `pos`.
+- Untested in play. Re-run the pilot checklist.

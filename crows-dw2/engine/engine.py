@@ -218,13 +218,13 @@ HELP = """commands (open output starts 'Ref:', secret output starts 'SEALED:')
   test MOD [--e N] [--b N] [--table ID] [--why TEXT]
                                            Ref-side 2d10 test (monster attack, suspicion F31, NPC)
   init                                     side initiative d10: 6+ crows first (R18)
-  enc [--en N] [--table ID] [--secret]     encounter check d10 >= EN (R14); rolls ID on a hit
+  enc [--en N] [--travel] [--table ID] [--secret]     encounter check d10 >= EN (R14); rolls ID on a hit
   table ID [--mod N] [--secret] [--why T]  roll a printed table
   read ID TOTAL                            read a table row without rolling (e.g. a tier test)
   tables [FILTER]                          list table ids
   fate ODDS [--why TEXT] [--secret]        Mythic fate check, CF 5: 2d10+odds, 11+ yes
                                            odds: impossible noway veryunlikely unlikely 5050 likely verylikely surething hastobe
-  travel slow|normal|fast [--en-adj N] [--lost] [--table ID]
+  travel slow|normal|fast [--en-adj N] [--moon] [--part] [--lost] [--table ID]
                                            one travel day (R24-29): EN by pace, check, secret drift if lost
   found                                    the group is no longer lost
   cycle P [--raised]                       end a 10-day cycle: Prosperity check, then roll the next Village Event (sealed)
@@ -237,6 +237,7 @@ HELP = """commands (open output starts 'Ref:', secret output starts 'SEALED:')
   where MAPID TOKEN                        token position and area
   dist MAPID A B                           distance in squares (diagonals = 1, R18); A/B = token or x,y
   los MAPID A B                            line of sight between A and B
+  pos NAME N | pos | pos rm NAME | pos clear   scene positions for improvised areas, in squares from the crow
   day [+N | set N]                         campaign day (travel adds 1 itself); prints cycle day and moon day
   moon [--day N] | moon special NAME|off  moon phase and EN adjustment (HOUSE); `travel ... --moon` applies it
   hunt new NAME MARKS | day NAME [--adv] | show   a hunt as a Mark clock (W&W p.16-17, adapted)
@@ -287,9 +288,18 @@ def main(argv):
     if not argv or argv[0] in ("help", "-h", "--help"):
         print(HELP); return
     cmd, a = argv[0], argv[1:]
+    KNOWN = {"--adv", "--b", "--day", "--e", "--en", "--en-adj", "--lost", "--mod", "--moon", "--raised", "--secret", "--table", "--why", "--travel", "--part", "--note"}
+    if "--help" in a or "-h" in a:
+        hl = [l for l in HELP.split("\n") if l.strip().startswith(cmd)]
+        print("\n".join(hl) or f"no help for {cmd}; engine.py help"); return
+    bad = [t for t in a if t.startswith("--") and t not in KNOWN]
+    if bad: raise_(f"unknown flag {bad[0]} for {cmd}; nothing was rolled. engine.py {cmd} --help")
     s = load()
     sealed = opt(a, "--secret", flag=True)
     why = opt(a, "--why", "")
+    note = opt(a, "--note", "")
+    if why and not sealed and re.search(r"\d+\s*/\s*\d+", why):
+        raise_("an open --why carries a number like 3/10 (a hidden value). Nothing was rolled. Put hidden values in --note (sealed log only) and keep --why to the reason")
     w = f" · {why}" if why else ""
 
     if cmd == "roll":
@@ -308,9 +318,10 @@ def main(argv):
         r = R.randint(1, 10); out(s, f"initiative d10={r} → {'crows act first' if r >= 6 else 'enemies act first'}")
 
     elif cmd == "enc":
+        trv = opt(a, "--travel", flag=True)
         en = min(10, int(opt(a, "--en", 9))); tid = opt(a, "--table")
         r = R.randint(1, 10)
-        res = "ENCOUNTER NOW" if r == 10 else "sign now, encounter within the next DT" if r >= en else "none"
+        res = "ENCOUNTER NOW" if r == 10 else (("encounter today, Ref picks when (R29)" if trv else "sign now, encounter within the next DT") if r >= en else "none")
         out(s, f"encounter d10={r} vs EN {en} → {res}{w}", sealed)
         if r >= en and tid: roll_table(s, tid, sealed=sealed)
 
@@ -338,25 +349,39 @@ def main(argv):
         pace = a[0]; base = {"slow": (8, 1), "normal": (7, 2), "fast": (6, 3)}.get(pace) or raise_("pace: slow|normal|fast")
         mo = moon_phase(s)[2] if opt(a, "--moon", flag=True) else 0
         en = max(2, min(10, base[0] + int(opt(a, "--en-adj", 0)) + mo))
+        part = opt(a, "--part", flag=True)
         tv = s["travel"]
-        s.setdefault("cal", {"day": 0})["day"] += 1
+        old_day = s.setdefault("cal", {"day": 0})["day"]
+        if not part: s["cal"]["day"] += 1
         if opt(a, "--lost", flag=True): tv["lost"] = True
         tid = opt(a, "--table", "travel_encounters")
-        tv["day"] += 1; tv["hexes"] += base[1]
-        out(s, f"travel day {tv['day']} · {pace} · {base[1]} hex{'es' if base[1] > 1 else ''} · EN {en}{' (moon ' + format(mo, '+d') + ')' if mo else ''}")
+        if not part: tv["day"] += 1
+        tv["hexes"] += base[1]
+        out(s, f"travel {'partial leg' if part else 'day ' + str(tv['day'])} · {pace} · {base[1]} hex{'es' if base[1] > 1 else ''} · EN {en}{' (moon ' + format(mo, '+d') + ')' if mo else ''}")
         r = R.randint(1, 10)
         hit = r >= en
         out(s, f"travel encounter d10={r} vs EN {en} → {'ENCOUNTER NOW' if r == 10 else 'encounter today, Ref picks when' if hit else 'none'}")
         if hit: roll_table(s, tid)
+        if s["cal"]["day"] // 10 > old_day // 10: out(s, "CYCLE END DUE: run `cycle <Prosperity> [--raised]` (C45)")
         if tv["lost"]:
             dirs = [lookup("lost_direction", R.randint(1, 6))["text"] for _ in range(base[1])]
             out(s, f"lost drift, day {tv['day']}: {' → '.join(dirs)} (count clockwise from north, R27)", sealed=True)
 
+    elif cmd == "pos":
+        P = s.setdefault("pos", {})
+        if not a:
+            print("positions (squares from the crow; diagonals count 1, R18): " + (" · ".join(f"{k} {v}" for k, v in sorted(P.items(), key=lambda x: x[1])) or "none")); return
+        if a[0] == "clear": s["pos"] = {}; out(s, "positions cleared")
+        elif a[0] == "rm": P.pop(a[1], None); out(s, f"pos {a[1]} removed")
+        else:
+            P[a[0]] = int(a[1]); out(s, f"pos {a[0]} {a[1]} sq from the crow")
+
     elif cmd == "day":
-        c = s.setdefault("cal", {"day": 0})
+        c = s.setdefault("cal", {"day": 0}); old = c["day"]
         if a and a[0] == "set": c["day"] = int(a[1])
         elif a: c["day"] += int(a[0])
         out(s, f"campaign day {c['day']} · village cycle day {c['day'] % 10 + 1}/10 · moon day {c['day'] % 30}")
+        if c["day"] // 10 > old // 10: out(s, "CYCLE END DUE: run `cycle <Prosperity> [--raised]` (C45)")
 
     elif cmd == "moon":
         if a and a[0] == "special":
@@ -459,6 +484,7 @@ def main(argv):
 
     else:
         raise_(f"unknown command {cmd}\n\n{HELP}")
+    if note: out(s, f"note · {note}", sealed=True)
     save(s)
 
 if __name__ == "__main__":
