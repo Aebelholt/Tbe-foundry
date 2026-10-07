@@ -582,7 +582,7 @@ This section wins over §1, §3 and §9 where they differ on who rolls and on re
 
 **17.9 Telegraph.** Before the first blow from a creature that can kill the crow in two hits, one beat of disposition or tell (F16, F22, F31) appears in the fiction. Lethality is unchanged.
 
-**17.10 Time.** Partial-day travel uses `travel --part`. Night travel is allowed; each night leg is a HOUSE EN +1 and a bane on sight tests unless the crow has light. The Ref states the ruling once and then applies it.
+**17.10 Time.** Partial-day travel uses `travel --part`. Night travel is allowed; each night leg lowers the encounter number by 1 (`--en-adj -1`; a lower EN means more encounters, since an encounter needs d10 at or above EN) and gives a bane on sight tests unless the crow has light. HOUSE. The Ref states the ruling once and then applies it.
 
 **17.11 Monster from Nearby (F6) vs Any Monster Encounter (F1).** F6 is for a specific local source, F1 for the generic table. Use one, say which, and never both for the same check.
 
@@ -591,3 +591,11 @@ This section wins over §1, §3 and §9 where they differ on who rolls and on re
 **17.13 A voided roll stays voided.** The Ref rolls again and states it. It does not keep the first result.
 
 **17.14 Miasma Marks (slow-burn Fallout, HOUSE).** Adapted from Liminal Horror's Fallout (private use). The Ledger counts it; nobody tracks it by hand. Each rest outside the Miasma that clears cruelty above 0 adds 1 **taint** (a crow that comes home clean adds none). At taint 3 the Ledger prints `MARK DUE`. The Ref rolls `engine table miasma_mark` (d12), says the result in the fiction, and runs `ledger mark add <name>`. The mark fills one pack slot for good, counts toward death like a wound, cannot hold a wound or item, and resets taint to 0. Marks are one line each, mostly a boon with a cost, and the Hunted and Visions results seed a sealed Threat. A mark leaves only by a ritual or a ruling (`mark rm`). A mark never replaces the Miasma Effects table (R28).
+
+**17.15 Session zero: the Ref never rolls the crow's background or gold.** It asks for the two results and waits. If a message is unclear, the Ref asks one short question and runs no tool until it is answered. (Pilot 02: a misread cost a built crow and three replies.)
+
+**17.16 Hands (R10 Equipped Items).** Apart from magic items worn in slots and armor, any weapon, tool, light source or spellbook must be in a hand slot to be used. Moving an item to a hand slot is a maneuver in combat and free outside rounds (R10). `ledger cast` and `ledger attack` refuse an item that is not in H1 or H2. Armor you wear is a suit in a backpack slot (R10 Wearing Armor); it is not slotless.
+
+**17.17 No invented engine lines.** A line that starts `Ref:` is pasted from the engine and nothing else. If the engine produced nothing, the Ref writes nothing, or writes plain fiction. Never a made-up `Ref:` result such as "already rolled, none".
+
+**17.18 Rulings are logged as rulings.** Where a card or rule is missing, the Ref states `RULING:` once, logs it to the sealed file, and keeps to it. A stat block reskinned from another creature, a placeholder number, or a spend of an expertise to clear a backlash is a ruling, not a rule. First choice is the card: `engine card <name>` (card deck, `tools/extract_cards.py`).

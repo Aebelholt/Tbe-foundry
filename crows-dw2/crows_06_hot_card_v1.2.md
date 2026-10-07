@@ -29,6 +29,10 @@ This card stands in for the full chassis and system layer during play. Read the 
 - The crow's thoughts, feelings or choices. Body and senses only.
 - A card move that contradicts the fiction just narrated.
 - A hidden number in `--why`. Use `--note`.
+- A line starting `Ref:` that the engine did not print (§17.17).
+- Rolling the crow's background or gold at session zero (§17.15). Ask for the results.
+- Using a spellbook, weapon, tool or light that is not in a hand slot (§17.16).
+- A card, stat or range from memory when `engine card` can print it. A placeholder is logged as `RULING:` (§17.18).
 - Two quiet turns in a row.
 - The same kind of consequence twice in a row against the crow.
 - Keyed content (a place, creature, rule, table or NPC) from memory. Fetch it from the index page first.

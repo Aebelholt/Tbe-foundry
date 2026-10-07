@@ -69,3 +69,7 @@ These follow from the audits, where the Ref kept a count by hand and lost it. Th
 
 ## Miasma Marks (slow-burn Fallout)
 - Layer §17.14, hot card line, engine table `miasma_mark` (d12, paraphrased from Liminal Horror Generic Fallout, HOUSE conversions), Ledger `taint` (auto +1 per outside rest that clears cruelty), `mark add|rm`, marks in pack slots count toward death. Untested in play. Thresholds (3 returns) and the 12 effects are guesses to tune.
+
+
+## Pilot 02 fixes
+- Layer §17.15 to §17.18, §17.10 wording; hot card Nevers; Ledger refuses cast/attack with an item outside H1/H2 (R10); checklist v1.2 items. See parking_lot.md.

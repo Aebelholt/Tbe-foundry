@@ -73,6 +73,12 @@ def wounds(s): return sum(1 for p in s["slots"]["P"] if p["w"])
 def speed(s):
     return max(0, s.get("speed", 5) - sum(1 for p in s["slots"]["P"] if p["w"] and p["i"]))
 
+def in_hand(s, name):
+    """R10 Equipped Items: a weapon, tool, light source or spellbook must be in a hand slot to be used. Unplaced sheets skip the check."""
+    S = s["slots"]; placed = any(S["H"]) or any(S["B"]) or any(p["i"] for p in S["P"])
+    if not placed: return True
+    return any(x and name.lower() in str(x).lower() for x in S["H"])
+
 def place_wound(s, slot):
     P = s["slots"]["P"]
     if slot:
@@ -175,6 +181,7 @@ def main():
     elif cmd == "attack":
         w = opt(a, "--w") or s.get("weapon")
         if w not in s["weapons"]: raise SystemExit(f"no weapon {w}; weapon add {w} stat=S t2=.. t3=..")
+        if not in_hand(s, w): raise SystemExit(f"{w} is not in a hand slot (R10 Equipped Items). Move it with `place {w} H1` (a maneuver in combat); nothing was rolled")
         W = s["weapons"][w]
         stat = (opt(a, "--stat") or "").upper() if isinstance(opt(a, "--stat"), str) else ""
         if not stat:
@@ -188,6 +195,7 @@ def main():
     elif cmd == "cast":
         b = s["books"].get(a[0]) or raise_(f"no book {a[0]}; book add {a[0]} ud=1 rank=0 t2=.. t3=..")
         if b["ud"] <= 0: raise SystemExit(f"{a[0]} has no UD left: no magic until it regains on a rest")
+        if not in_hand(s, a[0]): raise SystemExit(f"{a[0]} book is not in a hand slot (R10 Equipped Items). Move it with `place spellbook-{a[0]} H1` (a maneuver in combat); nothing was rolled")
         line, t, f = core(s, statval(s, "M"), a, a[0], "CAST")
         res = {1: "tier 1", 2: f"T2: {b.get('t2', '?')}", 3: f"T3: {b.get('t3', '?')}"}[t]
         extra = []

@@ -29,12 +29,23 @@ Run 10 exchanges in a fresh Cowork session with the start prompt. Include at lea
 - [ ] Fight: initiative, monster attacks and counters come from the engine. The Ref never states a number it didn't roll.
 - [ ] Fight: distance or sight was answered by `dist` or `los` on the map, not guessed.
 - [ ] A secret roll stayed secret, and the Ref did not hint at it.
-- [ ] My pasted Ledger lines were taken as given, never recomputed.
+- [ ] Ledger lines (mine or the Ref's) were taken as given, never recomputed.
 - [ ] After the fight, consequences land in the Ledger and the fiction. The Ref doesn't re-tabulate my sheet.
+
+## v1.2 additions (Pilot 02)
+
+- [ ] `Maneuver?` appeared after the crow's action and was used or declined.
+- [ ] One reply covered the whole round; one compact roll line per action.
+- [ ] Every crow roll has a Ledger line (the Ref rolling through the Ledger is the default; the player can take any roll).
+- [ ] Hidden numbers went in `--note`; no `Ref:` line the engine did not print.
+- [ ] The crow's thoughts and reflexes were not authored.
+- [ ] Items used were in a hand slot.
+- [ ] Missing cards were read with `engine card`; any placeholder was logged as `RULING:`.
+- [ ] Distance: `dist` or `los` when a map exists; otherwise `pos`, set once.
 
 ## Scene end
 
-- [ ] The sealed file got new lines (one per change, no prose) and `crows/engine/state.txt` was updated.
+- [ ] The sealed file got new lines (one per change, no prose) and `SAVE_open.md` and `SAVE_sealed.md` were written.
 - [ ] Nothing was written mid-scene.
 
 ## Verdict

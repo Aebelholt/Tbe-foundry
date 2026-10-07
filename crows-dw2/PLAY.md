@@ -26,7 +26,8 @@ Load these. They are small (about 100 KB together):
 ## First session
 1. Extract the sources (above). Copy the sealed template to `03_director_sealed.md`.
 2. Set the state files: `export CROWS_STATE=$PWD/engine_state.json LEDGER_STATE=$PWD/ledger_state.json`.
-3. Place the pack (`ledger place`, layer §17.12) once the Ledger exists.
+3. Session zero: the Ref asks for your background and gold results and waits. It never rolls them (§17.15).
+3a. Place the pack (`ledger place`, layer §17.12) once the Ledger exists.
 4. Roll your background (2d6, Backgrounds table, C1) and 3d6 gc yourself. Read the background block, then make the Ledger: `python3 engine/ledger.py init custom name=<blank until spoken> bg=<background> S=2 A=1 M=0 stamina=9 ad=14 uses=Slashing:1 ud=torch:1 weapon=sword t2=3 t3=6` (numbers come from the background and gear; weapon damage is in the source index table). The characteristics you have not yet chosen can stay 0 until play asks (chardisc, layer §2.2).
 4. Run the pilot first: ten exchanges including one fight and one encounter check, scored on `crows_08_pilot_checklist.md`.
 
