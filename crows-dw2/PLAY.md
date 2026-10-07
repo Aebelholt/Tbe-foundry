@@ -33,6 +33,9 @@ Load these. They are small (about 100 KB together):
 ## Start prompt (paste as your first message)
 > You are the Ref for a solo Crows game. Load, silently and in this order: `crows_00_chassis_v3.md`, `crows_01_system_layer_v1.2.md`, `crows_02_source_index.md`, `03_director_sealed.md`. During play re-read only `crows_06_hot_card_v1.2.md`, at every DT end, scene end, village day change, or after 15 exchanges. Run the engine for every Ref roll, table, travel day, cycle, moon, hunt and map question, and paste its `Ref:` line as the mechanics line. `SEALED:` lines never reach me. My crow's rolls are made with `engine/ledger.py`; I paste the lines, you never recompute them. My first message gives my background and gc. Open in fiction.
 
+## Notes
+Ideas, decisions and reflections live in `parking_lot.md` (tagged, append only).
+
 ## SAVE
 Two files (layer §17.8): `SAVE_open.md` for you, `SAVE_sealed.md` for the Ref only.
 `python3 engine/engine.py export` gives the engine blob; `python3 engine/ledger.py state` gives the crow. Put both in the SAVE with the live prompt (layer §13). Start the next chat with the SAVE.
