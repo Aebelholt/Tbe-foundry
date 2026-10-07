@@ -65,3 +65,7 @@ These follow from the audits, where the Ref kept a count by hand and lost it. Th
 
 ## Cards
 - `tools/extract_cards.py` builds `crows/src/cards.json` (128 cards incl. all 28 spellbooks) from the user's card PDFs; `engine card NAME|list|spells` prints them. Spell result rows can lose the `≤11` column header in extraction; the PDF page is the check.
+
+
+## Miasma Marks (slow-burn Fallout)
+- Layer §17.14, hot card line, engine table `miasma_mark` (d12, paraphrased from Liminal Horror Generic Fallout, HOUSE conversions), Ledger `taint` (auto +1 per outside rest that clears cruelty), `mark add|rm`, marks in pack slots count toward death. Untested in play. Thresholds (3 returns) and the 12 effects are guesses to tune.

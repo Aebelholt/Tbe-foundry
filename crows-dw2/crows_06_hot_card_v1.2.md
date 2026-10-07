@@ -61,6 +61,7 @@ This card stands in for the full chassis and system layer during play. Read the 
 - **Tier 1 with no printed result:** name a move from the card (§9c) on the mechanics line (`Move: <name>`) and make it. A weapon miss keeps its counter. A tier 2 never takes a card move.
 - **Social:** Pull Strings and Sense Motive are Mind tests, called only when an NPC has something at stake and the Ref wants dice (§9b).
 - **Threat ticks:** three clocks only (Miasma rest outdoors, a cycle with no Prosperity rise, a natural 10 on an encounter check). Cap 2 a session. Put each tick in the fiction **and** the sealed ledger.
+- **Miasma Marks (§17.14):** when the Ledger prints `MARK DUE`, roll `table miasma_mark`, narrate it, `ledger mark add <name>`. Never count taint by hand.
 - **Wilderness:** `day`, `moon` (`travel … --moon`), `hunt` and the `wyrd_*` tables (§16). Roll them; never recall them.
 - **Withdrawal (F16, F22, F31):** use likes and hates, suspicion, and fleeing when losing. Violence is rarely the only answer.
 

@@ -3733,5 +3733,75 @@
    }
   ],
   "note": "Paraphrased from Into the Wyrd and Wild (private use, all rights reserved by the publisher). Crows conversions marked 'Crows:' are HOUSE proposals, not printed Crows rules."
+ },
+ {
+  "id": "miasma_mark",
+  "title": "Miasma Marks (Fallout)",
+  "src": "HOUSE, paraphrased from Liminal Horror Generic Fallout (private use)",
+  "die": "d12",
+  "mod": null,
+  "entries": [
+   {
+    "lo": 1,
+    "hi": 1,
+    "text": "Acid blood: when a creature wounds you in melee it takes 1d6 acid damage (HOUSE)"
+   },
+   {
+    "lo": 2,
+    "hi": 2,
+    "text": "Hunted: something follows you and will not stop; the Ref seeds a sealed Threat (stalker). +2 Stamina max"
+   },
+   {
+    "lo": 3,
+    "hi": 3,
+    "text": "Reanimated: if the pack would fill, you do not die; you rise as an undead under Ref control"
+   },
+   {
+    "lo": 4,
+    "hi": 4,
+    "text": "Exsanguinate: maneuver, once per fight: drink from a creature you just wounded and regain 1d6 Stamina; those who see it are shaken"
+   },
+   {
+    "lo": 5,
+    "hi": 5,
+    "text": "Behold the night: you see 5 squares in total darkness"
+   },
+   {
+    "lo": 6,
+    "hi": 6,
+    "text": "Calcified hands: your bare hands strike as a weapon (2+S / 4+S) and tear your skin (1 damage after the first hit each fight)"
+   },
+   {
+    "lo": 7,
+    "hi": 7,
+    "text": "Wild rites: once per day cast a spellbook you carry without spending its UD, and roll the chaos d6 anyway"
+   },
+   {
+    "lo": 8,
+    "hi": 8,
+    "text": "Resonance: edge on tests to find, identify or handle magic items and ruins; the strange notices you back"
+   },
+   {
+    "lo": 9,
+    "hi": 9,
+    "text": "Visions: edge on the Miasma RR; after a week of nightmares give the Ref two images, which seed an omen or Threat"
+   },
+   {
+    "lo": 10,
+    "hi": 10,
+    "text": "Shadow step: maneuver, step to any shadow you can see within 5 squares; each use costs 2 Stamina"
+   },
+   {
+    "lo": 11,
+    "hi": 11,
+    "text": "Crowned: +1 Mind; those who also carry a mark see a crown over your head"
+   },
+   {
+    "lo": 12,
+    "hi": 12,
+    "text": "The Hunt: your attacks gain an edge; creatures of the Miasma and wild pick you first and attack you with an edge"
+   }
+  ],
+  "note": "Each mark fills a pack slot for good and counts toward death. Every Crows number here is a HOUSE conversion."
  }
 ]

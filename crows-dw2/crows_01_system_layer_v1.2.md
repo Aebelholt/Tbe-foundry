@@ -589,3 +589,5 @@ This section wins over §1, §3 and §9 where they differ on who rolls and on re
 **17.12 Session zero places the pack.** Before play, `ledger place` every item into H1-H2, B1-B4, P1-P10. A wound goes into an empty slot first, then displaces an item.
 
 **17.13 A voided roll stays voided.** The Ref rolls again and states it. It does not keep the first result.
+
+**17.14 Miasma Marks (slow-burn Fallout, HOUSE).** Adapted from Liminal Horror's Fallout (private use). The Ledger counts it; nobody tracks it by hand. Each rest outside the Miasma that clears cruelty above 0 adds 1 **taint** (a crow that comes home clean adds none). At taint 3 the Ledger prints `MARK DUE`. The Ref rolls `engine table miasma_mark` (d12), says the result in the fiction, and runs `ledger mark add <name>`. The mark fills one pack slot for good, counts toward death like a wound, cannot hold a wound or item, and resets taint to 0. Marks are one line each, mostly a boon with a cost, and the Hunted and Visions results seed a sealed Threat. A mark leaves only by a ritual or a ruling (`mark rm`). A mark never replaces the Miasma Effects table (R28).
