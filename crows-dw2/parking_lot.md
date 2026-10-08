@@ -58,3 +58,7 @@ Tag key: `#crows` `#nimble` `#stonetop-arcana` `#fallout` `#marks` `#boons` `#md
 ## 2026-10-08 · Offline self-test added · `#ledger #built #lean`
 - `engine/selftest.py`: 30 checks (tables, hands rule, marks and taint, void, pool, take, rest, flag rejection, `--why` lint, v1 migration). All pass. Cost: no tokens. Does not test LLM behaviour; Pilot 03 still does that.
 - Reflection: the first run had 3 failures, all in the test (empty sheet skips the hands check by design, UD roll can keep UD, `travel` needs a pace). The engine was right.
+
+## 2026-10-08 · Homebrew audit and creep measure · `#lean #decision #measure #crows`
+- Full register in `out/homebrew_audit.md`: layer +65% words and hot card +50% since v1 (Nevers 11 to 23). Five tests (evidence, Ref judgment, state, cost, origin). Core = RAW + Threat ticks + tier-1 card + social moves + precedence + short protocol + tools. Appendices: wilderness, Marks. Enforce in tools what failed twice in text.
+- Reflection: card growth is the creep number that matters, because it is what the Ref reads at every DT end. Two-pilot rule for calling a text rule settled.
