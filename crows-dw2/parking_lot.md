@@ -54,3 +54,7 @@ Tag key: `#crows` `#nimble` `#stonetop-arcana` `#fallout` `#marks` `#boons` `#md
 - **Useful transfer:** Realization is an escalation engine (failure makes a power narrower and stronger) and maps onto marks and arcana consequences. `#fallout #marks #stonetop-arcana`
 - **Option:** a Sentence-style layer for non-combat and social beats only (replaces Pull Strings/Sense Motive) while Crows keeps dice for combat, travel and attrition. Needs a test; not started.
 - **Decision:** none. Not tested. Revisit with the Nimble game.
+
+## 2026-10-08 · Offline self-test added · `#ledger #built #lean`
+- `engine/selftest.py`: 30 checks (tables, hands rule, marks and taint, void, pool, take, rest, flag rejection, `--why` lint, v1 migration). All pass. Cost: no tokens. Does not test LLM behaviour; Pilot 03 still does that.
+- Reflection: the first run had 3 failures, all in the test (empty sheet skips the hands check by design, UD roll can keep UD, `travel` needs a pace). The engine was right.
