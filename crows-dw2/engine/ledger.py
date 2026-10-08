@@ -261,7 +261,7 @@ def main():
         mark_due = ""
         if not miasma:
             s["uses"] = dict(s["uses_max"])
-            if s["cruelty"] > 0:                                     # slow burn: coming home carrying Miasma is the count (HOUSE, Fallout)
+            if s["cruelty"] > 0 and s.get("marks"):                # Appendix B, off unless `set marks 1`; slow burn: coming home carrying Miasma is the count (HOUSE, Fallout)
                 s["taint"] = s.get("taint", 0) + 1
                 mark_due = f" · returned with Miasma, taint {s['taint']}/3" + (" · MARK DUE: roll `engine table miasma_mark`, then `ledger mark add <name>`" if s["taint"] >= 3 else "")
             s["cruelty"] = 0

@@ -62,3 +62,7 @@ Tag key: `#crows` `#nimble` `#stonetop-arcana` `#fallout` `#marks` `#boons` `#md
 ## 2026-10-08 · Homebrew audit and creep measure · `#lean #decision #measure #crows`
 - Full register in `out/homebrew_audit.md`: layer +65% words and hot card +50% since v1 (Nevers 11 to 23). Five tests (evidence, Ref judgment, state, cost, origin). Core = RAW + Threat ticks + tier-1 card + social moves + precedence + short protocol + tools. Appendices: wilderness, Marks. Enforce in tools what failed twice in text.
 - Reflection: card growth is the creep number that matters, because it is what the Ref reads at every DT end. Two-pilot rule for calling a text rule settled.
+
+## 2026-10-08 · v1.3 core and appendices built · `#lean #built #untested #decision`
+- Followed the audit recommendation (user: 'I will follow your recommendations'). Layer v1.3, hot card v1.3 (780 words), appendices A (wilderness) and B (Marks, `set marks 1`). v1.2 files kept for reference.
+- Reflection: shrinking the card cost no tested rule; everything cut was untested or restated. The risk is a trimmed protocol line losing a fix Pilot 02 needed, so Pilot 03 should score §16 items one by one.

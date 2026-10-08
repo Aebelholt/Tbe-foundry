@@ -10,12 +10,13 @@
 ## What goes in the project (the "resident set")
 Load these. They are small (about 100 KB together):
 1. `crows_00_chassis_v3.md`: conduct and pacing.
-2. `crows_01_system_layer_v1.2.md`: rules (v1 plus Amendment 1 plus the wilderness supplement). **Use v1.2, not v1 or v1.1.**
+2. `crows_01_system_layer_v1.3.md`: rules (v1 plus Amendment 1 plus the wilderness supplement). **Use v1.3, not earlier versions.**
 3. `crows_02_source_index.md`: where each rule and creature lives.
-4. `crows_06_hot_card_v1.2.md`: the card the Ref re-reads at every DT end.
+4. `crows_06_hot_card_v1.3.md`: the card the Ref re-reads at every DT end.
 5. `03_director_sealed.md`: copy `03_director_sealed_template.md`, keep the Threats you want live. Ref only.
 6. `engine/`: `engine.py`, `tables.json`, `tables_wyrd.json`, `maps/`, `ledger.py`. Run `python3 engine/validate_tables.py engine/tables.json engine/tables_wyrd.json` once.
 7. (optional) `crows_08_pilot_checklist.md`.
+8. **Appendices, off by default:** `crows_09_appendix_wilderness.md` (moon, hunts, hazards, diseases, madness; uses `tables_wyrd.json`) and `crows_10_appendix_marks.md` (Miasma Marks; turn on with `ledger set marks 1`). Add one to the project only when you want it.
 
 **Source text** (needed because the layer streams one page at a time): your own copies of the five Playtest 2 books. Run `python3 tools/extract_sources.py <folder of the five .html files> crows/src`. It writes `crows/src/crows_0N_*.txt` with `===== PDFPAGE n =====` markers, which is what the index's page references use. **Do not commit these** (they are in `.gitignore`).
 
@@ -32,7 +33,7 @@ Load these. They are small (about 100 KB together):
 4. Run the pilot first: ten exchanges including one fight and one encounter check, scored on `crows_08_pilot_checklist.md`.
 
 ## Start prompt (paste as your first message)
-> You are the Ref for a solo Crows game. Load, silently and in this order: `crows_00_chassis_v3.md`, `crows_01_system_layer_v1.2.md`, `crows_02_source_index.md`, `03_director_sealed.md`. During play re-read only `crows_06_hot_card_v1.2.md`, at every DT end, scene end, village day change, or after 15 exchanges. Run the engine for every Ref roll, table, travel day, cycle, moon, hunt and map question, and paste its `Ref:` line as the mechanics line. `SEALED:` lines never reach me. My crow's rolls are made with `engine/ledger.py`; I paste the lines, you never recompute them. My first message gives my background and gc. Open in fiction.
+> You are the Ref for a solo Crows game. Load, silently and in this order: `crows_00_chassis_v3.md`, `crows_01_system_layer_v1.3.md`, `crows_02_source_index.md`, `03_director_sealed.md`. During play re-read only `crows_06_hot_card_v1.3.md`, at every DT end, scene end, village day change, or after 15 exchanges. Run the engine for every Ref roll, table, travel day, cycle, moon, hunt and map question, and paste its `Ref:` line as the mechanics line. `SEALED:` lines never reach me. My crow's rolls are made with `engine/ledger.py`; I paste the lines, you never recompute them. My first message gives my background and gc. Open in fiction.
 
 ## Self-test
 `python3 engine/selftest.py` runs 30 offline checks on the engine and Ledger (no tokens). Run it after any engine change.

@@ -79,3 +79,6 @@ Distillation:
 - Pull Strings and Sense Motive tiers 1 and 3 are untested.
 - The thunder backlash ruling and the card-damage 1d6 have no printed source `[UNSOURCED]`.
 - The wilderness and mark numbers are HOUSE guesses.
+
+## 7. Done 2026-10-08 (v1.3)
+Core plus appendices built as recommended: layer 8,439 to 7,391 words, hot card 1,244 to 780 (under v1's 830), Nevers 23 to 11, wilderness and Marks moved to appendices (off by default), §17 consolidated to an 8-item protocol. Marks gated by `ledger set marks 1`. Still to do: Pilot 03 on v1.3, then the exposure log.

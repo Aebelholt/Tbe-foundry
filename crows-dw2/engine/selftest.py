@@ -30,6 +30,8 @@ L("pool", "2"); c, o = L("test", "S"); check("pool consumed in order", "pool" in
 c, o = L("void", "test"); check("void undoes last mutating command", c == 0 and "void" in o.lower(), o)
 L("set", "stamina", "9"); c, o = L("take", "3", "--p", "--src", "t"); check("take reduces Stamina, no wound", "Stamina 9→6" in o and "wounds 0→0" in o, o)
 c, o = L("take", "9", "--p", "--src", "t"); check("take overflow places wounds in P slots", "wound in P" in o, o)
+L("set", "cruelty", "1"); c, o = L("rest"); check("Marks are off by default (no taint)", "taint" not in o, o)
+L("set", "marks", "1")
 for _ in range(3): L("rest")  # no cruelty: no taint
 c, o = L("status"); check("clean rests add no taint", "taint" not in o, o)
 for i in range(3):

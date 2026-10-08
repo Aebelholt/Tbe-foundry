@@ -73,3 +73,10 @@ These follow from the audits, where the Ref kept a count by hand and lost it. Th
 
 ## Pilot 02 fixes
 - Layer §17.15 to §17.18, §17.10 wording; hot card Nevers; Ledger refuses cast/attack with an item outside H1/H2 (R10); checklist v1.2 items. See parking_lot.md.
+
+
+## v1.3 (distilled from the homebrew audit)
+- **Layer v1.3:** v1.2 minus §16 wilderness and §17.14 Marks (now Appendices A and B, off by default), with §17 rewritten as a 8-item §16 Play protocol. Words 8,439 to 7,391.
+- **Hot card v1.3:** 1,244 to 780 words, Nevers 23 to 11 grouped lines, no wilderness or Marks lines.
+- **Ledger:** taint only counts when `marks` is set (`ledger set marks 1`). Selftest updated.
+- Evidence and verdicts: `out/homebrew_audit.md`.
