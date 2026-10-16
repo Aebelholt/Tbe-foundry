@@ -2,80 +2,104 @@
 
 Skill-challenge camp. Players say what they do and which skill, you set the TN and the stakes. No fixed task list.
 
+Borrows from `making-camp-table.md` only: Hearth Song, Good Meal, Tend a Wound, Stand Guard, and the night-action rule. Boons last until the next camp or Fellowship Phase.
+
 ## Setup
 
 - Ruin fortress cleared. Tents ready.
-- **3 sentries**, never relieved, are out there and will come back. When is tonight's dice.
+- **3 sentries**, never relieved, are out there and will come back. Stats (fill in now): Might ___, *Expert Ambusher*? ___, *Heartless*? ___.
 - **2 captured flatfoots** (prisoners).
 - **[Ally]** may seize an idea of revenge on the prisoners. Name them and decide what they are owed.
 - The party decides **where to rest**. That choice changes the sentry odds.
 
-## Two clocks (track on paper, hide from players)
+## Two clocks (hidden)
 
-**Sentries (0 to 6).** Roll 1d6 at dusk, midnight, and before dawn. They arrive if the roll is **at or below the clock**. Each watch, add 1 to the clock. Location and actions shift it (below).
+**Sentry clock.** Starts at 0.
+- Base = location modifier + fire modifier, **minimum 0, maximum 6**.
+- Each watch: add the number of the watch (1 at dusk, 2 at midnight, 3 before dawn), then roll 1d6. They arrive on a roll **at or below** the clock.
+- A clock of **6 is automatic arrival**.
+- **Stealth or Explore** (hide tracks, rig alarms): -1 on success, **once per night**, not per hero.
+- A prisoner who escapes: +1.
 
-**[Ally] Menace (0 to 3).**
-- +1 each watch the prisoners are left unguarded and unwatched.
-- +1 if the party mocks, ignores or dismisses [Ally]'s grievance.
-- -1 if a hero deals with the grievance directly (Persuade, Courtesy, Insight) and succeeds.
-- At **3**, [Ally] acts. Mid-night, at the worst moment, as a night action: the scene opens mid-act and the Company can still act.
+Odds the sentries arrive at some point in the night (for you only):
+
+| Camp | Odds |
+|---|---|
+| Courtyard, fire | about 97% |
+| Inner hall, fire | about 89% |
+| Inner hall, cold | about 44% |
+| Gatehouse, cold | about 17% |
+| Cellar or tower, cold | 0% |
+
+**[Ally] Menace (0 to 3).** Starts at 0.
+- +1 each watch the prisoners are left unguarded.
+- +1 if the party mocks, ignores or dismisses [Ally]'s grievance, or if a roll to deal with it fails with an Eye.
+- -1 if a hero deals with the grievance directly (Persuade, Courtesy, Insight) and succeeds. **One attempt per watch**, success or not.
+- At **3**, [Ally] acts. Mid-night if possible. If it hits 3 in the dawn watch, [Ally] acts at the next quiet moment.
+- **How it opens:** a night action. Watch success: the scene opens as the act begins. Watch failure: the scene opens mid-act, the Company can still act. A hero on **Stand Guard** over the prisoners covers them whatever the watch rolled.
 
 ## Where they rest
 
-| Choice | Sentry clock | Notes |
+| Choice | Modifier | Notes |
 |---|---|---|
-| Tents in the courtyard | +1 | Easy to see from outside, easy to escape. Hard to guard prisoners and watch the gate at once. |
-| Gatehouse | -1 | Held gate, one door. A sentry coming back sees the cleared gate and hears the party. Prisoners can be held in the guardroom. |
+| Courtyard tents | +1 | Seen from outside, easy to escape. Hard to guard prisoners and watch the gate. |
+| Gatehouse | -1 | One door. Prisoners can be held in the guardroom. |
 | Inner hall | 0 | Dry, defensible. Sentries who enter are trapped with the party. |
-| Cellar or tower | -2 | Hidden, but no sight of the gate. Fewer exits. |
-| Split up | 0 | Weaker watch. Prisoners and [Ally] are a danger when left alone. |
+| Cellar or tower | -2 | Hidden, but the watch **can't see them coming**: any arrival counts as "missed them". Fewer exits. |
+| Split up | 0 | Weaker watch. Prisoners and [Ally] are dangerous when left alone. |
 
-A lit fire is **+1** to the sentry clock. A cold camp is **-1** and loses the cook and song benefits.
+Lit fire: **+1**. Cold camp: **-1**, and no Good Meal or Hearth Song.
 
 ## Running a watch
 
 1. Players say what each hero does. One sentence, a skill, a purpose.
-2. You call a TN-attribute roll. A good idea earns (1d). A weak one earns a penalty or an Ill-favoured roll.
+2. You call a TN. A good idea earns (1d). A weak one costs (1d). Never Ill-favoured. Dice cap: at most (1d) gained and (1d) lost, and they cancel.
 3. Resolve, then move the clocks.
-4. Roll the sentry die. If they arrive, see below.
+4. Roll the sentry die.
 
-**Skill hooks (suggestions, not a menu)**
-- **Awareness or Scan:** a hero on watch. Success on the watch: the sentries are seen first, or noises are heard early.
-- **Stealth or Explore:** rig alarms, hide tracks, pick the spot. Lowers the sentry clock by 1 on success.
-- **Persuade, Insight, Courtesy:** read or placate [Ally]. Menace -1 on success.
-- **Enhearten or Song:** steady the prisoners, comfort the Company, a Hearth Song (2 uses, Shadow -1 after a Dread test, needs fire).
-- **Healing:** tend a Wound (Short Rest as if not Wounded, the Wound stays).
-- **Lore or Riddle:** what the fortress is, hidden ways, a rumour of the sentries.
-- **Battle or Craft:** ready a trap, bar the gate. Success: the first Close Quarters round is yours.
+**Skill hooks (suggestions)**
+- **Awareness**, or **Battle** or **Hunting**: the watch. Success: sentries are seen first, noises heard early. **No watch at all** (nobody awake and watching): the sentries attack with complete surprise.
+- **Stealth or Explore:** see the clock.
+- **Persuade, Insight, Courtesy:** read or placate [Ally].
+- **Hunting** (fire, food): **Good Meal**, 2 uses, a Protection roll Favoured.
+- **Enhearten or Song:** steady the Company. Song with fire: **Hearth Song**, 2 uses, Shadow -1 after a Dread test. A song sung at the table gains (1d).
+- **Healing:** Tend a Wound, as the table copy.
+- **Lore or Riddle:** what the fortress was, hidden ways, a rumour of the sentries.
+- **Battle or Craft:** ready a trap, bar the gate. If the party springs it on the sentries: **no opening volley and they lose (1d) on all combat rolls in round 1**.
 
-**Eye** on any roll: something small goes wrong, a sound, a spilled lamp, a prisoner talks. Pick one. Failing with an Eye while watching the prisoners: Menace +1.
+**Eye** on any roll: something small goes wrong. A sound, a spilled lamp, a prisoner talks. Pick one.
+
+## Sleep
+
+A hero who acts in **two or more watches** takes a **Short Rest**, not a Prolonged one. Standing watch or guarding the prisoners counts as acting. This puts the watch rota, and guarding against sleeping, in direct conflict.
 
 ## When the sentries return
 
-Roll **2d6** or choose. Fits the fiction first.
+Roll **2d6**, or choose.
+
+**Modifiers:** held gate with a fire visible **-2** (towards Wary). Courtyard camp **+2** (towards Hostile). A watch that saw them first **-2**.
 
 | Result | They come |
 |---|---|
-| 2 to 4 | Wary. Slow, quiet, watching. They wait at the edge of the light. Parley is possible. |
+| 2 to 4 | Wary. Slow, quiet, watching the edge of the light. Parley possible. |
 | 5 to 8 | Tired and nervy. They scatter if the gate looks held. |
 | 9 to 12 | Hostile. They think the fort is theirs and attack. |
 
-**Surprise.**
-- The watch **seen them first:** the Company chooses (ambush, parley, hide).
-- The watch **missed them:** every hero rolls Awareness. Failures act last in round 1 (Core p.95). They catch the party half-asleep.
-- A **held gate with a fire visible**: they know someone is in. A **cold camp**: they may walk in and stumble on the sleepers.
+**Surprise**
+- The watch **saw them first:** the Company chooses (ambush, parley, hide).
+- The watch **missed them**: every hero rolls Awareness (Core p.95). Failures get no opening volley and no action in the first Close Quarters round.
+- A **cold camp** may be walked into by the sentries.
 
-**If they find the prisoners**, the sentries may free them, kill them, or demand them. Prisoners and [Ally] can meet here. This is where it gets interesting.
+**If they find the prisoners**, they may free them, kill them, or demand them. Prisoners and [Ally] can meet here.
 
 ## Morning
 
-- Normal rest (Core p.71). Hope 0 gains 1 on a Prolonged Rest.
-- Boons from last night end now.
-- Tell the players what the night cost: Endurance, a hurt prisoner, a Shadow point. **Do not** rewrite what the dice said.
+- Resolve rests as above (Core p.71). Hope 0 gains 1 on a Prolonged Rest.
+- Tell the players what the night cost. Do not rewrite what the dice said.
 
 ## Table notes
 
-- Say the odds **vaguely** ("the dark feels watched"), never the clock number.
+- Describe the odds vaguely ("the dark feels watched"), never the clock number.
 - Fiction shapes the odds before rolling, never the result after.
-- If a roll isn't needed (mending, quiet talk), narrate it and move on.
-- 20 minutes in? Skip to the sentry roll and let the dice finish it.
+- If a roll isn't needed (mending, quiet talk), narrate it.
+- Short on time: skip to the sentry roll and let the dice finish it.

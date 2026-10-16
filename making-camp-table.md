@@ -99,7 +99,6 @@ The One Ring 2E. Loremaster side. Core rests run unchanged (Core p.71). Camp add
 
 ## Warts (known, unfixed, run it anyway)
 
-- **Unverified against Core:** the Ambush effects in the watch table. Check p.95 wording if a player queries it.
 - **Lend a Hand overlaps Core Support (p.20).** Kept because it is camp-only and costs the helper's task.
 - **Tend a Wound** overrides Core's rule that Wounded heroes gain no Endurance on a Short Rest. Intentional.
 - **Dunlending Survivor Virtues** not checked against the boons.
