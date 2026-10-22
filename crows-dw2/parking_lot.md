@@ -194,3 +194,24 @@ Tag key: `#crows` `#nimble` `#stonetop-arcana` `#fallout` `#marks` `#boons` `#md
 - **Failed:** no keyed site, threat, clock or deadline; case sat on a table; scenes with no practical endpoint; no XP, no beat log, no saves; Ref wrote the PC's motives.
 - **Fixes queued:** (1) readiness report (edition, source index, hot card, config version, actors, DT policy, instantiated scenario); (2) keyed-site template (objective, obstacle, inhabitants' wants, triggers, delay cost); (3) scene-endpoint diagnostic that compresses instead of adding threats; (4) companion model (goal, refusal conditions, own sheet); (5) durable saves with export metadata (full, partial, reconstructed); (6) precedence rule: printed rule > explicit house change > kit advice, soften "clever plan never removes a roll" for PT3; (7) version-tag engine and checks (PT2/PT3); (8) repackage zip so it ships resident rules or says plainly it does not; (9) trim tool ceremony for incidental scenes (batch calls, no preambles).
 - **Open question to user:** readiness report plus keyed-site template first, or PT3 engine deltas first.
+
+## 2026-10-22 | PT3 play pack built (crows-dw2-import) [decision] [build]
+- **Ask:** retry the Kit Croft game with the whole kit, plus a check that every needed tool is in the package.
+- **Built:** the engine and Ledger now run PT3:
+  - encounters d10 <= EN (default 3)
+  - travel paces 1/2/3 hexes at EN 2/4/6, with two checks
+  - Group A fast/slow round phases
+  - `dt` clock with the greed bonus
+  - 20-day cycle
+  - Effort after the roll
+  - Good Night's Rest
+  - Miasma RR at -cruelty
+  - PT3 levels
+  - `--who` companion sheets
+  - `rule` search over the user's extracted books
+  - tables_pt3.json overrides; PT2-only tables refused
+- **Readiness:** `engine/ready.py` checks manifest, editions, sources, sheets, DT policy, sealed prep (live threats, keyed site, companion) and save type. Verdicts: expedition / village only / not ready.
+- **Docs:** crows_11_pt3_overrides.md (precedence: printed rule > HOUSE > sheet > layer), hot card v1.4, sealed template keyed-site and companion blocks, PLAY.md start prompts.
+- **Kit Croft:** saves/kit_croft/setup.sh rebuilds both sheets. AD 0 for Kit comes from the PT3 Assassin starting equipment (no armor), Mara AD 10.
+- **Open:** the XP divisor for solo with a companion (printed: per player = 1). Gear slot placement. Layer and source index still carry PT2 text, outranked by the overrides sheet; a full rewrite waits on the pilot.
+- **Table audit:** most PT2 tables match PT3 text. The ones that changed are Miasma effects, the travel-role tests and Minor/Major Treasures (renamed).
