@@ -118,7 +118,7 @@ const woundsBlank = () => {
   return w;
 };
 
-function harness({ user, rolls = [], answers = {}, attacker, target }) {
+function harness({ user, rolls = [], answers = {}, attacker, target, settings }) {
   const log = [];
   const queue = rolls.slice();
   class Roll {
@@ -133,7 +133,7 @@ function harness({ user, rolls = [], answers = {}, attacker, target }) {
   const targets = target ? new Set([{ actor: target, name: target.name, center: { x: 0, y: 0 }, document: { elevation: 0 } }]) : new Set();
   const game = {
     user: Object.assign(user, { isGM: true, character: null, targets }),
-    settings: { get: () => "publicroll" },
+    settings: settings ?? { get: () => "publicroll" },
     thebrokenempires: {
       memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
       ui: { taskButtons: controls.taskButtons, favorButtons: controls.favorButtons, readRadio: controls.readRadio },
@@ -188,6 +188,29 @@ console.log("\n3. TBE: Skill Roll remembers the modifier, never the Favor");
   const h3 = harness({ user, rolls: [30], attacker: other });
   await h3.run(cmd("TBE: Skill Roll"));
   check(/name="mod" value="0" checked/.test(h3.log.find((e) => e.ev === "dialog")?.content || ""), "a different character opens on its own memory (Medium)");
+}
+
+console.log("\n3b. TBE: Extended Roll takes the Task Modifier (p.18), remembers it, and adds it");
+{
+  const user = mkUser();
+  const hero = actorStub({ id: "H", name: "Hero", type: "character", items: [], system: { resolve: { value: 5, max: 5 }, wounds: woundsBlank() } });
+  const store = { encounters: { T1: { id: "T1", kind: "extended", status: "active", name: "Track the stag", total: 0, slsRequired: 9,
+    intervalsUsed: 0, limit: 0, tolerance: 0, current: [] } } };
+  const settings = { get: (ns, k) => (k === "rollMode" ? "publicroll" : store[k]), set: async (ns, k, v) => { store[k] = JSON.parse(JSON.stringify(v)); } };
+  const answer = { tracker: "T1", act: "attempt", who: "Hero", pick: "", skillName: "Track", skillValue: "50", task: "-20", mod: "-5" };
+  const h1 = harness({ user, rolls: [40], attacker: hero, settings, answers: { "Extended Roll": answer } });
+  await h1.run(cmd("TBE: Extended Roll"));
+  const d1 = h1.log.find((e) => e.ev === "dialog")?.content || "";
+  check((d1.match(/name="task"/g) || []).length === 6 && /name="task" value="0" checked/.test(d1), "the Task Modifier is six buttons, opening on Medium", d1.slice(0, 160));
+  const key = Object.keys(store).find((k) => store[k]?.T1);
+  const att = store[key]?.T1?.current?.[0];
+  check(att?.skillValue === 25, "Track 50, Hard -20, situational -5: rolled against 25", att);
+  const h2 = harness({ user, rolls: [40], attacker: hero, settings, answers: {} });
+  await h2.run(cmd("TBE: Extended Roll"));
+  check(/name="task" value="-20" checked/.test(h2.log.find((e) => e.ev === "dialog")?.content || ""), "the next opening is on the Hard used last time");
+  const opp = cmd("TBE: Opposed Roll"), chase = cmd("TBE: Chase");
+  check(!/taskButtons\(/.test(opp.slice(opp.indexOf("/* TBE: Opposed Roll"))) && !/taskButtons\(/.test(chase.slice(chase.indexOf("/* TBE: Chase"))),
+    "Opposed Roll and Chase take no Task Modifier (p.18: \"should generally not be applied to opposed rolls\")");
 }
 
 console.log("\n4. TBE: Attack remembers the last attack; untrained Dodge and Endurance are 20");

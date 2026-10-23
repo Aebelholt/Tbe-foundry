@@ -71,6 +71,7 @@ then the user plays one session end to end (build, combat, wounds, cast,
 import `mythic_tables.json`, Random Events) and you fix what they find.
 
 ### 2. Shared chat cards two people can click (scope rule 3)
+**Done in v0.57.0** (`rules/card-claim.mjs`, `card_claim_check.mjs`). Use `TBE.claimCard` before any card button acts. Original brief:
 Nothing guards a card button against a player and the GM clicking at once.
 Before any card gets an action button (apply damage, accept a result),
 build the owner: a message-flag claim (`flags.the-broken-empires.claimed`,
@@ -80,6 +81,7 @@ against a stub, and a mutation that removes the claim. The Zweihander
 pattern is logged in BACKLOG's prior-art section.
 
 ### 3. Close small open items (Phase 2/3)
+**Done in v0.57.0**, except the eight `esc()` copies (opportunistic only). The derive() helpers item was already done in v0.53.0. Original list:
 - Create Character: "Spread what is left" can pour points into a skill
   already at 70; skip capped skills (owner: `module/chargen/`).
 - `derive()` still takes `applyAbilityScore`, `raiseExpertise`,

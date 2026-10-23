@@ -708,7 +708,7 @@ scope at least one pass at the player-facing output itself.
   entry module at all, and the Enchantment type had shipped with no label.
   Pass an unpacked release zip as `dir` to boot the artifact, not the tree.
   Read it before adding a document type, a setting or a rules export.
-- `node qol_check.mjs` — 49 checks over the v0.49.0 batch. The memory owner
+- `node qol_check.mjs` — 53 checks over the v0.49.0 batch (and v0.57.0's Extended Roll Task Modifier, 3b). The memory owner
   (`module/helpers/memory.mjs`) run as a sequence against a user whose
   setFlag MERGES like Foundry's, which is why memory is one JSON string: a
   nested flag object keeps a key you deleted. The BUILT TBE: Skill Roll and
@@ -772,6 +772,25 @@ scope at least one pass at the player-facing output itself.
   by uuid, and the BUILT macro whispers its card to the GM only. Read it
   before changing the probe: **a probe that cleans up by name, or stops at
   the first failure, is worse than none.**
+- `node card_claim_check.mjs` — 30 checks over the shared-card guard
+  (`module/rules/card-claim.mjs`, v0.57.0), scope rule 3 made code. **A
+  claimed flag written by each client is not a guard**: updates are not
+  atomic, so two clients both read "unclaimed" and both act. The active GM's
+  client referees (one JS thread, a per-key queue and a session memory);
+  players ask it over the system socket; no GM, or no answer, is a sentence
+  and nothing done. Every test fires its clicks in one tick over a socket
+  with latency; the mutation removes the queue and memory and two clicks win.
+  Use `TBE.claimCard(message.id, action)` before any card button acts.
+- `node funnel_roster_check.mjs` — 26 checks running the BUILT TBE: Funnel
+  Roster against a stub world: one guarded write per change, the card says
+  only what was saved (mutation: announcing regardless puts a death that
+  never happened in the log), conversion carries skills in their catalogue
+  groups, a player asking to convert is told why not, the legacy flag is
+  moved and deleted.
+- `node flag_scope_check.mjs` — 10 checks that nothing in `macros/` or the
+  system's `module/` reads or writes the illegal `tbe` flag scope outside
+  `migration.mjs` (deleting a legacy key with `-=` is allowed). Each of the
+  five forbidden shapes is fed to the scanner and must be caught.
 - `node concepts_check.mjs` — 17 checks over `data/concepts.json`, the
   original (not book) step-1 concept table. Every skill suggestion must be a
   real catalogue skill in the category it is filed under, because the window
@@ -794,7 +813,7 @@ scope at least one pass at the player-facing output itself.
   script could not run, and the journal shipped for months with every page
   one early (and, after v0.53.0, naming a retired macro) while every check was
   green. Needs `/tmp/tbe.txt`. Read it before touching the audit's rules.
-- `node creator_check.mjs` — 108 checks over the Create Character window
+- `node creator_check.mjs` — 111 checks over the Create Character window
   (`module/chargen/`, v0.52.0). Section 1 holds the system's rule copies in
   `chargen/rules.mjs` equal to `_lib.js`'s over their whole input space.
   Section 3 is rule 2 enforced: every `data-bind` names a draft field and

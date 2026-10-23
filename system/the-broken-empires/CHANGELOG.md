@@ -1,3 +1,27 @@
+# 0.57.0 - 2026-10-23
+
+**Fixes found reading the tools as a player, and the guard shared card buttons need.**
+
+- **TBE: Funnel Roster no longer reports a change it did not make.** A player
+  without permission marking someone dead got "is now dead" in the chat log
+  while nothing changed. The card now shows only what was saved, or the
+  reason it was not. A player asking to convert a survivor is told it is the
+  GM's job instead of nothing happening, and a townsperson removed from the
+  world no longer stops the macro.
+- **"Spread what is left" skips skills already at 70.** In Create Character
+  it used to put career points into a capped skill, where they were lost. It
+  now gives each skill only the room it has up to 70, measured before
+  Rounding Out, and says if any points have nowhere to go.
+- **TBE: Extended Roll takes the Task Modifier** (p.18), as buttons like
+  Skill Roll, remembered per user. The other box is now labelled as the
+  situational modifier. Opposed Roll and Chase keep no Task Modifier: the
+  book says opposed rolls set their own difficulty.
+- **Shared card buttons will act once.** New guard for any chat card
+  button a player and the GM might click together: the active GM's client
+  decides who was first, over the system socket. No card uses it yet; it is
+  in place so the first one cannot ship without it. The system now opens its
+  socket.
+
 # 0.56.0 - 2026-10-23 (test candidate)
 
 **Table compatibility test.**

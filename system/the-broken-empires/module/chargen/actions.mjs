@@ -27,6 +27,14 @@ const sum = (o) => Object.values(o || {}).reduce((n, v) => n + Math.max(0, num(v
 
 /* ---- writing a field ----------------------------------------------------- */
 
+/* A skill's value where career points land: derive()'s provenance, minus
+   what the Career and Rounding Out steps (which come at and after it) added. */
+export function beforeCareer(skill) {
+  if (!skill) return 0;
+  const later = (skill.sources || []).filter((x) => /^(Career|Rounding Out)/.test(x.label || "")).reduce((n, x) => n + num(x.delta), 0);
+  return num(skill.value) - later;
+}
+
 export function pathOf(bind, key) {
   const p = String(bind).split(".");
   if (key !== undefined && key !== null && key !== "") p.push(String(key));
@@ -366,9 +374,23 @@ export async function act(name, data, env) {
       const spent = names.reduce((n, _, i) => n + Math.max(0, num(d.alloc[cat + "_" + i])), 0);
       const empty = names.map((_, i) => i).filter((i) => !num(d.alloc[cat + "_" + i]));
       if (pool - spent <= 0 || !empty.length) { env.notify?.(pool - spent <= 0 ? cat + " is already fully spent." : "Every " + cat + " skill already has points; clear one to spread the rest."); break; }
-      const left = pool - spent, each = Math.floor(left / empty.length);
-      let rest = left - each * empty.length;
-      for (const i of empty) { d.alloc[cat + "_" + i] = each + (rest > 0 ? 1 : 0); if (rest > 0) rest--; }
+      /* Room under the creation cap (p.80), measured where the career points
+         land: before Rounding Out, which comes after them (book step order).
+         A skill already at 70 gets nothing; spare points go round again. */
+      const CAP = num(R.CHARGEN_SKILL_CAP, 70);
+      const room = Object.fromEntries(empty.map((i) => [i, Math.max(0, CAP - beforeCareer(env.ch?.skills?.[names[i]]))]));
+      const targets = empty.filter((i) => room[i] > 0);
+      if (!targets.length) { env.notify?.("Every empty " + cat + " skill is already at " + CAP + "; put the points somewhere else."); break; }
+      let rest = pool - spent, moved = true;
+      const add = Object.fromEntries(targets.map((i) => [i, 0]));
+      const even = Math.floor(rest / targets.length);
+      for (const i of targets) { const g = Math.min(even, room[i]); add[i] += g; room[i] -= g; rest -= g; }
+      while (rest > 0 && moved) {
+        moved = false;
+        for (const i of targets) if (rest > 0 && room[i] > 0) { add[i]++; room[i]--; rest--; moved = true; }
+      }
+      for (const i of targets) if (add[i]) d.alloc[cat + "_" + i] = add[i];
+      if (rest > 0) env.notify?.(rest + " " + cat + " point(s) would pass " + CAP + "; put them on a skill that has room.");
       break;
     }
     case "spread-magic": {

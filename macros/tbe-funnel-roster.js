@@ -86,17 +86,31 @@ if (!all.length) {
 
     /* Status and Scars: written onto the flag, and the Scar's line onto the
      * biography, because a scar the GM cannot see at the table is not a scar. */
-    if (data.who) {
+    /* One guarded write, and the card says only what it actually saved:
+     * the card used to announce "is now dead" even when a player without
+     * write permission had changed nothing (CLAUDE.md, scope rule 2). */
+    if (data.who && (data.status || data.scar)) {
       const a = game.actors.get(data.who);
-      const f = TBE.clone(TBE.flagOf(a, "funnel"));
-      if (data.status) { f.status = data.status; notes.push(a.name + " is now <b>" + data.status + "</b>."); }
+      const f = a ? TBE.clone(TBE.flagOf(a, "funnel")) : null;
+      const said = [];
+      if (!f) { notes.push("That townsperson is no longer in the world; nothing was changed."); }
+      else {
+      const changes = {};
+      if (data.status) { f.status = data.status; said.push(a.name + " is now <b>" + data.status + "</b>."); }
       if (data.scar) {
         const scar = TBE_FUNNEL.scars.find((s) => s.name === data.scar);
         f.scars = (f.scars || []).concat([{ name: scar.name, line: scar.line }]);
-        notes.push(a.name + " carries <b>" + scar.name + "</b> — " + scar.line);
-        await a.update({ "system.biography": (a.system.biography || "") + "<p><b>Scar — " + scar.name + ":</b> " + scar.line + "</p>" });
+        said.push(a.name + " carries <b>" + scar.name + "</b> — " + scar.line);
+        changes["system.biography"] = (a.system.biography || "") + "<p><b>Scar — " + scar.name + ":</b> " + scar.line + "</p>";
       }
-      await TBE.write(a, { [TBE.flagPath("funnel")]: f, "flags.tbe.-=funnel": null }, "the roster change");
+      changes[TBE.flagPath("funnel")] = f;
+      changes["flags.tbe.-=funnel"] = null;
+      const w = await TBE.write(a, changes, "the roster change for " + a.name);
+      if (w.ok) notes.push(...said); else notes.push('<span style="color:#8b1a1a">' + w.notice + "</span>");
+      }
+    }
+    if (data.conv && !game.user.isGM) {
+      notes.push("Only the GM can convert a survivor: it creates a new character actor. Ask the GM to run the roster.");
     }
 
     /* Conversion. Everything they already are carries over: skills with their
@@ -145,7 +159,8 @@ if (!all.length) {
       });
       await pc.createEmbeddedDocuments("Item", skills.concat(talents));
       f.status = "converted";
-      await TBE.write(src, { [TBE.flagPath("funnel")]: f, "flags.tbe.-=funnel": null }, "the roster change");
+      const w = await TBE.write(src, { [TBE.flagPath("funnel")]: f, "flags.tbe.-=funnel": null }, "marking " + src.name + " converted");
+      if (!w.ok) notes.push('<span style="color:#8b1a1a">' + w.notice + "</span>");
       notes.push("<b>" + pc.name + "</b> is a character now, in <b>TBE Survivors</b>" +
         (data.grew ? ", " + data.grew + " +10" : "") + (data.goal ? ', with the goal "' + data.goal + '"' : "") + ".");
       notes.push('<span style="font-size:11px;opacity:.8">What a real character still owes them (career, Cultural Background, Life Events, the rest of their Goals) is added on their sheet. Create Character builds from scratch, so it would replace what the funnel gave them.</span>');

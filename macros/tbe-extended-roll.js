@@ -101,7 +101,14 @@ const content =
    * modifier field at all to put it in -- unlike Skill Roll/Opposed Roll/
    * Haggle, which had the field but left it hardcoded to 0. Added here for
    * parity, prefilled the same way. */
-  '<label style="display:block">Modifier: <input type="number" name="mod" value="' + TBE.encMod(me) + '" style="width:100%"></label>' +
+  /* An extended roll is a run of standard rolls, so the Task Modifier Table
+   * applies (p.18; p.31 makes Track the example: "apply a task modifier.
+   * Often made as an extended roll"). Opposed rolls and Quick Chases take
+   * none ("Task modifiers should generally not be applied to opposed rolls",
+   * p.18), so TBE: Opposed Roll and TBE: Chase keep a plain situational box. */
+  '<div style="margin:2px 0">Task Modifier (p.18):</div>' +
+  TBE.taskButtons(TBE.recall("task", "extended") ?? 0, "task") +
+  '<label style="display:block">Other modifier (situational, encumbrance): <input type="number" name="mod" value="' + TBE.encMod(me) + '" style="width:100%"></label>' +
   "</div>";
 
 const data = await TBE.prompt("Extended Roll", content, "Go");
@@ -217,7 +224,8 @@ if (data) {
       /* ---- attempt ---- */
       const pick = TBE.readPick(data.pick);
       const skillName = pick ? pick.name : (data.skillName || "Untitled skill").trim();
-      const skillValue = (pick ? pick.value : TBE.num(data.skillValue, 50)) + TBE.num(data.mod, 0);
+      const skillValue = (pick ? pick.value : TBE.num(data.skillValue, 50)) + TBE.num(data.task, 0) + TBE.num(data.mod, 0);
+      await TBE.remember("task", "extended", TBE.num(data.task, 0));
       const who = (data.who || me?.name || "Someone").trim();
       const { roll, r } = await TBE.rollAttempt(skillValue, pick ? pick.expertise : 0);
       rolls.push(roll);

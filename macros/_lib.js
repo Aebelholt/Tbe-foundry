@@ -1807,6 +1807,18 @@ TBE.flagOf = function (doc, key) {
   return cur === undefined ? doc?.flags?.tbe?.[key] : cur;
 };
 
+/* A button on a shared chat card does its thing ONCE, table-wide: the
+ * player and the GM can click in the same second (CLAUDE.md scope rule 3).
+ * The system decides (module/rules/card-claim.mjs: the active GM's client
+ * referees). Without the system there is no referee, so the answer is no.
+ *   const c = await TBE.claimCard(message.id, "apply-damage");
+ *   if (!c.ok) return ui.notifications.info(c.notice);  */
+TBE.claimCard = async function (messageId, action) {
+  const C = (typeof game !== "undefined" && game?.thebrokenempires?.cards) || null;
+  if (!C?.claim) return { ok: false, by: null, notice: "Shared card buttons need The Broken Empires system installed. Nothing was done." };
+  return C.claim(messageId, action);
+};
+
 /* Escape text bound for a chat card. Eight macros each define a private
  * `esc` with this exact body; those are left alone (they shadow harmlessly
  * and ripping them out is not this task -- logged in BACKLOG), but anything

@@ -29,6 +29,7 @@ import * as tokenLink from './helpers/token-link.mjs';
 import * as portraits from './helpers/portraits.mjs';
 import * as oracle from './helpers/oracle-import.mjs';
 import { runTableSmokeTest } from './helpers/table-smoke.mjs';
+import * as cardClaim from './rules/card-claim.mjs';
 import * as chargenRules from './chargen/rules.mjs';
 
 /* -------------------------------------------- */
@@ -47,6 +48,9 @@ Hooks.once('init', function () {
     /* Retired macros and their redirects (helpers/retired-macros.mjs). */
     retiredMacros: RETIRED_MACROS,
     smoke: { run: runTableSmokeTest },
+    /* Who clicked a shared chat card's button first (rules/card-claim.mjs,
+       v0.57.0): the active GM's client decides, so an action happens once. */
+    cards: { claim: cardClaim.claim, claimedBy: cardClaim.claimedBy },
     /* Portrait roster (helpers/portraits.mjs) and character-token linking
        (helpers/token-link.mjs), v0.54.0. */
     /* Oracle tables the GM imports from their own file (helpers/oracle-import.mjs,
@@ -304,6 +308,12 @@ Hooks.once('init', function () {
  * fires and nothing here runs. */
 Hooks.once('diceSoNiceReady', (dice3d) => {
   diceRoles.registerDiceRoles(dice3d, game.system.id);
+});
+
+/* The shared-card guard (rules/card-claim.mjs), on every client: players ask
+   the active GM's client, which decides who clicked first. */
+Hooks.once('ready', function () {
+  try { cardClaim.install(); } catch (err) { console.error('TBE | card guard failed to start', err); }
 });
 
 /* Applied at ready, for every user, before the GM-only migration below. */

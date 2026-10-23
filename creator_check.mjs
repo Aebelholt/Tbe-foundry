@@ -272,6 +272,28 @@ console.log("\n4. Sequences: what a change clears, and what it keeps");
   await A.act("spread", { cat: "Combat" }, mkEnv(e2));
   const got = T.skillGroups.Combat.map((_, i) => e2.alloc["Combat_" + i] || 0);
   check(got[0] === 30 && got.reduce((a, b) => a + b, 0) === 80, "Spread what is left keeps a typed 30 and spends exactly the other 50", got);
+  /* ...and never into a skill with no room under 70 (p.80): it would be lost. */
+  const spE4 = DR.defaultDraft(T);
+  A.setBound(spE4, T, { bind: "careerName", value: "Warrior" });
+  const spEnv4 = mkEnv(spE4), spNotes4 = [];
+  spEnv4.notify = (m) => spNotes4.push(m);
+  const spCombat = T.skillGroups.Combat;
+  spEnv4.ch.skills[spCombat[0]] = { value: 70, sources: [] };
+  spEnv4.ch.skills[spCombat[1]] = { value: 66, sources: [] };
+  spEnv4.ch.skills[spCombat[2]] = { value: 75, sources: [{ label: "Rounding Out: bonus points", delta: 10 }, { label: "Career: Warrior (Combat points)", delta: 0 }] };
+  await A.act("spread", { cat: "Combat" }, spEnv4);
+  const spG4 = spCombat.map((_, i) => spE4.alloc["Combat_" + i] || 0);
+  const spPool4 = C.deriveWith(T, spE4).careerPoints.find((x) => x.cat === "Combat").pool;
+  check(spG4[0] === 0 && spG4[1] === 4 && spG4[2] === 5 && spG4.reduce((a, b) => a + b, 0) === spPool4,
+    "Spread skips a skill at 70, gives one at 66 only 4, measures room before Rounding Out, and still places the whole pool", { spG4, spPool4 });
+  check(A.beforeCareer({ value: 75, sources: [{ label: "Race: Ogre", delta: 10 }, { label: "Rounding Out: Young", delta: 10 }] }) === 65, "the value where career points land excludes Rounding Out");
+  const spE5 = DR.defaultDraft(T);
+  A.setBound(spE5, T, { bind: "careerName", value: "Warrior" });
+  const spEnv5 = mkEnv(spE5), spNotes5 = [];
+  spEnv5.notify = (m) => spNotes5.push(m);
+  for (const n of spCombat) spEnv5.ch.skills[n] = { value: 70, sources: [] };
+  await A.act("spread", { cat: "Combat" }, spEnv5);
+  check(!Object.values(spE5.alloc || {}).some(Boolean) && spNotes5.some((m) => /already at 70/.test(m)), "with every empty skill at 70, nothing moves and the player is told", spNotes5);
 
   /* Buying spends the silver the sheet shows; without silver it refuses. */
   const e3 = DR.defaultDraft(T);

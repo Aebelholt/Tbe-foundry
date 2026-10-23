@@ -1,3 +1,23 @@
+## v0.57.0 — built 2026-10-23
+
+NEXT_SESSION_PROMPT sections 2 and 3, built before the real-Foundry runs at
+Seb's request ("building everything to 100 before testing").
+- Shared-card guard, `rules/card-claim.mjs` (card_claim_check, 30). No card
+  uses it yet. Untested on a real table: the system socket (system.json
+  "socket": true needs a world reload after install to take effect).
+- Spread skips capped skills (creator_check +3, with the old code as the
+  mutation).
+- Funnel Roster: reported writes that did not happen; fixed, with
+  funnel_roster_check (26).
+- flag_scope_check (10): the `tbe` scope guard.
+- Extended Roll Task Modifier buttons (qol_check 3b); Opposed Roll and
+  Chase deliberately left without (p.18).
+- **Stale item closed:** "derive() takes applyAbilityScore, raiseExpertise,
+  talentNamed from the macro library" was already done in v0.53.0
+  (`chargen/rules.mjs` owns them, `creator_check.mjs` section 1 sweeps them).
+- Still open, deliberately: the eight private `esc()` copies (opportunistic
+  only).
+
 ## Table Smoke Test — v0.56.0 test candidate, reconciled 2026-10-23
 
 Built in another session from NEXT_SESSION_PROMPT.md section 1; only the zip
