@@ -163,6 +163,8 @@ const MACROS = [
   ["TBE: Empires List", "tbe-empires-list.js", "icons/svg/scroll.svg"],
   ["TBE: Create Character", "tbe-create-character.js", "icons/svg/statue.svg"],
   ["TBE: Link Character Tokens", "tbe-link-tokens.js", "icons/svg/anchor.svg"],
+  /* Real-Foundry compatibility probe, v0.56.0 (module/helpers/table-smoke.mjs). */
+  ["TBE: Table Smoke Test", "tbe-table-smoke.js", "icons/svg/book.svg"],
   /* TBE: Character Wizard, TBE: Finish Character and TBE: Build Character
      were retired in v0.53.0 (chargen rebuild stage 3): the Create Character
      window, in the system, replaced all three. World copies are pointed at

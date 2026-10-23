@@ -1,4 +1,18 @@
-# Unreleased (next batch)
+# 0.56.0 - 2026-10-23 (test candidate)
+
+**Table compatibility test.**
+
+- **New: TBE: Table Smoke Test** (GM). Checks dialog forms, token and scene
+  defaults, both ways to link a Character token, portraits, oracle table
+  result schemas and modified rolls, the character and equipment windows,
+  statuses and initiative. Uses temporary documents and posts one private
+  pass/fail card with the Foundry version. A failed check does not stop the
+  other checks or cleanup; anything left behind is named on the card.
+- **Character creation finishes rendering before returning its window.**
+  The equipment shop also returns its rendered dialog so the smoke test can
+  inspect and close the real windows.
+- This is a test candidate. A real Foundry run and the source-book checks
+  remain outstanding; the diagnostic is not proof of a completed playtest.
 
 - **Imported table names keep their capitals after an opening quote.** The
   focus table read "“meaningful” Standard Focus Table". Import again and it

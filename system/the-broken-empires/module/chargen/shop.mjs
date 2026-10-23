@@ -94,7 +94,8 @@ export async function openShop(actor) {
   if (!DV2) { ui.notifications?.warn("TBE: buying equipment needs Foundry v12 or later."); return; }
   const dlg = new DV2({ window: { title: "Buy equipment: " + actor.name }, position: { width: 480 }, content: '<div class="tbe-shop-host">' + body() + "</div>",
     buttons: [{ action: "close", label: "Close", default: true }] });
-  await dlg.render(true);
+  try { await dlg.render(true); }
+  catch (err) { await dlg.close(); throw err; }
   const host = () => dlg.element.querySelector(".tbe-shop-host");
   dlg.element.addEventListener("change", (ev) => {
     const k = ev.target.dataset?.shop;
@@ -112,4 +113,5 @@ export async function openShop(actor) {
     catch (err) { console.error("TBE | purchase failed", err); ui.notifications?.error("TBE: the purchase failed (" + (err?.message || err) + ")."); }
     host().innerHTML = body();
   });
+  return dlg;
 }

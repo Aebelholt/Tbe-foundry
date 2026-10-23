@@ -28,6 +28,7 @@ import * as tableDefaults from './helpers/table-defaults.mjs';
 import * as tokenLink from './helpers/token-link.mjs';
 import * as portraits from './helpers/portraits.mjs';
 import * as oracle from './helpers/oracle-import.mjs';
+import { runTableSmokeTest } from './helpers/table-smoke.mjs';
 import * as chargenRules from './chargen/rules.mjs';
 
 /* -------------------------------------------- */
@@ -45,6 +46,7 @@ Hooks.once('init', function () {
     memory: { recall: memory.recall, remember: memory.remember, forget: memory.forget },
     /* Retired macros and their redirects (helpers/retired-macros.mjs). */
     retiredMacros: RETIRED_MACROS,
+    smoke: { run: runTableSmokeTest },
     /* Portrait roster (helpers/portraits.mjs) and character-token linking
        (helpers/token-link.mjs), v0.54.0. */
     /* Oracle tables the GM imports from their own file (helpers/oracle-import.mjs,

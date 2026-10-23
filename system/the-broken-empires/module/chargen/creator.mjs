@@ -488,6 +488,6 @@ export async function openCreator(actor) {
   }
   const app = new Klass(actor, T, draft, ui0);
   try { app.portraits = await portraits.roster(); } catch (err) { console.warn("TBE | portrait roster unavailable", err); app.portraits = []; }
-  app.render(true);
+  await app.render(true);
   return app;
 }

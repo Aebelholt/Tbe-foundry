@@ -29,13 +29,14 @@ only `The-Broken-Empires-System.zip`.
 
 ## Where it stands (2026-10-23)
 
-- **Released: v0.55.0.** Create Character window (ApplicationV2, the book's
+- **Released: v0.56.0 (test candidate):** TBE: Table Smoke Test, plus the
+  four fixes below. Before that, **v0.55.0:** Create Character window (ApplicationV2, the book's
   12 steps, live sheet), the old Wizard/Finish/Build retired and redirected,
   table defaults (linked and sighted Character tokens, locked rotation, scene
   vision), stranded-token rescue and TBE: Link Character Tokens, the portrait
   roster, imported oracle tables (TBE: Import Oracle Tables, TBE: Oracle
   Tables, Random Events can use them).
-- **Committed, not released (CHANGELOG "Unreleased"):** oracle table titles
+- **In v0.56.0 as well:** oracle table titles
   keep capitals after an opening quote; Sheet Exchange reads Character
   Creator v0.7.0 (same layout as v0.6.5, now a fixture), an unnamed
   "Native Languge" slot imports as "Native Language" with a note, a Savvy
@@ -49,6 +50,9 @@ only `The-Broken-Empires-System.zip`.
 ## Remaining work, in order
 
 ### 1. Prove it in real Foundry (Phase 5/7)
+**Status 2026-10-23: built and released in v0.56.0 (test candidate), with
+`smoke_check.mjs` (45). What remains is the owner's real runs on V12 and
+V13+ and fixing what the cards name.** Original brief:
 Build **TBE: Table Smoke Test** (GM macro, plus a `smoke_check.mjs` that runs
 it against a stub world). It exercises each real-Foundry surface on throwaway
 documents, deletes them, and posts one pass/fail card with the Foundry

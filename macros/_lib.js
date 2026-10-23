@@ -2,12 +2,13 @@
 
 const TBE = {};
 
-TBE.prompt = async function (title, content, okLabel = "Roll") {
+TBE.prompt = async function (title, content, okLabel = "Roll", { render } = {}) {
   const DV2 = foundry.applications?.api?.DialogV2;
   if (DV2) {
     return DV2.prompt({
       window: { title },
       content,
+      ...(render ? { render } : {}),
       ok: { label: okLabel, callback: (ev, btn) => Object.fromEntries(new FormData(btn.form)) },
       rejectClose: false
     });

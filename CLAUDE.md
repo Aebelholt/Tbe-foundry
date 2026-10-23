@@ -760,6 +760,18 @@ scope at least one pass at the player-facing output itself.
   (re-import updates in place, create-before-delete), and Random Events
   fall back to the TBE tables slot by slot. `TBE_ORACLE_JSON=path` plans a
   real file too.
+- `node smoke_check.mjs` — 45 checks over TBE: Table Smoke Test
+  (`module/helpers/table-smoke.mjs`, v0.56.0), the probe a GM runs in a REAL
+  Foundry. This check cannot prove what the probe proves; it proves the probe
+  is safe to hand a GM: a full run passes on the V12, V13 and V14 shapes it
+  branches on, it never touches a document without its run tag (a
+  look-alike "TBE smoke:" table survives; mutation: a by-name sweep deletes
+  it), cancel creates nothing, one failed probe leaves the rest running and
+  its dependants NOT RUN, a create that persists then throws is still found
+  by tag and deleted (mutation: no sweep leaves it), a failed delete is named
+  by uuid, and the BUILT macro whispers its card to the GM only. Read it
+  before changing the probe: **a probe that cleans up by name, or stops at
+  the first failure, is worse than none.**
 - `node concepts_check.mjs` — 17 checks over `data/concepts.json`, the
   original (not book) step-1 concept table. Every skill suggestion must be a
   real catalogue skill in the category it is filed under, because the window

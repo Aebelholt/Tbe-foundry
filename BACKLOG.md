@@ -1,4 +1,17 @@
-## Character Creator v0.7.0 — checked 2026-09-28, held for next batch
+## Table Smoke Test — v0.56.0 test candidate, reconciled 2026-10-23
+
+Built in another session from NEXT_SESSION_PROMPT.md section 1; only the zip
+came back. Reconciled here from the zip: `module/helpers/table-smoke.mjs`,
+`macros/tbe-table-smoke.js`, a `render` option on `TBE.prompt`, Create
+Character and the shop returning their rendered windows. Rebuilt packs match
+the zip entry for entry (44 macro commands identical). Its stand-in check did
+not come back, so `smoke_check.mjs` (45) was written here.
+
+- **Still open: the real runs.** The owner runs TBE: Table Smoke Test on V12
+  and on V13+ and sends both cards. Nothing in this repo has yet run in a
+  real Foundry.
+
+## Character Creator v0.7.0 — checked 2026-09-28, released in v0.56.0
 
 Vasco Brown's Creator v0.7.0 (2026-09-26, shared to Seb's Drive) has the
 same Character Sheet layout as v0.6.5, 78 x 19, every label in place; the

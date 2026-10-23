@@ -25,7 +25,7 @@ Magic miracles are the book's own words. See **Licence** below.
 
 ## Requirements, and the modules that make it nicer
 
-**Required: nothing but Foundry.** Minimum version 12, verified on 14.365.
+**Required: nothing but Foundry.** Minimum version 12; the manifest targets 14.365.
 No module is needed. Everything below is optional, and the system says so
 when a feature notices one is missing.
 
@@ -56,13 +56,26 @@ This system has no public manifest, so install it manually:
 3. Everything else is already there. Open the Compendium tab and look for the
    **The Broken Empires** folder.
 
+## Checking your Foundry installation
+
+As GM, import **TBE: Table Smoke Test** from **TBE Tools** and run it. Accept
+the temporary actor name, then click **Check file** on the supplied test
+file. The test opens the real character and equipment windows, checks
+temporary documents, removes them and posts one private pass/fail card with
+your Foundry and system versions. A cleanup failure names anything you need
+to remove. Send the card when reporting a problem.
+
+Run this on V12 and V13 or later before relying on the recent windows at a
+table. Automated stand-ins cover both API shapes; a real Foundry test and a
+played session with GM and players are still required.
+
 ## What ships in the box
 
 Six compendium packs, grouped under one folder in the Compendium tab:
 
 | Pack | Holds |
 |---|---|
-| TBE Tools | the 43 play macros (Attack, Wounds & Recovery, Cast, Extended Roll, Social Encounter, Advancement, Status, Create Character, Haggle, Solo Panel...) |
+| TBE Tools | the 44 play macros (Attack, Wounds & Recovery, Cast, Extended Roll, Social Encounter, Advancement, Status, Create Character, Haggle, Solo Panel...) |
 | TBE Talents | all 150 Chapter 4 Talents |
 | TBE Weapons, Armor & Shields | the 50 equipment entries |
 | TBE Bestiary | 56 creatures, each with its skills and attacks already attached |
