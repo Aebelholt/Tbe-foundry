@@ -22,6 +22,7 @@ dos_compare_maneuvers = [true, false]  # ...with Choose Location / Pierce Armor 
 attribute_pct = { A = 40, B = 30, C = 20, D = 10 }
 skill_pct = { A = 40, B = 30, C = 20, D = 10, F = 0 }
 cuf_willpower = { A = 80, B = 60, C = 40, D = 20 }
+firearm_bonus = 0               # flat bonus to TBE attack skill with firearms (weapons unless firearm = false)
 damage_mult = 3                 # TBE Dmg = 4e Damage x this
 armor_mult = 3                  # TBE AP  = 4e Armor x this
 pierce_per_minus = 3            # each -1 weapon armor mod = Piercing 3
@@ -39,7 +40,7 @@ blast_dodge_dos_reduces = true  # Dodge DoS subtracts from blast damage
 #   "stepped" Dmg + step x floor(DoS / step) - AP      (4e extra success = +1, x3)
 #   "gate"    stopped unless DoS >= ceil(AP / armor_mult), then linear
 # Ammo-die extra hits carry no DoS and always take Dmg - AP.
-armor_dos_mode = "linear"
+armor_dos_mode = "stepped"
 armor_dos_step = 3
 pierce_stacks = true            # weapon Piercing + Pierce Armor maneuver add together
 # 4e hit location -> TBE general locations (for armor coverage)

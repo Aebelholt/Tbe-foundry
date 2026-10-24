@@ -46,7 +46,8 @@ def pct(attr, skill, keys):
 
 
 def tbe_weapon(stats, keys):
-    return {"dmg": stats["damage"] * keys["damage_mult"], "crit": stats["crit"],
+    return {"bonus": keys["firearm_bonus"] if stats.get("firearm", True) else 0,
+            "dmg": stats["damage"] * keys["damage_mult"], "crit": stats["crit"],
             "armor_mod": stats["armor_mod"], "ammo_dice": stats["ammo_dice"],
             "blast": stats.get("blast", 0)}
 
@@ -76,7 +77,7 @@ def tbe_fight(weapon, skill, target_name, cfg, rng):
     dodge = pct(d["agl"], d["dodge_skill"], keys)
     log = []
     for rnd in range(1, cfg["run"]["max_rounds"] + 1):
-        r = tbe.attack(t, weapon, skill, dodge, cfg, rng)
+        r = tbe.attack(t, weapon, skill + weapon["bonus"], dodge, cfg, rng)
         if weapon["blast"]:
             imp, wp = tbe.blast(t, weapon, dodge, cfg, rng)
             r["impaired"] |= imp
@@ -208,14 +209,33 @@ def report(rows, nat_rows, flag_list, cfg, path):
     Path(path).write_text("\n".join(L) + "\n")
 
 
+def apply_override(cfg, item):
+    """'keys.firearm_bonus=20' -> cfg['keys']['firearm_bonus'] = 20 (TOML value syntax)."""
+    path, value = item.split("=", 1)
+    *parents, leaf = path.split(".")
+    node = cfg
+    for p in parents:
+        node = node[p]
+    if leaf not in node:
+        sys.exit(f"--set: unknown key {path}")
+    node[leaf] = tomllib.loads(f"v = {value}")["v"]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("-c", "--config", default=str(Path(__file__).parent / "config.toml"))
     ap.add_argument("--trials", type=int)
+    ap.add_argument("--set", action="append", default=[], metavar="SECTION.KEY=VALUE",
+                    help="override one config value for this run, e.g. keys.firearm_bonus=20")
+    ap.add_argument("--out", help="output folder (default run.out_dir)")
     args = ap.parse_args()
     cfg = load(args.config)
     if args.trials:
         cfg["run"]["trials"] = args.trials
+    for item in args.set:
+        apply_override(cfg, item)
+    if args.out:
+        cfg["run"]["out_dir"] = args.out
 
     missing = missing_values(cfg)
     if missing:

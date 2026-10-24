@@ -171,6 +171,19 @@ class Native(unittest.TestCase):
         self.assertTrue(t.incapacitated)
 
 
+class Overrides(unittest.TestCase):
+    def test_set_and_bonus(self):
+        cfg = copy.deepcopy(CFG)
+        run.apply_override(cfg, "keys.firearm_bonus=20")
+        self.assertEqual(cfg["keys"]["firearm_bonus"], 20)
+        self.assertEqual(run.tbe_weapon(cfg["weapon"]["M9"], cfg["keys"])["bonus"], 20)
+        cfg["weapon"]["M9"]["firearm"] = False
+        self.assertEqual(run.tbe_weapon(cfg["weapon"]["M9"], cfg["keys"])["bonus"], 0)
+
+    def test_default_is_stepped(self):
+        self.assertEqual(CFG["keys"]["armor_dos_mode"], "stepped")
+
+
 class Smoke(unittest.TestCase):
     def test_pipeline_runs(self):
         cfg = copy.deepcopy(CFG)
