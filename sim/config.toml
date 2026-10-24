@@ -1,18 +1,18 @@
 # T2k 4e -> TBE conversion simulator: every tunable lives here.
 # Change one value, rerun `python3 sim/run.py`.
-#
-# "?" means NOT YET SUPPLIED. The simulator refuses to run while any "?" is
-# reachable from the matchups below, and prints the list of what is missing.
-# No 4e stat in this file has been guessed.
+# "?" marks a value not yet supplied; the run refuses to start while any remain.
+# PM = Twilight: 2000 4e Player's Manual (2022-08-04).
 
 [run]
 trials = 20000          # fights per matchup cell
 seed = 2000
-max_rounds = 30         # fight is abandoned (counted as "not incapacitated") after this
-skills = [30, 50, 70]   # attacker weapon skill % swept
+max_rounds = 30         # fight abandoned (not incapacitated) after this
 incap_by_round = 3      # report "% incapacitated by round N"
+# Attacker profiles as 4e [attribute, skill] letters. TBE % comes from the
+# keys below: C/D = 30, B/C = 50, A/B = 70. Native 4e rolls the same letters.
+attackers = [["C", "D"], ["B", "C"], ["A", "B"]]
 weapons = ["M16A2", "AK-74", "M9", "PKM", "M2HB"]
-targets = ["no_armor", "vest", "vest_helmet"]
+targets = ["no_armor", "flak", "flak_helmet", "plate", "plate_helmet"]
 out_dir = "sim/out"
 
 # ---------------------------------------------------------------- keys (v1)
@@ -24,123 +24,148 @@ damage_mult = 3                 # TBE Dmg = 4e Damage x this
 armor_mult = 3                  # TBE AP  = 4e Armor x this
 pierce_per_minus = 3            # each -1 weapon armor mod = Piercing 3
 ap_per_plus = 3                 # each +1 weapon armor mod = +3 AP to target
-plus_mod_hits_unarmored = false # does a +mod add AP to locations with no worn armor?
+plus_mod_hits_unarmored = false # 4e: "not applied if the target has no armor at all" (PM p.72)
 ammo_die_sides = 6
 ammo_extra_hit_face = 6         # each ammo die showing this = one extra hit
-ammo_extra_hits_need_hit = true # extra hits only if the main attack wins
-ammo_extra_hit_adds_dos = false # extra hits deal base Dmg only (key says base Dmg)
-extra_hit_location = "reroll"   # "reroll" = fresh d10; "different" = reroll until it differs from the main hit
+ammo_extra_hits_need_hit = true # 4e: ammo dice count only if the base dice hit
+ammo_extra_hit_adds_dos = false # extra hits deal base Dmg only
+extra_hit_location = "reroll"   # "reroll" = fresh d10; "different" = reroll until it differs
 blast_mult = 3                  # Blast -> Damaging hazard at Dmg x this
 blast_dodge_dos_reduces = true  # Dodge DoS subtracts from blast damage
 pierce_stacks = true            # weapon Piercing + Pierce Armor maneuver add together
+# 4e hit location -> TBE general locations (for armor coverage)
+location_map = { Torso = ["Body"], Head = ["Head"], Arm = ["R Arm", "L Arm"], Legs = ["R Leg", "L Leg"] }
 
-# ------------------------------------------------ TBE rules as printed (book)
+# ------------------------------------------------ TBE rules as printed
 [tbe]
 auto_success_max = 5    # 01-05 always succeeds (p.18)
 auto_fail_min = 99      # 99-00 always fails (p.18)
 crit_bonus_sl = 3       # p.18
 wound_die = 10          # red d10 (p.172); natural max face always avoids impairment
-maneuvers_normal = 1    # maneuvers allowed on a won attack
-maneuvers_crit = 2      # ...on a critical success
-pierce_armor_sl = 4     # Pierce Armor maneuver cost (p.163)
+maneuvers_normal = 1
+maneuvers_crit = 2
+pierce_armor_sl = 4     # Pierce Armor maneuver (p.163)
 pierce_armor_value = 3
 pierce_armor_min_ap = 4 # "no effect if that location has 3 AP or less"
 
-# ------------------------------------------------ table tactics (not rules)
+# ------------------------------------------------ TBE table tactics
 [tactics]
 defender_dodges = true      # TBE lets any attack be Dodged; false = undefended
 use_choose_location = true  # spend SL (cost = 4e Crit rating) to pick the location
-use_pierce_armor = true     # Pierce Armor maneuver when affordable and useful
-# Attacker picks whichever legal maneuver set maximises the wound; ties go
-# to the location listed first here.
+use_pierce_armor = true
 location_preference = ["Head", "Body", "R Arm", "L Arm", "R Leg", "L Leg"]
 
-# What counts as "incapacitated" (fight over for the target).
+# What ends the fight in TBE.
 [incapacitation]
 dead = true          # lethal WP total reaches Death Threshold
 shock = true         # includes unconscious and Dying
-arm_useless = false  # even-face first Arm impairment
-stunned = false      # odd-face first Head impairment (loses next action)
-prone = false        # odd-face first Leg impairment
+arm_useless = false
+stunned = false
+prone = false
 
-# Flag thresholds, compared per weapon x skill against the no-armor baseline.
+# Flag thresholds (TBE armored vs TBE unarmored, and TBE vs native 4e).
 [flags]
-useless_wound_per_hit = 0.15   # armored: under this share of hits draw blood -> "near-useless"
-useless_incap_ratio = 0.33     # armored incap-by-round-N under this x unarmored -> "near-useless"
-irrelevant_incap_ratio = 0.95  # armored incap-by-round-N at or above this x unarmored -> "armor irrelevant"
+useless_wound_per_hit = 0.15   # under this share of hits draw blood -> near-useless
+useless_incap_ratio = 0.33     # armored incap-by-N under this x unarmored -> near-useless
+irrelevant_incap_ratio = 0.95  # armored incap-by-N at/above this x unarmored -> armor irrelevant
+native_rounds_ratio = 1.5      # TBE mean rounds off native 4e by this factor either way -> flag
 
 # ------------------------------------------------ the target
-# Skill % = attribute + skill via the keys above.
+# One average soldier. TBE: Dodge = AGL% + dodge skill%, Endurance = STR% + skill%.
+# 4e: hit capacity = (STR die + AGL die) / 4, rounded up (PM p.16).
 [defender]
-dodge = { attribute = "C", skill = "D" }      # which 4e attr/skill feed Dodge: CONFIRM
-endurance = { attribute = "C", skill = "D" }  # rolled on first Body impairment: CONFIRM
-toughness = 0          # TBE human baseline
-death_threshold = 20   # TBE starting DT (p.86)
-resolve_vs_shock = false  # PC spends 3 Resolve to refuse Shock (once per fight)
+str = "C"
+agl = "C"
+dodge_skill = "D"       # which 4e skill level stands in for Dodge: CONFIRM
+endurance_skill = "D"   # stands in for Endurance (4e STAMINA): CONFIRM
+toughness = 0           # TBE human baseline
+death_threshold = 20    # TBE starting DT (p.86)
+resolve_vs_shock = false
 
-# ------------------------------------------------ 4e armor
-# rating = 4e Armor Rating. locations = TBE general locations covered.
-[armor.vest]
-rating = "?"
-locations = ["Body"]
+# ------------------------------------------------ 4e armor (PM p.126)
+[armor.flak_jacket]
+rating = 1
+location = "Torso"
 
-[armor.helmet]
-rating = "?"
-locations = ["Head"]
+[armor.plate_vest]
+rating = 2
+location = "Torso"
+
+[armor.kevlar_helmet]
+rating = 1
+location = "Head"
 
 [target.no_armor]
 wears = []
 
-[target.vest]
-wears = ["vest"]
+[target.flak]
+wears = ["flak_jacket"]
 
-[target.vest_helmet]
-wears = ["vest", "helmet"]
+[target.flak_helmet]
+wears = ["flak_jacket", "kevlar_helmet"]
 
-# ------------------------------------------------ 4e weapons
-# damage    = 4e Damage
-# crit      = 4e Crit rating (-> Choose Location SL cost)
-# armor_mod = 4e weapon armor modifier (negative = armor-piercing)
-# ammo_dice = ammo dice rolled per attack in the fire mode being tested (0 = single shot)
-# blast     = 4e Blast power (0 = none)
+[target.plate]
+wears = ["plate_vest"]
+
+[target.plate_helmet]
+wears = ["plate_vest", "kevlar_helmet"]
+
+# ------------------------------------------------ 4e weapons (PM p.100 US, p.104 Soviet)
+# ammo_dice = dice fired per attack; set to RoF (full rate). native_mod = net
+# 4e step modifier for handling (bipod/tripod assumed, so 0).
 [weapon.M16A2]
-damage = "?"
-crit = "?"
-armor_mod = "?"
-ammo_dice = "?"
+damage = 2
+crit = 3
+armor_mod = 0
+ammo_dice = 3
 blast = 0
+native_mod = 0
 
 [weapon."AK-74"]
-damage = "?"
-crit = "?"
-armor_mod = "?"
-ammo_dice = "?"
+damage = 2
+crit = 3
+armor_mod = 0
+ammo_dice = 5
 blast = 0
+native_mod = 0
 
 [weapon.M9]
-damage = "?"
-crit = "?"
-armor_mod = "?"
-ammo_dice = "?"
+damage = 1
+crit = 2
+armor_mod = 1
+ammo_dice = 2
 blast = 0
+native_mod = 0
 
 [weapon.PKM]
-damage = "?"
-crit = "?"
-armor_mod = "?"
-ammo_dice = "?"
+damage = 3
+crit = 4
+armor_mod = 0
+ammo_dice = 5
 blast = 0
+native_mod = 0     # bipod; carried would be -3
 
 [weapon.M2HB]
-damage = "?"
-crit = "?"
-armor_mod = "?"
-ammo_dice = "?"
+damage = 4
+crit = 4
+armor_mod = 0
+ammo_dice = 4
 blast = 0
+native_mod = 0     # tripod or vehicle mount only
 
-# ------------------------------------------------ 4e native comparison
-# Native 4e resolution is not implemented yet: the 4e combat rules are not in
-# the repo. Fill these and supply the rules text, then native.py gets written.
+# ------------------------------------------------ native 4e comparison
 [native_4e]
-enabled = false
-defender_hit_capacity = "?"
+enabled = true
+die_sizes = { A = 12, B = 10, C = 8, D = 6 }
+success_on = 6
+double_success_on = 10
+attack_mod = 0               # aimed shot, SHORT range, no cover
+ammo_sixes = "extra_hit"     # "extra_hit" or "damage" (+1 each)
+penetration_limit = 2        # base damage 2+ steps under modified armor = deflected
+armor_ablation = true        # penetrating hit: D6 success drops armor 1
+severe_step = 2              # +1 crit D10 per 2 points over the threshold
+hit_location = ["Legs", "Torso", "Torso", "Torso", "Arm", "Head"]  # D6 1-6
+# Crit results (D10) that end the fight: instant death, "fall down, immobile".
+dead_crits = { Head = [10], Torso = [10] }
+incap_crits = { Head = [8, 10], Torso = [7, 10] }
+crit_incapacitates = false   # true = minor-NPC rule, every crit incapacitates

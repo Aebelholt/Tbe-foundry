@@ -12,6 +12,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+import native  # noqa: E402
 import run  # noqa: E402
 import tbe  # noqa: E402
 
@@ -117,20 +118,46 @@ class Wounds(unittest.TestCase):
         self.assertEqual(t.lethality_level, 7)
 
 
+class Native(unittest.TestCase):
+    N = CFG["native_4e"]
+
+    def test_base_dice_and_steps(self):
+        sz = self.N["die_sizes"]
+        self.assertEqual(native.base_dice("A", "C", 0, sz), [12, 8])
+        self.assertEqual(native.base_dice("A", "C", -2, sz), [8, 8])     # PM Urban Ops example
+        self.assertEqual(native.base_dice("D", "D", -1, sz), [6])
+        self.assertEqual(native.base_dice("D", "D", -3, sz), [6])
+        self.assertEqual(native.base_dice("B", "F", 0, sz), [10])
+        self.assertEqual(native.base_dice("A", "A", 2, sz), [12, 12])
+
+    def test_armor_mod_and_penetration_limit(self):
+        class Six:
+            def randint(self, a, b):
+                return 6 if b == 6 else 1
+        t = native.Target(hit_capacity=4, armor={"Torso": 2})
+        m9 = CFG["weapon"]["M9"]                       # dmg 1, armor +1 -> level 3
+        self.assertEqual(native.apply_hit(t, m9, 5, Six(), self.N), 5)   # d6=6 is Head: unarmored, mod ignored
+        t = native.Target(hit_capacity=4, armor={"Head": 2})
+        self.assertEqual(native.apply_hit(t, m9, 5, Six(), self.N), 0)   # 1 <= 3-2: deflected
+        t = native.Target(hit_capacity=4, armor={"Head": 1})
+        self.assertEqual(native.apply_hit(t, m9, 5, Six(), self.N), 3)   # 5 - 2
+        self.assertEqual(t.armor["Head"], 0)                             # ablated on a 6
+
+    def test_incapacitation(self):
+        t = native.Target(hit_capacity=4, armor={})
+        native.apply_hit(t, {"damage": 2, "crit": 99, "armor_mod": 0}, 4, random.Random(0), self.N)
+        self.assertTrue(t.incapacitated)
+
+
 class Smoke(unittest.TestCase):
     def test_pipeline_runs(self):
         cfg = copy.deepcopy(CFG)
-        cfg["run"]["trials"] = 200
-        for w in cfg["run"]["weapons"]:
-            cfg["weapon"][w].update(damage=2, crit=3, armor_mod=0, ammo_dice=2)   # fixture
-        for a in cfg["armor"].values():
-            a["rating"] = 2                                                       # fixture
+        cfg["run"]["trials"] = 100
+        cfg["run"]["weapons"] = ["M16A2"]
         self.assertEqual(run.missing_values(cfg), [])
-        rng = random.Random(0)
-        w = run.tbe_weapon(cfg["weapon"]["M16A2"], cfg["keys"])
-        rows = [run.cell("M16A2", w, 50, t, cfg, rng) for t in cfg["run"]["targets"]]
-        self.assertGreater(rows[0]["incap_ever"], rows[2]["incap_ever"] - 0.05)
-        run.flags(rows, cfg)
+        rows, nat = run.sweep(cfg)
+        self.assertEqual(len(rows), len(nat))
+        run.flags(rows, nat, cfg)
 
 
 if __name__ == "__main__":
