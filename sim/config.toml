@@ -14,6 +14,8 @@ attackers = [["C", "D"], ["B", "C"], ["A", "B"]]
 weapons = ["M16A2", "AK-74", "M9", "PKM", "M2HB"]
 targets = ["no_armor", "flak", "flak_helmet", "plate", "plate_helmet"]
 out_dir = "sim/out"
+dos_modes_compared = ["linear", "stepped", "gate"]  # sim/compare_dos.py sweeps keys.armor_dos_mode
+dos_compare_maneuvers = [true, false]  # ...with Choose Location / Pierce Armor on, then off
 
 # ---------------------------------------------------------------- keys (v1)
 [keys]
@@ -32,6 +34,13 @@ ammo_extra_hit_adds_dos = false # extra hits deal base Dmg only
 extra_hit_location = "reroll"   # "reroll" = fresh d10; "different" = reroll until it differs
 blast_mult = 3                  # Blast -> Damaging hazard at Dmg x this
 blast_dodge_dos_reduces = true  # Dodge DoS subtracts from blast damage
+# How DoS meets armor on the primary hit (locations with AP > 0 only):
+#   "linear"  Dmg + DoS - AP                           (TBE as written)
+#   "stepped" Dmg + step x floor(DoS / step) - AP      (4e extra success = +1, x3)
+#   "gate"    stopped unless DoS >= ceil(AP / armor_mult), then linear
+# Ammo-die extra hits carry no DoS and always take Dmg - AP.
+armor_dos_mode = "linear"
+armor_dos_step = 3
 pierce_stacks = true            # weapon Piercing + Pierce Armor maneuver add together
 # 4e hit location -> TBE general locations (for armor coverage)
 location_map = { Torso = ["Body"], Head = ["Head"], Arm = ["R Arm", "L Arm"], Legs = ["R Leg", "L Leg"] }

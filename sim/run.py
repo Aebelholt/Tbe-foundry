@@ -105,11 +105,14 @@ def summarise(results, n, by, extra):
     hits = sum(r["hit"] for _, log, _ in results for r in log)
     wounds = sum(r["wounded"] for _, log, _ in results for r in log)
     rounds = [rnd for rnd, _, _ in results if rnd is not None]
+    armored = sum(r["armored_primary"] for _, log, _ in results for r in log)
+    pen = sum(r["armored_primary_pen"] for _, log, _ in results for r in log)
     row = dict(extra)
     row.update({
         "hit_rate": hits / attacks,
         "wound_rate": wounds / attacks,
         "wound_per_hit": wounds / hits if hits else 0.0,
+        "armor_pen": pen / armored if armored else None,
         f"incap_by_r{by}": sum(r <= by for r in rounds) / n,
         "incap_ever": len(rounds) / n,
         "dead_share": sum(dead for _, _, dead in results) / n,
@@ -119,7 +122,7 @@ def summarise(results, n, by, extra):
     return row
 
 
-def sweep(cfg):
+def sweep(cfg, with_native=True):
     rng = random.Random(cfg["run"]["seed"])
     n, by, keys = cfg["run"]["trials"], cfg["run"]["incap_by_round"], cfg["keys"]
     tbe_rows, nat_rows = [], []
@@ -132,7 +135,7 @@ def sweep(cfg):
                 base = {"weapon": wname, "target": tname, "skill": s, "profile": attr + skill}
                 res = [tbe_fight(w, s, tname, cfg, rng) for _ in range(n)]
                 tbe_rows.append(summarise(res, n, by, base))
-                if cfg["native_4e"]["enabled"]:
+                if with_native and cfg["native_4e"]["enabled"]:
                     res = [native_fight(stats, attr, skill, tname, cfg, rng) for _ in range(n)]
                     nat_rows.append(summarise(res, n, by, base))
                 print(f"  {wname:6} {tname:13} {attr}{skill} ({s}%)", file=sys.stderr)
@@ -185,7 +188,7 @@ def table(rows, cols):
 def report(rows, nat_rows, flag_list, cfg, path):
     by = cfg["run"]["incap_by_round"]
     k = f"incap_by_r{by}"
-    cols = ["weapon", "target", "skill", "hit_rate", "wound_rate", "wound_per_hit", k, "incap_ever", "median_rounds", "mean_rounds"]
+    cols = ["weapon", "target", "skill", "hit_rate", "wound_rate", "wound_per_hit", "armor_pen", k, "incap_ever", "median_rounds", "mean_rounds"]
     L = [f"# TBE conversion sim ({cfg['run']['trials']} fights per cell, max {cfg['run']['max_rounds']} rounds)", "",
          "Rates are per attack. Rounds count only fights that ended in incapacitation.", "",
          "## 1. TBE: hit, wound and incapacitation", ""]

@@ -118,6 +118,28 @@ class Wounds(unittest.TestCase):
         self.assertEqual(t.lethality_level, 7)
 
 
+class DosModes(unittest.TestCase):
+    def k(self, mode):
+        keys = dict(CFG["keys"])
+        keys["armor_dos_mode"] = mode
+        return keys
+
+    def test_linear_is_tbe_as_written(self):
+        self.assertEqual(tbe.wound_wp(6, 1, 6, self.k("linear")), 1)
+
+    def test_stepped(self):
+        k = self.k("stepped")
+        self.assertEqual([tbe.wound_wp(6, d, 6, k) for d in (1, 2, 3, 5, 6)], [0, 0, 3, 3, 6])
+        self.assertEqual(tbe.wound_wp(6, 1, 0, k), 7)          # unarmored stays linear
+
+    def test_gate(self):
+        k = self.k("gate")
+        self.assertEqual(tbe.wound_wp(6, 1, 6, k), 0)          # plate AR 2 needs DoS 2
+        self.assertEqual(tbe.wound_wp(6, 2, 6, k), 2)
+        self.assertEqual(tbe.wound_wp(6, 1, 3, k), 4)          # flak AR 1
+        self.assertEqual(tbe.wound_wp(6, 0, 0, k), 6)
+
+
 class Native(unittest.TestCase):
     N = CFG["native_4e"]
 

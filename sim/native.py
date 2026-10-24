@@ -46,16 +46,24 @@ def successes(dice, rng, n):
 class Target:
     hit_capacity: int
     armor: dict                       # 4e location -> current armor level
+    fresh: dict = None                # starting armor levels, to spot ablation
     damage: int = 0
     crits: list = field(default_factory=list)
     incapacitated: bool = False
     dead: bool = False
 
+    def __post_init__(self):
+        if self.fresh is None:
+            self.fresh = dict(self.armor)
 
-def apply_hit(t, weapon, dmg, rng, n):
-    """One hit. Returns damage that got through."""
+
+def apply_hit(t, weapon, dmg, rng, n, info=None):
+    """One hit. Returns damage that got through. `info`, if given, records
+    whether the hit struck armor that had not yet been ablated."""
     loc = n["hit_location"][rng.randint(1, 6) - 1]
     armor = t.armor.get(loc, 0)
+    if info is not None:
+        info["fresh_armor"] = armor > 0 and armor == t.fresh.get(loc, 0)
     if armor > 0:
         armor = max(0, armor + weapon["armor_mod"])
         if weapon["damage"] <= armor - n["penetration_limit"]:
@@ -83,7 +91,7 @@ def apply_hit(t, weapon, dmg, rng, n):
 def attack(t, weapon, attr, skill, n, rng):
     dice = base_dice(attr, skill, n["attack_mod"] + weapon.get("native_mod", 0), n["die_sizes"])
     succ = successes(dice, rng, n)
-    out = {"hit": succ > 0, "wounded": False}
+    out = {"hit": succ > 0, "wounded": False, "armored_primary": False, "armored_primary_pen": False}
     if not succ:
         return out
     sixes = sum(rng.randint(1, 6) == 6 for _ in range(weapon["ammo_dice"]))
@@ -93,6 +101,11 @@ def attack(t, weapon, attr, skill, n, rng):
         hits[0] += sixes
     else:
         hits += [weapon["damage"]] * sixes
-    for dmg in hits:
-        out["wounded"] |= apply_hit(t, weapon, dmg, rng, n) > 0
+    for i, dmg in enumerate(hits):
+        info = {} if i == 0 else None
+        through = apply_hit(t, weapon, dmg, rng, n, info)
+        out["wounded"] |= through > 0
+        if info and info["fresh_armor"]:
+            out["armored_primary"] = True
+            out["armored_primary_pen"] = through > 0
     return out

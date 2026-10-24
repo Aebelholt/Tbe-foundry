@@ -140,6 +140,21 @@ def effective_ap(target, loc, weapon, keys, pierce_maneuver, rules):
     return max(0, worn - pierce)   # Piercing only bypasses worn armor
 
 
+def wound_wp(dmg, dos, ap, keys):
+    """WP from one hit. keys.armor_dos_mode sets how DoS meets armor (ap > 0):
+      linear  - Dmg + DoS - AP (TBE as written)
+      stepped - Dmg + step*floor(DoS/step) - AP (4e: each extra success = +1 x3)
+      gate    - stopped unless DoS >= ceil(AP / armor_mult), then linear
+    Unarmored locations are always linear."""
+    mode = keys["armor_dos_mode"]
+    if ap > 0 and mode == "stepped":
+        step = keys["armor_dos_step"]
+        dos = step * (dos // step)
+    elif ap > 0 and mode == "gate" and dos < -(-ap // keys["armor_mult"]):
+        return 0
+    return max(0, dmg + dos - ap)
+
+
 def apply_wound(target, loc, wp, rng, rules):
     """Mark WP, roll Wound Die + Toughness, resolve impairment and Shock.
     Returns True if this wound impaired the location."""
@@ -213,7 +228,7 @@ def choose_maneuvers(rolled_loc, atk, dos, target, weapon, cfg):
             locs = pref if "cl" in combo else [rolled_loc]
             for loc in locs:
                 ap = effective_ap(target, loc, weapon, keys, "pa" in combo, rules)
-                wp = max(0, weapon["dmg"] + dos - ap)
+                wp = wound_wp(weapon["dmg"], dos, ap, keys)
                 # more WP first, then fewer maneuvers, then location preference
                 score = (wp, -n, -pref.index(loc) if loc in pref else -99)
                 if best is None or score > best[0]:
@@ -227,14 +242,19 @@ def attack(target, weapon, skill, dodge, cfg, rng):
     a = resolve(d100(rng), skill, rules)
     d = resolve(d100(rng), dodge, rules) if cfg["tactics"]["defender_dodges"] else None
     won, dos = opposed_attack(a, d)
-    out = {"hit": won, "wounded": False, "impaired": False, "extra_hits": 0, "wp": 0}
+    out = {"hit": won, "wounded": False, "impaired": False, "extra_hits": 0, "wp": 0,
+           "armored_primary": False, "armored_primary_pen": False}
     if not won:
         return out
 
     rolled = general_location(a.roll % 10)
     loc, pa = choose_maneuvers(rolled, a, dos, target, weapon, cfg)
-    wp = max(0, weapon["dmg"] + dos - effective_ap(target, loc, weapon, keys, pa, rules))
+    ap = effective_ap(target, loc, weapon, keys, pa, rules)
+    wp = wound_wp(weapon["dmg"], dos, ap, keys)
     hits = [(loc, wp)]
+    if target.worn_ap.get(loc, 0) > 0:
+        out["armored_primary"] = True
+        out["armored_primary_pen"] = wp > 0
 
     # Ammo dice: each extra-hit face = another hit at base Dmg, new location.
     n = weapon["ammo_dice"]
