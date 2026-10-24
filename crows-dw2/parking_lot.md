@@ -220,3 +220,17 @@ Tag key: `#crows` `#nimble` `#stonetop-arcana` `#fallout` `#marks` `#boons` `#md
 - **Kept:** engine (dice, six resolution types, sheets, damage chain, slots and hands, rest, XP and milestones, clocks with a tick cap, foes and rounds, pool, void, saves), readiness report, rule search, push-after-roll, fast/slow phases, `--who` companions; four templates; one GUIDE.md; template plus Crows PT3 and EZD6 configs.
 - **Cut to the archive (`solo-kit-v1/`):** SPEC.md (runtime and board-game theory), BUILD_GUIDE, BUILDER_PROMPT, README, the parking-lot and pilot templates, the PT2 Crows config, the sites, beats and positions commands, expertise pools.
 - **Incident:** the v2 commit on solo-kit included the user's extracted PT3 book text (crows/src was not ignored on that branch). Removed in the next commit and now ignored. History rewrite (force-push) is pending the user's approval.
+
+## 2026-10-24 | PbtA layer in both packs; solo-kit history cleaned [decision] [build]
+- **Why:** the user's experience is that PbtA works well with LLMs because text beats maths. Stonetop's "Running the Game" (p.167+) is the running guide.
+- **Built, solo-kit:**
+  - `move NAME` prints the outcome text, with the number second; `moves` lists them; push reprints the improved outcome.
+  - pbta.json example (basic moves in the kit's words, after Dungeon World); Crows PT3 example has six moves.
+  - Threats in Stonetop's shape: instinct, grim portents, impending doom, stakes, moves. Readiness requires all five.
+  - Hot card template: agenda, principles, soft and hard Ref moves. GUIDE principle 1 is text over maths.
+- **Built, Crows pack:**
+  - engine/moves.json (eight PT3 tests as moves); `ledger move`; Effort reprints the outcome text.
+  - Sealed seeds converted to Stonetop shape; ready.py checks them.
+  - Hot card v1.4 gains agenda, principles and Ref moves (1,140 words). Overrides §9 retires the §9c card.
+- **Copyright:** the agenda, principles and moves are paraphrased with page references, and the exact text comes from the user's copy via `rule`.
+- **Incident closed:** with the user's approval, solo-kit was force-pushed to a single clean commit (7bc2a29) without the book text. The orphaned commit d9c3d8f may stay reachable by direct SHA on GitHub until it is garbage collected.
