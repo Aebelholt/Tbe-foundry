@@ -215,3 +215,8 @@ Tag key: `#crows` `#nimble` `#stonetop-arcana` `#fallout` `#marks` `#boons` `#md
 - **Kit Croft:** saves/kit_croft/setup.sh rebuilds both sheets. AD 0 for Kit comes from the PT3 Assassin starting equipment (no armor), Mara AD 10.
 - **Open:** the XP divisor for solo with a companion (printed: per player = 1). Gear slot placement. Layer and source index still carry PT2 text, outranked by the overrides sheet; a full rewrite waits on the pilot.
 - **Table audit:** most PT2 tables match PT3 text. The ones that changed are Miasma effects, the travel-role tests and Minor/Major Treasures (renamed).
+## 2026-10-24 | solo kit pared to the core [decision]
+- **Ask:** cut every auxiliary element that bogs down the LLM; refine, don't sprawl.
+- **Kept:** engine (dice, six resolution types, sheets, damage chain, slots and hands, rest, XP and milestones, clocks with a tick cap, foes and rounds, pool, void, saves), readiness report, rule search, push-after-roll, fast/slow phases, `--who` companions; four templates; one GUIDE.md; template plus Crows PT3 and EZD6 configs.
+- **Cut to the archive (`solo-kit-v1/`):** SPEC.md (runtime and board-game theory), BUILD_GUIDE, BUILDER_PROMPT, README, the parking-lot and pilot templates, the PT2 Crows config, the sites, beats and positions commands, expertise pools.
+- **Incident:** the v2 commit on solo-kit included the user's extracted PT3 book text (crows/src was not ignored on that branch). Removed in the next commit and now ignored. History rewrite (force-push) is pending the user's approval.
