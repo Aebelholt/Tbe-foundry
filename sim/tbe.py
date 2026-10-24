@@ -216,7 +216,7 @@ def choose_maneuvers(rolled_loc, atk, dos, target, weapon, cfg):
     rules, keys, tac = cfg["tbe"], cfg["keys"], cfg["tactics"]
     allowed = rules["maneuvers_crit"] if atk.crit else rules["maneuvers_normal"]
     options = []
-    if tac["use_choose_location"] and atk.sl >= weapon["crit"]:
+    if tac["use_choose_location"] and atk.sl >= weapon["cl_cost"]:
         options.append("cl")
     if tac["use_pierce_armor"] and atk.sl >= rules["pierce_armor_sl"]:
         options.append("pa")
