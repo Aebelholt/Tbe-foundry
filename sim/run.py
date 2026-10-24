@@ -48,7 +48,7 @@ def pct(attr, skill, keys):
 def tbe_weapon(stats, keys):
     return {"bonus": keys["firearm_bonus"] if stats.get("firearm", True) else 0,
             "dmg": stats["damage"] * keys["damage_mult"], "crit": stats["crit"],
-            "cl_cost": max(stats["crit"] + keys["choose_location_extra"], keys["choose_location_min"]),
+            "cl_cost": stats.get("cl_cost", max(stats["crit"] + keys["choose_location_extra"], keys["choose_location_min"])),
             "armor_mod": stats["armor_mod"], "ammo_dice": stats["ammo_dice"],
             "blast": stats.get("blast", 0)}
 

@@ -181,11 +181,22 @@ class Overrides(unittest.TestCase):
         self.assertEqual(run.tbe_weapon(cfg["weapon"]["M9"], cfg["keys"])["bonus"], 0)
 
     def test_choose_location_cost(self):
+        m9 = {k: v for k, v in CFG["weapon"]["M9"].items() if k != "cl_cost"}    # formula only
         keys = dict(CFG["keys"], choose_location_extra=1, choose_location_min=3)
-        self.assertEqual(run.tbe_weapon(CFG["weapon"]["M9"], keys)["cl_cost"], 3)      # crit 2 + 1
+        self.assertEqual(run.tbe_weapon(m9, keys)["cl_cost"], 3)      # crit 2 + 1
         self.assertEqual(run.tbe_weapon(CFG["weapon"]["PKM"], keys)["cl_cost"], 5)     # crit 4 + 1
         keys = dict(CFG["keys"], choose_location_extra=0, choose_location_min=3)
         self.assertEqual(run.tbe_weapon(CFG["weapon"]["M16A2"], keys)["cl_cost"], 3)
+
+    def test_weapon_cl_cost_overrides(self):
+        keys = dict(CFG["keys"], choose_location_extra=2, choose_location_min=0)
+        self.assertEqual(run.tbe_weapon(dict(CFG["weapon"]["M9"], cl_cost=6), keys)["cl_cost"], 6)
+        self.assertEqual(run.tbe_weapon(CFG["weapon"]["M16A2"], keys)["cl_cost"], 5)
+
+    def test_final_defaults(self):
+        self.assertEqual(CFG["keys"]["firearm_bonus"], 20)
+        self.assertEqual(CFG["keys"]["choose_location_extra"], 2)
+        self.assertEqual(CFG["weapon"]["M9"]["cl_cost"], 6)
 
     def test_default_is_stepped(self):
         self.assertEqual(CFG["keys"]["armor_dos_mode"], "stepped")

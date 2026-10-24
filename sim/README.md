@@ -14,6 +14,11 @@ Every key, rule constant, tactic and threshold lives in `config.toml`. `"?"` mar
 
 Sources: TBE rules from the Foundry bundle's verbatim book quotes and attack code; 4e stats and native rules from the Player's Manual (2022-08-04): weapons p.100/104, armor p.126, hit capacity p.16, base dice p.44-45, ranged fire and ammo dice p.63-66, damage, armor and crits p.72-76.
 
+## Final keys (v2)
+v1 keys plus: `firearm_bonus = 20`, `armor_dos_mode = "stepped"` (DoS through armor in steps of 3), Choose Location = 4e Crit + 2 SL, M9 `cl_cost = 6`.
+
+Final sweep (`out/report.md`): TBE mean rounds to incapacitation are a median 1.04x native 4e, 72/75 matchups within 1.5x and 65/75 within 1.25x. Rifles and machine guns all land within 0.92-1.39x. The three misses are the M9 vs a vest plus helmet at 50-70% skill (0.58-0.63x, TBE faster); that gap persists with Choose Location switched off, so its cause sits elsewhere.
+
 ## Files
 - `tbe.py`: TBE engine (d100, SL, crits, opposed cascade, two-die location, AP/Piercing, Wound Die + Toughness, impairment, Shock, DT)
 - `native.py`: native 4e ranged fire (base dice, ammo dice, armor modifier, penetration limit, ablation, hit capacity, crit tables)

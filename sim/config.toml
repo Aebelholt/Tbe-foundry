@@ -22,10 +22,10 @@ dos_compare_maneuvers = [true, false]  # ...with Choose Location / Pierce Armor 
 attribute_pct = { A = 40, B = 30, C = 20, D = 10 }
 skill_pct = { A = 40, B = 30, C = 20, D = 10, F = 0 }
 cuf_willpower = { A = 80, B = 60, C = 40, D = 20 }
-# Choose Location SL cost = max(4e Crit + extra, min)
-choose_location_extra = 0
+# Choose Location SL cost = max(4e Crit + extra, min); a weapon's own cl_cost overrides both
+choose_location_extra = 2
 choose_location_min = 0
-firearm_bonus = 0               # flat bonus to TBE attack skill with firearms (weapons unless firearm = false)
+firearm_bonus = 20              # flat bonus to TBE attack skill with firearms (weapons unless firearm = false)
 damage_mult = 3                 # TBE Dmg = 4e Damage x this
 armor_mult = 3                  # TBE AP  = 4e Armor x this
 pierce_per_minus = 3            # each -1 weapon armor mod = Piercing 3
@@ -149,6 +149,7 @@ armor_mod = 1
 ammo_dice = 2
 blast = 0
 native_mod = 0
+cl_cost = 6        # pistol Choose Location priced up (crit + 2 = 4 still buys cheap headshots)
 
 [weapon.PKM]
 damage = 3
