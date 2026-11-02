@@ -10,6 +10,13 @@ the derived initiativeEffective was absent on 14.365 at roll time is not
 known; the v0.57.1 probe reports each combatant's formula and value, so the
 next run says which one and what it held.
 
+Rerun on 0.57.1, same day: **16 of 16 PASS.** Formulas seen: character
+"1d10 + 10", rated creature "7", unrated creature "1d10 + 0". The open
+question stays open (the fix makes it harmless, the cause is unseen).
+Statuses are still an Array on 14.365, so the keyed-object branch has only
+run in the harness. Still needed: a played session with a GM and players
+(socket card guard, permission notices, whispers).
+
 ## v0.57.0 — built 2026-10-23
 
 NEXT_SESSION_PROMPT sections 2 and 3, built before the real-Foundry runs at
