@@ -1,3 +1,14 @@
+# 0.57.1 - 2026-11-02
+
+**First fix from a real-Foundry run (Table Smoke Test on 14.365: 15 of 16 passed).**
+
+- **A creature with a blank Initiative can roll initiative.** Its roll could
+  fail to parse ("1d10 + " with nothing after it). The initiative value
+  handed to a roll is now always a number: blank reads as 0, so the creature
+  rolls 1d10.
+- **The smoke test names every failing combatant**, with its formula and
+  value, instead of stopping at the first.
+
 # 0.57.0 - 2026-10-23
 
 **Fixes found reading the tools as a player, and the guard shared card buttons need.**

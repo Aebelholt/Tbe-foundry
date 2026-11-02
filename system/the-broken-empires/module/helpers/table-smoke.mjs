@@ -223,13 +223,23 @@ export async function runTableSmokeTest({ filePrompt } = {}) {
       const combat = await create(Combat, { scene: scene.id, name: "TBE smoke: " + name, active: false });
       const cs = await combat.createEmbeddedDocuments("Combatant", [pc, creature, blank].map((a) => ({ actorId: a.id, name: a.name })));
       assert(cs.length === 3, "Not all temporary combatants were created.");
-      const formulas = [];
+      /* Every combatant is tried and named, so one failure does not hide
+         which of the three it was. */
+      const formulas = [], bad = [];
       for (const c of cs) {
-        const roll = c.getInitiativeRoll();
-        await roll.evaluate();
-        assert(Number.isFinite(roll.total) && !/undefined|NaN|@/.test(roll.formula), "Initiative has an unresolved value: " + roll.formula);
-        formulas.push(roll.formula);
+        const who = c.actor?.type + (c.actor?.system?.initiative === "" ? " (blank Initiative)" : "");
+        const raw = c._getInitiativeFormula();
+        const eff = c.actor?.getRollData?.()?.initiativeEffective;
+        try {
+          const roll = c.getInitiativeRoll();
+          await roll.evaluate();
+          if (!Number.isFinite(roll.total) || /undefined|NaN|@/.test(roll.formula)) bad.push(who + ": " + raw + " gave " + roll.formula);
+          formulas.push(roll.formula);
+        } catch (err) {
+          bad.push(who + ": " + raw + " with initiativeEffective=" + JSON.stringify(eff) + " failed: " + message(err));
+        }
       }
+      assert(!bad.length, bad.join(" | "));
       assert(cs[0]._getInitiativeFormula() === CONFIG.Combat.initiative.formula &&
         cs[2]._getInitiativeFormula() === CONFIG.Combat.initiative.formula &&
         cs[1]._getInitiativeFormula() !== cs[2]._getInitiativeFormula(), "Rated/unrated combatants did not use the configured initiative paths.");

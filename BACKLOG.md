@@ -1,3 +1,15 @@
+## First real-Foundry run — 2026-11-02, Foundry 14.365, system 0.57.0
+
+TBE: Table Smoke Test: 15 of 16 PASS (dialogs, file input, actor/scene/token
+defaults, token delta and both link paths, FilePicker, RollTable create/update
+and modified roll, Create Character step 1, shop, statuses as an Array).
+FAIL: Combatant initiative, a parse error ("end of input"): a roll formula of
+"1d10 + " from a blank creature Initiative reaching getRollData as "". Fixed
+in v0.57.1 (always a number; audit_check section 2 + mutation). **Open:** why
+the derived initiativeEffective was absent on 14.365 at roll time is not
+known; the v0.57.1 probe reports each combatant's formula and value, so the
+next run says which one and what it held.
+
 ## v0.57.0 — built 2026-10-23
 
 NEXT_SESSION_PROMPT sections 2 and 3, built before the real-Foundry runs at

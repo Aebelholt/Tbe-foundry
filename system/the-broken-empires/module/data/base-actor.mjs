@@ -124,9 +124,14 @@ export default class TheBrokenEmpiresActorBase extends TheBrokenEmpiresDataModel
   /* What @-references in a roll formula can see. The initiative formula
    * registered at init resolves @initiativeEffective from here. */
   getRollData() {
+    /* Always a NUMBER. A blank creature Initiative is "" (a StringField), and
+       if the derived value was missing this used to hand "" to the formula:
+       "1d10 + " fails to parse. Found by TBE: Table Smoke Test on Foundry
+       14.365 (v0.57.1). */
+    const n = (v) => (v === null || v === undefined || String(v).trim() === "" || !Number.isFinite(Number(v)) ? null : Number(v));
     return {
       initiative: this.initiative,
-      initiativeEffective: this.initiativeEffective ?? this.initiative,
+      initiativeEffective: n(this.initiativeEffective) ?? n(this.initiative) ?? 0,
       armorInitPenalty: this.armorInitPenalty ?? 0,
       toughness: this.toughness,
       ll: this.lethalityLevel,

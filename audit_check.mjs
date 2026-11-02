@@ -182,6 +182,22 @@ check(refs.every((r) => rd[r] !== undefined),
   "every @reference in the initiative formula resolves for a character",
   refs.filter((r) => rd[r] === undefined));
 
+/* v0.57.1, found by TBE: Table Smoke Test on real Foundry 14.365: the
+ * initiative of a creature with a BLANK Initiative failed to parse ("1d10 + "),
+ * because the fallback handed the raw "" through when the derived value was
+ * absent. The roll data must always be a number. */
+{
+  const blank = Object.assign(Object.create(Base.prototype), { initiative: "", initiativeEffective: undefined }).getRollData();
+  check(blank.initiativeEffective === 0, "a blank Initiative with no derived value resolves to 0, never \"\"", blank.initiativeEffective);
+  const raw = Object.assign(Object.create(Base.prototype), { initiative: "7", initiativeEffective: undefined }).getRollData();
+  check(raw.initiativeEffective === 7, "a typed \"7\" with no derived value resolves to the number 7", raw.initiativeEffective);
+  const neg = Object.assign(Object.create(Base.prototype), { initiative: 2, initiativeEffective: -1 }).getRollData();
+  check(neg.initiativeEffective === -1, "a derived negative value is kept (p.161: acts on the negative value)");
+  const Old = new Function("return class { getRollData() { return { initiativeEffective: this.initiativeEffective ?? this.initiative }; } }")();
+  const old = Object.assign(Object.create(Old.prototype), { initiative: "", initiativeEffective: undefined }).getRollData();
+  check(("1d10 + " + old.initiativeEffective).trim() === "1d10 +", "MUTATION: the old fallback builds \"1d10 + \", the formula Foundry refused");
+}
+
 /* Creatures never overrode, and must not start. */
 check(!/getRollData/.test(read(`${SYS}/module/data/actor-creature.mjs`)),
   "creature model still inherits the base contract rather than re-stating it");
