@@ -34,7 +34,7 @@
  */
 
 const MODE = "report";          // "report" or "record"
-const HOURS_BACK = 12;          // how far back a session counts; raise if yours ran longer
+const HOURS_BACK = 96;          // how far back a session counts (4 days); raise if yours ran longer ago
 const CHAT_TEXT = "preview";    // "preview" (160 chars of non-roll messages) or "none"
 const GAP_MINUTES = 8;          // a quiet stretch longer than this is treated as a pause
 
@@ -133,7 +133,7 @@ const GAP_MINUTES = 8;          // a quiet stretch longer than this is treated a
       users: game.users.map((u) => ({ name: u.name, gm: u.isGM, character: u.character?.name ?? null }))
     };
     /* The system records the world's migrated version; worth knowing it matches. */
-    try { P.env.migratedVersion = game.settings.get(game.system.id, "systemMigrationVersion"); }
+    try { P.env.migratedVersion = game.settings.get(game.system.id, "worldSchemaVersion"); }
     catch (e) { P.env.migratedVersion = "(setting not registered)"; }
   } catch (e) { P.notes.push("env read failed: " + e.message); }
 
