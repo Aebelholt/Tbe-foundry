@@ -64,6 +64,7 @@ if (!attacker) {
       /* Weapon Readiness (p.129): a stored greatsword and a drawn one are not
          equally available, and nothing here used to say so. */
       readiness: TBE.readiness(i), readinessNote: TBE.readinessNote(i),
+      carried: s.carried ?? "hand",
       cl: TBE.num(s.cl, 3), cs: TBE.num(s.cs, 3), dis: TBE.num(s.dis, 4), t: TBE.num(s.t, 5),
       skillName: sk?.name ?? skillName, skillValue: sk?.value ?? 0, skillExpertise: sk?.expertise ?? 0, matched: !!sk
     };
@@ -159,12 +160,40 @@ if (!attacker) {
        only: the modifiers are recomputed every time (encumbrance, zones and
        size change between rounds) and nothing that spends is remembered. */
     const mem = TBE.recall("attack", attacker.id) || {};
-    const wLast = Math.max(0, weapons.findIndex((w) => w.id === mem.weaponId || w.name === mem.weapon));
+    /* Which weapon the dialog opens on (v0.58.0, first-session note: "whatever
+       weapon is in hand should be auto chosen"). Held and Ready first, then
+       At Hand; the remembered weapon wins within the same readiness. A Stored
+       or Dropped weapon is greyed out: it has to be retrieved first (p.129),
+       and the sheet's carry picker is where that is recorded. If nothing is
+       held or at hand, nothing is greyed, so the dialog never offers an empty
+       list; the readiness tag still says what each costs. */
+    const R = TBE.READINESS;
+    const rank = (w) => (w.readiness === R.ready ? 0 : TBE.carryPool(w.carried) === TBE.POOL.HAND ? 1 : 2);
+    const anyReady = weapons.some((w) => rank(w) < 2);
+    const usable = (w) => !anyReady || rank(w) < 2;
+    const remembered = (w) => w.id === mem.weaponId || w.name === mem.weapon;
+    let wLast = -1;
+    for (const r of [0, 1, 2]) {
+      const pool = weapons.map((w, i) => [w, i]).filter(([w]) => rank(w) === r && usable(w));
+      if (!pool.length) continue;
+      wLast = (pool.find(([w]) => remembered(w)) ?? pool[0])[1];
+      break;
+    }
+    if (wLast < 0) wLast = 0;
     const wOpts = weapons.map((w, i) =>
-      '<option value="' + i + '"' + (i === wLast ? " selected" : "") + '>' + w.name + " &mdash; " + w.skillName + " " + w.skillValue + TBE.expertiseTag(w.skillExpertise) +
+      '<option value="' + i + '"' + (i === wLast ? " selected" : "") + (usable(w) ? "" : " disabled") + '>' + w.name + " &mdash; " + w.skillName + " " + w.skillValue + TBE.expertiseTag(w.skillExpertise) +
       ", Dmg " + w.dmg + (w.nl ? " NL" : "") + " [" + w.readiness.short + "]" +
-      (w.matched ? "" : " [no matching skill]") + "</option>"
+      (w.matched ? "" : " [no matching skill]") + (usable(w) ? "" : " (retrieve it first)") + "</option>"
     ).join("");
+    /* Resolve as Favor (p.25-26): "+10 per Resolve to a skill roll", at most 3
+       from any source. An attack is a skill roll; it was the one roll the
+       dialog could not take Favor on (first session). Opens on 0 every time:
+       it spends Resolve, so it is never remembered. */
+    const favorMax = Math.min(3, TBE.availableResolve(attacker));
+    const favorHtml = attacker.type === "character" || favorMax > 0
+      ? '<div style="margin:2px 0">Resolve as Favor on the attack (+10 each, max 3):</div>' +
+        "<div>" + TBE.resolveTrackHtml(attacker, 0) + "</div>" + TBE.favorButtons(favorMax, "favor")
+      : "";
     /* "Melee attacks from a creature 3+ Sizes larger cannot be parried, only
        Dodged." Drop the parry option rather than let it be picked illegally. */
     const legalDef = (sizeFx && sizeFx.defenderMustDodge)
@@ -200,6 +229,7 @@ if (!attacker) {
           weapons.filter((w) => w.throwable).map((w) => w.name).join(", ") + ' can be thrown; leave unticked to strike in melee)</label>'
         : "") +
       '<label style="display:block">Attack modifier: <input type="number" name="atkMod" value="' + atkEnc.penalty + '" style="width:100%"></label>' +
+      favorHtml +
       TBE.encNote(attacker) +
       TBE.riderNote(attacker) +
       '<label style="display:block">Defence: <select name="def" style="width:100%">' + dOpts + "</select></label>" +
@@ -222,7 +252,25 @@ if (!attacker) {
       (mem.weapon ? '<div style="font-size:11px;opacity:.7;margin-top:2px">Opened on your last attack with ' + attacker.name + ".</div>" : "") +
       "</div>";
 
-    const data = await TBE.prompt("TBE Attack", content, "Strike");
+    /* "Shoot" for a bow, crossbow or sling, or a weapon being thrown;
+       "Strike" otherwise. Follows the weapon picker and the throw box. */
+    const verb = (w, thrown) => (w && (w.usesAmmo || (w.throwable && thrown)) ? "Shoot" : "Strike");
+    const okLabel = verb(weapons[wLast], !!mem.thrown && weapons[wLast]?.throwable);
+    const relabel = (ev, dialog) => {
+      const root = dialog?.element ?? ev?.target?.element ?? null;
+      const form = root?.querySelector?.("form") ?? root;
+      const btn = root?.querySelector?.('button[data-action="ok"]');
+      if (!form || !btn) return;
+      const sync = () => {
+        const w = weapons[TBE.num(form.querySelector('[name="weapon"]')?.value, 0)];
+        const label = verb(w, !!form.querySelector('[name="thrown"]')?.checked);
+        const span = btn.querySelector("span");
+        if (span) span.textContent = label; else btn.textContent = label;
+      };
+      form.querySelector('[name="weapon"]')?.addEventListener("change", sync);
+      form.querySelector('[name="thrown"]')?.addEventListener("change", sync);
+    };
+    const data = await TBE.prompt("TBE Attack", content, okLabel, { render: relabel });
     if (data) {
       const w = weapons[TBE.num(data.weapon, 0)];
       const sizeToHit = sizeFx ? sizeFx.toHit : 0;
@@ -243,12 +291,25 @@ if (!attacker) {
             ticked: (id) => data["hz_" + id] === "on", ranged: isRanged,
             attackSkill: w.skillName, defenceSkill: defPick ? defPick.name : "" })
         : { attack: 0, defence: 0, applied: [] };
-      const atk = w.skillValue + TBE.num(data.atkMod, 0) + sizeToHit + hz.attack;
+      /* Favor cannot outrun the track (p.26): spent and Fatigue boxes are not
+         free. The write is guarded; if it is refused the card says so and the
+         bonus still stands as rolled, the same as TBE: Skill Roll. */
+      const favorAsked = Math.max(0, Math.min(3, TBE.num(data.favor, 0)));
+      const favor = Math.min(favorAsked, favorMax);
+      const trackBefore = favor ? { system: { resolve: Object.assign({}, attacker.system?.resolve), fatigue: attacker.system?.fatigue } } : null;
+      let favorWrite = { ok: true, notice: null };
+      if (favor) {
+        const cur = TBE.num(attacker.system?.resolve?.value, 0);
+        favorWrite = await TBE.write(attacker, { "system.resolve.value": Math.max(0, cur - favor) }, "the " + favor + " Resolve");
+      }
+      const atk = w.skillValue + TBE.num(data.atkMod, 0) + sizeToHit + hz.attack + favor * 10;
       const def = defPick ? defPick.value + TBE.num(data.defMod, 0) + hz.defence : 0;
       const woundDie = data.d20 === "on" ? 20 : 10;
 
       const aRoll = await TBE.d100("attack");
       const aRes = TBE.resolve(aRoll.total, atk, w.skillExpertise);
+      /* The Breaking (p.83): Resolve spent and a critical failure. */
+      const breaking = favor ? await TBE.theBreaking(attacker, aRes, favor) : "";
       const rolls = [aRoll];
       let dRes = null;
       if (!undefended && defPick) {
@@ -290,6 +351,9 @@ if (!attacker) {
         (sizeToHit ? '<div style="font-size:11px;opacity:.85">Attack skill includes +' + sizeToHit + " for the Size gap.</div>" : "") +
         (hz.applied.length ? '<div style="font-size:11px;opacity:.85">Zone: ' +
           hz.applied.map((m) => m.label + " (p." + m.page + ")").join(" &middot; ") + "</div>" : "") +
+        (favor ? '<div style="font-size:11px;opacity:.85">Attack skill includes ' + favor + " Resolve spent as Favor (+" + favor * 10 + ")." +
+          (favorWrite.ok ? "" : ' <span style="color:#8b1a1a">Not deducted. ' + TBE.esc(favorWrite.notice) + "</span>") + "</div>" +
+          (favorWrite.ok && trackBefore ? "<div>" + TBE.resolveTrackHtml(trackBefore, favor) + "</div>" : "") : "") +
         "<div>Attack: <b>" + TBE.face(aRes.roll) + "</b> " + TBE.tag(aRes) + (aRes.success ? ", " + aSL + " SL" : "") + "</div>" +
         (dRes ? "<div>Defence: <b>" + TBE.face(dRes.roll) + "</b> " + TBE.tag(dRes) + (dRes.success ? ", " + dSL + " SL" : "") + "</div>" : "");
 
@@ -300,6 +364,12 @@ if (!attacker) {
       if (tieNote) body += '<div style="font-size:11px;opacity:.8">' + tieNote + "</div>";
       if (!attackerWins) {
         body += '<div style="margin-top:4px;font-weight:bold;color:#6b2b2b">The attack is turned aside.</div>';
+        /* Where the blow was going, for narration only (first-session
+           request): the same ones-die reading a hit uses, and it
+           deals nothing. */
+        const missOnes = aRes.roll % 10;
+        body += '<div style="font-size:11px;opacity:.8">Aimed at the ' + generalLocation(missOnes === 0 ? 10 : missOnes) + " (narration only; nothing is struck).</div>";
+        body += breaking;
         if (dRes && dRes.critFail) body += "<div>Critical failure on defence: the attacker gains a bonus SL next exchange.</div>";
         await TBE.say(TBE.card("TBE Attack", body), rolls);
       } else {

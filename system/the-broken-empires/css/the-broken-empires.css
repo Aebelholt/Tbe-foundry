@@ -525,6 +525,21 @@
   padding: 0 2px;
   margin-left: 2px;
 }
+/* The open list is drawn by the browser on its own light background, and the
+   options inherited the sheet's parchment ink: pale text on white, unreadable
+   (first session, 2026-11-02). Give every select's options in a TBE window
+   the sheet's own dark ground. */
+.the-broken-empires select option,
+.the-broken-empires select optgroup,
+.tbe-creator select option,
+.tbe-creator select optgroup {
+  background: var(--tbe-parchment-panel, #1f1710);
+  color: var(--tbe-ink, #efe2c4);
+}
+.the-broken-empires select option:disabled,
+.tbe-creator select option:disabled {
+  color: #7f7462;
+}
 
 /* The Resolve track (rules/resolve-track.mjs): spent slashed from the left,
    Fatigue crossed from the right, as on the paper sheet (p.26). Neutral
@@ -596,6 +611,7 @@
 .tbe-cc-row .grow { flex: 1; }
 .tbe-cc-row input[type="text"] { flex: 1; min-width: 120px; }
 .tbe-cc-block { display: block; margin: 4px 0; }
+.tbe-cc-sub { margin-left: 22px; font-size: 12px; }
 .tbe-cc-block input[type="text"], .tbe-cc-block select { width: 100%; }
 .tbe-cc-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; }
 .tbe-cc-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px 10px; }

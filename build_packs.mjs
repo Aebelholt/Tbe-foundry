@@ -202,7 +202,11 @@ const beasts = read("bestiary_docs.json").map((c, i) => {
     img: "icons/svg/sword.svg", sort: (items.length + 1) * 1000,
     system: {
       description: "<p>" + a.text + "</p>", dmg: Number(a.damage) || 0, nl: false,
-      cl: a.cl, cs: a.cs, dis: a.dis, t: a.t, skillName: a.name, ranged: !!a.ranged || !!a.thrown
+      cl: a.cl, cs: a.cs, dis: a.dis, t: a.t, skillName: a.name, ranged: !!a.ranged || !!a.thrown,
+      /* A stat block's attacks are how the creature fights as written: a Bite
+         is not drawn. Held and Ready, not the item default At Hand, which put
+         "a Minor Action to draw" on every wolf's bite (first session). */
+      carried: "ready"
     },
     effects: [], folder: null, ownership: { default: 0 }, flags: {}, _stats: STATS()
   });

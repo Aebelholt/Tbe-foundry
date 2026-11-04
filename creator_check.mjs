@@ -254,6 +254,27 @@ console.log("\n4. Sequences: what a change clears, and what it keeps");
   const ev = T.lifeEvents.origin.find((e) => (e.options || []).length > 1);
   await A.act("life-pick", { key: "origin", value: ev.range }, env);
   check(d.lifeEvents.origin.name === ev.name && d.lifeChoice.origin === null, "a Life Event with a choice starts unchosen (not silently on its first option)");
+  /* v0.58.0: an option's own sub-choice is on the page before the option is
+     picked (first session: "needs to be pressed to appear"), and choosing in
+     it takes the option. Still nothing is picked for the player. */
+  {
+    const evs = ["origin", "youth", "recent"].flatMap((k) => (T.lifeEvents[k] || []).map((e) => [k, e]));
+    const hit = evs.find(([, e]) => (e.options || []).length > 1 && (e.options || []).some((o) => o.kind === "skill-any" && (o.options || []).length > 1));
+    check(!!hit, "the tables hold a multi-option event with a skill to choose", null);
+    if (hit) {
+      const [k, e] = hit;
+      const i = e.options.findIndex((o) => o.kind === "skill-any" && (o.options || []).length > 1);
+      const dl = DR.defaultDraft(T);
+      await A.act("life-pick", { key: k, value: e.range }, mkEnv(dl));
+      const page = S.renderStep("life", mkEnv(dl));
+      const sel = new RegExp('<select data-bind="lifeChoiceExtra" data-key="' + k + '" data-sub="' + i + '"');
+      check(dl.lifeChoice[k] === null && sel.test(page), "option " + i + "'s skill select is shown before any option is picked");
+      A.setBound(dl, T, { bind: "lifeChoiceExtra", key: k, sub: String(i), value: e.options[i].options[1] });
+      check(dl.lifeChoice[k] === i && dl.lifeChoiceExtra[k] === e.options[i].options[1], "choosing in it takes that option and keeps the skill", [dl.lifeChoice[k], dl.lifeChoiceExtra[k]]);
+      const lifeOpen = DR.stepStatus(T, dl, C.deriveWith(T, dl)).life.open;
+      check(!lifeOpen.some((x) => x.includes(e.name)), "and the still-to-choose list is satisfied for that event", lifeOpen);
+    }
+  }
   const one = T.lifeEvents.youth.find((e) => (e.options || []).length === 1);
   if (one) { await A.act("life-pick", { key: "youth", value: one.range }, env); check(d.lifeChoice.youth === 0, "a one-option Life Event is taken, there is nothing to choose"); }
 

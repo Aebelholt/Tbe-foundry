@@ -372,14 +372,23 @@ function stepLife(env) {
         (ev.desc ? '<div class="tbe-cc-desc">' + esc(ev.desc) + "</div>" : "");
       const opts = ev.options || [];
       const pick = (d.lifeChoice || {})[key];
-      opts.forEach((o, i) => { h += W.radio("lifeChoice", i, pick, esc(o.label), { key, type: "number" }); });
-      const cur = pick === null || pick === undefined || pick === "" ? null : opts[num(pick, -1)];
-      if (cur && cur.kind === "skill-any") {
-        h += "<label class=\"tbe-cc-block\">Which skill " + W.select("lifeChoiceExtra", cur.options || [], (d.lifeChoiceExtra || {})[key], { key }) + "</label>";
-      } else if (cur && (cur.kind === "bind" || cur.kind === "strand") && !cur.name) {
-        const names = (cur.kind === "bind" ? T.magic?.binds : T.magic?.strands) || [];
-        h += "<label class=\"tbe-cc-block\">Which " + cur.kind + " " + W.select("lifeChoiceExtra", names.map((x) => x.name), (d.lifeChoiceExtra || {})[key], { key }) + "</label>";
-      }
+      const picked = pick === null || pick === undefined || pick === "" ? -1 : num(pick, -1);
+      const cur = picked < 0 ? null : opts[picked];
+      /* Each option's sub-choice is shown under it from the start (v0.58.0,
+         first-session note: the select only appeared after clicking the
+         radio, an extra click for nothing). Choosing in it takes the option
+         too. The option itself still starts unchosen: the book has the
+         player take one, so nothing is picked for them. */
+      opts.forEach((o, i) => {
+        h += W.radio("lifeChoice", i, pick, esc(o.label), { key, type: "number" });
+        const val = picked === i ? (d.lifeChoiceExtra || {})[key] : "";
+        if (o.kind === "skill-any" && (o.options || []).length > 1) {
+          h += '<label class="tbe-cc-block tbe-cc-sub">Which skill ' + W.select("lifeChoiceExtra", o.options || [], val, { key, sub: String(i) }) + "</label>";
+        } else if ((o.kind === "bind" || o.kind === "strand") && !o.name) {
+          const names = (o.kind === "bind" ? T.magic?.binds : T.magic?.strands) || [];
+          h += '<label class="tbe-cc-block tbe-cc-sub">Which ' + o.kind + " " + W.select("lifeChoiceExtra", names.map((x) => x.name), val, { key, sub: String(i) }) + "</label>";
+        }
+      });
       if (cur && (cur.kind === "bind" || cur.kind === "strand") && patternOf(T, d) === "none") {
         h += W.warn("This is the Spellweaver branch, and as things stand this character is not Patterned. Take the other option, or choose the Spellweaver career (step 7).");
       }

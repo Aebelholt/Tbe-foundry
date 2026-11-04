@@ -1,3 +1,30 @@
+# 0.58.0 - 2026-11-04
+
+**Fixes from the first played session.**
+
+- **TBE: Attack takes Favor.** Spend up to 3 Resolve for +10 each, the same
+  as any other skill roll (p.26). Only free boxes on the track can be spent.
+  It is deducted with the same guarded write as Skill Roll, and the card
+  shows the track before and after. It always opens on 0 and is never
+  remembered.
+- **TBE: Attack opens on the weapon in hand.** Held and Ready comes first,
+  then At Hand, and the last weapon used wins within the same readiness.
+  Stored and Dropped weapons are greyed out ("retrieve it first") unless
+  nothing is held or at hand.
+- **The button reads Shoot** for a bow, crossbow, sling or a throw, and
+  Strike otherwise.
+- **A miss says where the blow was aimed.** It uses the same ones-die
+  reading as a hit, and is marked as narration only.
+- **Creature attacks are Held and Ready.** A wolf's Bite no longer says it
+  takes a Minor Action to draw. This applies to bestiary actors imported from
+  this version on. For actors already in a world, set the attack to Held on
+  the Gear tab.
+- **Life Events show each option's skill or Bind choice from the start.**
+  Before, the dropdown only appeared after clicking the option. Choosing in
+  the dropdown takes that option. Nothing is picked for the player.
+- **Dropdown lists are readable on the dark sheet.** The open list was pale
+  text on white, as on the gear carry picker.
+
 # 0.57.1 - 2026-11-02
 
 **First fix from a real-Foundry run (Table Smoke Test on 14.365: 15 of 16 passed).**

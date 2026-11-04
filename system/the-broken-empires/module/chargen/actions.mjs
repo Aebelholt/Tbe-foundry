@@ -74,6 +74,17 @@ export function setBound(d, T, el) {
     if (el.sub !== "spec" && !f.name) d.freeTalents = d.freeTalents.filter((x) => x !== f);
     return;
   }
+  /* A Life Event option's own sub-choice (v0.58.0): its select sits under
+     its radio and is shown without clicking the radio first, so choosing in
+     it also takes that option. Set the option first; reconcile() on
+     lifeChoice would otherwise clear the skill just picked. */
+  if (el.bind === "lifeChoiceExtra" && el.sub !== undefined && el.sub !== null && el.sub !== "") {
+    d.lifeChoice = d.lifeChoice || {};
+    d.lifeChoiceExtra = d.lifeChoiceExtra || {};
+    d.lifeChoice[el.key] = num(el.sub, 0);
+    d.lifeChoiceExtra[el.key] = String(el.value ?? "");
+    return;
+  }
   const path = pathOf(el.bind, el.key);
   const before = getPath(d, path);
   setPath(d, path, valueOf(el));

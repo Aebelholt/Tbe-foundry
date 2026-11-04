@@ -1,3 +1,28 @@
+## First played session notes — 2026-11-04 (v0.58.0 built)
+
+Fixed in v0.58.0:
+- Favor on Attack, opening on the held weapon (Stored/Dropped greyed out),
+  Shoot for ranged weapons, where a miss was aimed (qol_check 4b, with a
+  mutation).
+- Creature attacks are built Held and Ready (no draw note on a Bite). World
+  copies imported before this keep At Hand.
+- Life Event sub-choices are visible from the start (creator_check).
+- Option lists readable on the dark sheet (CSS).
+
+Open, needing a decision from Seb:
+- **Edit an existing character** without starting over. Possible shape:
+  Create Character opened on an existing actor, from a draft rebuilt off
+  the actor. The risk is the derived numbers: a rebuilt draft has to
+  reproduce the actor exactly before any edit is allowed to write.
+- **Buy equipment layout.** A player suggested choosing material, then
+  location. Seb prefers tabs (material x location, or the other way round),
+  with armour types the character is not proficient in greyed out.
+- **Zone effects in attacks**: a player wants them easier to reach. The note
+  was cut off; ask what was missing at the table.
+- Defender Favor: the defender's player may want to spend Favor on the
+  defence roll, which runs on the attacker's client. Needs the socket
+  (card-claim style) or a defender-side prompt.
+
 ## First real-Foundry run — 2026-11-02, Foundry 14.365, system 0.57.0
 
 TBE: Table Smoke Test: 15 of 16 PASS (dialogs, file input, actor/scene/token

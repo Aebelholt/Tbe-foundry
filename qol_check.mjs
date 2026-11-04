@@ -18,6 +18,8 @@
  *      Favor that always opens on 0.
  *   3. The BUILT TBE: Skill Roll, twice: the second opening is on the first
  *      one's modifier, and never on its Favor.
+ *   4b. (v0.58.0) Attack opens on the held weapon, greys out stored ones,
+ *       takes Favor, says Shoot for a shot, and names where a miss was aimed.
  *   4. The BUILT TBE: Attack, twice: weapon, Wound Die and defence remembered;
  *      the defence only for the same target; a character target with no Dodge
  *      or Endurance written down dodges and rolls Endurance at 20.
@@ -260,6 +262,70 @@ console.log("\n4. TBE: Attack remembers the last attack; untrained Dodge and End
 
   const src = read("macros/tbe-attack.js");
   check(!/remember\([^)]*(resolve|favor|atkMod|defMod)/i.test(src), "nothing in Attack remembers a spend or a modifier");
+}
+
+console.log("\n4b. TBE: Attack after the first session: held weapon first, Favor, Shoot, where a miss was aimed");
+{
+  const user = mkUser();
+  const w = (id, name, sk, carried, extra = {}) => ({ type: "weapon", id, name, system: Object.assign({ dmg: 4, skillName: sk, cl: 3, cs: 3, dis: 4, t: 5, carried }, extra) });
+  const mkA = (weapons, resolve = 5) => actorStub({ id: "A2", name: "Cran", type: "character",
+    items: [skill("Melee: Medium", 50), skill("Melee: Light", 40), skill("Missile", 45)].concat(weapons),
+    system: { size: "Medium", wounds: woundsBlank(), supply: { ammo: 6 }, resolve: { value: resolve, max: 5 }, fatigue: 0 } });
+  const tgt = actorStub({ id: "T9", name: "White Wolf", type: "creature", items: [skill("Dodge", 60, false)],
+    system: { size: "Medium", wounds: woundsBlank(), toughness: 1, armour: {}, deathThreshold: { value: 10, max: 10 } } });
+  /* Remembered: the Axe, At Hand. The Sword is Held and Ready, so it wins. */
+  await memory.remember(user, "attack", "A2", { weapon: "Axe", weaponId: "wa", def: {} });
+  const a = mkA([w("wa", "Axe", "Melee: Medium", "hand"), w("ws", "Sword", "Melee: Medium", "ready"), w("wd", "Dagger", "Melee: Light", "stored")]);
+  const h1 = harness({ user, rolls: [95, 30], attacker: a, target: tgt,
+    answers: { "TBE Attack": { weapon: "1", def: "0", atkMod: "0", defMod: "0", favor: "2" } } });
+  await h1.run(cmd("TBE: Attack"));
+  const d1 = h1.log.find((e) => e.ev === "dialog" && e.title === "TBE Attack")?.content || "";
+  check(/<option value="1" selected>Sword/.test(d1), "the held weapon is chosen over a remembered one that is only At Hand", d1.match(/<option value="\d"[^>]*>[A-Z][a-z]+/g));
+  check(/<option value="2" disabled>Dagger[^<]*retrieve it first/.test(d1), "a Stored weapon is greyed out and says why");
+  check(/<option value="0">Axe/.test(d1), "an At Hand weapon stays selectable");
+  check((d1.match(/name="favor"/g) || []).length === 4 && /name="favor" value="0" checked/.test(d1), "Favor 0-3 is offered on the attack, opening on 0");
+  check(a.updates?.some((u) => u["system.resolve.value"] === 3), "2 Favor spends 2 Resolve, through the guarded write", a.updates);
+  const p1 = h1.log.filter((e) => e.ev === "post").map((e) => e.content).join(" ");
+  check(/Melee: Medium 70\)/.test(p1) && /2 Resolve spent as Favor \(\+20\)/.test(p1), "the attack is rolled at 50 + 20 and the card says so", p1.slice(0, 300));
+  check(/Aimed at the Body \(narration only/.test(p1), "a miss names where it was aimed (95: ones 5, Body), for narration", p1.match(/Aimed at[^<]*/));
+  const saved = memory.recall(user, "attack", "A2");
+  check(!("favor" in saved), "the Favor is not remembered");
+
+  /* Nothing held or at hand: nothing is greyed, so the dialog is never empty. */
+  const b = mkA([w("x1", "Spear", "Melee: Medium", "stored"), w("x2", "Club", "Melee: Medium", "dropped")]);
+  const h2 = harness({ user: mkUser("U9"), rolls: [99, 30], attacker: b, target: tgt, answers: { "TBE Attack": { weapon: "0", def: "0" } } });
+  await h2.run(cmd("TBE: Attack"));
+  const d2 = h2.log.find((e) => e.ev === "dialog" && e.title === "TBE Attack")?.content || "";
+  check(!/ disabled>/.test(d2) && /<option value="0" selected>Spear/.test(d2), "all stored or dropped: none greyed, the first chosen");
+
+  /* A creature with no Resolve gets no Favor row. */
+  const wolf = actorStub({ id: "W", name: "Wolf", type: "creature", items: [skill("Bite", 65), w("wb", "Bite", "Bite", "ready")],
+    system: { size: "Medium", wounds: woundsBlank(), resolve: { value: 0, max: 0 } } });
+  const h3 = harness({ user: mkUser("U8"), rolls: [99, 30], attacker: wolf, target: tgt, answers: { "TBE Attack": { weapon: "0", def: "0" } } });
+  await h3.run(cmd("TBE: Attack"));
+  const d3 = h3.log.find((e) => e.ev === "dialog" && e.title === "TBE Attack")?.content || "";
+  check(!/name="favor"/.test(d3), "a creature with no Resolve is offered no Favor");
+  check(!/Minor Action to draw/.test(h3.log.filter((e) => e.ev === "post").map((e) => e.content).join(" ")), "a held Bite carries no draw note");
+
+  /* The button reads Shoot for a bow. The harness ignores render, so the
+     label passed to the dialog is what is checked. */
+  const src = cmd("TBE: Attack");
+  check(/verb\(weapons\[wLast\]/.test(src) && /"Shoot" : "Strike"/.test(src), "the confirm button is Shoot for a shot or a throw, Strike otherwise");
+
+  /* Mutation: open on the remembered weapon whatever its readiness (the
+     pre-0.58.0 rule) and the held Sword is no longer chosen. */
+  const mutSrc = src.replace(/wLast = \(pool\.find[^;]*;/, "wLast = Math.max(0, weapons.findIndex((w) => remembered(w)));");
+  check(mutSrc !== src, "(mutation) the default-weapon rule was found to replace");
+  const um = mkUser("U7");
+  await memory.remember(um, "attack", "A2", { weapon: "Axe", weaponId: "wa", def: {} });
+  const hm = harness({ user: um, rolls: [99, 30], attacker: mkA([w("wa", "Axe", "Melee: Medium", "hand"), w("ws", "Sword", "Melee: Medium", "ready")]), target: tgt,
+    answers: { "TBE Attack": { weapon: "0", def: "0" } } });
+  await hm.run(mutSrc);
+  const dm = hm.log.find((e) => e.ev === "dialog" && e.title === "TBE Attack")?.content || "";
+  check(/<option value="0" selected>Axe/.test(dm), "(mutation) remembered-first opens on the At Hand Axe, so the first assertion above would fail");
+
+  /* The bestiary pack: stat-block attacks are Held and Ready. */
+  check(/carried: "ready"/.test(read("build_packs.mjs")), "creature attacks are built Held and Ready, not At Hand");
 }
 
 console.log("\n5. The sheet: carry picker and roll dialog");
