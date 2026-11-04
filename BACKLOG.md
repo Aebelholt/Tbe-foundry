@@ -9,6 +9,22 @@ Fixed in v0.58.0:
 - Life Event sub-choices are visible from the start (creator_check).
 - Option lists readable on the dark sheet (CSS).
 
+Session probe, first real run (2026-11-04, world still on 0.57.1):
+- No chat in its 12h window (run two days after play); the probe also read a
+  migration setting that does not exist. Both fixed in the probe; rerun.
+- Rann carries every skill, weapon and Talent three or four times (198
+  skills, armour Init penalty 10) and Resolve 12/10. Wastau's weapons are
+  doubled. Cause unknown: the world still holds the retired Character Wizard,
+  Build Character and Finish Character with their old commands (Update
+  Macros not run), and Create Character with "Replace" unticked would also
+  add rather than replace. Ask which was used before guessing.
+- Both users are GMs and no user has a character assigned, so the session
+  did not exercise player permissions, whispers or TBE.me()'s ownership
+  preference.
+- World macros: TBE: Attack, Create Character (x3) and Zone Hazards are
+  duplicated, and the three retired macros are present: run TBE: Update
+  Macros.
+
 Open, needing a decision from Seb:
 - **Edit an existing character** without starting over. Possible shape:
   Create Character opened on an existing actor, from a draft rebuilt off
